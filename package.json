@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/sitemap": "^7.4.3",
     "@vueuse/core": "^13.1.0",
     "dayjs-nuxt": "^1.1.2",
     "nuxt": "^3.17.6",

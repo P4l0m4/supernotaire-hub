@@ -58,7 +58,7 @@
           Créez votre dossier de vente immobilière sans effort et confiez-le
           rapidement à un notaire.
         </p>
-        <NuxtLink to="/estimation-en-ligne-bien-immobilier"
+        <NuxtLink to="/"
           ><PrimaryButton variant="accent-color" icon="arrow_right"
             >Créer mon compte</PrimaryButton
           ></NuxtLink

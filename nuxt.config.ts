@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
   srcDir: "src/",
   css: ["@/styles/global.scss"],
-  modules: ["dayjs-nuxt"],
+  modules: ["dayjs-nuxt", "@nuxtjs/sitemap"],
   vite: {
     css: {
       preprocessorOptions: {
@@ -36,5 +36,9 @@ export default defineNuxtConfig({
   },
   dayjs: {
     locales: ["fr"],
+  },
+  site: {
+    url: "https://supernotaire.fr",
+    name: "Supernotaire",
   },
 });
