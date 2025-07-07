@@ -1,0 +1,16 @@
+export const colors = {
+  "base-color": "#f7f7f7",
+  "primary-color": "#FFFDFA",
+  "secondary-color": "#00065c",
+  "accent-color": "#4885DE",
+  "text-color": "#22262e",
+  "error-color": "#CB0000",
+  "warning-color": "#f0ae00",
+  "gold-color": "#FFE492",
+  "base-color-faded": "#f7f7f750",
+  "secondary-color-faded": "#00065c50",
+  "primary-color-faded": "#FFFDFA50",
+  "text-color-faded": "#22262e60",
+  "accent-color-faded": "#4885DE50",
+  "success-color": "#48d664",
+};
