@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
+
 import signature from "@/assets/images/signature.jpg";
 import vespa from "@/assets/images/vespa.jpg";
 import securite from "@/assets/images/securite.jpg";
+
+const url = ref();
 
 useHead({
   title: "Supernotaire | Finalisation rapide de vente immobilière",
@@ -66,8 +70,12 @@ useJsonld(() => ({
   name: "Supernotaire | Finalisation rapide de vente immobilière",
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
-  url: window.location.href,
+  url: url.value,
 }));
+
+onMounted(() => {
+  url.value = window.location.href;
+});
 </script>
 <template>
   <Container>
