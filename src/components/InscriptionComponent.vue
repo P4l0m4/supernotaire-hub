@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
+const isPopupOpen = ref(false);
+
 const selectedOption = ref("vendeur");
 
 const radioOptions = [
@@ -21,7 +24,7 @@ const radioOptions = [
 ];
 </script>
 <template>
-  <div class="inscription">
+  <div class="inscription-component">
     <FormelementsRadioOption
       v-for="radioOption in radioOptions"
       :key="radioOption.id"
@@ -37,9 +40,13 @@ const radioOptions = [
       variant="accent-color"
       icon="arrow_right"
       style="margin-top: 0.5rem"
+      @click="isPopupOpen = true"
       >Continuez</PrimaryButton
     >
-    <ConfirmationPopUp>
+    <ConfirmationPopUp
+      v-if="isPopupOpen"
+      @close-confirmation="isPopupOpen = false"
+    >
       <template #title>Merci de votre intérêt pour Supernotaire !</template>
       Nous ne sommes pas encore ouverts au public, mais vous pouvez suivre le
       développement de la plateforme sur
@@ -54,14 +61,15 @@ const radioOptions = [
   </div>
 </template>
 <style lang="scss" scoped>
-.inscription {
+.inscription-component {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
   max-width: 700px;
+  height: fit-content;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 !important;
   align-items: end;
 }
 </style>

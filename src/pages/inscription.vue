@@ -2,7 +2,7 @@
   <Container
     ><div class="inscription"><h1 class="titles">Créez votre compte</h1></div>
 
-    <Inscription />
+    <InscriptionComponent />
   </Container>
 </template>
 <style lang="scss" scoped>
@@ -12,19 +12,12 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  padding: 2rem 1rem;
+  padding: 4rem 0;
   height: fit-content;
 
   @media (min-width: $big-tablet-screen) {
     justify-content: center;
     align-items: center;
-    gap: 4rem;
-    min-height: initial;
-  }
-
-  @media (min-width: $laptop-screen) {
-    gap: 8rem;
-    padding: 4rem;
   }
 
   &__headlines {
