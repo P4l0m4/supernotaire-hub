@@ -1,62 +1,73 @@
 <script setup lang="ts">
 const questions = [
   {
-    title: "Comment fonctionne le simulateur ?",
+    title: "Comment fonctionne Supernotaire ?",
     answer:
-      "Nous nous basons sur les données DVF (Demandes de Valeurs Foncières) pour estimer la valeur des biens immobiliers. Le simulateur fait ensuite une estimation basée sur les transactions récentes dans la région. Il applique une décote ou une surcote en fonction de l'état du bien, de sa localisation et d'autres facteurs.",
+      "Créez facilement votre compte, puis commencez à créer de nouveaux mandats de vente immobilière. Associez un vendeur et un acheteur à chaque mandat pour qu'ils fournissent facilement les documents et infos dont vous avez besoin. Tout se fait en ligne, et vous pouvez suivre l'avancement de chaque mandat en temps réel.",
   },
   {
-    title: "Le simulateur est-il fiable ?",
+    title: "Supernotaire est-il fiable ?",
     answer:
-      "Oui, le simulateur utilise des données officielles régulièrement actualisées et prend en compte un maximum de critères pour fournir une estimation la plus précise possible.",
+      "Oui, Supernotaire est une plateforme fiable. Nous nous mettons régulièrement l'outil à jour et veillons à la sécurité des données qui transitent par la plateforme. De plus, nous travaillons en étroite collaboration avec des notaires pour garantir la fiabilité de l'outil.",
   },
   {
-    title: "L'offre obtenue est-elle définitive ?",
+    title: "A quoi sert Supernotaire ?",
     answer:
-      "Aucune offre n'est définitive tant que le bien n'a pas été visité par un professionnel. L'estimation est indicative et peut varier en fonction de l'état et la situation réels du bien.",
-  },
-  {
-    title: "A quoi sert Martinimmo ?",
-    answer:
-      "Nous avons conçu Martinimmo pour simplifier la vente de biens immobiliers. C'est une solution digitale qui fluidifie au maximum le processus de vente pour que vous récupériez votre argent ultra rapidement.",
+      "Supernotaire est une plateforme qui permet aux notaires de finaliser rapidement les mandats de vente immobilière, ce qui leur permet de gérer plus de mandats sans augmenter leur charge de travail. ",
   },
 
   {
-    title: "Quels types de biens puis-je estimer ?",
+    title: "Quels types de mandats puis-je accélérer ?",
     answer:
-      "Vous pouvez estimer tout type d'appartements ou de maisons. Le simulateur n'est en revanche pas adapté pour les terrains, les locaux commerciaux, les garages et les lots.",
+      "Vous pouvez accélérer les mandats de vente immobilière, qu'il s'agisse de maisons ou d'appartements. En revanche, Supernotaire n'est pas conçu pour les ventes de terrains ou autres types de biens immobiliers.",
+  },
+
+  {
+    title: "A qui s'adresse Supernotaire ?",
+    answer:
+      "Supernotaire s'adresse à tous les notaires qui souhaitent simplifier et accélérer la finalisation des mandats de vente immobilière. La plateforme bénéficie également aux vendeurs et acheteurs de biens immobiliers.",
   },
   {
-    title: "J'ai un problème sur le site, que faire ?",
+    title: "Combien coûte Supernotaire ?",
     answer:
-      "Vous pouvez nous contacter par mail à l'adresse tekilawebfactory@gmail.com.",
-  },
-  {
-    title: "Comment ça marche ?",
-    answer:
-      "Vous pouvez estimer votre bien en ligne, obtenir une offre d'achat instantanément et finaliser la vente en toute simplicité et très rapidement.",
-  },
-  {
-    title: "A qui s'adresse Martinimmo ?",
-    answer:
-      "Martinimmo s'adresse à tous les propriétaires de biens immobiliers qui souhaitent vendre rapidement et facilement, sans les tracas des méthodes traditionnelles.",
+      "Supernotaire est gratuit pour les notaires et pour les vendeurs de biens. Une option payante de mise en avant sur l'anuaire est disponible, tout comme des sièges supplémentaires permettant à des collaborateurs d'intervenir sur les mandats.",
   },
 ];
 
+const jsonLDFAQ = questions.map((question) => {
+  return {
+    "@type": "Question" as const,
+    name: question.title,
+    acceptedAnswer: {
+      "@type": "Answer" as const,
+      text: question.answer,
+    },
+  };
+});
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage" as const,
+  mainEntity: jsonLDFAQ,
+}));
+
 useHead({
-  title: "Foire aux questions - Vente accélérée de biens immobiliers",
+  title: "Supernotaire | Questions fréquentes des notaires",
   meta: [
     {
       name: "description",
       content:
-        "Découvrez les réponses aux questions fréquentes sur la vente de biens immobiliers avec Martinimmo. Estimez votre bien, obtenez une offre d'achat et vendez rapidement.",
+        "Retrouvez les réponses aux questions les plus fréquentes des notaires sur Supernotaire.",
     },
   ],
 });
 </script>
 <template>
   <section class="faq">
-    <h1 class="titles">Foire aux questions</h1>
+    <div class="faq__headlines">
+      <h1 class="titles">Foire aux questions</h1>
+      <h2 class="subtitles">On répond aux questions des notaires</h2>
+    </div>
 
     <FAQComponent :questions />
   </section>
@@ -84,6 +95,19 @@ useHead({
   @media (min-width: $laptop-screen) {
     gap: 8rem;
     padding: 4rem;
+  }
+
+  &__headlines {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+
+    .titles,
+    .subtitles {
+      color: $text-color;
+    }
   }
 }
 </style>

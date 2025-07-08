@@ -4,7 +4,7 @@ import vespa from "@/assets/images/vespa.jpg";
 import securite from "@/assets/images/securite.jpg";
 
 useHead({
-  title: "Finalisation rapide de vente immobilière | Supernotaire",
+  title: "Supernotaire | Finalisation rapide de vente immobilière",
   meta: [
     {
       name: "description",
@@ -17,16 +17,16 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Finalisation rapide de vente immobilière | Supernotaire",
+      content: "Supernotaire | Finalisation rapide de vente immobilière",
     },
     {
       property: "og:url",
-      content:
-        "https://opengraph.b-cdn.net/production/images/0d54207b-5b60-4086-9160-a5b7df6bf2c6.jpg?token=iHNWoqdZlZfJaFO_MRtDAX6VyogK9vW0tj-ShcS9QsQ&height=982&width=968&expires=33284606311",
+      content: "https://supernotaire.fr/",
     },
     {
       property: "og:image",
-      content: "https://martinimmo.n/og-image.jpg",
+      content:
+        "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
     },
     {
       property: "og:description",
@@ -59,6 +59,15 @@ const articles = [
     link: "/comment-ca-marche",
   },
 ];
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Supernotaire | Finalisation rapide de vente immobilière",
+  description:
+    "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+  url: window.location.href,
+}));
 </script>
 <template>
   <Container>
@@ -72,7 +81,7 @@ const articles = [
         progression de votre dossier et ne fournissez jamais les mêmes
         informations deux fois.
       </p>
-      <NuxtLink to="/" class="hero__link">
+      <NuxtLink to="/inscription" class="hero__link">
         <PrimaryButton variant="accent-color" icon="arrow_right">
           Créer mon dossier
         </PrimaryButton>
@@ -90,6 +99,7 @@ const articles = [
       />
     </div>
   </Container>
+  <HotjarTracking />
 </template>
 <style lang="scss" scoped>
 .hero {
@@ -100,9 +110,9 @@ const articles = [
   gap: 2rem;
   padding: 1rem;
   background-image: linear-gradient(
-      45deg,
+      -135deg,
       rgba($text-color, 0),
-      rgba($text-color, 0.6)
+      rgba($text-color, 1)
     ),
     url("@/assets/images/vente.webp");
   border-radius: $radius;

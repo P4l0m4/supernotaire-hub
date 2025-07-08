@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
   srcDir: "src/",
   css: ["@/styles/global.scss"],
-  modules: ["dayjs-nuxt", "@nuxtjs/sitemap"],
+  modules: ["dayjs-nuxt", "@nuxtjs/sitemap", "nuxt-jsonld"],
   vite: {
     css: {
       preprocessorOptions: {
@@ -23,6 +23,8 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: "fr" },
       link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: "shortcut icon", type: "image/x-icon", href: "/favicon.ico" },
         {
           rel: "apple-touch-icon",
           sizes: "180x180",
@@ -31,6 +33,7 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   runtimeConfig: {
     public: {},
   },

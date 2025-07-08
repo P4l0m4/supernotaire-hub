@@ -23,7 +23,7 @@
           <NuxtLink to="/faq-notaires">F.A.Q.</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/" style="text-decoration: underline"
+          <NuxtLink to="/inscription" style="text-decoration: underline"
             >Espace notaires</NuxtLink
           >
         </li>
@@ -34,7 +34,7 @@
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/" style="text-decoration: underline"
+          <NuxtLink to="/inscription" style="text-decoration: underline"
             >Espace vendeurs</NuxtLink
           >
         </li>
@@ -58,7 +58,7 @@
           Créez votre dossier de vente immobilière sans effort et confiez-le
           rapidement à un notaire.
         </p>
-        <NuxtLink to="/"
+        <NuxtLink to="/inscription"
           ><PrimaryButton variant="accent-color" icon="arrow_right"
             >Créer mon compte</PrimaryButton
           ></NuxtLink

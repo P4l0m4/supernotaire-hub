@@ -82,7 +82,7 @@ const perks = [
         :title="perk.title"
         :description="perk.description"
       />
-      <NuxtLink to="/" class="perks__link">
+      <NuxtLink to="/inscription" class="perks__link">
         <SecondaryButton
           variant="accent-color"
           icon="arrow_right"

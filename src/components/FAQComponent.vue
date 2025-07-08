@@ -82,7 +82,7 @@ function toggleQuestion(index: number) {
       height: fit-content;
       font-size: 1rem;
       font-weight: $regular;
-      color: $text-color-alt;
+      color: $text-color;
 
       @media (min-width: $big-tablet-screen) {
         font-size: $subtitles;
@@ -95,11 +95,13 @@ function toggleQuestion(index: number) {
       animation: fading 0.3s;
       width: 100%;
       line-height: $subtitles;
+      color: $text-color;
     }
 
     &__link {
       animation: fading 0.4s;
       width: fit-content;
+      color: $text-color;
     }
   }
 }
