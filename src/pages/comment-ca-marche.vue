@@ -69,7 +69,7 @@ const perks = [
   <Container>
     <div class="hero">
       <h1 class="hero__title">Supernotaire.fr</h1>
-      <p class="paragraphs">
+      <p class="hero__subtitle paragraphs">
         La LegalTech d’intérêt général 100% française contruite avec les
         notaires
       </p>
@@ -86,7 +86,7 @@ const perks = [
         <SecondaryButton
           variant="accent-color"
           icon="arrow_right"
-          style="height: 100%"
+          style="height: 100%; max-width: none"
         >
           Créer mon compte
         </SecondaryButton>
@@ -104,10 +104,24 @@ const perks = [
   background-size: cover;
   background-position: center;
   color: $text-color;
+  padding: 2rem 0;
 
   &__title {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: $bold;
+
+    @media (min-width: $tablet-screen) {
+      font-size: 3rem;
+    }
+
+    @media (min-width: $big-tablet-screen) {
+      font-size: 4rem;
+    }
+  }
+
+  &__subtitle {
+    text-align: center;
+    text-wrap: balance;
   }
 }
 
@@ -119,10 +133,6 @@ const perks = [
 
   @media (min-width: $tablet-screen) {
     grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: $big-tablet-screen) {
-    grid-template-columns: 1fr 1fr 1fr;
   }
 
   &__link {

@@ -14,6 +14,16 @@
           <NuxtLink to="/comment-ca-marche" exact>Comment ça marche ?</NuxtLink>
         </li>
       </ul>
+      <div class="header__nav__buttons">
+        <NuxtLink to="/inscription">
+          <SecondaryButton variant="accent-color">Connexion</SecondaryButton>
+        </NuxtLink>
+        <NuxtLink to="/inscription">
+          <PrimaryButton variant="accent-color" icon="arrow_right">
+            Inscription
+          </PrimaryButton>
+        </NuxtLink>
+      </div>
     </nav>
   </header>
 </template>
@@ -49,6 +59,12 @@
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 1.5rem;
+
+    &__buttons {
+      display: flex;
+      gap: 1.5rem;
+    }
 
     &__ul {
       list-style: none;

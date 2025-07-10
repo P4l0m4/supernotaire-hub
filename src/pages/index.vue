@@ -91,6 +91,14 @@ const features2 = ref([
     color: colors["purple-color"],
     reverse: true,
   },
+  {
+    title: "Déontologie respectée",
+    subtitle: "Gagnez du temps sur les tâches sans valeur ajoutée",
+    description:
+      "Avec Supernotaire, vous pouvez vous débarasser des tâches répétitives et sans valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
+    video: securite,
+    color: colors["accent-color"],
+  },
 ]);
 
 useJsonld(() => ({

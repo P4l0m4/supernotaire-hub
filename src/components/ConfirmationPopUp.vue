@@ -31,7 +31,7 @@ const emit = defineEmits(["closeConfirmation"]);
   align-items: center;
   height: 100dvh;
   width: 100vw;
-  background-color: $secondary-color-faded;
+  background-color: rgba($accent-color, 0.1);
   backdrop-filter: blur(4px);
   padding: 1rem;
   z-index: 1;
