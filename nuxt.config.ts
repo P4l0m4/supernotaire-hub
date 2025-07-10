@@ -9,7 +9,19 @@ export default defineNuxtConfig({
 
   srcDir: "src/",
   css: ["@/styles/global.scss"],
-  modules: ["dayjs-nuxt", "@nuxtjs/sitemap", "nuxt-jsonld"],
+  modules: [
+    "dayjs-nuxt",
+    "@nuxtjs/sitemap",
+    "nuxt-jsonld",
+    [
+      "@storyblok/nuxt",
+      {
+        accessToken: process.env.STORYBLOK_KEY,
+        cacheProvider: "memory",
+        apiOptions: { region: "fr" },
+      },
+    ],
+  ],
   vite: {
     css: {
       preprocessorOptions: {
@@ -35,7 +47,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    public: {},
+    public: {
+      STORYBLOK_KEY: process.env.STORYBLOK_KEY,
+    },
   },
   dayjs: {
     locales: ["fr"],
