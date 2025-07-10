@@ -210,7 +210,7 @@ onMounted(() => {
   color: $text-color;
 
   @media (min-width: $big-tablet-screen) {
-    padding: 4rem 2rem;
+    padding: 4rem 0;
     flex-direction: row;
     align-items: center;
   }
@@ -228,7 +228,6 @@ onMounted(() => {
 
       @media (min-width: $big-tablet-screen) {
         font-size: 3rem;
-        max-width: 80%;
       }
     }
 

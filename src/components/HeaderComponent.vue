@@ -53,6 +53,7 @@
   @media (min-width: $big-tablet-screen) {
     display: flex;
     padding: 1rem 4rem;
+    height: fit-content;
   }
 
   &__nav {
