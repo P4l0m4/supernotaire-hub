@@ -12,8 +12,8 @@
             alt="logo martinimmo"
           />
         </NuxtLink>
-        <p class="paragraphs">
-          Finalisez vos ventes immobilières à la vitesse de l’éclair
+        <p class="paragraphs" style="text-wrap: balance">
+          Accélérez la finalisation de vos ventes immobilières
         </p>
       </div>
       <ul class="footer__links-container__links">
