@@ -56,7 +56,7 @@ const features = ref([
   },
   {
     title: "Accès facilité aux notaires",
-    subtitle: "Prenez rendez-vous rapidement avec un notaire",
+    subtitle: "N’attendez plus pour confier votre dossier à un notaire",
     description:
       "Pas de contraintes géographiques ! Confiez rapidement votre dossier à un notaire disponible n’importe où en France.",
     video: annuaire,
