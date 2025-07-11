@@ -119,7 +119,7 @@ onMounted(() => {
     <div class="hero">
       <div class="hero__text">
         <h1 class="hero__text__title">
-          Finalisez vos ventes immobilières à la vitesse de l’éclair
+          Accélérez la finalisation de vos ventes immobilières
         </h1>
         <p class="hero__text__subtitle">
           Créez facilement votre dossier de vente immobilière et confiez-le
