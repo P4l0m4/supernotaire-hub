@@ -1,6 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: "Finalisation rapide de vente immobilière | Supernotaire",
+  title:
+    "Avancez plus rapidement sur votre dossier de vente immobilière | Supernotaire",
   meta: [
     {
       name: "description",
@@ -13,7 +14,8 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Finalisation rapide de vente immobilière | Supernotaire",
+      content:
+        "Avancez plus rapidement sur votre dossier de vente immobilière | Supernotaire",
     },
     {
       property: "og:url",
