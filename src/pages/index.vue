@@ -7,6 +7,8 @@ import securite from "@/assets/images/securite.jpg";
 
 import annuaire from "@/assets/videos/annuaire.mp4";
 import documents from "@/assets/videos/documents.mp4";
+import progress from "@/assets/videos/progress.mp4";
+import form from "@/assets/videos/form.mp4";
 
 import { colors } from "@/utils/colors";
 
@@ -51,7 +53,7 @@ const features = ref([
     subtitle: "Trouvez et envoyez vos documents facilement",
     description:
       "Grâce à nos formulaires intelligents, vous êtes sûr(e) de déposer le bon document au bon endroit et ne fournissez jamais les mêmes informations deux fois.",
-    video: documents,
+    video: form,
     color: colors["accent-color"],
   },
   {
@@ -64,11 +66,11 @@ const features = ref([
     reverse: true,
   },
   {
-    title: "Sécurité et confidentialité",
-    subtitle: "Transmettez vos documents en toute sécurité",
+    title: "Suivi en temps réel",
+    subtitle: "Suivez la progression de votre dossier en temps réel",
     description:
-      "Vos documents et vos données sont protégés par des mesures de sécurité avancées. Supernotaire garantit la confidentialité de vos informations personnelles et administratives.",
-    video: vespa,
+      "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
+    video: progress,
     color: colors["success-color"],
   },
 ]);
@@ -87,7 +89,7 @@ const features2 = ref([
     subtitle: "Suivez la progression de chaque mandat en temps réel",
     description:
       "Visualisez votre propre progression ainsi que celle des vendeurs et acheteurs. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
-    video: securite,
+    video: progress,
     color: colors["purple-color"],
     reverse: true,
   },
@@ -98,6 +100,15 @@ const features2 = ref([
       "Avec Supernotaire, vous pouvez vous débarasser des tâches répétitives et sans valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
     video: securite,
     color: colors["accent-color"],
+  },
+  {
+    title: "Sécurité et confidentialité",
+    subtitle: "Transmettez vos documents en toute sécurité",
+    description:
+      "Vos documents et vos données sont protégés par des mesures de sécurité avancées. Supernotaire garantit la confidentialité des informations personnelles et des documents qui transitent sur la plateforme.",
+    video: vespa,
+    color: colors["success-color"],
+    reverse: true,
   },
 ]);
 

@@ -113,7 +113,7 @@ defineProps<props>();
     filter: grayscale(0);
 
     @media (min-width: $big-tablet-screen) {
-      max-width: 450px;
+      max-width: 500px;
     }
   }
 }
