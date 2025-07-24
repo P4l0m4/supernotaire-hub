@@ -39,23 +39,23 @@ const perks = [
     icon: "lightning",
     title: "Automatisation des tâches répétitives",
     description:
-      "Gagnez du temps et réduisez les erreurs en automatisant les tâches redondantes. Nous nous occupons de pré-rédiger vos documents et vous guidons jusqu’au bout du processus.",
+      "Gagnez du temps et réduisez les erreurs en automatisant les tâches redondantes. Pré-remplissage des documents, analyse des fichiers, parcours ultra-optimisés; nous nous vous guidons jusqu’au bout du processus pour une efficacité maximale.",
   },
   {
     icon: "sparkle",
     title: "Formulaires intelligents",
     description:
-      "Ne renseignez jamais les mêmes informations deux fois grâce aux formulaires intelligents qui se pré-remplissent à partir des documents que vous fournissez.",
+      "Ne renseignez jamais les mêmes informations deux fois grâce aux formulaires intelligents qui se pré-remplissent à partir des documents et informations que vous fournissez.",
   },
   {
     icon: "clock_countdown",
     title: "Suivi en temps réel",
     description:
-      "Ne réclamez plus des informations. Suivez facilement la progression du mandat de vente en temps réel et soyez notifié lorsque votre intervention est nécessaire.",
+      "Ne réclamez plus des informations. Suivez facilement la progression de vos dossiers de vente en temps réel et soyez notifié lorsque votre intervention est nécessaire. ",
   },
   {
     icon: "globe",
-    title: "Digital & sans frontières",
+    title: "Digital & Sans frontières",
     description:
       "De la création du dossier à la signature de l’acte de vente, tout se fait en ligne. De quoi vous faire gagner du temps et vous libérer des contraintes géographiques.",
   },

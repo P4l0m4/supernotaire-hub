@@ -60,7 +60,7 @@ const features = ref([
     title: "Accès facilité aux notaires",
     subtitle: "N’attendez plus pour confier votre dossier à un notaire",
     description:
-      "Pas de contraintes géographiques ! Confiez rapidement votre dossier à un notaire disponible n’importe où en France.",
+      "Pas de contraintes géographiques ! Confiez votre dossier à un notaire disponible n’importe où en France en quelques jours, pas en quelques semaines.",
     video: annuaire,
     color: colors["purple-color"],
     reverse: true,
