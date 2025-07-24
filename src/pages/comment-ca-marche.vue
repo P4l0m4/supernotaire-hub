@@ -72,8 +72,8 @@ const perks = [
     <div class="hero">
       <h1 class="hero__title">Supernotaire.fr</h1>
       <p class="hero__subtitle paragraphs">
-        La LegalTech d’intérêt général 100% française contruite avec les
-        notaires
+        Gagner du temps sans jamais compromettre la sécurité ni la déontologie
+        notariale
       </p>
     </div>
     <div class="perks">
