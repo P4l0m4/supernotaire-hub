@@ -95,9 +95,9 @@ const features2 = ref([
   },
   {
     title: "Déontologie respectée",
-    subtitle: "Gagnez du temps sur les tâches sans valeur ajoutée",
+    subtitle: "Gagnez du temps sur les tâches à faible valeur ajoutée",
     description:
-      "Avec Supernotaire, vous pouvez vous débarasser des tâches répétitives et sans valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
+      "Avec Supernotaire, vous vous débarassez des tâches répétitives à faible valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
     video: securite,
     color: colors["accent-color"],
   },
