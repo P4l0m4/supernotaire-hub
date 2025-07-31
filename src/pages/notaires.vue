@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import annuaire from "@/assets/videos/annuaire.mp4";
-import dossier from "@/assets/videos/dossier.mp4";
-import progress from "@/assets/videos/progress.mp4";
+import securite from "@/assets/images/securite.jpg";
+
+import relation from "@/assets/videos/relation.mp4";
+import contact from "@/assets/videos/contact.mp4";
 
 import { colors } from "@/utils/colors";
 
 const url = ref();
 
 useHead({
-  title: "Supernotaire | Finalisation rapide de vente immobilière",
+  title: "Supernotaire | Finalisation rapide de mandats de vente immobilière",
   meta: [
     {
       name: "description",
       content:
-        "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+        "Digitalisez la gestion de vos mandats de vente immobilière, soyez visible à l’échelle nationale et gagnez du temps facturable.",
     },
     {
       property: "og:type",
@@ -44,29 +45,31 @@ useHead({
 
 const features = ref([
   {
-    title: "Démarches allégées",
-    subtitle: "Trouvez et envoyez vos documents facilement",
+    title: "Digitalisation complète",
+    subtitle:
+      "Sans frais, de l’ouverture du dossier à la signature de l’acte de vente",
     description:
-      "Grâce à nos formulaires intelligents, vous êtes sûr(e) de déposer le bon document au bon endroit et ne fournissez jamais les mêmes informations deux fois.",
-    video: dossier,
-    color: colors["accent-color"],
+      "Ouverture et constitution autonomes des dossiers, pré-rédaction des actes et signatures qualifiées gratuites, sans quitter votre navigateur.",
+    video: relation,
+    color: colors["success-color"],
+    reverse: true,
   },
   {
-    title: "Accès facilité aux notaires",
-    subtitle: "N’attendez plus pour confier votre dossier à un notaire",
+    title: "Apport d’Affaires",
+    subtitle: "Etendez votre visibilité à l’échelle nationale",
     description:
-      "Pas de contraintes géographiques ! Confiez votre dossier à un notaire disponible n’importe où en France en quelques jours, pas en quelques semaines.",
-    video: annuaire,
+      "Notre annuaire en ligne facilite la mise en relation avec vos prospects. Recevez des demandes d’ouverture de dossiers sans effort commercial supplémentaire.",
+    video: contact,
     color: colors["purple-color"],
     reverse: true,
   },
   {
-    title: "Suivi en temps réel",
-    subtitle: "Suivez la progression de votre dossier en temps réel",
+    title: "Déontologie respectée",
+    subtitle: "Gagnez du temps sur les tâches à faible valeur ajoutée",
     description:
-      "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
-    video: progress,
-    color: colors["success-color"],
+      "Avec Supernotaire, vous vous débarassez des tâches répétitives à faible valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
+    video: relation,
+    color: colors["accent-color"],
   },
 ]);
 
@@ -88,17 +91,18 @@ onMounted(() => {
     <div class="hero">
       <div class="hero__text">
         <h1 class="hero__text__title">
-          Accélérez la finalisation de vos ventes immobilières
+          Gagnez du temps sur vos mandats de vente immobilière
         </h1>
         <p class="hero__text__subtitle">
-          Créez facilement votre dossier de vente immobilière et confiez-le
-          rapidement à un notaire, où que vous soyez.
+          Facilitez la collecte des éléments du dossier, débarassez-vous des
+          tâches répétitives et entrez en relation avec des clients partout en
+          France.
         </p>
         <NuxtLink to="/inscription" class="hero__text__link">
           <PrimaryButton variant="accent-color" icon="arrow_right">
-            Créer mon dossier
+            Créer un dossier
           </PrimaryButton>
-          C'est totalement gratuit !
+          Sans frais, de l'ouverture à la signature.
         </NuxtLink>
       </div>
       <div class="hero__pictures">
@@ -121,10 +125,10 @@ onMounted(() => {
     </div>
 
     <Benefits
-      title="Vendeurs de biens immobiliers"
-      subtitle="+ 80% d’efficacité dans vos démarches"
-      text="Trouvez vos documents et informations sans prise de tête, déposez vos
-        papiers et laissez l’IA remplir les formalités à votre place."
+      title="Notaires débordés"
+      subtitle="+ 60% de temps facturable"
+      text="Constituez les dossiers sans avoir courrir après les parties prenantes.
+        et automatisez les tâches répétitives à faible valeur ajoutée."
     />
     <div class="features">
       <FeatureComponent

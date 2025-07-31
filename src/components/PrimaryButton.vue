@@ -9,6 +9,8 @@ interface Props {
     | "base-color"
     | "text-color"
     | "primary-color"
+    | "success-color"
+    | "purple-color"
     | "error-color";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   icon?: string;
@@ -35,6 +37,10 @@ const iconColor = computed(() => {
     case "text-color":
       return colors["primary-color"];
     case "accent-color":
+      return colors["primary-color"];
+    case "purple-color":
+      return colors["primary-color"];
+    case "success-color":
       return colors["primary-color"];
     case "error-color":
       return colors["primary-color"];
@@ -74,12 +80,13 @@ const iconColor = computed(() => {
   align-items: center;
   border-radius: calc($radius/2);
   font-weight: $regular;
-  transition: background-color 0.3s linear, color 0.3s linear,
-    border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
 
   @media (min-width: $big-tablet-screen) {
+    transition: background-color 0.3s linear, color 0.3s linear,
+      border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
+
     &:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: $shadow-black;
     }
   }
@@ -113,6 +120,18 @@ const iconColor = computed(() => {
   background-color: $primary-color;
   color: $accent-color;
   border: 2px solid $primary-color;
+}
+
+.success-color {
+  background-color: $success-color;
+  color: $primary-color;
+  border: 2px solid $success-color;
+}
+
+.purple-color {
+  background-color: $purple-color;
+  color: $primary-color;
+  border: 2px solid $purple-color;
 }
 
 .error-color {

@@ -15,9 +15,9 @@
         </li>
       </ul>
       <div class="header__nav__buttons">
-        <NuxtLink to="/inscription">
+        <!-- <NuxtLink to="/inscription">
           <SecondaryButton variant="accent-color">Connexion</SecondaryButton>
-        </NuxtLink>
+        </NuxtLink> -->
         <NuxtLink to="/inscription">
           <PrimaryButton variant="accent-color" icon="arrow_right">
             Inscription

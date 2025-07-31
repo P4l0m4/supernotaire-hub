@@ -1,5 +1,6 @@
 <template>
   <HeaderComponent />
+  <MobileHeader />
   <main>
     <slot />
   </main>

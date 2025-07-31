@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 interface Props {
   id: string;
   name: string;
@@ -10,11 +12,26 @@ interface Props {
 
 defineProps<Props>();
 
+const inputRef = ref<HTMLInputElement | null>(null);
+
 const model = defineModel<string>();
+
+function simulateClick() {
+  if (inputRef.value) {
+    inputRef.value.click();
+  }
+}
 </script>
 <template>
-  <label :for="id" class="radio-option">
+  <label
+    :for="id"
+    class="radio-option"
+    tabindex="0"
+    @keydown.enter="simulateClick"
+    @keydown.space="simulateClick"
+  >
     <input
+      ref="inputRef"
       class="radio-option__input"
       type="radio"
       v-model="model"

@@ -55,12 +55,13 @@ const props = withDefaults(defineProps<Props>(), {
   align-items: center;
   border-radius: calc($radius/2);
   font-weight: $regular;
-  transition: background-color 0.3s linear, color 0.3s linear,
-    border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
 
   @media (min-width: $big-tablet-screen) {
+    transition: background-color 0.3s linear, color 0.3s linear,
+      border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
+
     &:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: $shadow-black;
     }
   }

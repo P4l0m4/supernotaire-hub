@@ -159,12 +159,17 @@ input[type="checkbox"] {
 
   &::after {
     content: "";
-    background-color: $error-color-faded;
+    background-color: rgba($error-color, 0.1);
     border-radius: calc($radius / 2);
     position: absolute;
     inset: 0;
     pointer-events: none;
     text-align: center;
+  }
+
+  &:focus-within {
+    border: 1px solid $error-color-faded !important;
+    box-shadow: 0 0 2px 2px $error-color-faded !important;
   }
 }
 
@@ -329,6 +334,21 @@ details > summary::-webkit-details-marker /* Safari */ {
 
 .margin-left-auto {
   margin-left: auto;
+}
+
+.features {
+  display: flex;
+  gap: 2rem;
+  height: fit-content;
+  flex-direction: column;
+
+  @media (min-width: $big-tablet-screen) {
+    gap: 4rem;
+  }
+
+  @media (min-width: $desktop-screen) {
+    gap: 8rem;
+  }
 }
 
 //ANIMATIONS

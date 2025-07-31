@@ -119,7 +119,6 @@ onMounted(() => {
         />
       </div>
     </div>
-
     <Benefits
       title="Vendeurs de biens immobiliers"
       subtitle="+ 80% d’efficacité dans vos démarches"

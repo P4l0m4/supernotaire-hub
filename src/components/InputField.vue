@@ -39,7 +39,7 @@ function toggleShowPassword() {
     <IconComponent
       v-if="icon"
       :icon="icon"
-      :color="colors['primary-color']"
+      :color="colors['text-color-faded']"
       size="1.25rem"
     />
 
@@ -77,9 +77,8 @@ function toggleShowPassword() {
       @click="toggleShowPassword"
       @keydown.enter="toggleShowPassword"
       @keydown.space="toggleShowPassword"
-    />
+    /><span class="input-field__error" v-if="error">{{ error }}</span>
   </div>
-  <!-- <span class="input-error" v-if="error"></span> -->
 </template>
 <style lang="scss" scoped>
 .input-field {
@@ -87,13 +86,13 @@ function toggleShowPassword() {
   gap: 0.5rem;
   width: 100%;
   align-items: center;
-  background-color: $accent-color-faded;
+  background-color: $primary-color;
   border-radius: calc($radius/2);
+  border: 1px solid rgba($text-color, 0.1);
   padding: 0 0.75rem;
   box-shadow: $shadow-black;
-  overflow: hidden;
   position: relative;
-  height: 44px;
+  height: 55px;
 
   &__label {
     font-size: $small-text;
@@ -103,39 +102,43 @@ function toggleShowPassword() {
     margin-left: 0.75rem;
   }
 
+  &:focus-within {
+    border: 1px solid $accent-color-faded;
+    box-shadow: 0 0 2px 2px $accent-color-faded;
+  }
+
   input {
     font-size: 1rem;
     padding: 0.65rem 0;
-    padding-top: 0.75rem;
     border: none;
-    color: $text-color-alt;
+    color: $text-color;
     background-color: transparent !important;
     width: 100% !important;
+    max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    caret-color: $text-color;
+    font-family: inherit;
+    display: inline-block;
 
     &::placeholder {
-      color: $text-color-alt;
+      color: $text-color-faded;
       font-size: 1rem;
       font-weight: $regular;
     }
+  }
 
-    &[type="search"] {
-      max-width: 100%;
-    }
-    &[type="datetime-local"] {
-      width: 100%;
-      max-width: 400px;
-      min-width: 300px;
-      position: absolute;
-      // top: 0px;
-      opacity: 0;
-    }
-    &[type="number"] {
-      // background-color: $base-color !important;
-      // border-radius: 0 !important;
-    }
+  &__error {
+    position: absolute;
+    color: $error-color;
+    font-size: $small-text;
+    bottom: -0.5rem;
+    right: -0.1rem;
+    background-color: $error-color-faded;
+    backdrop-filter: blur(8px);
+    padding: 0 0.2rem;
+    border-radius: calc($radius/4);
   }
 }
 </style>

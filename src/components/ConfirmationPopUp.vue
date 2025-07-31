@@ -13,9 +13,14 @@ const emit = defineEmits(["closeConfirmation"]);
     @keydown.enter="emit('closeConfirmation')"
     @keydown.space="emit('closeConfirmation')"
     tabindex="0"
-    aria-label="fermer la fenêtre"
+    aria-label="fermer la pop up"
   >
-    <div class="pop-up__content" ref="target">
+    <div
+      class="pop-up__content"
+      ref="target"
+      tabindex="0"
+      @keydown.esc="emit('closeConfirmation')"
+    >
       <h2 class="subtitles"><slot name="title" /></h2>
       <span class="paragraphs"><slot /></span>
       <slot name="button" />
@@ -41,7 +46,7 @@ const emit = defineEmits(["closeConfirmation"]);
     border-radius: $radius;
     padding: 1rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -52,7 +57,7 @@ const emit = defineEmits(["closeConfirmation"]);
     white-space: pre-wrap;
 
     @media (min-width: $big-tablet-screen) {
-      padding: 2rem;
+      padding: 1.5rem;
     }
 
     & :deep(a) {

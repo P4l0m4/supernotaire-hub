@@ -25,10 +25,11 @@ useHead({
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  padding: 4rem 0;
+
   height: fit-content;
 
   @media (min-width: $big-tablet-screen) {
+    padding: 4rem 0;
     justify-content: center;
     align-items: center;
   }
