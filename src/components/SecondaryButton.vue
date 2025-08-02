@@ -16,7 +16,7 @@ interface Props {
   fontSize?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   variant: "primary-color",
   direction: "row",
   fontSize: "1rem",
@@ -36,6 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
 
     <IconComponent
       v-if="icon"
+      class="icon"
       :icon
       :size="iconSize || undefined"
       :color="variant ? colors[variant] : colors['text-color']"
@@ -58,13 +59,21 @@ const props = withDefaults(defineProps<Props>(), {
 
   @media (min-width: $big-tablet-screen) {
     transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
+      border-color 0.3s linear, box-shadow 0.2s linear, gap 0.2s linear;
 
     &:hover {
-      transform: translateY(-2px);
       box-shadow: $shadow-black;
+      gap: 1rem;
+
+      & .icon {
+        transform: translateX(0.5rem);
+      }
     }
   }
+}
+
+.icon {
+  transition: transform 0.4s ease;
 }
 
 .secondary-color {
@@ -102,6 +111,4 @@ const props = withDefaults(defineProps<Props>(), {
   color: $error-color;
   border: 2px solid $error-color;
 }
-
-//hover animation that will make buttons shiny
 </style>

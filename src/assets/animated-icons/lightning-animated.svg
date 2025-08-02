@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="no"?>
+<svg id="Vector" width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; max-height: 100%;">
+<path d="M15 1L13 11L21 14L7 29L9 19L1 16L15 1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0,0,78.5206527709961"><animate attributeType="XML" attributeName="stroke-dasharray" repeatCount="1" dur="0.6944444444444444s" values="0,0,0,78.5206527709961; 
+          0,39.26032638549805,39.26032638549805,0; 
+          78.5206527709961,0,0,0" keyTimes="0; 0.5; 1" fill="freeze"></animate></path>
+</svg>

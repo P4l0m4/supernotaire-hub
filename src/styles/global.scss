@@ -227,6 +227,134 @@ input[type="checkbox"] {
   align-items: center;
 }
 
+.hero {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 87px);
+  gap: 2rem;
+  color: $text-color;
+
+  @media (min-width: $laptop-screen) {
+    padding: 4rem 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+
+    @media (min-width: $big-tablet-screen) {
+      gap: 4rem;
+    }
+
+    &__title {
+      font-size: 1.85rem;
+      font-weight: $bold;
+      text-wrap: balance;
+
+      @media (min-width: $big-tablet-screen) {
+        font-size: 3rem;
+      }
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+      line-height: 1.35;
+      font-weight: $regular;
+      margin-top: -1rem;
+
+      @media (min-width: $big-tablet-screen) {
+        font-size: 1.25rem;
+        margin-top: -3rem;
+      }
+    }
+
+    &__link {
+      color: $text-color;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 400px;
+
+      @media (min-width: $tablet-screen) {
+        max-width: 350px;
+      }
+    }
+  }
+
+  &__pictures {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-height: 460px;
+    width: 100%;
+
+    @media (min-width: $big-tablet-screen) {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      max-width: 40vw;
+    }
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: $radius;
+
+      &:nth-of-type(1) {
+        display: none;
+
+        @media (min-width: $big-tablet-screen) {
+          display: block;
+          grid-column: span 2;
+        }
+      }
+      &:nth-of-type(2) {
+        display: none;
+
+        @media (min-width: $big-tablet-screen) {
+          display: block;
+          grid-column: span 1;
+        }
+      }
+      &:nth-of-type(3) {
+        grid-column: span 3;
+      }
+    }
+  }
+
+  &__image {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: fit-content;
+
+    & img {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+    }
+
+    &__dots {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      inset: 0;
+      margin: auto;
+    }
+  }
+}
+
 //SCROLLBAR
 /* width */
 ::-webkit-scrollbar {

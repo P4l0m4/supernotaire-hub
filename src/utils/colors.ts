@@ -10,7 +10,7 @@ export const colors = {
   "base-color-faded": "#f7f7f750",
   "secondary-color-faded": "#00065c50",
   "primary-color-faded": "#FFFDFA50",
-  "text-color-faded": "#22262e60",
+  "text-color-faded": "#22262e70",
   "accent-color-faded": "#3185ff50",
   "success-color": "#48d664",
   "purple-color": "#9035ff",

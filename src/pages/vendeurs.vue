@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import annuaire from "@/assets/videos/annuaire.mp4";
-import dossier from "@/assets/videos/dossier.mp4";
-import progress from "@/assets/videos/progress.mp4";
+import annuaire from "@/assets/images/time-39.svg";
+import dossier from "@/assets/images/files-and-folder-78.svg";
+import progress from "@/assets/images/checklist-71.svg";
 
 import { colors } from "@/utils/colors";
 
@@ -48,7 +48,7 @@ const features = ref([
     subtitle: "Trouvez et envoyez vos documents facilement",
     description:
       "Grâce à nos formulaires intelligents, vous êtes sûr(e) de déposer le bon document au bon endroit et ne fournissez jamais les mêmes informations deux fois.",
-    video: dossier,
+    image: dossier,
     color: colors["accent-color"],
   },
   {
@@ -56,7 +56,7 @@ const features = ref([
     subtitle: "N’attendez plus pour confier votre dossier à un notaire",
     description:
       "Pas de contraintes géographiques ! Confiez votre dossier à un notaire disponible n’importe où en France en quelques jours, pas en quelques semaines.",
-    video: annuaire,
+    image: annuaire,
     color: colors["purple-color"],
     reverse: true,
   },
@@ -65,7 +65,7 @@ const features = ref([
     subtitle: "Suivez la progression de votre dossier en temps réel",
     description:
       "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
-    video: progress,
+    image: progress,
     color: colors["success-color"],
   },
 ]);
@@ -125,14 +125,14 @@ onMounted(() => {
       text="Trouvez vos documents et informations sans prise de tête, déposez vos
         papiers et laissez l’IA remplir les formalités à votre place."
     />
-    <div class="features">
+    <div id="features" class="features">
       <FeatureComponent
         v-for="feature in features"
         :key="feature.title"
         :title="feature.title"
         :subtitle="feature.subtitle"
         :description="feature.description"
-        :video="feature.video"
+        :image="feature.image"
         :color="feature.color"
         :reverse="feature.reverse"
       />
@@ -140,100 +140,3 @@ onMounted(() => {
   </Container>
   <HotjarTracking />
 </template>
-<style lang="scss" scoped>
-.hero {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(70vh);
-  gap: 2rem;
-  color: $text-color;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 4rem 0;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-
-    &__title {
-      font-size: 1.85rem;
-      font-weight: $bold;
-      text-wrap: balance;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 3rem;
-      }
-    }
-
-    &__subtitle {
-      font-size: 1rem;
-      line-height: 1.35;
-      font-weight: $regular;
-      text-wrap: balance;
-      max-width: 600px;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 1.25rem;
-      }
-    }
-
-    &__link {
-      color: $text-color;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      @media (min-width: $tablet-screen) {
-        width: fit-content;
-      }
-    }
-  }
-
-  &__pictures {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    max-height: 460px;
-    width: 100%;
-
-    @media (min-width: $big-tablet-screen) {
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      max-width: 40vw;
-    }
-
-    &__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      border-radius: $radius;
-
-      &:nth-of-type(1) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 2;
-        }
-      }
-      &:nth-of-type(2) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 1;
-        }
-      }
-      &:nth-of-type(3) {
-        grid-column: span 3;
-      }
-    }
-  }
-}
-</style>

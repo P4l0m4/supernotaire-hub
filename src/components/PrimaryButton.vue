@@ -61,6 +61,7 @@ const iconColor = computed(() => {
 
     <IconComponent
       v-if="icon"
+      class="icon"
       :icon
       :size="iconSize || undefined"
       :color="iconColor"
@@ -83,13 +84,20 @@ const iconColor = computed(() => {
 
   @media (min-width: $big-tablet-screen) {
     transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, transform 0.2s linear, box-shadow 0.2s linear;
+      border-color 0.3s linear, box-shadow 0.2s linear;
 
     &:hover {
-      transform: translateY(-2px);
       box-shadow: $shadow-black;
+
+      & .icon {
+        transform: translateX(0.5rem);
+      }
     }
   }
+}
+
+.icon {
+  transition: transform 0.4s ease;
 }
 
 .secondary-color {
@@ -139,6 +147,4 @@ const iconColor = computed(() => {
   color: $primary-color;
   border: 2px solid $error-color;
 }
-
-//hover animation that will make buttons shiny
 </style>

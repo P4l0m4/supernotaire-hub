@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
+import sparkle from "@/assets/animated-icons/sparkle-animated.svg?raw";
+import clock from "@/assets/animated-icons/clock-animated.svg?raw";
+import globe from "@/assets/animated-icons/globe-animated.svg?raw";
+import lock from "@/assets/animated-icons/lock-animated.svg?raw";
+
 useHead({
   title:
     "Avancez plus rapidement sur votre dossier de vente immobilière | Supernotaire",
@@ -36,31 +42,31 @@ useHead({
 
 const perks = [
   {
-    icon: "lightning",
+    icon: lightning,
     title: "Automatisation des tâches répétitives",
     description:
       "Gagnez du temps et réduisez les erreurs en automatisant les tâches redondantes. Pré-remplissage des documents, analyse des fichiers, parcours ultra-optimisés; nous nous vous guidons jusqu’au bout du processus pour une efficacité maximale.",
   },
   {
-    icon: "sparkle",
+    icon: sparkle,
     title: "Formulaires intelligents",
     description:
       "Ne renseignez jamais les mêmes informations deux fois grâce aux formulaires intelligents qui se pré-remplissent à partir des documents et informations que vous fournissez.",
   },
   {
-    icon: "clock_countdown",
+    icon: clock,
     title: "Suivi en temps réel",
     description:
       "Ne réclamez plus des informations. Suivez facilement la progression de vos dossiers de vente en temps réel et soyez notifié lorsque votre intervention est nécessaire. ",
   },
   {
-    icon: "globe",
+    icon: globe,
     title: "Digital & Sans frontières",
     description:
       "De la création du dossier à la signature de l’acte de vente, tout se fait en ligne. De quoi vous faire gagner du temps et vous libérer des contraintes géographiques.",
   },
   {
-    icon: "lock_key",
+    icon: lock,
     title: "Sécurité renforcée",
     description:
       "Vos documments et vos données sont protégés par des mesures de sécurité avancées. Supernotaire garantit la confidentialité de vos informations personnelles et administratives, conformément avec les plus hauts standards de sécurité informatique.",
@@ -69,9 +75,9 @@ const perks = [
 </script>
 <template>
   <Container>
-    <div class="hero">
-      <h1 class="hero__title">Supernotaire.fr</h1>
-      <p class="hero__subtitle paragraphs">
+    <div class="headlines">
+      <h1 class="headlines__title">Supernotaire.fr</h1>
+      <p class="headlines__subtitle paragraphs">
         Gagner du temps sans jamais compromettre la sécurité ni la déontologie
         notariale
       </p>
@@ -97,7 +103,7 @@ const perks = [
   </Container>
 </template>
 <style lang="scss" scoped>
-.hero {
+.headlines {
   display: flex;
   flex-direction: column;
   align-items: center;

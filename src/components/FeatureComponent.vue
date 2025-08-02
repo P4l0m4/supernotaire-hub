@@ -3,7 +3,7 @@ interface props {
   title: string;
   subtitle: string;
   description: string;
-  video?: string;
+  image?: string;
   color: string;
   reverse?: boolean;
 }
@@ -26,9 +26,7 @@ defineProps<props>();
       <span class="feature__text__subtitle">{{ subtitle }}</span>
       <p class="feature__text__description">{{ description }}</p>
     </div>
-    <video v-if="video" class="feature__video" autoplay loop muted playsinline>
-      <source :src="video" type="video/mp4" />
-    </video>
+    <img v-if="image" class="feature__image" :src="image" alt="" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -102,15 +100,10 @@ defineProps<props>();
     }
   }
 
-  &__video {
+  &__image {
     width: 100%;
     height: 100%;
-    background-color: $base-color;
     padding: 1rem;
-    border-radius: $radius;
-    outline: none;
-    border: none;
-    filter: grayscale(0);
 
     @media (min-width: $big-tablet-screen) {
       max-width: 500px;

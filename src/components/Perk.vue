@@ -1,15 +1,18 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   icon: string;
   title: string;
   description: string;
-}
-
-defineProps<Props>();
+}>();
 </script>
 <template>
   <div class="perk">
-    <IconComponent :icon size="2rem" />
+    <span
+      class="perk__icon"
+      aria-label="Illustration animée"
+      role="img"
+      v-html="icon"
+    ></span>
     <h2 class="perk__title">{{ title }}</h2>
     <p class="paragraphs">{{ description }}</p>
   </div>
@@ -22,20 +25,38 @@ defineProps<Props>();
   padding: 1.5rem;
   color: $text-color;
   width: 100%;
-  border-radius: calc($radius/2);
+  border-radius: calc($radius / 2);
   border: 1px solid rgba($text-color, 0.1);
-  transition: transform 0.2s linear;
+  transition: transform 0.2s linear, color 0.2s ease;
 
   &:hover {
     transform: translateY(-3px);
+    color: $success-color;
+    background-color: rgba($success-color, 0.1);
+    border: 1px solid transparent;
+
+    .perk__icon {
+      background-color: rgba($success-color, 0.1);
+      border: 1px solid transparent;
+    }
+
+    .paragraphs {
+      color: $text-color;
+    }
   }
 
-  &__image {
-    width: 100%;
-    height: 235px;
-    border-radius: $radius;
-    object-fit: cover;
-    object-position: center;
+  ::v-deep svg {
+    height: 2rem;
+    width: auto;
+    transition: fill 0.2s ease, stroke 0.2s ease;
+    stroke: currentColor;
+    fill: none !important;
+  }
+
+  ::v-deep svg path {
+    transition: fill 0.2s ease;
+    stroke: currentColor !important;
+    fill: none !important;
   }
 
   &__title {
@@ -46,6 +67,17 @@ defineProps<Props>();
   .paragraphs {
     margin-top: -0.7rem;
     color: $text-color-faded;
+  }
+
+  &__icon {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc($radius / 2);
+    border: 1px solid rgba($text-color, 0.1);
+    transition: background-color 0.2s ease, border 0.2s ease;
   }
 }
 </style>

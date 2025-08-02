@@ -8,6 +8,7 @@ interface Props {
     | "accent-color"
     | "base-color"
     | "text-color"
+    | "text-color-faded"
     | "primary-color"
     | "error-color";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
@@ -34,6 +35,8 @@ const iconColor = computed(() => {
       return colors["primary-color"];
     case "text-color":
       return colors["primary-color"];
+    case "text-color-faded":
+      return colors["text-color-faded"];
     case "accent-color":
       return colors["primary-color"];
     case "error-color":
@@ -54,10 +57,11 @@ const iconColor = computed(() => {
       color: variant ? colors[variant] : colors['text-color'],
     }"
   >
-    <slot />
+    <span class="button__text"><slot /></span>
 
     <IconComponent
       v-if="icon"
+      class="icon"
       :icon
       :size="iconSize || undefined"
       :color="iconColor"
@@ -66,24 +70,33 @@ const iconColor = computed(() => {
 </template>
 <style scoped lang="scss">
 .button {
-  width: 100%;
+  width: fit-content;
   max-width: 375px;
   padding: 0;
   cursor: pointer;
   white-space: nowrap;
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
   font-weight: $regular;
-  font-size: 0.75rem;
-  text-decoration: underline;
+  font-size: 0.875rem;
   margin-top: auto;
-  transition: transform 0.2s linear;
+  transition: transform 0.2s linear, color 0.2s linear;
 
   @media (min-width: $big-tablet-screen) {
     &:hover {
-      transform: translateY(-3px);
+      & .icon {
+        transform: translateX(0.5rem);
+      }
     }
   }
+
+  &__text {
+    text-decoration: underline;
+  }
+}
+
+.icon {
+  transition: transform 0.4s ease;
 }
 </style>

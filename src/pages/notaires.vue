@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import securite from "@/assets/images/securite.jpg";
-
-import relation from "@/assets/videos/relation.mp4";
-import contact from "@/assets/videos/contact.mp4";
+import coins from "@/assets/images/money-jar-71.svg";
+import relation from "@/assets/images/marketing-1-30.svg";
+import contact from "@/assets/images/note-taking-100.svg";
 
 import { colors } from "@/utils/colors";
 
@@ -45,21 +44,20 @@ useHead({
 
 const features = ref([
   {
-    title: "Digitalisation complète",
+    title: "Solution gratuite",
     subtitle:
       "Sans frais, de l’ouverture du dossier à la signature de l’acte de vente",
     description:
       "Ouverture et constitution autonomes des dossiers, pré-rédaction des actes et signatures qualifiées gratuites, sans quitter votre navigateur.",
-    video: relation,
+    image: coins,
     color: colors["success-color"],
-    reverse: true,
   },
   {
     title: "Apport d’Affaires",
     subtitle: "Etendez votre visibilité à l’échelle nationale",
     description:
       "Notre annuaire en ligne facilite la mise en relation avec vos prospects. Recevez des demandes d’ouverture de dossiers sans effort commercial supplémentaire.",
-    video: contact,
+    image: relation,
     color: colors["purple-color"],
     reverse: true,
   },
@@ -68,7 +66,7 @@ const features = ref([
     subtitle: "Gagnez du temps sur les tâches à faible valeur ajoutée",
     description:
       "Avec Supernotaire, vous vous débarassez des tâches répétitives à faible valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
-    video: relation,
+    image: contact,
     color: colors["accent-color"],
   },
 ]);
@@ -130,115 +128,19 @@ onMounted(() => {
       text="Constituez les dossiers sans avoir courrir après les parties prenantes.
         et automatisez les tâches répétitives à faible valeur ajoutée."
     />
-    <div class="features">
+    <div id="features" class="features">
       <FeatureComponent
         v-for="feature in features"
         :key="feature.title"
         :title="feature.title"
         :subtitle="feature.subtitle"
         :description="feature.description"
-        :video="feature.video"
+        :image="feature.image"
         :color="feature.color"
         :reverse="feature.reverse"
       />
     </div>
+    <Tarifs />
   </Container>
   <HotjarTracking />
 </template>
-<style lang="scss" scoped>
-.hero {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(70vh);
-  gap: 2rem;
-  color: $text-color;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 4rem 0;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-
-    &__title {
-      font-size: 1.85rem;
-      font-weight: $bold;
-      text-wrap: balance;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 3rem;
-      }
-    }
-
-    &__subtitle {
-      font-size: 1rem;
-      line-height: 1.35;
-      font-weight: $regular;
-      text-wrap: balance;
-      max-width: 600px;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 1.25rem;
-      }
-    }
-
-    &__link {
-      color: $text-color;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      @media (min-width: $tablet-screen) {
-        width: fit-content;
-      }
-    }
-  }
-
-  &__pictures {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    max-height: 460px;
-    width: 100%;
-
-    @media (min-width: $big-tablet-screen) {
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      max-width: 40vw;
-    }
-
-    &__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      border-radius: $radius;
-
-      &:nth-of-type(1) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 2;
-        }
-      }
-      &:nth-of-type(2) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 1;
-        }
-      }
-      &:nth-of-type(3) {
-        grid-column: span 3;
-      }
-    }
-  }
-}
-</style>

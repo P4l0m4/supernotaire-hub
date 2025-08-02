@@ -1,13 +1,31 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-
-import annuaire from "@/assets/videos/annuaire.mp4";
-import dossier from "@/assets/videos/dossier.mp4";
-import progress from "@/assets/videos/progress.mp4";
-
-import { colors } from "@/utils/colors";
+import notary from "@/assets/images/accountant-54.svg";
+import seller from "@/assets/images/real-estate-agent-76.svg";
+import hero from "@/assets/images/super-hero.svg";
+import dots from "@/assets/images/dots-big.svg";
 
 const url = ref();
+
+const profiles = ref([
+  {
+    image: notary,
+    title: "Notaires débordés",
+    subtitle: "Gagnez du temps facturable et élargissez votre clientèle.",
+    link: "/notaires#features",
+    linkText: "Montrez-moi comment",
+    decoration: "left",
+  },
+  {
+    image: seller,
+    title: "Vendeurs pressés",
+    subtitle:
+      "Facilitez vos démarches et accédez plus rapidement à un notaire.",
+    link: "/vendeurs#features",
+    linkText: "Montrez-moi comment",
+    decoration: "right",
+  },
+]);
 
 useHead({
   title: "Supernotaire | Finalisation rapide de vente immobilière",
@@ -42,40 +60,12 @@ useHead({
   ],
 });
 
-const features = ref([
-  {
-    title: "Démarches allégées",
-    subtitle: "Trouvez et envoyez vos documents facilement",
-    description:
-      "Grâce à nos formulaires intelligents, vous êtes sûr(e) de déposer le bon document au bon endroit et ne fournissez jamais les mêmes informations deux fois.",
-    video: dossier,
-    color: colors["accent-color"],
-  },
-  {
-    title: "Accès facilité aux notaires",
-    subtitle: "N’attendez plus pour confier votre dossier à un notaire",
-    description:
-      "Pas de contraintes géographiques ! Confiez votre dossier à un notaire disponible n’importe où en France en quelques jours, pas en quelques semaines.",
-    video: annuaire,
-    color: colors["purple-color"],
-    reverse: true,
-  },
-  {
-    title: "Suivi en temps réel",
-    subtitle: "Suivez la progression de votre dossier en temps réel",
-    description:
-      "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
-    video: progress,
-    color: colors["success-color"],
-  },
-]);
-
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Supernotaire | Finalisation rapide de vente immobilière",
   description:
-    "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+    "La plateforme qui accélère la finalisation des ventes immobilières.",
   url: url.value,
 }));
 
@@ -88,153 +78,63 @@ onMounted(() => {
     <div class="hero">
       <div class="hero__text">
         <h1 class="hero__text__title">
-          Accélérez la finalisation de vos ventes immobilières
+          La plateforme qui accélère la finalisation des ventes immobilières
         </h1>
         <p class="hero__text__subtitle">
-          Créez facilement votre dossier de vente immobilière et confiez-le
-          rapidement à un notaire, où que vous soyez.
+          Digital, intuitif et sans-frontières. Pour les vendeurs pressés et les
+          notaires débordés.
         </p>
-        <NuxtLink to="/inscription" class="hero__text__link">
-          <PrimaryButton variant="accent-color" icon="arrow_right">
-            Créer mon dossier
-          </PrimaryButton>
-          C'est totalement gratuit !
-        </NuxtLink>
+        <div class="hero__text__link">
+          <NuxtLink
+            to="#profiles"
+            aria-label="Découvrir notre offre"
+            style="width: 100%"
+          >
+            <PrimaryButton variant="accent-color">
+              Découvrir notre offre
+            </PrimaryButton></NuxtLink
+          >
+          Sans frais, de la création du dossier à la signature de l’acte de
+          vente.
+        </div>
       </div>
-      <div class="hero__pictures">
+      <div class="hero__image">
         <img
-          class="hero__pictures__image"
-          src="@/assets/images/signature.jpg"
-          alt="finalisation vente immobilière"
+          :src="hero"
+          alt="Supernotaire, la plateforme qui accélère la finalisation des ventes immobilières"
         />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/securite.jpg"
-          alt="vente immobilière rapide"
-        />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/vente.webp"
-          alt="mandat immobilier rapide"
-        />
+        <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>
     </div>
-
-    <Benefits
-      title="Vendeurs de biens immobiliers"
-      subtitle="+ 80% d’efficacité dans vos démarches"
-      text="Trouvez vos documents et informations sans prise de tête, déposez vos
-        papiers et laissez l’IA remplir les formalités à votre place."
-    />
-    <div class="features">
-      <FeatureComponent
-        v-for="feature in features"
-        :key="feature.title"
-        :title="feature.title"
-        :subtitle="feature.subtitle"
-        :description="feature.description"
-        :video="feature.video"
-        :color="feature.color"
-        :reverse="feature.reverse"
+    <div id="profiles" class="profiles">
+      <Profile
+        v-for="profile in profiles"
+        :key="profile.title"
+        :image="profile.image"
+        :title="profile.title"
+        :subtitle="profile.subtitle"
+        :link="profile.link"
+        :linkText="profile.linkText"
+        :decoration="profile.decoration"
       />
     </div>
   </Container>
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
-.hero {
+.profiles {
   display: flex;
   flex-direction: column;
-  min-height: calc(70vh);
+  width: 100%;
+  height: fit-content;
+  min-height: 400px;
   gap: 2rem;
-  color: $text-color;
 
   @media (min-width: $big-tablet-screen) {
-    padding: 4rem 0;
     flex-direction: row;
-    align-items: center;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-
-    &__title {
-      font-size: 1.85rem;
-      font-weight: $bold;
-      text-wrap: balance;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 3rem;
-      }
-    }
-
-    &__subtitle {
-      font-size: 1rem;
-      line-height: 1.35;
-      font-weight: $regular;
-      text-wrap: balance;
-      max-width: 600px;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 1.25rem;
-      }
-    }
-
-    &__link {
-      color: $text-color;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      @media (min-width: $tablet-screen) {
-        width: fit-content;
-      }
-    }
-  }
-
-  &__pictures {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    max-height: 460px;
-    width: 100%;
-
-    @media (min-width: $big-tablet-screen) {
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      max-width: 40vw;
-    }
-
-    &__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      border-radius: $radius;
-
-      &:nth-of-type(1) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 2;
-        }
-      }
-      &:nth-of-type(2) {
-        display: none;
-
-        @media (min-width: $big-tablet-screen) {
-          display: block;
-          grid-column: span 1;
-        }
-      }
-      &:nth-of-type(3) {
-        grid-column: span 3;
-      }
-    }
+    gap: 4rem;
+    justify-content: space-between;
+    height: fit-content;
   }
 }
 </style>
