@@ -4,6 +4,8 @@ import { ref, onMounted } from "vue";
 import coins from "@/assets/images/money-jar-71.svg";
 import relation from "@/assets/images/marketing-1-30.svg";
 import contact from "@/assets/images/note-taking-100.svg";
+import hero from "@/assets/images/fly.svg";
+import dots from "@/assets/images/dots-big.svg";
 
 import { colors } from "@/utils/colors";
 
@@ -103,22 +105,12 @@ onMounted(() => {
           Sans frais, de l'ouverture à la signature.
         </NuxtLink>
       </div>
-      <div class="hero__pictures">
+      <div class="hero__image">
         <img
-          class="hero__pictures__image"
-          src="@/assets/images/signature.jpg"
-          alt="finalisation vente immobilière"
+          :src="hero"
+          alt="Supernotaire, la plateforme qui accélère la finalisation des ventes immobilières"
         />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/securite.jpg"
-          alt="vente immobilière rapide"
-        />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/vente.webp"
-          alt="mandat immobilier rapide"
-        />
+        <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>
     </div>
 

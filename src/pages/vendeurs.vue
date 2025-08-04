@@ -4,6 +4,8 @@ import { ref, onMounted } from "vue";
 import annuaire from "@/assets/images/time-39.svg";
 import dossier from "@/assets/images/files-and-folder-78.svg";
 import progress from "@/assets/images/checklist-71.svg";
+import hero from "@/assets/images/pool.svg";
+import dots from "@/assets/images/dots-big.svg";
 
 import { colors } from "@/utils/colors";
 
@@ -101,22 +103,12 @@ onMounted(() => {
           C'est totalement gratuit !
         </NuxtLink>
       </div>
-      <div class="hero__pictures">
+      <div class="hero__image">
         <img
-          class="hero__pictures__image"
-          src="@/assets/images/signature.jpg"
-          alt="finalisation vente immobilière"
+          :src="hero"
+          alt="Supernotaire, la plateforme qui accélère la finalisation des ventes immobilières"
         />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/securite.jpg"
-          alt="vente immobilière rapide"
-        />
-        <img
-          class="hero__pictures__image"
-          src="@/assets/images/vente.webp"
-          alt="mandat immobilier rapide"
-        />
+        <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>
     </div>
     <Benefits

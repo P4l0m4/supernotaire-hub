@@ -43,7 +43,7 @@
       <ul class="footer__links-container__links">
         <h5 class="footer__links-container__links__title">Autres</h5>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/faq">Comment ça marche ?</NuxtLink>
+          <NuxtLink to="/comment-ca-marche">Comment ça marche ?</NuxtLink>
         </li>
       </ul>
       <div class="footer__links-container__special-box">

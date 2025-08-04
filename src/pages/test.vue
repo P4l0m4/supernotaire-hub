@@ -5,6 +5,8 @@ const status = ref("not started");
 const statusResponse = ref();
 const taskId = ref("");
 const results = ref();
+const isProcessing = ref(false);
+const error = ref("");
 
 const uploadDocument = async (file: File) => {
   const formData = new FormData();
@@ -24,14 +26,11 @@ const checkStatus = async (taskId: string) => {
     const response = await fetch(
       `http://localhost:3000/api/tasks/${taskId}/status`
     );
-
     if (!response.ok) {
       throw new Error(`Status check failed: ${response.status}`);
     }
-
     const result = await response.json();
     console.log("Status response:", result);
-    results.value = result;
     return result;
   } catch (error) {
     console.error("Status check error:", error);
@@ -40,46 +39,69 @@ const checkStatus = async (taskId: string) => {
 };
 
 const getResults = async (taskId: string) => {
-  const response = await fetch(
-    `http://localhost:3000/api/tasks/${taskId}/result`
-  );
-  return await response.json();
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/tasks/${taskId}/result`
+    );
+    if (!response.ok) {
+      throw new Error(`Result fetch failed: ${response.status}`);
+    }
+    const result = await response.json();
+    console.log("Result response:", result);
+    return result;
+  } catch (error) {
+    console.error("Result fetch error:", error);
+    throw error;
+  }
 };
 
 const processDocument = async (file: File) => {
   try {
+    isProcessing.value = true;
+    error.value = "";
+    results.value = null;
+
+    // 1. Upload the document
+    console.log("Uploading document...");
     taskId.value = await uploadDocument(file);
+    console.log("Task ID:", taskId.value);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    status.value = "pending";
+    // 2. Poll for completion
+    status.value = "processing";
     let attempts = 0;
-    const maxAttempts = 3;
+    const maxAttempts = 30; // Increased to 30 attempts (60 seconds max)
 
-    while (
-      (status.value === "pending" || status.value === "processing") &&
-      attempts < maxAttempts
-    ) {
+    while (attempts < maxAttempts) {
+      console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
+
       statusResponse.value = await checkStatus(taskId.value);
       status.value = statusResponse.value.status;
 
-      if (status.value === "failed") {
-        console.error("Processing failed:", statusResponse.value);
-        return;
-      }
-
       if (status.value === "completed") {
+        console.log("Task completed! Getting results...");
         results.value = await getResults(taskId.value);
-        return results.value;
+        console.log("Final results:", results.value);
+        break;
+      } else if (status.value === "failed") {
+        error.value = statusResponse.value.error || "Processing failed";
+        console.error("Processing failed:", statusResponse.value);
+        break;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Wait 2 seconds before next check
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       attempts++;
     }
 
-    console.log("Processing timeout or unknown status");
-  } catch (error) {
-    console.error("Error:", error);
+    if (attempts >= maxAttempts && status.value !== "completed") {
+      error.value = "Processing timeout - please try again";
+      console.log("Processing timeout");
+    }
+  } catch (err) {
+    error.value = err.message || "An error occurred";
+    console.error("Error:", err);
+  } finally {
+    isProcessing.value = false;
   }
 };
 
