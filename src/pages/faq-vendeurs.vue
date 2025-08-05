@@ -63,14 +63,16 @@ useHead({
 });
 </script>
 <template>
-  <section class="faq">
-    <div class="faq__headlines">
-      <h1 class="titles">Foire aux questions</h1>
-      <h2 class="subtitles">On répond aux questions des particuliers</h2>
-    </div>
+  <Container>
+    <div class="faq">
+      <div class="faq__headlines">
+        <h1 class="titles">Foire aux questions</h1>
+        <h2 class="subtitles">On répond aux questions des particuliers</h2>
+      </div>
 
-    <FAQComponent :questions />
-  </section>
+      <FAQComponent :questions />
+    </div>
+  </Container>
 </template>
 
 <style lang="scss" scoped>
@@ -79,7 +81,7 @@ useHead({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100svh - 4rem);
+  min-height: calc(100vh - 1rem);
   gap: 2rem;
   padding: 2rem 1rem;
   height: fit-content;

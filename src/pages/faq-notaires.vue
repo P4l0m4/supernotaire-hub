@@ -63,14 +63,16 @@ useHead({
 });
 </script>
 <template>
-  <section class="faq">
-    <div class="faq__headlines">
-      <h1 class="titles">Foire aux questions</h1>
-      <h2 class="subtitles">On répond aux questions des notaires</h2>
-    </div>
+  <Container>
+    <div class="faq">
+      <div class="faq__headlines">
+        <h1 class="titles">Foire aux questions</h1>
+        <h2 class="subtitles">On répond aux questions des notaires</h2>
+      </div>
 
-    <FAQComponent :questions />
-  </section>
+      <FAQComponent :questions />
+    </div>
+  </Container>
 </template>
 
 <style lang="scss" scoped>
