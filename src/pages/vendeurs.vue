@@ -66,7 +66,7 @@ const features = ref([
     title: "Suivi en temps réel",
     subtitle: "Suivez la progression de votre dossier en temps réel",
     description:
-      "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu de la prochaine action à réaliser.",
+      "Visualisez votre propre progression ainsi que celle de votre notaire et de votre acheteur. Dès que la collecte des informations avance, vous êtes prévenu(e) de la prochaine action à réaliser.",
     image: progress,
     color: colors["success-color"],
   },

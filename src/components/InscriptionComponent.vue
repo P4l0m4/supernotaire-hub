@@ -44,7 +44,7 @@ function confirmSubmission() {
 
   setTimeout(() => {
     wasSent.value = false;
-  }, 1400);
+  }, 3000);
 }
 
 const rules = {

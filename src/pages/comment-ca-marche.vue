@@ -69,7 +69,7 @@ const perks = [
     icon: lock,
     title: "Sécurité renforcée",
     description:
-      "Vos documments et vos données sont protégés par des mesures de sécurité avancées. Supernotaire garantit la confidentialité de vos informations personnelles et administratives, conformément avec les plus hauts standards de sécurité informatique.",
+      "Vos documents et vos données sont protégés par des mesures de sécurité avancées. Supernotaire garantit la confidentialité de vos informations personnelles et administratives, conformément avec les plus hauts standards de sécurité informatique.",
   },
 ];
 </script>

@@ -43,10 +43,18 @@ defineProps<props>();
   }
 
   @media (min-width: $big-tablet-screen) {
-    padding: 8rem 4rem;
+    padding: 2rem;
     flex-direction: row;
     justify-content: space-between;
-    min-height: 600px;
+    min-height: 500px;
+    align-items: center;
+  }
+
+  @media (min-width: $big-tablet-screen) {
+    padding: 2rem 4rem;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 500px;
     align-items: center;
   }
 

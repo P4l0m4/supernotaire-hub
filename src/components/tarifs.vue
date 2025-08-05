@@ -135,9 +135,15 @@ const plans = ref([
       </div>
 
       <div class="tarifs__questions__buttons">
-        <PrimaryButton variant="accent-color">Nous contacter</PrimaryButton>
-        <TertiaryButton variant="text-color-faded"
-          >Foire Aux Questions</TertiaryButton
+        <NuxtLink to="/contact" aria-label="contact"
+          ><PrimaryButton variant="accent-color"
+            >Nous contacter</PrimaryButton
+          ></NuxtLink
+        >
+        <NuxtLink to="/faq-notaires" aria-label="Foire aux questions"
+          ><TertiaryButton variant="text-color-faded"
+            >Foire Aux Questions</TertiaryButton
+          ></NuxtLink
         >
       </div>
     </div>
