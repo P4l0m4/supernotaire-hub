@@ -83,20 +83,19 @@ useHead({
   justify-content: center;
   min-height: calc(100vh - 1rem);
   gap: 2rem;
-  padding: 2rem 1rem;
   height: fit-content;
 
   @media (min-width: $big-tablet-screen) {
     justify-content: center;
     align-items: center;
     gap: 4rem;
-    padding: 4rem 2rem;
+    padding: 2rem 0;
     min-height: initial;
   }
 
-  @media (min-width: $laptop-screen) {
+  @media (min-width: $desktop-screen) {
     gap: 8rem;
-    padding: 4rem;
+    padding: 4rem 0;
   }
 
   &__headlines {

@@ -79,8 +79,12 @@ const options = [
     justify-content: center;
     align-items: center;
     gap: 4rem;
-    padding: 4rem 0;
+    padding: 2rem 0;
     min-height: initial;
+  }
+
+  @media (min-width: $desktop-screen) {
+    padding: 4rem 0;
   }
 
   &__headlines {

@@ -135,7 +135,7 @@ const plans = ref([
       </div>
 
       <div class="tarifs__questions__buttons">
-        <NuxtLink to="/contact" aria-label="contact"
+        <NuxtLink to="/contact" aria-label="contact" style="width: 100%"
           ><PrimaryButton variant="accent-color"
             >Nous contacter</PrimaryButton
           ></NuxtLink
