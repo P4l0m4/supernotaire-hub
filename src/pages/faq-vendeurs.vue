@@ -30,7 +30,7 @@ const questions = [
   {
     title: "Combien coûte Supernotaire ?",
     answer:
-      "Supernotaire est totalement gratuit pour vendeurs et acheteurs de biens, qu'ils soient particuliers ou professionnels. ",
+      "Supernotaire est totalement gratuit pour les vendeurs et acheteurs de biens, qu'ils soient particuliers ou professionnels. ",
   },
 ];
 
