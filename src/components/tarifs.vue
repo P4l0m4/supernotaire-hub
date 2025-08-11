@@ -39,7 +39,7 @@ const plans = ref([
   },
   {
     name: "Premium",
-    price: "200€",
+    price: "280€",
     frequency: "/mois",
     features: [
       {
@@ -56,7 +56,11 @@ const plans = ref([
       },
       {
         included: true,
-        text: "2 espaces collaborateur sécurisés",
+        text: "2 espaces collaborateur sécurisés et sièges supplémentaires dégréssifs",
+      },
+      {
+        included: true,
+        text: "Accès prioritaire aux nouvelles fonctionnalités",
       },
     ],
     link: "/inscription",

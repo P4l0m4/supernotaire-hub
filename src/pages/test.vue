@@ -6,6 +6,7 @@ const statusResponse = ref();
 const taskId = ref("");
 const results = ref();
 const isProcessing = ref(false);
+const progress = ref(0);
 const error = ref("");
 
 const uploadDocument = async (file: File) => {
@@ -30,6 +31,7 @@ const checkStatus = async (taskId: string) => {
       throw new Error(`Status check failed: ${response.status}`);
     }
     const result = await response.json();
+    progress.value = result.progress;
     console.log("Status response:", result);
     return result;
   } catch (error) {
@@ -157,9 +159,10 @@ dropContainerRef.value?.addEventListener("drop", (e) => {
       />
       <span class="drop-zone__formats">.pdf, .jpg, .jpeg, .png</span>
     </label>
-    <span v-if="status === 'failed'" class="status">Statut: {{ status }}</span>
+    <span v-if="progress" class="status">{{ progress }}%</span>
 
     <p v-if="results" class="results">Results: {{ results.result }}</p>
+    <p v-if="results" class="results">Results: {{ results.result.summary }}</p>
   </Container>
 </template>
 <style lang="scss" scoped>
