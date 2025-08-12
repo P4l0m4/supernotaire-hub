@@ -29,7 +29,7 @@ const uploadDocument = async (file: File) => {
 const checkStatus = async (taskId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/tasks/${taskId}/status`
+      `https://document-text-extractor-production.up.railway.app/api/tasks/${taskId}/status`
     );
     if (!response.ok) {
       throw new Error(`Status check failed: ${response.status}`);
@@ -47,7 +47,7 @@ const checkStatus = async (taskId: string) => {
 const getResults = async (taskId: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/tasks/${taskId}/result`
+      `https://document-text-extractor-production.up.railway.app/api/tasks/${taskId}/result`
     );
     if (!response.ok) {
       throw new Error(`Result fetch failed: ${response.status}`);
