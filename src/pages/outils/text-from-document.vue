@@ -40,6 +40,7 @@ const checkStatus = async (taskId: string) => {
     return result;
   } catch (error) {
     console.error("Status check error:", error);
+    error.value = "Une erreur est survenue lors de la vérification du statut.";
     throw error;
   }
 };
@@ -55,8 +56,10 @@ const getResults = async (taskId: string) => {
     const result = await response.json();
     console.log("Result response:", result);
     return result;
-  } catch (error) {
-    console.error("Result fetch error:", error);
+  } catch (err) {
+    console.error("Result fetch error:", err);
+    error.value =
+      "Une erreur est survenue lors de la récupération des résultats.";
     throw error;
   }
 };
@@ -67,15 +70,13 @@ const processDocument = async (file: File) => {
     error.value = "";
     results.value = null;
 
-    // 1. Upload the document
     console.log("Uploading document...");
     taskId.value = await uploadDocument(file);
     console.log("Task ID:", taskId.value);
 
-    // 2. Poll for completion
     status.value = "processing";
     let attempts = 0;
-    const maxAttempts = 30; // Increased to 30 attempts (60 seconds max)
+    const maxAttempts = 30;
 
     while (attempts < maxAttempts) {
       console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
@@ -94,7 +95,6 @@ const processDocument = async (file: File) => {
         break;
       }
 
-      // Wait 2 seconds before next check
       await new Promise((resolve) => setTimeout(resolve, 2000));
       attempts++;
     }
@@ -104,7 +104,7 @@ const processDocument = async (file: File) => {
       console.log("Processing timeout");
     }
   } catch (err) {
-    error.value = err.message || "An error occurred";
+    error.value = "Une erreur est survenue lors du traitement.";
     console.error("Error:", err);
   } finally {
     isProcessing.value = false;
