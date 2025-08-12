@@ -13,6 +13,9 @@
         <li class="header__nav__ul__li">
           <NuxtLink to="/comment-ca-marche" exact>Comment ça marche ?</NuxtLink>
         </li>
+        <li class="header__nav__ul__li">
+          <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+        </li>
       </ul>
       <div class="header__nav__buttons">
         <!-- <NuxtLink to="/inscription">

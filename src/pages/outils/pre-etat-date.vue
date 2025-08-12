@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { copyToClipboard } from "@/utils/otherFunctions";
 
 const status = ref("not started");
 const statusResponse = ref();
@@ -134,10 +135,21 @@ dropContainerRef.value?.addEventListener("drop", (e) => {
     fileInputRef.value.files = e.dataTransfer.files;
   }
 });
+
+function reset() {
+  status.value = "not started";
+  statusResponse.value = null;
+  taskId.value = "";
+  results.value = null;
+  isProcessing.value = false;
+  progress.value = 0;
+  error.value = "";
+}
 </script>
 <template>
   <Container>
     <label
+      v-if="!progress && !isProcessing"
       for="images"
       ref="dropcontainerRef"
       class="drop-zone"
@@ -157,12 +169,37 @@ dropContainerRef.value?.addEventListener("drop", (e) => {
         @click="(e) => e.stopPropagation()"
         @change="(e) => processDocument((e.target as HTMLInputElement).files[0])"
       />
-      <span class="drop-zone__formats">.pdf, .jpg, .jpeg, .png</span>
+      <span class="drop-zone__formats">.pdf, .jpg, .png</span>
     </label>
-    <span v-if="progress" class="status">{{ progress }}%</span>
-
-    <p v-if="results" class="results">Results: {{ results.result }}</p>
-    <p v-if="results" class="results">Results: {{ results.result.summary }}</p>
+    <div class="wrapper">
+      <StatusComponent v-if="status" :status />
+      <PrimaryButton
+        v-if="progress === 100 || error.length > 0"
+        variant="accent-color"
+        @click="reset"
+      >
+        Réessayer</PrimaryButton
+      >
+    </div>
+    <div v-if="results?.result?.summary" class="summary">
+      <div
+        class="summary__page"
+        v-for="page in results.result.summary"
+        :key="page.number"
+      >
+        <span class="summary__page__number"
+          >Page: {{ page.pageNumber }}
+          <span class="summary__page__number__copy">
+            <IconComponent
+              icon="copy"
+              size="1.5rem"
+              @click="() => copyToClipboard(page.pageText)" /></span
+        ></span>
+        <p class="summary__page__text paragraphs">
+          {{ page.pageText }}
+        </p>
+      </div>
+    </div>
   </Container>
 </template>
 <style lang="scss" scoped>
@@ -174,15 +211,15 @@ dropContainerRef.value?.addEventListener("drop", (e) => {
   gap: 2rem;
   height: fit-content;
   padding: 2rem 1rem;
-  border: 2px dashed $secondary-color;
+  border: 1px dashed $secondary-color;
   color: $text-color;
   border-radius: calc($radius / 2);
   cursor: pointer;
   transition: background 0.2s ease, border 0.2s ease;
 
   &:hover {
-    background: rgba($secondary-color, 0.1);
-    border-color: $secondary-color-faded;
+    background: rgba($accent-color, 0.1);
+    border: rgba($accent-color, 0.1) solid 2px;
   }
 
   @media (min-width: $big-tablet-screen) {
@@ -249,5 +286,50 @@ input[type="file"]::file-selector-button {
 
 input[type="file"]::file-selector-button:hover {
   background-color: darken($secondary-color, 3%);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: fit-content;
+  color: $text-color;
+
+  @media (min-width: $big-tablet-screen) {
+    flex-direction: row;
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+  }
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__page {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &__number {
+      font-weight: $semi-bold;
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__copy {
+        cursor: pointer;
+        transition: transform 0.2s linear;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
 }
 </style>

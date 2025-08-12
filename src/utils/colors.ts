@@ -13,5 +13,7 @@ export const colors = {
   "text-color-faded": "#22262e70",
   "accent-color-faded": "#3185ff50",
   "success-color": "#48d664",
+  "success-color-faded": "#48d66450",
   "purple-color": "#9035ff",
+  "purple-color-faded": "#9035ff50",
 };

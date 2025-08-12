@@ -57,6 +57,9 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               >Comment ça marche ?<span class="line"></span
             ></NuxtLink>
           </li>
+          <li class="header__nav__links__link">
+            <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+          </li>
         </ul>
       </nav>
     </Transition>

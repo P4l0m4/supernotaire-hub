@@ -1,0 +1,71 @@
+<script setup lang="ts">
+import { computed } from "vue";
+
+const props = defineProps<{
+  status: string;
+}>();
+
+const statusText = computed(() => {
+  switch (props.status) {
+    case "not started":
+      return "";
+    case "pending":
+      return "Récupération du document";
+    case "processing":
+      return "Traitement en cours";
+    case "completed":
+      return "Traitement terminé";
+    case "failed":
+      return `Échec: ${error.value}`;
+    default:
+      return "Statut inconnu";
+  }
+});
+
+const statusIcon = computed(() => {
+  switch (props.status) {
+    case "not started":
+      return "";
+    case "pending":
+      return "circle_notch";
+    case "processing":
+      return "circle_notch";
+    case "completed":
+      return "check_circle";
+    case "failed":
+      return "error";
+    default:
+      return "";
+  }
+});
+
+const statusIconColor = computed(() => {
+  switch (props.status) {
+    case "not started":
+      return colors["text-color"];
+    case "processing":
+      return colors["accent-color"];
+    case "completed":
+      return colors["success-color"];
+    case "failed":
+      return colors["error-color"];
+    default:
+      return colors["purple-color"];
+  }
+});
+</script>
+<template>
+  <span class="status-component" v-if="statusText?.length > 0">
+    {{ statusText
+    }}<IconComponent :icon="statusIcon" :color="statusIconColor" size="1rem" />
+  </span>
+</template>
+<style lang="scss" scoped>
+.status-component {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: $text-color;
+}
+</style>

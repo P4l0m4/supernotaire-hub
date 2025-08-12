@@ -4,25 +4,27 @@ defineProps(["error"]);
 
 <template>
   <HeaderComponent />
-  <div class="error">
-    <div class="error__message">
-      <h1 class="subtitles">Oooops... erreur {{ error.statusCode }}</h1>
-      <template v-if="error === 404">
-        <h2 class="paragraphs">Cette page n'existe pas.</h2>
-      </template>
-      <template v-else-if="error === 403">
-        <h2 class="paragraphs">
-          Le lien de confirmation de votre email a expiré.
-        </h2>
-      </template>
+  <Container>
+    <div class="error">
+      <div class="error__message">
+        <h1 class="subtitles">Oooops... erreur {{ error.statusCode }}</h1>
+        <template v-if="error === 404">
+          <h2 class="paragraphs">Cette page n'existe pas.</h2>
+        </template>
+        <template v-else-if="error === 403">
+          <h2 class="paragraphs">
+            Le lien de confirmation de votre email a expiré.
+          </h2>
+        </template>
 
-      <NuxtLink to="/">
-        <PrimaryButton variant="accent-color"
-          >Retour à la page d'accueil</PrimaryButton
-        ></NuxtLink
-      >
-    </div>
-  </div>
+        <NuxtLink to="/">
+          <PrimaryButton variant="accent-color"
+            >Retour à la page d'accueil</PrimaryButton
+          ></NuxtLink
+        >
+      </div>
+    </div></Container
+  >
 </template>
 <style lang="scss" scoped>
 .error {
