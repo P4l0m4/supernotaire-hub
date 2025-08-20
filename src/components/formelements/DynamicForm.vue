@@ -253,8 +253,6 @@ if (import.meta.client) {
       class="dynamic-form__section"
       v-show="currentSection === index"
     >
-      <h3 class="dynamic-form__section__title sr-only">{{ section.label }}</h3>
-
       <div class="dynamic-form__section__fields">
         <FormelementsFormField
           v-for="field in section.fields"
