@@ -157,19 +157,9 @@ input[type="checkbox"] {
   animation: shake 0.25s;
   color: $error-color;
 
-  &::after {
-    content: "";
-    background-color: rgba($error-color, 0.1);
-    border-radius: calc($radius / 2);
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    text-align: center;
-  }
-
   &:focus-within {
     border: 1px solid $error-color-faded !important;
-    box-shadow: 0 0 2px 2px $error-color-faded !important;
+    box-shadow: 0 0px 6px 0px $error-color-faded !important;
   }
 }
 
@@ -323,19 +313,19 @@ input[type="checkbox"] {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: $secondary-color-faded;
+  background: rgba($text-color, 0.1);
   border-radius: 20px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $secondary-color-faded;
+  background: rgba($text-color, 0.4);
   border-radius: $radius;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: $text-color-faded;
+  background: rgba($text-color, 0.6);
 }
 
 //DETAILS

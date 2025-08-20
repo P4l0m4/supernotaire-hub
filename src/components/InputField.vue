@@ -13,6 +13,9 @@ interface Props {
   error?: string;
   name: string;
   autocomplete?: "on" | "off";
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -22,7 +25,11 @@ withDefaults(defineProps<Props>(), {
   autocomplete: "on",
 });
 
-const model = defineModel<string | number>();
+defineEmits<{
+  (e: "blur"): void;
+}>();
+
+const model = defineModel<string | number | boolean>();
 const inputRef = ref<HTMLInputElement | null>(null);
 
 const showPassword = ref(false);
@@ -32,18 +39,19 @@ function toggleShowPassword() {
 }
 </script>
 <template>
-  <div class="input-field" :class="{ shake: error }">
-    <label class="input-field__label sr-only" :for="id">
-      {{ label }}
-    </label>
+  <div
+    class="input-field"
+    :class="{ shake: error, 'input-field--has-error': error }"
+  >
     <IconComponent
       v-if="icon"
       :icon="icon"
       :color="colors['text-color-faded']"
-      size="1.25rem"
+      size="1rem"
     />
 
     <input
+      v-if="type === 'text' || type === 'email' || type === 'password'"
       v-model="model"
       ref="inputRef"
       :id="id"
@@ -53,11 +61,33 @@ function toggleShowPassword() {
       :autocomplete="autocomplete"
       :autofocus="autofocus"
       :aria-label="label"
-      :aria-labelledby="label"
+      :aria-labelledby="id"
       :title="label"
       :aria-placeholder="placeholder"
       :name="name"
       :value="model"
+    />
+
+    <input
+      v-else-if="type === 'number'"
+      v-model="model"
+      ref="inputRef"
+      :id="id"
+      class="input-field__input"
+      :type="type"
+      :placeholder="placeholder"
+      :autocomplete="autocomplete"
+      :autofocus="autofocus"
+      :aria-label="label"
+      :aria-labelledby="id"
+      :title="label"
+      :aria-placeholder="placeholder"
+      :name="name"
+      :value="model"
+      :min="min ? min : undefined"
+      :max="max ? max : undefined"
+      :step="step ? step : undefined"
+      @blur="$emit('blur')"
     />
 
     <IconComponent
@@ -94,6 +124,19 @@ function toggleShowPassword() {
   position: relative;
   height: 55px;
 
+  &--has-error {
+    border: 1px solid rgba($error-color, 0.1);
+    background-color: rgba($error-color, 0.1);
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 20px #fae3e1 inset !important;
+      //the color cannot have transparency, need to update this in case the error color changes
+    }
+  }
+
   &__label {
     font-size: $small-text;
     font-weight: $regular;
@@ -104,7 +147,7 @@ function toggleShowPassword() {
 
   &:focus-within {
     border: 1px solid $accent-color-faded;
-    box-shadow: 0 0 2px 2px $accent-color-faded;
+    box-shadow: 0 0px 6px 0px $accent-color-faded;
   }
 
   input {
@@ -130,15 +173,20 @@ function toggleShowPassword() {
   }
 
   &__error {
+    display: inline-block;
     position: absolute;
     color: $error-color;
     font-size: $small-text;
-    bottom: -0.5rem;
-    right: -0.1rem;
-    background-color: $error-color-faded;
-    backdrop-filter: blur(8px);
-    padding: 0 0.2rem;
-    border-radius: calc($radius/4);
+    bottom: 0rem;
+    right: 0;
+    padding: 0.1rem 0.25rem;
+    border: 1px solid rgba($error-color, 0.1);
+    background-color: rgba($error-color, 0.1);
+    border-radius: calc($radius/2.2);
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 </style>

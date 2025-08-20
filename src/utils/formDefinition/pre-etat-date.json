@@ -1,0 +1,607 @@
+{
+  "title": "Pré-état daté",
+  "sections": [
+    {
+      "id": "bien",
+      "label": "Le bien à vendre",
+      "fields": [
+        {
+          "path": "bien.adresse",
+          "id": "bien-adresse",
+          "label": "Adresse",
+          "name": "adresse",
+          "type": "text",
+          "required": true,
+          "placeholder": "12 Rue Exemple, 75000 Paris",
+          "icon": "map_pin_fill"
+        },
+        {
+          "path": "bien.identification.batiment",
+          "id": "bien-identification-batiment",
+          "label": "Bâtiment",
+          "name": "batiment",
+          "type": "text",
+          "placeholder": "A",
+          "required": true,
+          "icon": "buildings_fill"
+        },
+        {
+          "path": "bien.identification.escalier",
+          "id": "bien-identification-escalier",
+          "label": "Escalier",
+          "name": "escalier",
+          "type": "text",
+          "placeholder": "1",
+          "required": false,
+          "icon": "stairs_fill"
+        },
+        {
+          "path": "bien.identification.niveau",
+          "id": "bien-identification-niveau",
+          "label": "Niveau",
+          "name": "niveau",
+          "type": "text",
+          "placeholder": "3e, rez-de-chaussée...",
+          "required": true,
+          "icon": "escalator_up_fill"
+        },
+        {
+          "path": "bien.identification.complements",
+          "id": "bien-identification-complements",
+          "label": "Compléments",
+          "name": "complements",
+          "required": false,
+          "type": "text",
+          "placeholder": "Porte 12"
+        },
+        {
+          "path": "bien.lots",
+          "id": "bien-lots",
+          "label": "Liste des lots",
+          "name": "lots",
+          "type": "array",
+          "minItems": 1,
+          "required": true,
+          "itemLabel": "Lot {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "numero",
+                "label": "Numéro",
+                "name": "numero",
+                "type": "text",
+                "required": true,
+                "placeholder": "56",
+                "icon": "hash_fill"
+              },
+              {
+                "path": "usage",
+                "label": "Usage",
+                "name": "usage",
+                "type": "select",
+                "options": [
+                  "Habitation",
+                  "Commercial",
+                  "Exploitation agricole et forestière",
+                  "Intérêt collectif et services publics",
+                  "Autre"
+                ],
+                "placeholder": "Sélectionner un usage",
+                "icon": "gear_six_fill",
+                "required": true
+              },
+              {
+                "path": "tantiemes",
+                "label": "Tantièmes",
+                "name": "tantiemes",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "placeholder": "125",
+                "required": true
+              },
+              {
+                "path": "tantiemes_speciaux.ascenseur",
+                "label": "Tantièmes spéciaux — Ascenseur",
+                "name": "tantiemes_speciaux_ascenseur",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "placeholder": "140",
+                "required": false,
+                "icon": "elevator_fill"
+              },
+              {
+                "path": "tantiemes_speciaux.chauffage",
+                "label": "Tantièmes spéciaux — Chauffage",
+                "name": "tantiemes_speciaux_chauffage",
+                "type": "number",
+                "min": 0,
+                "step": 1,
+                "placeholder": "260",
+                "required": false,
+                "icon": "thermometer_simple_bold"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "copropriete",
+      "label": "La copro",
+      "fields": [
+        {
+          "path": "copropriete.arrete_au",
+          "id": "copropriete-arrete-au",
+          "label": "Arrêté au",
+          "name": "arrete_au",
+          "type": "date",
+          "placeholder": "Arrêté au",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "copropriete.nombre_lots_principaux",
+          "id": "copropriete-nombre-lots-principaux",
+          "label": "Nombre de lots principaux",
+          "name": "nombre_lots_principaux",
+          "type": "number",
+          "min": 0,
+          "step": 1,
+          "required": true
+        },
+        {
+          "path": "copropriete.fonds_travaux.montant",
+          "id": "copropriete-fonds-travaux-montant",
+          "label": "Fonds travaux (EUR)",
+          "name": "fonds_travaux_montant",
+          "required": true,
+          "placeholder": "1000",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€"
+        },
+        {
+          "path": "copropriete.fonds_travaux.date_arret",
+          "id": "copropriete-fonds-travaux-date-arret",
+          "label": "Arrêté fonds travaux",
+          "name": "fonds_travaux_date_arret",
+          "type": "date",
+          "placeholder": "Arrêté fonds travaux",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "copropriete.impayes.total",
+          "id": "copropriete-impayes-total",
+          "label": "Impayés total (EUR)",
+          "name": "impayes_total",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "max": 100000000,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "copropriete.impayes.taux",
+          "id": "copropriete-impayes-taux",
+          "name": "impayes_taux",
+          "label": "Taux d’impayés",
+          "type": "number",
+          "placeholder": "0.05",
+          "min": 0,
+          "max": 1,
+          "step": 0.0001,
+          "ui:suffix": "ratio 0–1",
+          "required": false
+        },
+        {
+          "path": "copropriete.assurance.assureur",
+          "id": "copropriete-assurance-assureur",
+          "label": "Assureur principal",
+          "name": "assurance_assureur",
+          "required": true,
+          "type": "text",
+          "placeholder": "Foncia, AXA, etc."
+        },
+        {
+          "path": "copropriete.assurance.police",
+          "id": "copropriete-assurance-police",
+          "name": "assurance_police",
+          "required": true,
+          "label": "Police",
+          "type": "text",
+          "placeholder": "POL123456"
+        },
+        {
+          "path": "copropriete.assurance.echeance",
+          "id": "copropriete-assurance-echeance",
+          "label": "Échéance",
+          "name": "assurance_echeance",
+          "type": "date",
+          "placeholder": "Échéance",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "copropriete.procedures",
+          "id": "copropriete-procedures",
+          "label": "Procédures",
+          "name": "procedures",
+          "required": false,
+          "minItems": 0,
+          "maxItems": 100,
+          "type": "array",
+          "itemLabel": "Procédure {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "type",
+                "label": "Type",
+                "type": "text",
+                "placeholder": "29-1"
+              },
+              {
+                "path": "etat",
+                "label": "État",
+                "type": "select",
+                "options": ["en cours", "clos"],
+                "placeholder": "Sélectionner un état",
+                "allowCustom": true
+              },
+              {
+                "path": "montant",
+                "label": "Montant (EUR)",
+                "type": "number",
+                "placeholder": "1000",
+                "min": 0,
+                "step": 0.01,
+                "ui:prefix": "€"
+              }
+            ]
+          }
+        },
+        {
+          "path": "copropriete.emprunts",
+          "id": "copropriete-emprunts",
+          "label": "Emprunts éventuels",
+          "name": "emprunts-eventuels",
+          "required": false,
+          "type": "array",
+          "itemLabel": "Emprunt {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "objet",
+                "label": "Objet",
+                "type": "text",
+                "placeholder": "Rénovation toiture"
+              },
+              {
+                "path": "capital_restant_du",
+                "label": "CRD (EUR)",
+                "type": "number",
+                "placeholder": "10000",
+                "min": 0,
+                "step": 0.01,
+                "ui:prefix": "€"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "syndic",
+      "label": "Le syndic",
+      "fields": [
+        {
+          "path": "syndic.nom",
+          "id": "syndic-nom",
+          "label": "Nom du syndic",
+          "name": "syndic_nom",
+          "type": "text",
+          "placeholder": "Foncia Lemanic, etc.",
+          "required": true
+        },
+        {
+          "path": "syndic.contact.email",
+          "id": "syndic-contact-email",
+          "label": "Email",
+          "name": "syndic_contact_email",
+          "type": "text",
+          "placeholder": "syndic@email.com",
+          "required": true
+        },
+        {
+          "path": "syndic.contact.telephone",
+          "id": "syndic-contact-telephone",
+          "label": "Téléphone",
+          "name": "syndic_contact_telephone",
+          "type": "text",
+          "placeholder": "Téléphone du syndic",
+          "required": true
+        },
+        {
+          "path": "syndic.fin_du_mandat",
+          "id": "syndic-fin-du-mandat",
+          "label": "Fin du mandat",
+          "name": "syndic_fin_du_mandat",
+          "type": "date",
+          "placeholder": "Fin du mandat",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "syndic.date_designation_ag",
+          "id": "syndic-date-designation-ag",
+          "label": "Date de désignation (AG)",
+          "name": "syndic_date_designation_ag",
+          "type": "date",
+          "placeholder": "Date de désignation (AG)",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        }
+      ]
+    },
+    {
+      "id": "ag",
+      "label": "L'assemblée générale",
+      "fields": [
+        {
+          "path": "ag.derniere_ag.date",
+          "id": "ag-derniere-ag-date",
+          "name": "ag_derniere_ag_date",
+          "label": "Date de la dernière AG",
+          "type": "date",
+          "placeholder": "Date de la dernière AG",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "ag.derniere_ag.ref_proces_verbal",
+          "id": "ag-derniere-ag-ref-pv",
+          "label": "Référence du PV",
+          "name": "ag_derniere_ag_ref_pv",
+          "type": "text",
+          "placeholder": "pv_2025.pdf",
+          "required": true
+        },
+        {
+          "path": "ag.derniere_ag.travaux_votes",
+          "id": "ag-derniere-ag-travaux-votes",
+          "required": false,
+          "label": "Travaux votés",
+          "name": "ag_derniere_ag_travaux_votes",
+          "minItems": 0,
+          "maxItems": 100,
+          "type": "array",
+          "itemLabel": "Travaux {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "objet",
+                "label": "Objet",
+                "type": "text",
+                "placeholder": "Réparation ascenseur",
+                "required": true
+              },
+              {
+                "path": "budget",
+                "label": "Budget (EUR)",
+                "type": "number",
+                "placeholder": "1000",
+                "min": 0,
+                "step": 0.01,
+                "ui:prefix": "€",
+                "required": true
+              },
+              {
+                "path": "etat",
+                "label": "État",
+                "type": "select",
+                "placeholder": "Sélectionner un état",
+                "options": ["non solde", "soldé", "en cours"],
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "financier_lot",
+      "label": "Situation financière du lot",
+      "fields": [
+        {
+          "path": "financier_lot.arrete_au",
+          "id": "financier_lot-arrete-au",
+          "label": "Arrêté au",
+          "name": "financier_lot_arrete_au",
+          "placeholder": "Arrêté au",
+          "type": "date",
+          "required": true,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "financier_lot.solde_compte",
+          "id": "financier_lot-solde-compte",
+          "label": "Solde du compte (EUR)",
+          "name": "financier_lot_solde_compte",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.appels_echus_non_payes",
+          "id": "financier_lot-appels-echus-non-payes",
+          "label": "Appels échus non payés (EUR)",
+          "name": "financier_lot_appels_echus_non_payes",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.echeances_a_venir",
+          "id": "financier_lot-echeances-a-venir",
+          "label": "Échéances à venir",
+          "name": "financier_lot_echeances_a_venir",
+          "minItems": 0,
+          "maxItems": 100,
+          "type": "array",
+          "required": false,
+          "itemLabel": "Échéance {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date",
+                "type": "date",
+                "placeholder": "Date de l'échéance",
+                "required": true,
+                "icon": "calendar_dots_fill"
+              },
+              {
+                "path": "montant",
+                "label": "Montant (EUR)",
+                "type": "number",
+                "placeholder": "1000",
+                "min": 0,
+                "step": 0.01,
+                "ui:prefix": "€",
+                "required": true,
+                "icon": "calendar_dots_fill"
+              }
+            ]
+          }
+        },
+        {
+          "path": "financier_lot.avances_provisions.generale",
+          "id": "financier_lot-avances_provisions-generale",
+          "label": "Avance générale (EUR)",
+          "name": "financier_lot_avances_provisions_generale",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.avances_provisions.travaux",
+          "id": "financier_lot-avances_provisions-travaux",
+          "label": "Provision travaux (EUR)",
+          "name": "financier_lot_avances_provisions_travaux",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.charges.N.année_exercice",
+          "id": "financier_lot-charges-N-annee-exercice",
+          "label": "Exercice N",
+          "name": "financier_lot_charges_N_annee_exercice",
+          "type": "text",
+          "pattern": "^\\d{4}$",
+          "placeholder": "2025",
+          "required": true
+        },
+        {
+          "path": "financier_lot.charges.N.courantes",
+          "id": "financier_lot-charges-N-courantes",
+          "label": "Charges N — Courantes (EUR)",
+          "name": "financier_lot_charges_N_courantes",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.charges.N.hors_budget",
+          "id": "financier_lot-charges-N-hors-budget",
+          "label": "Charges N — Hors budget (EUR)",
+          "name": "financier_lot_charges_N_hors_budget",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.charges.N_1.année_exercice",
+          "id": "financier_lot-charges-N_1-annee-exercice",
+          "label": "Exercice N-1",
+          "name": "financier_lot_charges_N_1_annee_exercice",
+          "type": "text",
+          "pattern": "^\\d{4}$",
+          "placeholder": "2024",
+          "required": true
+        },
+        {
+          "path": "financier_lot.charges.N_1.courantes",
+          "id": "financier_lot-charges-N_1-courantes",
+          "label": "Charges N-1 — Courantes (EUR)",
+          "name": "financier_lot_charges_N_1_courantes",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.charges.N_1.hors_budget",
+          "id": "financier_lot-charges-N_1-hors-budget",
+          "label": "Charges N-1 — Hors budget (EUR)",
+          "name": "financier_lot_charges_N_1_hors_budget",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente",
+          "id": "financier_lot-sommes-a-la-charge-acquereur-post-vente",
+          "required": false,
+          "label": "Sommes à la charge de l’acquéreur après vente",
+          "name": "financier_lot_sommes_a_la_charge_acquereur_post_vente",
+          "minItems": 0,
+          "maxItems": 100,
+          "type": "array",
+          "itemLabel": "Somme {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "decision_ag",
+                "label": "Décision d’AG",
+                "type": "text"
+              },
+              {
+                "path": "montant",
+                "label": "Montant (EUR)",
+                "type": "number",
+                "min": 0,
+                "step": 0.01,
+                "ui:prefix": "€"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

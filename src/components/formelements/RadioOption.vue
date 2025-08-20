@@ -14,7 +14,7 @@ defineProps<Props>();
 
 const inputRef = ref<HTMLInputElement | null>(null);
 
-const model = defineModel<string>();
+const model = defineModel<string | number | boolean>();
 
 function simulateClick() {
   if (inputRef.value) {

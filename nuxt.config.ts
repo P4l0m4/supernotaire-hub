@@ -22,6 +22,8 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  build: { transpile: ["pdfmake", "@vuepic/vue-datepicker"] },
+
   vite: {
     css: {
       preprocessorOptions: {

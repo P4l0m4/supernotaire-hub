@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { colors } from "@/utils/colors";
 
 interface Props {
@@ -14,6 +13,7 @@ interface Props {
   icon?: string;
   iconSize?: string;
   fontSize?: string;
+  reverse?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -22,6 +22,7 @@ withDefaults(defineProps<Props>(), {
   fontSize: "1rem",
   iconSize: "1.25rem",
   radius: "",
+  reverse: false,
 });
 </script>
 <template>
@@ -37,6 +38,7 @@ withDefaults(defineProps<Props>(), {
     <IconComponent
       v-if="icon"
       class="icon"
+      :class="{ 'icon--reverse': reverse }"
       :icon
       :size="iconSize || undefined"
       :color="variant ? colors[variant] : colors['text-color']"
@@ -68,12 +70,20 @@ withDefaults(defineProps<Props>(), {
       & .icon {
         transform: translateX(0.5rem);
       }
+
+      & .icon--reverse {
+        transform: translateX(-0.5rem);
+      }
     }
   }
 }
 
 .icon {
   transition: transform 0.4s ease;
+
+  &--reverse {
+    order: -1;
+  }
 }
 
 .secondary-color {

@@ -16,6 +16,7 @@ interface Props {
   icon?: string;
   iconSize?: string;
   fontSize?: string;
+  reverse?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   fontSize: "1rem",
   iconSize: "1.25rem",
   radius: "",
+  reverse: false,
 });
 
 const iconColor = computed(() => {
@@ -62,6 +64,7 @@ const iconColor = computed(() => {
     <IconComponent
       v-if="icon"
       class="icon"
+      :class="{ 'icon--reverse': reverse }"
       :icon
       :size="iconSize || undefined"
       :color="iconColor"
@@ -92,12 +95,20 @@ const iconColor = computed(() => {
       & .icon {
         transform: translateX(0.5rem);
       }
+
+      & .icon--reverse {
+        transform: translateX(-0.5rem);
+      }
     }
   }
 }
 
 .icon {
   transition: transform 0.4s ease;
+
+  &--reverse {
+    order: -1;
+  }
 }
 
 .secondary-color {
