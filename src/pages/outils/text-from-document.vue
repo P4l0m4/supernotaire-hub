@@ -229,7 +229,7 @@ function reset() {
 
   @media (min-width: $big-tablet-screen) {
     padding: 4rem 2rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
 
   &__title {
@@ -305,7 +305,7 @@ input[type="file"]::file-selector-button:hover {
   @media (min-width: $big-tablet-screen) {
     flex-direction: row;
     padding: 4rem 2rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
 }
 

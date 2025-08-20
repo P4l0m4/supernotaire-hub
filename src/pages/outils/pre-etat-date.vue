@@ -94,7 +94,7 @@ async function generatePdf() {
 
   @media (min-width: $big-tablet-screen) {
     padding: 0 2rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
 
   &__title {

@@ -301,7 +301,6 @@ if (import.meta.client) {
 
   @media (min-width: $big-tablet-screen) {
     padding: 1.5rem;
-    gap: 3rem;
   }
 
   &__title {

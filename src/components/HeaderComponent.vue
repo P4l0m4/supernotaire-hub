@@ -40,7 +40,7 @@
   padding: 1rem;
   box-shadow: $shadow-black;
   background-color: $base-color;
-  height: 72px;
+  height: fit-content;
   z-index: 2;
   position: fixed;
   top: 0;
@@ -52,7 +52,7 @@
 
   @media (min-width: $big-tablet-screen) {
     display: flex;
-    padding: 1rem 4rem;
+    padding: 0.5rem 4rem;
     height: fit-content;
   }
 
