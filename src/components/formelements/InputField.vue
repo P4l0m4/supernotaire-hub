@@ -43,7 +43,7 @@ function toggleShowPassword() {
     class="input-field"
     :class="{ shake: error, 'input-field--has-error': error }"
   >
-    <IconComponent
+    <UIIconComponent
       v-if="icon"
       :icon="icon"
       :color="colors['text-color-faded']"
@@ -90,7 +90,7 @@ function toggleShowPassword() {
       @blur="$emit('blur')"
     />
 
-    <IconComponent
+    <UIIconComponent
       icon="eye"
       class="input-field__icon"
       style="cursor: pointer"
@@ -99,7 +99,7 @@ function toggleShowPassword() {
       @keydown.enter="toggleShowPassword"
       @keydown.space="toggleShowPassword"
     />
-    <IconComponent
+    <UIIconComponent
       icon="eye_off"
       class="input-field__icon"
       style="cursor: pointer"
@@ -133,7 +133,7 @@ function toggleShowPassword() {
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active {
       -webkit-box-shadow: 0 0 0 20px #fae3e1 inset !important;
-      //the color cannot have transparency, need to update this in case the error color changes
+      //the color cannot have transparency, need to update this in case the error background color changes
     }
   }
 

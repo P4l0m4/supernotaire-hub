@@ -6,7 +6,10 @@ import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
 
 import type { FormDefinition } from "@/utils/types/forms";
 
-const props = defineProps<{ formDefinition: FormDefinition }>();
+const props = defineProps<{
+  formDefinition: FormDefinition;
+  suggestions: Record<string, any>;
+}>();
 const emit = defineEmits<{
   (e: "complete"): void;
 }>();
@@ -14,6 +17,8 @@ const emit = defineEmits<{
 const formRef = ref<HTMLFormElement | null>(null);
 
 const currentSection = ref(0);
+
+const stopNextStep = ref(false);
 
 const model = defineModel<any>({ default: {} });
 
@@ -32,15 +37,6 @@ function ensureArrayPaths(def?: FormDefinition) {
 }
 
 ensureArrayPaths(props.formDefinition);
-
-const setDeep = (obj: any, path: string[], val: any) => {
-  let cur = obj;
-  for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]] ??= {};
-  cur[path[path.length - 1]] = Object.assign(
-    cur[path[path.length - 1]] ?? {},
-    val
-  );
-};
 
 const regexFrom = (p?: string | RegExp) => {
   if (!p) return null;
@@ -84,6 +80,19 @@ const stepValidator = (step?: number | null) =>
 //   return false;
 // }
 
+function getDeep(obj: any, path: string[]) {
+  return path.reduce((o, k) => (o ? o[k] : undefined), obj);
+}
+
+const setDeep = (obj: any, path: string[], val: any) => {
+  let cur = obj;
+  for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]] ??= {};
+  cur[path[path.length - 1]] = Object.assign(
+    cur[path[path.length - 1]] ?? {},
+    val
+  );
+};
+
 function buildRules(def?: FormDefinition) {
   const rules: any = {};
   if (!def) return rules;
@@ -112,14 +121,42 @@ function buildRules(def?: FormDefinition) {
     const p = field.path.split(".");
     const full = [...basePath, ...p];
 
-    if (field.type === "array") {
-      const arrRules: any = {};
-      if (field.required) arrRules.required = required;
-      if (field.minItems != null)
-        arrRules.minLength = fr.minLength(field.minItems);
-      if (field.maxItems != null)
-        arrRules.maxLength = fr.maxLength(field.maxItems);
+    // if (field.type === "array") {
+    //   const arrRules: any = {};
+    //   if (field.required) arrRules.required = required;
+    //   if (field.minItems != null)
+    //     arrRules.minLength = fr.minLength(field.minItems);
+    //   if (field.maxItems != null)
+    //     arrRules.maxLength = fr.maxLength(field.maxItems);
 
+    //   setDeep(rules, full, {
+    //     ...(field.required ? { required } : {}),
+    //     ...(field.minItems != null
+    //       ? { minLength: minLength(field.minItems) }
+    //       : {}),
+    //     ...(field.maxItems != null
+    //       ? { maxLength: maxLength(field.maxItems) }
+    //       : {}),
+    //   });
+
+    //   const itemShape: any = {};
+    //   for (const sub of field.itemSchema?.fields ?? []) {
+    //     const leaf = rulesForScalar(sub);
+    //     if (leaf) setDeep(itemShape, sub.path.split("."), leaf);
+    //   }
+
+    //   const arrInModel = (getDeep(model.value, full) as any[]) || [];
+    //   for (let i = 0; i < arrInModel.length; i++) {
+    //     // important: cloner pour éviter les références partagées
+    //     const perItem = JSON.parse(JSON.stringify(itemShape));
+    //     setDeep(rules, [...full, String(i)], perItem);
+    //   }
+
+    //   return;
+    // }
+
+    if (field.type === "array") {
+      // règles du conteneur
       setDeep(rules, full, {
         ...(field.required ? { required } : {}),
         ...(field.minItems != null
@@ -130,6 +167,21 @@ function buildRules(def?: FormDefinition) {
           : {}),
       });
 
+      // shape d'un item
+      const itemShape: any = {};
+      for (const sub of field.itemSchema?.fields ?? []) {
+        const leaf = rulesForScalar(sub);
+        if (leaf) setDeep(itemShape, sub.path.split("."), leaf);
+      }
+
+      // règles par index existant (sans JSON.stringify)
+      const arrInModel = (getDeep(model.value, full) as any[]) || [];
+      for (let i = 0; i < arrInModel.length; i++) {
+        // réutilise la même shape (les validateurs sont des fonctions pures)
+        setDeep(rules, [...full, String(i)], itemShape);
+        // Variante si tu veux un léger découplage au 1er niveau :
+        // setDeep(rules, [...full, String(i)], { ...itemShape });
+      }
       return;
     }
 
@@ -175,6 +227,17 @@ async function validateCurrentSection() {
 
   return sectionErrors.length === 0;
 }
+
+const isCurrentStepInvalid = computed(() => {
+  const section = props.formDefinition.sections[currentSection.value];
+  const paths = section.fields.map((f) => f.path);
+
+  const sectionErrors = v$.value.$errors.filter((e) =>
+    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+  );
+
+  return sectionErrors.length > 0;
+});
 
 async function next() {
   try {
@@ -230,6 +293,13 @@ if (import.meta.client) {
     { immediate: true }
   );
 }
+
+const getSuggestion = (k?: string) => {
+  if (!k) return "";
+  const arr = Array.isArray(props.suggestions) ? props.suggestions : [];
+  const hit = arr.find((it) => it && it.key === k);
+  return hit?.value ?? "";
+};
 </script>
 
 <template>
@@ -240,7 +310,7 @@ if (import.meta.client) {
     v-if="formDefinition"
   >
     <span class="dynamic-form__title sr-only">{{ formDefinition?.title }}</span>
-    <FormelementsFormSteps
+    <FormElementsFormSteps
       v-if="formDefinition?.sections.length > 1"
       :steps-labels="formDefinition.sections.map((s) => s.label)"
       :currentStep="currentSection + 1"
@@ -254,26 +324,28 @@ if (import.meta.client) {
       v-show="currentSection === index"
     >
       <div class="dynamic-form__section__fields">
-        <FormelementsFormField
+        <FormElementsFormField
           v-for="field in section.fields"
           :key="field.path"
           :formField="field"
+          :suggestion="getSuggestion(field.suggestionRef)"
           v-model="model"
           :validation="nodeFor(field.path)"
+          @hasErrors="stopNextStep = $event.hasErrors"
         />
       </div>
     </div>
     <div class="dynamic-form__buttons">
-      <PrimaryButton
-        variant="accent-color"
+      <UIPrimaryButton
+        :variant="isCurrentStepInvalid ? 'error-color' : 'accent-color'"
         icon="arrow_right"
         @click="next"
         @keydown.enter="next"
         @keydown.space="next"
       >
         Suivant
-      </PrimaryButton>
-      <SecondaryButton
+      </UIPrimaryButton>
+      <UISecondaryButton
         v-if="currentSection > 0"
         variant="accent-color"
         icon="arrow_left"
@@ -283,7 +355,7 @@ if (import.meta.client) {
         @keydown.space="prev"
       >
         Précédent
-      </SecondaryButton>
+      </UISecondaryButton>
     </div>
   </form>
 </template>

@@ -30,7 +30,7 @@ function toggleQuestion(index: number) {
     >
       <h5 class="faq-component__card__question">
         {{ question.title }}
-        <IconComponent
+        <UIIconComponent
           :icon="
             questionOpened === index ? 'caret_down_bold' : 'caret_right_bold'
           "

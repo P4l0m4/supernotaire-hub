@@ -91,15 +91,15 @@ const plans = ref([
           </div>
 
           <NuxtLink :to="plan.link" class="tarifs__plans__plan__link">
-            <PrimaryButton
+            <UIPrimaryButton
               v-if="plan.buttonType === 'primary'"
               variant="accent-color"
-              >Commencer maintenant</PrimaryButton
+              >Commencer maintenant</UIPrimaryButton
             >
-            <SecondaryButton
+            <UISecondaryButton
               v-if="plan.buttonType === 'secondary'"
               variant="accent-color"
-              >Commencer maintenant</SecondaryButton
+              >Commencer maintenant</UISecondaryButton
             >
           </NuxtLink>
         </div>
@@ -140,13 +140,13 @@ const plans = ref([
 
       <div class="tarifs__questions__buttons">
         <NuxtLink to="/contact" aria-label="contact" style="width: 100%"
-          ><PrimaryButton variant="accent-color"
-            >Nous contacter</PrimaryButton
+          ><UIPrimaryButton variant="accent-color"
+            >Nous contacter</UIPrimaryButton
           ></NuxtLink
         >
         <NuxtLink to="/faq-notaires" aria-label="Foire aux questions"
-          ><TertiaryButton variant="text-color-faded"
-            >Foire Aux Questions</TertiaryButton
+          ><UITertiaryButton variant="text-color-faded"
+            >Foire Aux Questions</UITertiaryButton
           ></NuxtLink
         >
       </div>

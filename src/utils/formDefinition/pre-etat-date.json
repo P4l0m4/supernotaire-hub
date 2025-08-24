@@ -2,12 +2,43 @@
   "title": "Pré-état daté",
   "sections": [
     {
+      "id": "documents",
+      "label": "Les sources",
+      "fields": [
+        {
+          "path": "document.dernier_pv_ag",
+          "id": "dernier-pv-ag",
+          "label": "Déposez votre dernier PV d'AG",
+          "name": "dernier_pv_ag",
+          "type": "file",
+          "required": true,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_ExtractionPVAG"
+        },
+        {
+          "path": "document.fiche_synthetique_copropriete",
+          "id": "fiche-synthetique-copropriete",
+          "label": "Fiche synthétique de la copropriété",
+          "name": "fiche_synthetique_copropriete",
+          "type": "file",
+          "required": true,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_FicheSynthétiqueCopropriété"
+        }
+      ]
+    },
+    {
       "id": "bien",
       "label": "Le bien à vendre",
       "fields": [
         {
           "path": "bien.adresse",
           "id": "bien-adresse",
+          "suggestionRef": "adresse_du_bien",
           "label": "Adresse",
           "name": "adresse",
           "type": "text",
@@ -18,7 +49,8 @@
         {
           "path": "bien.identification.batiment",
           "id": "bien-identification-batiment",
-          "label": "Bâtiment",
+          "suggestionRef": "identification_du_batiment",
+          "label": "Identifiant du bâtiment",
           "name": "batiment",
           "type": "text",
           "placeholder": "A",
@@ -28,26 +60,29 @@
         {
           "path": "bien.identification.escalier",
           "id": "bien-identification-escalier",
-          "label": "Escalier",
+          "suggestionRef": "bien_identification_escalier",
+          "label": "Entrée / cage (escalier)",
           "name": "escalier",
           "type": "text",
-          "placeholder": "1",
+          "placeholder": "1, B, etc.",
           "required": false,
           "icon": "stairs_fill"
         },
         {
-          "path": "bien.identification.niveau",
-          "id": "bien-identification-niveau",
-          "label": "Niveau",
-          "name": "niveau",
+          "path": "bien.identification.etage",
+          "id": "bien-identification-etage",
+          "suggestionRef": "bien_identification_etage",
+          "label": "Étage",
+          "name": "etage",
           "type": "text",
-          "placeholder": "3e, rez-de-chaussée...",
+          "placeholder": "3e, RDC...",
           "required": true,
           "icon": "escalator_up_fill"
         },
         {
           "path": "bien.identification.complements",
           "id": "bien-identification-complements",
+          "suggestionRef": "bien_identification_complements",
           "label": "Compléments",
           "name": "complements",
           "required": false,
@@ -67,6 +102,7 @@
             "fields": [
               {
                 "path": "numero",
+                "suggestionRef": "bien_lots_numero",
                 "label": "Numéro",
                 "name": "numero",
                 "type": "text",
@@ -76,6 +112,7 @@
               },
               {
                 "path": "usage",
+                "suggestionRef": "bien_lots_usage",
                 "label": "Usage",
                 "name": "usage",
                 "type": "select",
@@ -92,6 +129,7 @@
               },
               {
                 "path": "tantiemes",
+                "suggestionRef": "bien_lots_tantiemes",
                 "label": "Tantièmes",
                 "name": "tantiemes",
                 "type": "number",
@@ -102,6 +140,7 @@
               },
               {
                 "path": "tantiemes_speciaux.ascenseur",
+                "suggestionRef": "bien_lots_tantiemes_speciaux_ascenseur",
                 "label": "Tantièmes spéciaux — Ascenseur",
                 "name": "tantiemes_speciaux_ascenseur",
                 "type": "number",
@@ -113,6 +152,7 @@
               },
               {
                 "path": "tantiemes_speciaux.chauffage",
+                "suggestionRef": "bien_lots_tantiemes_speciaux_chauffage",
                 "label": "Tantièmes spéciaux — Chauffage",
                 "name": "tantiemes_speciaux_chauffage",
                 "type": "number",
@@ -134,6 +174,7 @@
         {
           "path": "copropriete.arrete_au",
           "id": "copropriete-arrete-au",
+          "suggestionRef": "copropriete_arrete_au",
           "label": "Arrêté au",
           "name": "arrete_au",
           "type": "date",
@@ -143,6 +184,7 @@
         },
         {
           "path": "copropriete.nombre_lots_principaux",
+          "suggestionRef": "copropriete_nombre_lots_principaux",
           "id": "copropriete-nombre-lots-principaux",
           "label": "Nombre de lots principaux",
           "name": "nombre_lots_principaux",
@@ -153,8 +195,9 @@
         },
         {
           "path": "copropriete.fonds_travaux.montant",
+          "suggestionRef": "copropriete_montant_du_fonds_travaux",
           "id": "copropriete-fonds-travaux-montant",
-          "label": "Fonds travaux (EUR)",
+          "label": "Montant total fonds travaux",
           "name": "fonds_travaux_montant",
           "required": true,
           "placeholder": "1000",
@@ -165,16 +208,18 @@
         },
         {
           "path": "copropriete.fonds_travaux.date_arret",
+          "suggestionRef": "copropriete_date_arret_fonds_travaux",
           "id": "copropriete-fonds-travaux-date-arret",
           "label": "Arrêté fonds travaux",
           "name": "fonds_travaux_date_arret",
           "type": "date",
-          "placeholder": "Arrêté fonds travaux",
+          "placeholder": "Date de fin de l’exercice clos",
           "required": true,
           "icon": "calendar_dots_fill"
         },
         {
           "path": "copropriete.impayes.total",
+          "suggestionRef": "copropriete_impayes_total",
           "id": "copropriete-impayes-total",
           "label": "Impayés total (EUR)",
           "name": "impayes_total",
@@ -188,6 +233,7 @@
         },
         {
           "path": "copropriete.impayes.taux",
+          "suggestionRef": "copropriete_impayes_taux",
           "id": "copropriete-impayes-taux",
           "name": "impayes_taux",
           "label": "Taux d’impayés",
@@ -201,6 +247,7 @@
         },
         {
           "path": "copropriete.assurance.assureur",
+          "suggestionRef": "copropriete_assurance_assureur",
           "id": "copropriete-assurance-assureur",
           "label": "Assureur principal",
           "name": "assurance_assureur",
@@ -210,6 +257,7 @@
         },
         {
           "path": "copropriete.assurance.police",
+          "suggestionRef": "copropriete_assurance_police",
           "id": "copropriete-assurance-police",
           "name": "assurance_police",
           "required": true,
@@ -219,6 +267,7 @@
         },
         {
           "path": "copropriete.assurance.echeance",
+          "suggestionRef": "copropriete_assurance_echeance",
           "id": "copropriete-assurance-echeance",
           "label": "Échéance",
           "name": "assurance_echeance",
@@ -229,6 +278,7 @@
         },
         {
           "path": "copropriete.procedures",
+          "suggestionRef": "copropriete_procedures",
           "id": "copropriete-procedures",
           "label": "Procédures",
           "name": "procedures",
@@ -241,12 +291,14 @@
             "fields": [
               {
                 "path": "type",
+                "suggestionRef": "copropriete_procedures_type",
                 "label": "Type",
                 "type": "text",
                 "placeholder": "29-1"
               },
               {
                 "path": "etat",
+                "suggestionRef": "copropriete_procedures_etat",
                 "label": "État",
                 "type": "select",
                 "options": ["en cours", "clos"],
@@ -255,6 +307,7 @@
               },
               {
                 "path": "montant",
+                "suggestionRef": "copropriete_procedures_montant",
                 "label": "Montant (EUR)",
                 "type": "number",
                 "placeholder": "1000",
@@ -267,6 +320,7 @@
         },
         {
           "path": "copropriete.emprunts",
+          "suggestionRef": "copropriete_emprunts",
           "id": "copropriete-emprunts",
           "label": "Emprunts éventuels",
           "name": "emprunts-eventuels",
@@ -277,12 +331,14 @@
             "fields": [
               {
                 "path": "objet",
+                "suggestionRef": "copropriete_emprunts_objet",
                 "label": "Objet",
                 "type": "text",
                 "placeholder": "Rénovation toiture"
               },
               {
                 "path": "capital_restant_du",
+                "suggestionRef": "copropriete_emprunts_capital_restant_du",
                 "label": "CRD (EUR)",
                 "type": "number",
                 "placeholder": "10000",
@@ -301,6 +357,7 @@
       "fields": [
         {
           "path": "syndic.nom",
+          "suggestionRef": "nom_du_syndic",
           "id": "syndic-nom",
           "label": "Nom du syndic",
           "name": "syndic_nom",
@@ -310,6 +367,7 @@
         },
         {
           "path": "syndic.contact.email",
+          "suggestionRef": "email_du_syndic",
           "id": "syndic-contact-email",
           "label": "Email",
           "name": "syndic_contact_email",
@@ -319,6 +377,7 @@
         },
         {
           "path": "syndic.contact.telephone",
+          "suggestionRef": "telephone_du_syndic",
           "id": "syndic-contact-telephone",
           "label": "Téléphone",
           "name": "syndic_contact_telephone",
@@ -328,6 +387,7 @@
         },
         {
           "path": "syndic.fin_du_mandat",
+          "suggestionRef": "date_fin_du_mandat_syndic",
           "id": "syndic-fin-du-mandat",
           "label": "Fin du mandat",
           "name": "syndic_fin_du_mandat",
@@ -338,6 +398,7 @@
         },
         {
           "path": "syndic.date_designation_ag",
+          "suggestionRef": "date_designation_ag_syndic",
           "id": "syndic-date-designation-ag",
           "label": "Date de désignation (AG)",
           "name": "syndic_date_designation_ag",
@@ -354,6 +415,7 @@
       "fields": [
         {
           "path": "ag.derniere_ag.date",
+          "suggestionRef": "date_derniere_ag",
           "id": "ag-derniere-ag-date",
           "name": "ag_derniere_ag_date",
           "label": "Date de la dernière AG",
@@ -363,16 +425,8 @@
           "icon": "calendar_dots_fill"
         },
         {
-          "path": "ag.derniere_ag.ref_proces_verbal",
-          "id": "ag-derniere-ag-ref-pv",
-          "label": "Référence du PV",
-          "name": "ag_derniere_ag_ref_pv",
-          "type": "text",
-          "placeholder": "pv_2025.pdf",
-          "required": true
-        },
-        {
           "path": "ag.derniere_ag.travaux_votes",
+          "suggestionRef": "travaux_votes_derniere_ag",
           "id": "ag-derniere-ag-travaux-votes",
           "required": false,
           "label": "Travaux votés",
@@ -385,6 +439,7 @@
             "fields": [
               {
                 "path": "objet",
+                "suggestionRef": "derniere_ag_travaux_votes_objet",
                 "label": "Objet",
                 "type": "text",
                 "placeholder": "Réparation ascenseur",
@@ -392,6 +447,7 @@
               },
               {
                 "path": "budget",
+                "suggestionRef": "derniere_ag_travaux_votes_budget",
                 "label": "Budget (EUR)",
                 "type": "number",
                 "placeholder": "1000",
@@ -402,10 +458,11 @@
               },
               {
                 "path": "etat",
+                "suggestionRef": "derniere_ag_travaux_votes_etat",
                 "label": "État",
                 "type": "select",
                 "placeholder": "Sélectionner un état",
-                "options": ["non solde", "soldé", "en cours"],
+                "options": ["non soldé", "soldé", "en cours"],
                 "required": true
               }
             ]
@@ -419,6 +476,7 @@
       "fields": [
         {
           "path": "financier_lot.arrete_au",
+          "suggestionRef": "financier_lot_arrete_au",
           "id": "financier_lot-arrete-au",
           "label": "Arrêté au",
           "name": "financier_lot_arrete_au",
@@ -429,18 +487,21 @@
         },
         {
           "path": "financier_lot.solde_compte",
+          "suggestionRef": "financier_lot_solde_compte",
           "id": "financier_lot-solde-compte",
           "label": "Solde du compte (EUR)",
           "name": "financier_lot_solde_compte",
           "type": "number",
           "placeholder": "1000",
-          "min": 0,
+          "min": -100000000,
+          "max": 100000000,
           "step": 0.01,
           "ui:prefix": "€",
           "required": true
         },
         {
           "path": "financier_lot.appels_echus_non_payes",
+          "suggestionRef": "financier_lot_appels_echus_non_payes",
           "id": "financier_lot-appels-echus-non-payes",
           "label": "Appels échus non payés (EUR)",
           "name": "financier_lot_appels_echus_non_payes",
@@ -453,6 +514,7 @@
         },
         {
           "path": "financier_lot.echeances_a_venir",
+          "suggestionRef": "financier_lot_echeances_a_venir",
           "id": "financier_lot-echeances-a-venir",
           "label": "Échéances à venir",
           "name": "financier_lot_echeances_a_venir",
@@ -487,6 +549,7 @@
         },
         {
           "path": "financier_lot.avances_provisions.generale",
+          "suggestionRef": "financier_lot_avances_provisions_generale",
           "id": "financier_lot-avances_provisions-generale",
           "label": "Avance générale (EUR)",
           "name": "financier_lot_avances_provisions_generale",
@@ -499,6 +562,7 @@
         },
         {
           "path": "financier_lot.avances_provisions.travaux",
+          "suggestionRef": "financier_lot_avances_provisions_travaux",
           "id": "financier_lot-avances_provisions-travaux",
           "label": "Provision travaux (EUR)",
           "name": "financier_lot_avances_provisions_travaux",
@@ -511,6 +575,7 @@
         },
         {
           "path": "financier_lot.charges.N.année_exercice",
+          "suggestionRef": "financier_lot_charges_N_annee_exercice",
           "id": "financier_lot-charges-N-annee-exercice",
           "label": "Exercice N",
           "name": "financier_lot_charges_N_annee_exercice",
@@ -521,6 +586,7 @@
         },
         {
           "path": "financier_lot.charges.N.courantes",
+          "suggestionRef": "financier_lot_charges_N_courantes",
           "id": "financier_lot-charges-N-courantes",
           "label": "Charges N — Courantes (EUR)",
           "name": "financier_lot_charges_N_courantes",
@@ -532,6 +598,7 @@
         },
         {
           "path": "financier_lot.charges.N.hors_budget",
+          "suggestionRef": "financier_lot_charges_N_hors_budget",
           "id": "financier_lot-charges-N-hors-budget",
           "label": "Charges N — Hors budget (EUR)",
           "name": "financier_lot_charges_N_hors_budget",
@@ -543,6 +610,7 @@
         },
         {
           "path": "financier_lot.charges.N_1.année_exercice",
+          "suggestionRef": "financier_lot_charges_N_1_annee_exercice",
           "id": "financier_lot-charges-N_1-annee-exercice",
           "label": "Exercice N-1",
           "name": "financier_lot_charges_N_1_annee_exercice",
@@ -553,6 +621,7 @@
         },
         {
           "path": "financier_lot.charges.N_1.courantes",
+          "suggestionRef": "financier_lot_charges_N_1_courantes",
           "id": "financier_lot-charges-N_1-courantes",
           "label": "Charges N-1 — Courantes (EUR)",
           "name": "financier_lot_charges_N_1_courantes",
@@ -564,6 +633,7 @@
         },
         {
           "path": "financier_lot.charges.N_1.hors_budget",
+          "suggestionRef": "financier_lot_charges_N_1_hors_budget",
           "id": "financier_lot-charges-N_1-hors-budget",
           "label": "Charges N-1 — Hors budget (EUR)",
           "name": "financier_lot_charges_N_1_hors_budget",
@@ -575,6 +645,7 @@
         },
         {
           "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente",
+          "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente",
           "id": "financier_lot-sommes-a-la-charge-acquereur-post-vente",
           "required": false,
           "label": "Sommes à la charge de l’acquéreur après vente",
@@ -587,11 +658,13 @@
             "fields": [
               {
                 "path": "decision_ag",
+                "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente_decision_ag",
                 "label": "Décision d’AG",
                 "type": "text"
               },
               {
                 "path": "montant",
+                "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente_montant",
                 "label": "Montant (EUR)",
                 "type": "number",
                 "min": 0,

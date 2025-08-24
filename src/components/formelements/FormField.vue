@@ -7,6 +7,7 @@ import type { FormField } from "@/utils/types/forms";
 
 const props = defineProps<{
   formField: FormField;
+  suggestion?: string | object | number;
   validation?: Validation<any> | null;
 }>();
 
@@ -55,13 +56,13 @@ const errorMessage = computed(() => {
       :for="formField.id"
       class="form-field__label"
       >{{ formField.label }}
-      <IconComponent
+      <UIIconComponent
         v-if="formField.required"
         icon="asterisk"
         size="0.75rem"
         :color="colors['error-color']"
     /></label>
-    <InputField
+    <FormElementsInputField
       v-if="
         formField.type === 'text' ||
         formField.type === 'number' ||
@@ -77,7 +78,7 @@ const errorMessage = computed(() => {
       :error="errorMessage"
     />
     <ClientOnly v-else-if="formField.type === 'date'">
-      <FormelementsDateField
+      <FormElementsDateField
         :id="formField.id"
         :label="formField.label"
         v-model="valueRef"
@@ -87,19 +88,49 @@ const errorMessage = computed(() => {
       />
     </ClientOnly>
 
-    <FormelementsArrayFieldRenderer
+    <FormElementsArrayFieldRenderer
       v-if="formField.type === 'array'"
       v-model="arrayRef"
       :field="formField"
+      :suggestion="typeof suggestion === 'object' ? suggestion : undefined"
       :parentError="errorMessage"
     />
-    <FormelementsSelectField
+    <FormElementsSelectField
       v-else-if="formField.type === 'select'"
       :options="formField.options || []"
       v-model="valueRef"
       :placeholder="formField.placeholder || ''"
       :icon="formField.icon || ''"
       :error="errorMessage"
+    />
+    <FormElementsFileField
+      v-else-if="formField.type === 'file'"
+      :id="formField.id"
+      :name="formField.name"
+      :label="formField.label"
+      v-model="valueRef"
+      :required="formField.required"
+      :error="errorMessage"
+      :icon="formField.icon || ''"
+      :accept="formField.accept"
+      :multiple="formField.multiple || false"
+      :TS_TYPE="formField.TS_TYPE || ''"
+    />
+
+    <UISmartSuggestion
+      v-if="
+        suggestion !== undefined &&
+        suggestion !== null &&
+        suggestion !== '' &&
+        (typeof suggestion === 'string' || typeof suggestion === 'number') &&
+        valueRef !== suggestion
+      "
+      :suggestion="suggestion.toString()"
+      @click="
+        () => {
+          valueRef = suggestion;
+        }
+      "
     />
   </div>
 </template>

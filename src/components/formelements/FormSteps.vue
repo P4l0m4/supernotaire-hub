@@ -43,7 +43,7 @@ watch(
       @keydown.space="emit('changeStep', index)"
     >
       <div class="form-steps__item__circle">
-        <IconComponent
+        <UIIconComponent
           v-if="index + 1 < currentStep"
           icon="check_fat_fill"
           size="1rem"

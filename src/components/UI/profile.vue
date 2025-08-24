@@ -24,11 +24,11 @@ defineProps<{
     <h2 class="profile__title">{{ title }}</h2>
     <p class="profile__subtitle">{{ subtitle }}</p>
 
-    <TertiaryButton
+    <UITertiaryButton
       class="profile__link"
       variant="text-color-faded"
       icon="arrow_right"
-      >{{ linkText }}</TertiaryButton
+      >{{ linkText }}</UITertiaryButton
     >
   </NuxtLink>
 </template>

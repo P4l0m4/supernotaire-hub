@@ -35,13 +35,13 @@ const options = [
           @click="copyToClipboard(option.text)"
         >
           <span class="contact__options__option__icon"
-            ><IconComponent
+            ><UIIconComponent
               :icon="option.icon"
               :color="colors['accent-color']"
               size="1.75rem"
           /></span>
           {{ option.text }}
-          <IconComponent
+          <UIIconComponent
             icon="copy"
             :color="colors['text-color-faded']"
             size="1rem"
@@ -53,13 +53,13 @@ const options = [
           aria-label="Tester l’outil en avant-première"
           style="width: 100%"
         >
-          <PrimaryButton
+          <UIPrimaryButton
             variant="accent-color"
             icon="lightning_fill"
             style="width: 100%; margin-left: auto"
           >
             Tester en avant-première
-          </PrimaryButton>
+          </UIPrimaryButton>
         </NuxtLink>
       </div>
     </div>

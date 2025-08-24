@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 
 import { buildDocDefinition } from "@/utils/docDefinitions.ts/pre-etat-date";
 import formDefinition from "@/utils/formDefinition/pre-etat-date.json";
+import { processDocument } from "@/utils/textFromDocument";
+
+import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
+import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
+
+import { extractDataFromResults } from "@/utils/AIExtraction";
 
 import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/utils/types/forms";
@@ -40,6 +46,74 @@ async function generatePdf() {
   const doc = buildDocDefinition(formData, logo);
   $pdfMake.createPdf(doc).download("pre-etat-date.pdf");
 }
+
+const TS_TYPES: Record<string, string> = {
+  TS_TYPE_ExtractionPVAG,
+  TS_TYPE_FicheSynthétiqueCopropriété,
+};
+
+type AnyField = { path?: string; name?: string; TS_TYPE?: string };
+const FIELD_BY_DOC_KEY: Record<string, AnyField> = {};
+for (const sec of (formDefinition as any).sections ?? []) {
+  for (const f of (sec.fields ?? []) as AnyField[]) {
+    if (typeof f.path === "string" && f.path.startsWith("document.")) {
+      const k = f.path.split(".")[1]; // ex: "dernier_pv_ag"
+      FIELD_BY_DOC_KEY[k] = f;
+    }
+  }
+}
+
+function resolveTsTypeFor(key: string): string | null {
+  const f = FIELD_BY_DOC_KEY[key];
+  if (!f || !f.TS_TYPE) return null;
+  return (
+    TS_TYPES[f.TS_TYPE] ?? (typeof f.TS_TYPE === "string" ? f.TS_TYPE : null)
+  );
+}
+
+type Row = { key: string; value: unknown };
+const suggestions = ref<Row[]>([]);
+
+function toRows(o: Record<string, any>): Row[] {
+  return Object.entries(o).map(([key, value]) => ({ key, value }));
+}
+
+function upsertSuggestions(rows: Row[]) {
+  const map = new Map(suggestions.value.map((r) => [r.key, r.value]));
+  for (const r of rows) map.set(r.key, r.value); // remplace par clé
+  suggestions.value = Array.from(map, ([key, value]) => ({ key, value }));
+}
+
+async function handleDocumentInfoExtraction(key: string, file: File) {
+  const { results } = await processDocument(file);
+  const TS_TYPE = resolveTsTypeFor(key);
+  if (!TS_TYPE) return;
+
+  const filledModel = await extractDataFromResults([], results, key, TS_TYPE);
+  upsertSuggestions(toRows(filledModel || {}));
+}
+
+const seen = new Map<string, string>();
+const fileSig = (f: File) => `${f.name}|${f.size}|${f.lastModified}`;
+
+watch(
+  () => (formData as any).document,
+  (docs) => {
+    if (!docs) return;
+    for (const [key, val] of Object.entries(docs as Record<string, unknown>)) {
+      if (val instanceof File) {
+        const sig = fileSig(val);
+        if (seen.get(key) !== sig) {
+          seen.set(key, sig); // nouvelle version → traite
+          handleDocumentInfoExtraction(key, val);
+        }
+      } else if (val == null) {
+        seen.delete(key); // clé vidée → oubli
+      }
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -51,27 +125,28 @@ async function generatePdf() {
         conforme</span
       >
 
-      <FormelementsDynamicForm
+      <FormElementsDynamicForm
         v-if="!showFinalAction"
         :formDefinition="formDefinition as FormDefinition"
+        :suggestions
         v-model="formData"
         @complete="showFinalAction = true"
       />
       <div class="final-action" v-if="showFinalAction">
-        <PrimaryButton
+        <UIPrimaryButton
           @click="generatePdf()"
           :disabled="!ready"
           variant="success-color"
           icon="download"
-          >Télécharger le Pré-état daté</PrimaryButton
-        ><TertiaryButton
+          >Télécharger le Pré-état daté</UIPrimaryButton
+        ><UITertiaryButton
           variant="text-color"
           @click="showFinalAction = false"
           @keydown.enter="showFinalAction = false"
           @keydown.space="showFinalAction = false"
         >
           Revenir au formulaire
-        </TertiaryButton>
+        </UITertiaryButton>
         <div class="pre-etat-date__list">
           <h2 class="pre-etat-date__list__title">
             Documents à joindre à votre pré-état daté

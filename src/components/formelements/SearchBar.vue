@@ -38,7 +38,7 @@ watch(
     @click="debouncedSearch()"
     @keyup.enter="debouncedSearch()"
   >
-    <IconComponent icon="search" :color="colors['text-color-faded']" />
+    <UIIconComponent icon="search" :color="colors['text-color-faded']" />
     <input
       type="search"
       v-model="local"

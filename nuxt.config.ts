@@ -51,6 +51,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       STORYBLOK_KEY: process.env.STORYBLOK_KEY,
+      GEMINI_KEY: process.env.NUXT_PUBLIC_GEMINI_KEY,
     },
   },
   dayjs: {

@@ -16,12 +16,12 @@
       </ul>
       <div class="header__nav__buttons">
         <!-- <NuxtLink to="/inscription">
-          <SecondaryButton variant="accent-color">Connexion</SecondaryButton>
+          <UISecondaryButton variant="accent-color">Connexion</UISecondaryButton>
         </NuxtLink> -->
         <NuxtLink to="/inscription">
-          <PrimaryButton variant="accent-color" icon="arrow_right">
+          <UIPrimaryButton variant="accent-color" icon="arrow_right">
             Inscription
-          </PrimaryButton>
+          </UIPrimaryButton>
         </NuxtLink>
       </div>
     </nav>

@@ -13,7 +13,7 @@ defineProps<Props>();
     <img class="article-preview__image" :src="image" :alt="title" />
     <h2 class="article-preview__title">{{ title }}</h2>
     <p class="paragraphs">{{ description }}</p>
-    <TertiaryButton>En savoir plus</TertiaryButton>
+    <UITertiaryButton>En savoir plus</UITertiaryButton>
   </NuxtLink>
 </template>
 <style lang="scss" scoped>

@@ -62,8 +62,8 @@
           rapidement à un notaire.
         </p>
         <NuxtLink to="/inscription"
-          ><PrimaryButton variant="accent-color" icon="arrow_right"
-            >Créer mon compte</PrimaryButton
+          ><UIPrimaryButton variant="accent-color" icon="arrow_right"
+            >Créer mon compte</UIPrimaryButton
           ></NuxtLink
         >
       </div>

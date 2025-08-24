@@ -2,6 +2,7 @@ type ISODate = `${number}-${number}-${number}`;
 type Euro = number;
 
 export interface PreEtatDate {
+  documents: Documents;
   bien: Bien;
   copropriete: Copropriete;
   syndic: Syndic;
@@ -9,12 +10,17 @@ export interface PreEtatDate {
   financier_lot: FinancierLot;
 }
 
+export interface Documents {
+  dernier_pv_ag: File;
+  fiche_synthetique_copropriete: File;
+}
+
 export interface Bien {
   adresse: string;
   identification: {
     batiment: string;
     escalier: string;
-    niveau: string;
+    etage: string;
     complements: string;
   };
   lots: Lot[];
@@ -27,11 +33,6 @@ export interface Lot {
     ascenseur: number;
     chauffage: number;
   };
-}
-
-export interface Perimetre {
-  lots_concernes: string[];
-  commentaire: string;
 }
 
 export interface Copropriete {

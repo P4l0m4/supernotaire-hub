@@ -5,11 +5,13 @@ type FieldType =
   | "select"
   | "checkbox"
   | "array"
-  | "email";
+  | "email"
+  | "file";
 
 export interface BaseField {
   path: string;
   id: string;
+  suggestionRef?: string;
   label: string;
   name: string;
   type: Exclude<FieldType, "array">; // tous sauf "array"
@@ -21,6 +23,9 @@ export interface BaseField {
   required?: boolean;
   placeholder?: string;
   icon?: string;
+  accept?: string[]; // pour file
+  multiple?: boolean; // pour file
+  TS_TYPE?: string; // pour extraction AI
 }
 
 // Spécifique aux tableaux

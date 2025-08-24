@@ -18,8 +18,8 @@ defineProps(["error"]);
         </template>
 
         <NuxtLink to="/">
-          <PrimaryButton variant="accent-color"
-            >Retour à la page d'accueil</PrimaryButton
+          <UIPrimaryButton variant="accent-color"
+            >Retour à la page d'accueil</UIPrimaryButton
           ></NuxtLink
         >
       </div>

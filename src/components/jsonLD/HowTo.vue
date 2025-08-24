@@ -64,8 +64,8 @@ const props = defineProps<Props>();
               class="how-to__prerequisites__list__element__link"
               :to="prerequisite.internalLink"
               aria-label="aide"
-              ><SecondaryButton variant="accent-color"
-                >Aide</SecondaryButton
+              ><UISecondaryButton variant="accent-color"
+                >Aide</UISecondaryButton
               ></NuxtLink
             >
           </li>

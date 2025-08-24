@@ -42,7 +42,7 @@ watch(query, (newQuery) => {
 <template>
   <Container>
     <div class="annuaire">
-      <FormelementsSearchBar
+      <FormElementsSearchBar
         v-model="query"
         placeholder="Chercher par nom"
         @search="(q) => console.log('debounced query ➜', q)"

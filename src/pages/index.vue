@@ -90,9 +90,9 @@ onMounted(() => {
             aria-label="Découvrir notre offre"
             style="width: 100%"
           >
-            <PrimaryButton variant="accent-color">
+            <UIPrimaryButton variant="accent-color">
               Découvrir notre offre
-            </PrimaryButton></NuxtLink
+            </UIPrimaryButton></NuxtLink
           >
           Sans frais, de la création du dossier à la signature de l’acte de
           vente.

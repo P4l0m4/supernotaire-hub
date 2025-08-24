@@ -91,13 +91,13 @@ const perks = [
         :description="perk.description"
       />
       <NuxtLink to="/inscription" class="perks__link">
-        <SecondaryButton
+        <UISecondaryButton
           variant="accent-color"
           icon="arrow_right"
           style="height: 100%; max-width: none"
         >
           Créer mon compte
-        </SecondaryButton>
+        </UISecondaryButton>
       </NuxtLink>
     </div>
   </Container>

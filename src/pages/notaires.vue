@@ -99,9 +99,9 @@ onMounted(() => {
           France.
         </p>
         <NuxtLink to="/inscription" class="hero__text__link">
-          <PrimaryButton variant="accent-color" icon="arrow_right">
+          <UIPrimaryButton variant="accent-color" icon="arrow_right">
             Créer un dossier
-          </PrimaryButton>
+          </UIPrimaryButton>
           Sans frais, de l'ouverture à la signature.
         </NuxtLink>
       </div>

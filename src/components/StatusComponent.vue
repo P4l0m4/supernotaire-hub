@@ -57,7 +57,11 @@ const statusIconColor = computed(() => {
 <template>
   <span class="status-component" v-if="statusText?.length > 0">
     {{ statusText
-    }}<IconComponent :icon="statusIcon" :color="statusIconColor" size="1rem" />
+    }}<UIIconComponent
+      :icon="statusIcon"
+      :color="statusIconColor"
+      size="1rem"
+    />
   </span>
 </template>
 <style lang="scss" scoped>

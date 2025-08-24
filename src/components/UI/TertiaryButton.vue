@@ -59,7 +59,7 @@ const iconColor = computed(() => {
   >
     <span class="button__text"><slot /></span>
 
-    <IconComponent
+    <UIIconComponent
       v-if="icon"
       class="icon"
       :icon

@@ -29,7 +29,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
       tabindex="0"
       aria-label="menu"
     >
-      <IconComponent
+      <UIIconComponent
         :icon="isMenuOpen ? 'xx' : 'menu'"
         size="2rem"
         :color="colors['text-color']"

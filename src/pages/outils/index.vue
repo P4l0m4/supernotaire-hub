@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const tools = [
   {
-    name: "Extracteur de texte à partir d'un document",
+    name: "Extraire le texte d'un document",
     path: "/outils/text-from-document",
   },
-  { name: "Générateur de Pré-état daté", path: "/outils/pre-etat-date" },
+  { name: "Créer un Pré-état daté", path: "/outils/pre-etat-date" },
 ];
 </script>
 <template>

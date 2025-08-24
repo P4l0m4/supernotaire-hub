@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { colors } from "@/utils/colors";
 
 interface Props {
@@ -9,8 +8,6 @@ interface Props {
     | "base-color"
     | "text-color"
     | "primary-color"
-    | "success-color"
-    | "purple-color"
     | "error-color";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   icon?: string;
@@ -19,36 +16,13 @@ interface Props {
   reverse?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   variant: "primary-color",
   direction: "row",
   fontSize: "1rem",
   iconSize: "1.25rem",
   radius: "",
   reverse: false,
-});
-
-const iconColor = computed(() => {
-  switch (props.variant) {
-    case "base-color":
-      return colors["secondary-color-faded"];
-    case "primary-color":
-      return colors["accent-color"];
-    case "secondary-color":
-      return colors["primary-color"];
-    case "text-color":
-      return colors["primary-color"];
-    case "accent-color":
-      return colors["primary-color"];
-    case "purple-color":
-      return colors["primary-color"];
-    case "success-color":
-      return colors["primary-color"];
-    case "error-color":
-      return colors["primary-color"];
-    default:
-      return colors["base-color-faded"];
-  }
 });
 </script>
 <template>
@@ -61,13 +35,13 @@ const iconColor = computed(() => {
   >
     <slot />
 
-    <IconComponent
+    <UIIconComponent
       v-if="icon"
       class="icon"
       :class="{ 'icon--reverse': reverse }"
       :icon
       :size="iconSize || undefined"
-      :color="iconColor"
+      :color="variant ? colors[variant] : colors['text-color']"
     />
   </span>
 </template>
@@ -87,10 +61,11 @@ const iconColor = computed(() => {
 
   @media (min-width: $big-tablet-screen) {
     transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, box-shadow 0.2s linear;
+      border-color 0.3s linear, box-shadow 0.2s linear, gap 0.2s linear;
 
     &:hover {
       box-shadow: $shadow-black;
+      gap: 1rem;
 
       & .icon {
         transform: translateX(0.5rem);
@@ -112,50 +87,38 @@ const iconColor = computed(() => {
 }
 
 .secondary-color {
-  background-color: $secondary-color;
-  color: $base-color;
+  background-color: transparent;
+  color: $secondary-color;
   border: 2px solid $secondary-color;
 }
 
 .accent-color {
-  background-color: $accent-color;
-  color: $primary-color;
+  background-color: transparent;
+  color: $accent-color;
   border: 2px solid $accent-color;
 }
 
 .base-color {
-  background-color: $base-color;
-  color: $secondary-color;
+  background-color: transparent;
+  color: $base-color;
   border: 2px solid $base-color;
 }
 
 .text-color {
-  background-color: $text-color;
-  color: $primary-color;
+  background-color: transparent;
+  color: $text-color;
   border: 2px solid $text-color;
 }
 
 .primary-color {
-  background-color: $primary-color;
-  color: $accent-color;
+  background-color: transparent;
+  color: $primary-color;
   border: 2px solid $primary-color;
 }
 
-.success-color {
-  background-color: $success-color;
-  color: $primary-color;
-  border: 2px solid $success-color;
-}
-
-.purple-color {
-  background-color: $purple-color;
-  color: $primary-color;
-  border: 2px solid $purple-color;
-}
-
 .error-color {
-  background-color: $error-color;
-  color: $primary-color;
+  background-color: transparent;
+  color: $error-color;
   border: 2px solid $error-color;
 }
 </style>

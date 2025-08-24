@@ -5,14 +5,7 @@ import { normalizeString } from "@/utils/normalize";
 import { getByPath, clone, labelFor, genId, setDeep } from "@/utils/arrayField";
 import { fr } from "@/utils/validators-fr";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  numeric,
-  minValue,
-  maxValue,
-  email,
-  helpers,
-} from "@vuelidate/validators";
+import { numeric, helpers } from "@vuelidate/validators";
 
 import type { ArrayField } from "@/utils/types/forms";
 
@@ -21,6 +14,7 @@ type ArrayItem = { __id: string } & Record<string, any>;
 
 const props = defineProps<{
   field: ArrayField;
+  suggestion?: object;
   parentError?: string | null;
 }>();
 
@@ -191,17 +185,18 @@ const childrenErrors = computed(() => {
     }"
   >
     <span v-if="parentError" class="array-field__error">{{ parentError }}</span>
+
     <div class="array-field__header">
       <h4 class="array-field__label">
         {{ field.label }}
-        <IconComponent
+        <UIIconComponent
           v-if="field.required"
           icon="asterisk"
           size="0.75rem"
           :color="colors['error-color']"
         />
       </h4>
-      <SecondaryButton
+      <UISecondaryButton
         variant="accent-color"
         icon="plus_circle"
         @click="addItem"
@@ -210,7 +205,7 @@ const childrenErrors = computed(() => {
         style="width: fit-content"
       >
         Ajouter
-      </SecondaryButton>
+      </UISecondaryButton>
     </div>
 
     <div
@@ -236,7 +231,7 @@ const childrenErrors = computed(() => {
       >
         <span>{{ labelFor(idx, field.itemLabel) }}</span>
 
-        <IconComponent
+        <UIIconComponent
           :icon="
             isCollapsed(item.__id || String(idx))
               ? 'caret_down_bold'
@@ -259,14 +254,15 @@ const childrenErrors = computed(() => {
           <label class="fi">
             <span class="fi__label"
               >{{ f.label
-              }}<IconComponent
+              }}<UIIconComponent
                 v-if="f.required"
                 icon="asterisk"
                 size="0.75rem"
                 :color="colors['error-color']"
-            /></span>
+              />
+            </span>
 
-            <InputField
+            <FormElementsInputField
               v-if="
                 f.type === 'text' || f.type === 'number' || f.type === 'email'
               "
@@ -286,7 +282,7 @@ const childrenErrors = computed(() => {
               :error="firstItemMsg(idx, f.path)"
             />
 
-            <FormelementsSelectField
+            <FormElementsSelectField
               v-if="f.type === 'select'"
               :options="f.options || []"
               :model-value="getByPath(item, f.path)"
@@ -298,7 +294,7 @@ const childrenErrors = computed(() => {
               :error="firstItemMsg(idx, f.path)"
             />
             <ClientOnly v-else-if="f.type === 'date'">
-              <FormelementsDateField
+              <FormElementsDateField
                 :id="f.label"
                 :label="f.label"
                 :model-value="getByPath(item, f.path)"
@@ -307,10 +303,24 @@ const childrenErrors = computed(() => {
                 :error="firstItemMsg(idx, f.path)"
               />
             </ClientOnly>
+            <UISmartSuggestion
+              v-if="
+                suggestion &&
+                (typeof suggestion[idx][f.suggestionRef] === 'string' ||
+                  typeof suggestion[idx][f.suggestionRef] === 'number') &&
+                suggestion[idx][f.suggestionRef] !== getByPath(item, f.path)
+              "
+              :suggestion="suggestion[idx][f.suggestionRef].toString()"
+              @click="
+                () => {
+                  updateItem(idx, f.path, suggestion[idx][f.suggestionRef]);
+                }
+              "
+            />
           </label>
         </template>
       </div>
-      <TertiaryButton
+      <UITertiaryButton
         variant="error-color"
         type="button"
         @click="removeItem(idx)"
@@ -319,7 +329,7 @@ const childrenErrors = computed(() => {
         style="margin-left: auto"
       >
         Supprimer
-      </TertiaryButton>
+      </UITertiaryButton>
     </div>
   </div>
 </template>
@@ -371,13 +381,15 @@ const childrenErrors = computed(() => {
   padding: 0.75rem;
   gap: 1rem;
   scroll-margin-top: 8rem;
+  background-color: $primary-color;
 
   &--children-have-errors {
-    border: 1px solid rgba($error-color, 0.1);
+    border: 1px solid rgba($error-color, 0.2);
     box-shadow: 0 0px 6px 0px $error-color-faded;
 
     & > .array-item__title {
       color: $error-color;
+      background-color: rgba($error-color, 0.1);
     }
   }
 
@@ -401,6 +413,7 @@ const childrenErrors = computed(() => {
 .fi {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 
   &__label {
     font-size: 12px;

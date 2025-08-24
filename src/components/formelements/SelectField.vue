@@ -1,42 +1,60 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import { colors } from "@/utils/colors";
 import { onClickOutside } from "@vueuse/core";
 
 const target = ref();
-
 onClickOutside(target, () => {
   isSelectOpen.value = false;
 });
 
-const emit = defineEmits(["optionSelected"]);
-defineProps({
-  options: {
-    type: Array<string>,
-  },
-  placeholder: String,
-  icon: String,
-  error: String,
+// v-model
+const modelValue = defineModel<string | null>({ default: null });
+
+// rétro-compatibilité
+const emit = defineEmits<{
+  (e: "update:modelValue", v: string | null): void;
+  (e: "optionSelected", v: string | null): void;
+}>();
+
+const props = defineProps({
+  options: { type: Array as () => readonly string[], default: () => [] },
+  placeholder: { type: String, default: "" },
+  icon: { type: String, default: "" },
+  error: { type: String, default: "" },
 });
 
-const optionSelected = ref("");
 const isSelectOpen = ref(false);
+const optionSelected = ref<string>("");
 
-const toggleSelect = () => {
+// sync affichage ←→ modèle
+onMounted(() => {
+  optionSelected.value = modelValue.value ?? "";
+});
+watch(
+  () => modelValue.value,
+  (v) => {
+    optionSelected.value = v ?? "";
+  }
+);
+
+const displayText = computed(() =>
+  optionSelected.value?.length ? optionSelected.value : props.placeholder
+);
+
+function toggleSelect() {
   isSelectOpen.value = !isSelectOpen.value;
-};
+}
 
 function selectOption(option: string) {
-  if (optionSelected.value === option) {
-    optionSelected.value = "";
-    emit("optionSelected", "");
-  } else {
-    optionSelected.value = option;
-    emit("optionSelected", option);
-  }
+  const next = optionSelected.value === option ? "" : option;
+  optionSelected.value = next;
+  emit("update:modelValue", next || null); // pilote le parent
+  emit("optionSelected", next || null); // compat ArrayFieldRenderer existant
   isSelectOpen.value = false;
 }
 </script>
+
 <template>
   <div class="select-field" ref="target">
     <span
@@ -52,21 +70,22 @@ function selectOption(option: string) {
         'select-field__selected--has-error': error,
       }"
     >
-      <IconComponent
+      <UIIconComponent
         v-if="icon?.length"
         :icon="icon"
         size="1rem"
-        :color="colors['text-color-faded']" />
-
-      <span class="select-field__selected__placeholder">{{
-        optionSelected.length > 0 ? optionSelected : placeholder
-      }}</span>
+        :color="colors['text-color-faded']"
+      />
+      <span class="select-field__selected__placeholder">{{ displayText }}</span>
       <span style="opacity: 0.8; margin-left: auto">
-        <IconComponent
+        <UIIconComponent
           :icon="isSelectOpen ? 'caret_up_bold' : 'caret_down_bold'"
           size="1rem"
-          :color="colors['text-color-faded']" /></span
-    ></span>
+          :color="colors['text-color-faded']"
+        />
+      </span>
+    </span>
+
     <div class="select-field__content" v-if="isSelectOpen">
       <span
         class="select-field__content__option"
@@ -87,6 +106,7 @@ function selectOption(option: string) {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .select-field {
   width: 100%;
@@ -156,6 +176,7 @@ function selectOption(option: string) {
       text-overflow: ellipsis;
       overflow: hidden;
       display: inline-block;
+      color: $text-color;
 
       &:hover {
         background-color: rgba($accent-color, 0.1);

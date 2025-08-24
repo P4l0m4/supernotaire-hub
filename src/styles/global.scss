@@ -368,12 +368,7 @@ details > summary::-webkit-details-marker /* Safari */ {
 .paragraphs {
   font-size: 1rem;
   font-weight: $regular;
-  line-height: 1.2;
-
-  @media (min-width: $tablet-screen) {
-    font-size: 1.1rem;
-    line-height: 1.5;
-  }
+  line-height: 1.5;
 }
 
 .small-text {

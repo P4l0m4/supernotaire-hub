@@ -1,115 +1,31 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { copyToClipboard } from "@/utils/otherFunctions";
+import { processDocument } from "@/utils/textFromDocument";
 
 const status = ref("not started");
 const statusResponse = ref();
-const taskId = ref("");
 const results = ref();
 const isProcessing = ref(false);
 const progress = ref(0);
 const error = ref("");
 
-const uploadDocument = async (file: File) => {
-  const formData = new FormData();
-  formData.append("file", file);
+async function handleDocumentTextExtraction(file: File) {
+  isProcessing.value = true;
+  progress.value = 5;
 
-  const response = await fetch(
-    "https://document-text-extractor-production.up.railway.app/api/documents/upload",
-    {
-      method: "POST",
-      body: formData,
-    }
-  );
+  status.value = "processing";
 
-  const result = await response.json();
-  return result.taskId;
-};
-
-const checkStatus = async (taskId: string) => {
   try {
-    const response = await fetch(
-      `https://document-text-extractor-production.up.railway.app/api/tasks/${taskId}/status`
-    );
-    if (!response.ok) {
-      throw new Error(`Status check failed: ${response.status}`);
-    }
-    const result = await response.json();
-    progress.value = result.progress;
-    console.log("Status response:", result);
-    return result;
-  } catch (error) {
-    console.error("Status check error:", error);
-    error.value = "Une erreur est survenue lors de la vérification du statut.";
-    throw error;
-  }
-};
-
-const getResults = async (taskId: string) => {
-  try {
-    const response = await fetch(
-      `https://document-text-extractor-production.up.railway.app/api/tasks/${taskId}/result`
-    );
-    if (!response.ok) {
-      throw new Error(`Result fetch failed: ${response.status}`);
-    }
-    const result = await response.json();
-    console.log("Result response:", result);
-    return result;
-  } catch (err) {
-    console.error("Result fetch error:", err);
-    error.value =
-      "Une erreur est survenue lors de la récupération des résultats.";
-    throw error;
-  }
-};
-
-const processDocument = async (file: File) => {
-  try {
-    isProcessing.value = true;
-    error.value = "";
-    results.value = null;
-
-    console.log("Uploading document...");
-    taskId.value = await uploadDocument(file);
-    console.log("Task ID:", taskId.value);
-
-    status.value = "processing";
-    let attempts = 0;
-    const maxAttempts = 30;
-
-    while (attempts < maxAttempts) {
-      console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
-
-      statusResponse.value = await checkStatus(taskId.value);
-      status.value = statusResponse.value.status;
-
-      if (status.value === "completed") {
-        console.log("Task completed! Getting results...");
-        results.value = await getResults(taskId.value);
-        console.log("Final results:", results.value);
-        break;
-      } else if (status.value === "failed") {
-        error.value = statusResponse.value.error || "Processing failed";
-        console.error("Processing failed:", statusResponse.value);
-        break;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      attempts++;
-    }
-
-    if (attempts >= maxAttempts && status.value !== "completed") {
-      error.value = "Processing timeout - please try again";
-      console.log("Processing timeout");
-    }
-  } catch (err) {
-    error.value = "Une erreur est survenue lors du traitement.";
-    console.error("Error:", err);
+    const resp = await processDocument(file);
+    status.value = resp.status ?? "failed";
+    progress.value = resp.progress;
+    error.value = resp.error;
+    results.value = resp.results;
   } finally {
     isProcessing.value = false;
   }
-};
+}
 
 const dropContainerRef = ref<HTMLLabelElement | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null);
@@ -142,12 +58,49 @@ dropContainerRef.value?.addEventListener("drop", (e) => {
 function reset() {
   status.value = "not started";
   statusResponse.value = null;
-  taskId.value = "";
   results.value = null;
   isProcessing.value = false;
   progress.value = 0;
   error.value = "";
 }
+
+// async function extractDataFromResults(
+//   relevantPages: number[] = [],
+//   resultsFromTextExtraction: any
+// ) {
+//   console.log("Extracting data from results...");
+//   let textFromRelevantPages;
+//   if (!resultsFromTextExtraction || !resultsFromTextExtraction.result)
+//     return null;
+//   if (relevantPages.length === 0) {
+//     textFromRelevantPages = resultsFromTextExtraction.result.summary
+//       .map((page: { pageText: string }) => page.pageText)
+//       .join("\n");
+//   } else {
+//     textFromRelevantPages = relevantPages
+//       .map((pageNumber) => {
+//         const page = resultsFromTextExtraction.result.summary.find(
+//           (p: { pageNumber: number }) => p.pageNumber === pageNumber
+//         );
+//         return page ? page.pageText : "";
+//       })
+//       .join("\n");
+//     console.log(`Using relevant pages`);
+//   }
+
+//   try {
+//     AIExtractionResult.value = await AIExtractInfoFromText(
+//       textFromRelevantPages,
+//       documentName.value,
+//       TS_TYPE
+//     );
+//     console.log("Extraction result:", AIExtractionResult.value);
+//   } catch (e: any) {
+//     console.error("Extraction error:", e);
+//   }
+//   console.log("Extraction finished:", AIExtractionResult.value);
+//   return AIExtractionResult.value;
+// }
 </script>
 <template>
   <Container>
@@ -172,18 +125,18 @@ function reset() {
         class="drop-zone__input"
         accept=".pdf,.jpg,.jpeg,.png"
         @click="(e) => e.stopPropagation()"
-        @change="(e) => processDocument((e.target as HTMLInputElement).files[0])"
+        @change="(e) => handleDocumentTextExtraction((e.target as HTMLInputElement).files[0])"
       />
       <span class="drop-zone__formats">.pdf, .jpg, .png</span>
     </label>
     <div class="wrapper">
       <StatusComponent v-if="status" :status />
-      <PrimaryButton
+      <UIPrimaryButton
         v-if="progress === 100 || error.length > 0"
         variant="accent-color"
         @click="reset"
       >
-        Réessayer</PrimaryButton
+        Réessayer</UIPrimaryButton
       >
     </div>
     <div v-if="results?.result?.summary" class="summary">
@@ -192,14 +145,15 @@ function reset() {
         v-for="page in results.result.summary"
         :key="page.number"
       >
-        <span class="summary__page__number"
-          >Page: {{ page.pageNumber }}
-          <span class="summary__page__number__copy">
-            <IconComponent
+        <div class="summary__page__header">
+          <UITagComponent>Page {{ page.pageNumber }}</UITagComponent>
+          <span class="summary__page__header__copy">
+            <UIIconComponent
               icon="copy"
               size="1.5rem"
-              @click="() => copyToClipboard(page.pageText)" /></span
-        ></span>
+              @click="() => copyToClipboard(page.pageText)"
+          /></span>
+        </div>
         <p class="summary__page__text paragraphs">
           {{ page.pageText }}
         </p>
@@ -319,9 +273,7 @@ input[type="file"]::file-selector-button:hover {
     flex-direction: column;
     gap: 0.5rem;
 
-    &__number {
-      font-weight: $semi-bold;
-      font-size: 1.25rem;
+    &__header {
       display: flex;
       justify-content: space-between;
       align-items: center;

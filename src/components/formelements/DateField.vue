@@ -16,7 +16,7 @@ const model = defineModel<string | number | boolean>();
     class="date-field"
     :class="{ shake: error, 'date-field--has-error': error }"
   >
-    <IconComponent
+    <UIIconComponent
       v-if="icon"
       :icon="icon"
       :color="colors['text-color-faded']"
@@ -27,6 +27,7 @@ const model = defineModel<string | number | boolean>();
       :label="label"
       v-model="model"
       model-type="dd-MM-yyyy"
+      format="dd-MM-yyyy"
       locale="fr"
       cancelText="Annuler"
       selectText="Sélectionner"

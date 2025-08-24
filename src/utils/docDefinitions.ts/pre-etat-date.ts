@@ -93,8 +93,11 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                 widths: ["*", "*"],
                 body: [
                   ["Bâtiment", d.bien?.identification?.batiment ?? "-"],
-                  ["Escalier", d.bien?.identification?.escalier ?? "-"],
-                  ["Niveau", d.bien?.identification?.niveau ?? "-"],
+                  [
+                    "Entrée / Cage escalier",
+                    d.bien?.identification?.escalier ?? "-",
+                  ],
+                  ["Étage", d.bien?.identification?.etage ?? "-"],
                   ["Compléments", d.bien?.identification?.complements ?? "-"],
                 ],
               },
@@ -132,7 +135,10 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ["Impayés (>30j) total", fmtEur(d.copropriete?.impayes?.total)],
             ["Taux d’impayés", fmtPct(d.copropriete?.impayes?.taux)], // <= FIX
             ["Assureur", d.copropriete?.assurance?.assureur ?? "-"],
-            ["Police", d.copropriete?.assurance?.police ?? "-"],
+            [
+              "N° de police d'assurance",
+              d.copropriete?.assurance?.police ?? "-",
+            ],
             ["Échéance assurance", d.copropriete?.assurance?.echeance ?? "-"],
           ],
         },
@@ -187,10 +193,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         table: {
           widths: ["*", "auto"],
-          body: [
-            ["Date", d.ag?.derniere_ag?.date ?? "-"],
-            ["PV de référence", d.ag?.derniere_ag?.ref_proces_verbal ?? "-"],
-          ],
+          body: [["Date", d.ag?.derniere_ag?.date ?? "-"]],
         },
         layout: "lightHorizontalLines",
         margin: [0, 0, 0, 6],
@@ -291,14 +294,25 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       { text: "Métadonnées", style: "h2" },
       {
         table: {
-          widths: ["auto", "auto", "*"],
-          body: [["Généré le", squashTofu(Date.now().toLocaleString("fr-FR"))]],
+          widths: ["auto", "*"],
+          body: [
+            [
+              { text: "Généré le", noWrap: true },
+              {
+                text: new Date().toLocaleString("fr-FR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }),
+                noWrap: true,
+              },
+            ],
+          ],
         },
         layout: "lightHorizontalLines",
       },
 
       {
-        text: "Pré-état daté provisoire. Sous réserves des pièces du syndic.",
+        text: "Pré-état daté provisoire. Sous réserves des pièces du syndic et sur la foi des déclarations effectuées par le propriétaire du bien.",
         italics: true,
         margin: [0, 8, 0, 0],
       },

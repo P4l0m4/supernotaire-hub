@@ -88,7 +88,7 @@ async function validContactState() {
 </script>
 <template>
   <div class="inscription-component">
-    <FormelementsRadioOption
+    <FormElementsRadioOption
       v-for="radioOption in radioOptions"
       :key="radioOption.id"
       :id="radioOption.id"
@@ -99,7 +99,7 @@ async function validContactState() {
       :checked="radioOption.value === selectedOption"
       v-model="selectedOption"
     />
-    <PrimaryButton
+    <UIPrimaryButton
       variant="accent-color"
       icon="arrow_right"
       style="margin-top: 0.5rem"
@@ -107,7 +107,7 @@ async function validContactState() {
       @keydown.enter="isPopupOpen = true"
       @keydown.space="isPopupOpen = true"
       tabindex="0"
-      >Continuer</PrimaryButton
+      >Continuer</UIPrimaryButton
     >
     <ConfirmationPopUp
       v-if="isPopupOpen"
@@ -124,7 +124,7 @@ async function validContactState() {
             @submit.prevent="submit"
             @click="$event.stopPropagation()"
           >
-            <InputField
+            <FormElementsInputField
               v-if="!wasSent"
               id="beta-email"
               name="beta-email"
@@ -139,7 +139,7 @@ async function validContactState() {
               style="width: 100%"
             />
 
-            <PrimaryButton
+            <UIPrimaryButton
               v-if="!wasSent"
               variant="accent-color"
               :icon="isSubmitting ? 'circle_notch_bold' : 'hands_clapping_fill'"
@@ -147,7 +147,7 @@ async function validContactState() {
               @click="validContactState"
               @keydown.enter="validContactState"
               @keydown.space="validContactState"
-              >Rejoindre</PrimaryButton
+              >Rejoindre</UIPrimaryButton
             >
             <span v-if="wasSent" class="form-beta__success-message"
               >Demande bien reçue 👌</span
@@ -157,8 +157,8 @@ async function validContactState() {
             to="https://www.linkedin.com/in/aurore-sajot/"
             target="_blank"
             style="width: 100%"
-            ><SecondaryButton variant="secondary-color" icon="linkedin_logo"
-              >Suivre le projet</SecondaryButton
+            ><UISecondaryButton variant="secondary-color" icon="linkedin_logo"
+              >Suivre le projet</UISecondaryButton
             ></NuxtLink
           >
         </div>
