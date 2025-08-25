@@ -51,6 +51,13 @@ const simulateClick = () => {
       @click="(e) => e.stopPropagation()"
       @change="(e) => model = (e.target as HTMLInputElement).files ? (multiple ? Array.from((e.target as HTMLInputElement).files!) : (e.target as HTMLInputElement).files![0]) : null"
     />
+    <!-- if a file has been chosen -->
+    <UIIconComponent
+      v-if="model"
+      icon="check_circle"
+      :color="colors['success-color']"
+      size="1.5rem"
+    />
   </div>
 </template>
 <style scoped lang="scss">
@@ -89,7 +96,7 @@ const simulateClick = () => {
     font-size: 1rem;
     padding: 0.65rem 0;
     border: none;
-    color: $text-color;
+    color: $text-color-faded;
     background-color: transparent !important;
     width: 100% !important;
     max-width: 100%;
@@ -108,11 +115,17 @@ const simulateClick = () => {
   }
 
   input[type="file"]::file-selector-button {
-    margin-right: 0.5rem;
     border: none;
-    background: $base-color;
+    background: transparent;
     color: $text-color;
     font-family: inherit;
+    cursor: pointer;
+    display: none;
+
+    @media (min-width: $big-tablet-screen) {
+      display: inline-block;
+      margin-right: 4rem;
+    }
   }
 
   &__error {

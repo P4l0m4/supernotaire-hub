@@ -28,6 +28,18 @@
           "accept": [".pdf", ".png", ".jpg", ".jpeg"],
           "multiple": false,
           "TS_TYPE": "TS_TYPE_FicheSynthétiqueCopropriété"
+        },
+        {
+          "path": "document.acte_de_propriete",
+          "id": "acte-de-propriete",
+          "label": "Attestation de propriété",
+          "name": "acte_de_propriete",
+          "type": "file",
+          "required": true,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_AttestationDePropriété"
         }
       ]
     },
@@ -94,6 +106,7 @@
           "id": "bien-lots",
           "label": "Liste des lots",
           "name": "lots",
+          "suggestionRef": "bien_lots",
           "type": "array",
           "minItems": 1,
           "required": true,
@@ -132,21 +145,20 @@
                 "suggestionRef": "bien_lots_tantiemes",
                 "label": "Tantièmes",
                 "name": "tantiemes",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "placeholder": "125",
-                "required": true
+                "type": "text",
+                "placeholder": "125/10000",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
+                "required": true,
+                "tooltip": "Tantièmes généraux du lot (figurant sur votre acte de propriété)."
               },
               {
                 "path": "tantiemes_speciaux.ascenseur",
                 "suggestionRef": "bien_lots_tantiemes_speciaux_ascenseur",
                 "label": "Tantièmes spéciaux — Ascenseur",
                 "name": "tantiemes_speciaux_ascenseur",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "placeholder": "140",
+                "type": "text",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
+                "placeholder": "20/10000",
                 "required": false,
                 "icon": "elevator_fill"
               },
@@ -155,12 +167,41 @@
                 "suggestionRef": "bien_lots_tantiemes_speciaux_chauffage",
                 "label": "Tantièmes spéciaux — Chauffage",
                 "name": "tantiemes_speciaux_chauffage",
-                "type": "number",
-                "min": 0,
-                "step": 1,
-                "placeholder": "260",
+                "type": "text",
+                "placeholder": "35/10000",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
                 "required": false,
                 "icon": "thermometer_simple_bold"
+              },
+              {
+                "path": "tantiemes_speciaux.eau",
+                "suggestionRef": "bien_lots_tantiemes_speciaux_eau",
+                "label": "Tantièmes spéciaux — Eau",
+                "name": "tantiemes_speciaux_eau",
+                "type": "text",
+                "placeholder": "45/10000",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
+                "required": false
+              },
+              {
+                "path": "tantiemes_speciaux.gardiennage",
+                "suggestionRef": "bien_lots_tantiemes_speciaux_gardiennage",
+                "label": "Tantièmes spéciaux — Gardiennage",
+                "name": "tantiemes_speciaux_gardiennage",
+                "type": "text",
+                "placeholder": "55/10000",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
+                "required": false
+              },
+              {
+                "path": "tantiemes_speciaux.espaces_verts",
+                "suggestionRef": "bien_lots_tantiemes_speciaux_espaces_verts",
+                "label": "Tantièmes spéciaux — Espaces verts",
+                "name": "tantiemes_speciaux_espaces_verts",
+                "type": "text",
+                "placeholder": "65/10000",
+                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
+                "required": false
               }
             ]
           }

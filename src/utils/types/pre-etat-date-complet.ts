@@ -28,10 +28,13 @@ export interface Bien {
 export interface Lot {
   numero: string;
   usage: string;
-  tantiemes: number;
+  tantiemes: string;
   tantiemes_speciaux: {
-    ascenseur: number;
-    chauffage: number;
+    ascenseur: string;
+    chauffage: string;
+    eau: string;
+    gardiennage: string;
+    espaces_verts: string;
   };
 }
 

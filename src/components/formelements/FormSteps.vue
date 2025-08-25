@@ -109,6 +109,7 @@ watch(
         & > .form-steps__item__circle {
           background-color: $accent-color;
           color: $primary-color;
+          border-color: $accent-color;
         }
       }
     }
@@ -142,12 +143,12 @@ watch(
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        background-color: $text-color-faded;
+        background-color: rgba($text-color, 0.4);
         padding: 1rem;
-        height: 2rem;
-        min-height: 2rem;
-        width: 2rem;
-        min-width: 2rem;
+        height: 1.5rem;
+        min-height: 1.5rem;
+        width: 1.5rem;
+        min-width: 1.5rem;
       }
 
       &__number {

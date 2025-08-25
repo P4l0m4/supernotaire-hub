@@ -7,13 +7,15 @@ import { processDocument } from "@/utils/textFromDocument";
 
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
+import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
 import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/utils/types/forms";
+import PrimaryButton from "~/components/UI/PrimaryButton.vue";
 
-const documentsList = [
+const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
   "État daté des impayés du copropriétaire vendeur et des dettes envers le syndicat.",
   "Montant du fonds travaux (ALUR) et arrêté correspondant.",
@@ -25,7 +27,16 @@ const documentsList = [
   "Attestation d’assurance de l’immeuble.",
 ];
 
+const documents = [
+  "Dernier procès-verbal d’assemblée générale approuvé.",
+  "Fiche synthétique de la copropriété.",
+  "Attestation de propriété.",
+];
+
 const formData = reactive({} as PreEtatDate);
+
+const showFirstAction = ref(true);
+const showFinalAction = ref(false);
 
 formData.bien = formData.bien ?? {
   adresse: "",
@@ -38,7 +49,6 @@ formData.bien.lots = Array.isArray(formData.bien.lots)
 
 const { $pdfMake } = useNuxtApp();
 const ready = useState<boolean>("pdfmake-ready");
-const showFinalAction = ref(false);
 
 async function generatePdf() {
   if (!process.client || !$pdfMake?.createPdf) return;
@@ -50,6 +60,7 @@ async function generatePdf() {
 const TS_TYPES: Record<string, string> = {
   TS_TYPE_ExtractionPVAG,
   TS_TYPE_FicheSynthétiqueCopropriété,
+  TS_TYPE_AttestationDePropriété,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };
@@ -220,40 +231,77 @@ useHead({
           valide
         </span>
       </div>
+      <Transition>
+        <div class="first-action" v-if="showFirstAction">
+          <img
+            class="first-action__image"
+            src="@/assets/images/checklist-71-blue.svg"
+            alt="Avant de commencer"
+          />
 
-      <FormElementsDynamicForm
-        v-if="!showFinalAction"
-        :formDefinition="formDefinition as FormDefinition"
-        :suggestions
-        v-model="formData"
-        @complete="showFinalAction = true"
-      />
-      <div class="final-action" v-if="showFinalAction">
-        <UIPrimaryButton
-          @click="generatePdf()"
-          :disabled="!ready"
-          variant="success-color"
-          icon="download"
-          >Télécharger le Pré-état daté</UIPrimaryButton
-        ><UITertiaryButton
-          variant="text-color"
-          @click="showFinalAction = false"
-          @keydown.enter="showFinalAction = false"
-          @keydown.space="showFinalAction = false"
-        >
-          Revenir au formulaire
-        </UITertiaryButton>
-        <div class="pre-etat-date__list">
-          <h2 class="pre-etat-date__list__title">
-            Documents à joindre à votre pré-état daté
-          </h2>
-          <ul>
-            <li v-for="document in documentsList" :key="document">
+          <ul class="first-action__list">
+            <span class="first-action__list__title">Avant de commencer...</span>
+            <span class="first-action__list__subtitle"
+              >Munissez-vous des documents (digitalisés) suivants:
+            </span>
+            <li
+              v-for="document in documents"
+              :key="document"
+              class="first-action__list__item"
+            >
               {{ document }}
             </li>
+
+            <PrimaryButton
+              icon="arrow_right"
+              variant="accent-color"
+              @click="showFirstAction = false"
+              style="margin-top: 1rem"
+              >Commencer</PrimaryButton
+            >
           </ul>
+        </div></Transition
+      ><Transition>
+        <FormElementsDynamicForm
+          v-if="!showFirstAction && !showFinalAction"
+          :formDefinition="formDefinition as FormDefinition"
+          :suggestions
+          v-model="formData"
+          @complete="showFinalAction = true"
+      /></Transition>
+      <Transition>
+        <div class="final-action" v-if="showFinalAction">
+          <ul class="final-action__list">
+            <span class="final-action__list__title"> Avant de partir...</span>
+            <span class="final-action__list__subtitle">
+              Documents à joindre en annexe de votre pré-état daté
+            </span>
+            <li
+              class="final-action__list__item"
+              v-for="annexe in annexes"
+              :key="annexe"
+            >
+              {{ annexe }}
+            </li>
+          </ul>
+
+          <UIPrimaryButton
+            @click="generatePdf()"
+            :disabled="!ready"
+            variant="success-color"
+            icon="download"
+            >Télécharger le Pré-état daté</UIPrimaryButton
+          ><UITertiaryButton
+            variant="text-color"
+            @click="showFinalAction = false"
+            @keydown.enter="showFinalAction = false"
+            @keydown.space="showFinalAction = false"
+            style="margin-top: -2rem"
+          >
+            Revenir au formulaire
+          </UITertiaryButton>
         </div>
-      </div>
+      </Transition>
     </div>
   </Container>
 
@@ -298,28 +346,74 @@ useHead({
       text-wrap: balance;
     }
   }
+}
+
+.first-action {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 2rem;
+  border-radius: $radius;
+  background-color: $primary-color;
+  width: 100%;
+  min-width: 280px;
+  min-height: 21.87rem;
+  scroll-margin-top: 2rem;
+
+  @media (min-width: $big-tablet-screen) {
+    padding: 1.5rem;
+    gap: 3rem;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+  }
 
   &__list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    font-size: 1rem;
-    color: $text-color;
-    font-weight: $regular;
+    gap: 0.5rem;
+    height: 100%;
+    min-height: 100%;
+    justify-content: space-between;
 
-    &__title {
-      font-size: 1.2rem;
-      font-weight: $regular;
+    @media (min-width: $big-tablet-screen) {
+      min-height: 18.87rem;
     }
 
-    & ul {
-      list-style-position: inside;
-      font-size: 1rem;
-      color: $text-color;
+    &__title {
+      font-size: 2.5rem;
+      font-weight: $semi-bold;
+      text-wrap: balance;
+      max-width: 600px;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem;
       font-weight: $regular;
+      text-wrap: balance;
+      margin-bottom: 1rem;
+    }
+
+    &__item {
       display: flex;
-      flex-direction: column;
       gap: 0.5rem;
+      align-items: center;
+      font-size: 1.05rem;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        height: 1rem;
+        width: 1rem;
+        min-width: 1rem;
+        border: 1px solid $text-color;
+      }
     }
   }
 }
@@ -338,6 +432,50 @@ useHead({
   @media (min-width: $big-tablet-screen) {
     padding: 1.5rem;
     gap: 3rem;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    min-height: 100%;
+    justify-content: space-between;
+
+    @media (min-width: $big-tablet-screen) {
+      min-height: 18.87rem;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+      font-weight: $semi-bold;
+      text-wrap: balance;
+      max-width: 600px;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem;
+      font-weight: $regular;
+      text-wrap: balance;
+      margin-bottom: 1rem;
+    }
+
+    &__item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 1.05rem;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        height: 1rem;
+        width: 1rem;
+        min-width: 1rem;
+        border: 1px solid $text-color;
+      }
+    }
   }
 }
 </style>

@@ -1,6 +1,5 @@
 import type {
   Syndic,
-  Bien,
   Copropriete,
 } from "@/utils/types/pre-etat-date-complet.ts";
 

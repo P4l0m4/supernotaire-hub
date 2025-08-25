@@ -26,6 +26,7 @@ const tools = [
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  width: 100%;
 
   @media (min-width: $big-tablet-screen) {
     grid-template-columns: repeat(3, 1fr);
