@@ -65,10 +65,15 @@ function toggleQuestion(index: number) {
     max-width: 800px;
     height: fit-content;
     gap: 1rem;
+    padding: 1rem;
     cursor: pointer;
+    background-color: darken($base-color, 2%);
+    border: 1px solid darken($base-color, 5%);
 
     @media (min-width: $big-tablet-screen) {
       min-width: 500px;
+      padding: 1.5rem;
+      min-height: 6.5rem;
     }
 
     @media (min-width: $laptop-screen) {
@@ -77,12 +82,14 @@ function toggleQuestion(index: number) {
     &__question {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 1rem;
       width: 100%;
       height: fit-content;
       font-size: 1rem;
       font-weight: $regular;
       color: $text-color;
+      text-wrap: balance;
 
       @media (min-width: $big-tablet-screen) {
         font-size: $subtitles;

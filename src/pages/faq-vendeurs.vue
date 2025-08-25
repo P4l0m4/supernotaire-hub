@@ -67,48 +67,13 @@ useHead({
     <div class="faq">
       <div class="faq__headlines">
         <h1 class="titles">Foire aux questions</h1>
-        <h2 class="subtitles">On répond aux questions des particuliers</h2>
+        <h2 class="paragraphs">
+          Des réponses aux questions des vendeurs et acheteurs de biens
+          immobiliers sur Supernotaire.fr
+        </h2>
       </div>
 
       <FAQComponent :questions />
     </div>
   </Container>
 </template>
-
-<style lang="scss" scoped>
-.faq {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 1rem);
-  gap: 2rem;
-  height: fit-content;
-
-  @media (min-width: $big-tablet-screen) {
-    justify-content: center;
-    align-items: center;
-    gap: 4rem;
-    padding: 2rem 0;
-    min-height: initial;
-  }
-
-  @media (min-width: $desktop-screen) {
-    gap: 8rem;
-    padding: 4rem 0;
-  }
-
-  &__headlines {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    text-align: center;
-
-    .titles,
-    .subtitles {
-      color: $text-color;
-    }
-  }
-}
-</style>

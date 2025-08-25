@@ -107,7 +107,7 @@ onMounted(() => {
       </div>
     </div>
     <div id="profiles" class="profiles">
-      <Profile
+      <UIProfile
         v-for="profile in profiles"
         :key="profile.title"
         :image="profile.image"

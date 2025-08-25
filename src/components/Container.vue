@@ -23,7 +23,11 @@
   @media (min-width: $desktop-screen) {
     padding: 4.5rem 4rem;
     gap: 2rem;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
   }
+
   @media (min-width: $super-big-screen) {
     width: 100%;
     max-width: 2064px;

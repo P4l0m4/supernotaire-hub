@@ -83,7 +83,7 @@ const perks = [
       </p>
     </div>
     <div class="perks">
-      <Perk
+      <UIPerk
         v-for="perk in perks"
         :key="perk.title"
         :icon="perk.icon"
@@ -130,6 +130,7 @@ const perks = [
   &__subtitle {
     text-align: center;
     text-wrap: balance;
+    color: $text-color-faded;
   }
 }
 

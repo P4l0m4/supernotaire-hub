@@ -114,16 +114,110 @@ watch(
   },
   { deep: true }
 );
+
+const questions = [
+  {
+    title: "Combient coûte le service de génération de Pré-état daté ?",
+    answer:
+      "Vous pouvez utiliser Supernotaire.fr pour créer un Pré-état daté gratuitement (pour le moment). Habituellement, un Pré-état daté coûte entre 150 et 300 euros lorsqu'il est réalisé par un professionnel.",
+  },
+  {
+    title: "Le Pré-état daté généré est-il conforme aux exigences légales ?",
+    answer:
+      "Oui, le Pré-état daté généré sur Supernotaire est conforme aux exigences légales en vigueur. Nous nous assurons que toutes les informations nécessaires sont incluses, mais il est toujours recommandé de faire vérifier le document par un professionnel avant de l'utiliser.",
+  },
+  {
+    title: "Quels documents dois-je fournir pour générer un Pré-état daté ?",
+    answer:
+      "Le Carnet d’entretien de l’immeuble, le dernier procès-verbal d’assemblée générale, l’état des impayés, et d’autres documents listés dans le formulaire sont nécessaires pour générer un Pré-état daté complet et précis.",
+  },
+  {
+    title:
+      "Puis-je modifier les informations avant de générer le Pré-état daté ?",
+    answer:
+      "Oui, vous pouvez revenir en arrière à tout moment pour modifier les informations saisies dans le formulaire avant de générer le Pré-état daté. Assurez-vous que toutes les informations sont correctes et à jour avant de finaliser le document.",
+  },
+  {
+    title: "Le service de création de Pré-état daté est-il sécurisé ? ",
+    answer:
+      "Nous prenons la sécurité de vos données très au sérieux, c'est pourquoi aucune des informations et documents que vous fournissez ne sont stockés ni partagés à des tiers.",
+  },
+  {
+    title: "Comment sont utilisés les documents que je télécharge ?",
+    answer:
+      "Les documents que vous téléchargez sont utilisés uniquement pour extraire les informations nécessaires pour vous guider lors de la création du Pré-état daté. Ils sont supprimés immédiatement après le traitement.",
+  },
+  {
+    title: "À qui s'adresse ce service de génération de Pré-état daté ?",
+    answer:
+      "Ce service est destiné aux vendeurs de biens immobiliers, notaires, syndics de copropriété, et autres professionnels de l'immobilier qui ont besoin de générer rapidement et efficacement des Pré-états datés dans le cadre d'une vente immobilière.",
+  },
+  {
+    title: "Puis-je utiliser ce service pour plusieurs biens immobiliers ?",
+    answer:
+      "Oui, vous pouvez utiliser Supernotaire pour générer des Pré-états datés pour plusieurs biens immobiliers. Il vous suffit de remplir un nouveau formulaire pour chaque bien.",
+  },
+  {
+    title: "Combien de temps faut-il pour générer un Pré-état daté ?",
+    answer:
+      "Le processus de génération du Pré-état daté est généralement rapide et peut être complété en quelques minutes, en fonction de la rapidité avec laquelle vous fournissez les informations et documents nécessaires. Nous avons optimisé le processus pour vous faire gagner du temps grâce à un système de suggestions intelligentes à partir des informations trouvées dans vos documents.",
+  },
+  {
+    title: "Quels documents joindre au Pré-état daté ?",
+    answer:
+      "Une fois le Pré-état daté généré, vous devez y joindre plusieurs annexes au document: le dernier procès-verbal d’assemblée générale, l’état daté des impayés, le montant du fonds travaux, le carnet d’entretien de l’immeuble, le diagnostic technique global (DTG) s’il existe, le budget prévisionnel voté et les comptes des deux derniers exercices, l’état des procédures en cours contre la copropriété, la copie du règlement de copropriété et état descriptif de division à jour, ainsi que l’attestation d’assurance de l’immeuble. ",
+  },
+  {
+    title: "Pourquoi ai-je besoin d'un Pré-état daté ?",
+    answer:
+      "Le Pré-état daté est un document essentiel dans le cadre de la vente d'un bien en copropriété. Il informe l'acheteur et le notaire sur la situation financière et administrative de la copropriété, ce qui est crucial pour prendre une décision éclairée.",
+  },
+  {
+    title: "Pourquoi utiliser Supernotaire pour générer un Pré-état daté ?",
+    answer:
+      "Supernotaire simplifie et accélère le processus de création du Pré-état daté grâce à son interface intuitive et ses fonctionnalités intelligentes. Nous vous guidons pour que vous puissiez créer votre document en toute simplicité.Vous gagnez du temps et réduisez les risques d'erreurs en utilisant notre service.",
+  },
+];
+
+const jsonLDFAQ = questions.map((question) => {
+  return {
+    "@type": "Question" as const,
+    name: question.title,
+    acceptedAnswer: {
+      "@type": "Answer" as const,
+      text: question.answer,
+    },
+  };
+});
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage" as const,
+  mainEntity: jsonLDFAQ,
+}));
+
+useHead({
+  title: "Supernotaire | Questions sur le Pré-état daté",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Retrouvez les réponses aux questions les plus fréquentes sur le Pré-état daté.",
+    },
+  ],
+});
 </script>
 
 <template>
   <Container>
     <div class="pre-etat-date">
-      <h1 class="pre-etat-date__title">Générateur de Pré-état daté en ligne</h1>
-      <span class="pre-etat-date__subtitle"
-        >Remplissez le formulaire suivant pour générer un Pré-état daté
-        conforme</span
-      >
+      <h1 class="pre-etat-date__title titles">
+        Générateur de Pré-état daté gratuit
+      </h1>
+      <span class="pre-etat-date__subtitle paragraphs"
+        >Remplissez le formulaire pour générer rapidement un Pré-état daté
+        valide
+      </span>
 
       <FormElementsDynamicForm
         v-if="!showFinalAction"
@@ -160,6 +254,19 @@ watch(
       </div>
     </div>
   </Container>
+
+  <Container>
+    <div class="faq">
+      <div class="faq__headlines">
+        <h2 class="titles">Questions fréquentes sur le Pré-état daté</h2>
+        <h3 class="subtitles">
+          Tarif, délais, validité, documents à fournir, etc.
+        </h3>
+      </div>
+
+      <FAQComponent :questions />
+    </div>
+  </Container>
 </template>
 <style scoped lang="scss">
 .pre-etat-date {
@@ -170,12 +277,11 @@ watch(
   @media (min-width: $big-tablet-screen) {
     padding: 0 2rem;
     margin-top: 2rem;
+    height: 100%;
+    align-items: center;
   }
 
   &__title {
-    color: $text-color;
-    font-size: 1.4rem;
-    font-weight: $semi-bold;
     text-align: center;
     text-wrap: balance;
   }
@@ -183,8 +289,6 @@ watch(
   &__subtitle {
     text-align: center;
     text-wrap: balance;
-    font-size: 1rem;
-    font-weight: $regular;
     margin-top: -1rem;
   }
 
