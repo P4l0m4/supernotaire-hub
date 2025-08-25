@@ -118,6 +118,7 @@ function toggleShowPassword() {
       size="1.5rem"
       v-if="tooltip"
       v-tooltip="tooltip"
+      tabindex="0"
     />
 
     <span class="input-field__error" v-if="error">{{ error }}</span>

@@ -121,7 +121,7 @@ onMounted(() => {
         et automatisez les tâches répétitives à faible valeur ajoutée."
     />
     <div id="features" class="features">
-      <FeatureComponent
+      <UIFeatureComponent
         v-for="feature in features"
         :key="feature.title"
         :title="feature.title"

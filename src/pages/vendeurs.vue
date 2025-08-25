@@ -118,7 +118,7 @@ onMounted(() => {
         papiers et laissez l’IA remplir les formalités à votre place."
     />
     <div id="features" class="features">
-      <FeatureComponent
+      <UIFeatureComponent
         v-for="feature in features"
         :key="feature.title"
         :title="feature.title"
