@@ -438,13 +438,10 @@ details > summary::-webkit-details-marker /* Safari */ {
     justify-content: center;
     align-items: center;
     gap: 4rem;
-    padding: 2rem 0;
     min-height: initial;
   }
 
   @media (min-width: $desktop-screen) {
-    gap: 6rem;
-    padding: 4rem 0;
     width: 100%;
   }
 

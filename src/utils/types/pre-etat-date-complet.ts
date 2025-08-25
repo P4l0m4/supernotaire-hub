@@ -73,15 +73,39 @@ export interface AG {
 export interface FinancierLot {
   arrete_au: ISODate;
   solde_compte: Euro;
+  solde_crediteur_exercice_anterieur?: Euro;
   appels_echus_non_payes: Euro;
   echeances_a_venir: { date: ISODate; montant: Euro }[];
-  avances_provisions: { generale: Euro; travaux: Euro };
+  sommes_dues_cedant?: {
+    provisions_budget_previsionnel_exigibles?: Euro;
+    provisions_hors_budget_exigibles?: Euro;
+    charges_impayees_anterieures?: Euro;
+    provisions_posterieures_exigibles?: Euro;
+  };
+  avances_provisions: {
+    generale: Euro;
+    travaux: Euro;
+    modalites_remboursement: string;
+  };
   charges: {
     N: { courantes: Euro; hors_budget: Euro; année_exercice: string };
     N_1: { courantes: Euro; hors_budget: Euro; année_exercice: string };
   };
   sommes_a_la_charge_acquereur_post_vente: {
-    decision_ag: string;
-    montant: Euro;
-  }[];
+    reconstitution_avances: {
+      reserve: Euro;
+      provisions_speciales: Euro;
+      avances_emprunts: Euro;
+    };
+    provisions_non_encore_exigibles: {
+      budget_previsionnel: {
+        date: ISODate;
+        montant: Euro;
+      }[];
+      hors_budget: {
+        date: ISODate;
+        montant: Euro;
+      };
+    };
+  };
 }

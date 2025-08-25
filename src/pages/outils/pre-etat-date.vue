@@ -211,13 +211,15 @@ useHead({
 <template>
   <Container>
     <div class="pre-etat-date">
-      <h1 class="pre-etat-date__title titles">
-        Générateur de Pré-état daté gratuit
-      </h1>
-      <span class="pre-etat-date__subtitle paragraphs"
-        >Remplissez le formulaire pour générer rapidement un Pré-état daté
-        valide
-      </span>
+      <div class="pre-etat-date__headlines">
+        <h1 class="pre-etat-date__headlines__title titles">
+          Générateur de Pré-état daté gratuit
+        </h1>
+        <span class="pre-etat-date__headlines__subtitle paragraphs"
+          >Remplissez le formulaire pour générer rapidement un Pré-état daté
+          valide
+        </span>
+      </div>
 
       <FormElementsDynamicForm
         v-if="!showFinalAction"
@@ -259,7 +261,7 @@ useHead({
     <div class="faq">
       <div class="faq__headlines">
         <h2 class="titles">Questions fréquentes sur le Pré-état daté</h2>
-        <h3 class="subtitles">
+        <h3 class="paragraphs">
           Tarif, délais, validité, documents à fournir, etc.
         </h3>
       </div>
@@ -275,21 +277,26 @@ useHead({
   gap: 2rem;
 
   @media (min-width: $big-tablet-screen) {
-    padding: 0 2rem;
     margin-top: 2rem;
+    gap: 4rem;
     height: 100%;
     align-items: center;
   }
 
-  &__title {
-    text-align: center;
-    text-wrap: balance;
-  }
+  &__headlines {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
-  &__subtitle {
-    text-align: center;
-    text-wrap: balance;
-    margin-top: -1rem;
+    &__title {
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    &__subtitle {
+      text-align: center;
+      text-wrap: balance;
+    }
   }
 
   &__list {

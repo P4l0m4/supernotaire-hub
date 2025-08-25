@@ -18,6 +18,7 @@
     "@vuepic/vue-datepicker": "^11.0.1",
     "@vueuse/core": "^13.1.0",
     "dayjs-nuxt": "^1.1.2",
+    "floating-vue": "^5.2.2",
     "nuxt": "^3.17.6",
     "nuxt-jsonld": "^2.2.1",
     "pdfmake": "^0.2.20",

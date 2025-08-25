@@ -26,6 +26,7 @@ export interface BaseField {
   accept?: string[]; // pour file
   multiple?: boolean; // pour file
   TS_TYPE?: string; // pour extraction AI
+  tooltip?: string; // pour info bulle
 }
 
 // Spécifique aux tableaux

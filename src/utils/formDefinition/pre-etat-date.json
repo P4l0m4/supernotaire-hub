@@ -53,7 +53,7 @@
           "label": "Identifiant du bâtiment",
           "name": "batiment",
           "type": "text",
-          "placeholder": "A",
+          "placeholder": "A, B1, etc.",
           "required": true,
           "icon": "buildings_fill"
         },
@@ -175,12 +175,13 @@
           "path": "copropriete.arrete_au",
           "id": "copropriete-arrete-au",
           "suggestionRef": "copropriete_arrete_au",
-          "label": "Arrêté au",
+          "label": "Date de clôture de l’exercice",
           "name": "arrete_au",
           "type": "date",
-          "placeholder": "Arrêté au",
+          "placeholder": "jj-mm-aaaa",
           "required": true,
-          "icon": "calendar_dots_fill"
+          "icon": "calendar_dots_fill",
+          "tooltip": "Date de clôture de l’exercice comptable de la copropriété."
         },
         {
           "path": "copropriete.nombre_lots_principaux",
@@ -188,10 +189,12 @@
           "id": "copropriete-nombre-lots-principaux",
           "label": "Nombre de lots principaux",
           "name": "nombre_lots_principaux",
+          "placeholder": "100",
           "type": "number",
           "min": 0,
           "step": 1,
-          "required": true
+          "required": true,
+          "tooltip": "Nombre total de lots principaux dans la copropriété (hors parkings, caves, etc.)."
         },
         {
           "path": "copropriete.fonds_travaux.montant",
@@ -204,7 +207,8 @@
           "type": "number",
           "min": 0,
           "step": 0.01,
-          "ui:prefix": "€"
+          "ui:prefix": "€",
+          "tooltip": "Montant total du fonds travaux à la date de clôture de l’exercice."
         },
         {
           "path": "copropriete.fonds_travaux.date_arret",
@@ -215,7 +219,8 @@
           "type": "date",
           "placeholder": "Date de fin de l’exercice clos",
           "required": true,
-          "icon": "calendar_dots_fill"
+          "icon": "calendar_dots_fill",
+          "tooltip": "Date de clôture de l’exercice comptable à laquelle est arrêté le montant du fonds travaux (souvent identique à la date de l’exercice comptable de la copropriété)."
         },
         {
           "path": "copropriete.impayes.total",
@@ -224,12 +229,13 @@
           "label": "Impayés total (EUR)",
           "name": "impayes_total",
           "type": "number",
-          "placeholder": "1000",
+          "placeholder": "10000",
           "min": 0,
           "max": 100000000,
           "step": 0.01,
           "ui:prefix": "€",
-          "required": false
+          "required": false,
+          "tooltip": "Montant total des charges impayées par l’ensemble des copropriétaires à la date de clôture de l’exercice."
         },
         {
           "path": "copropriete.impayes.taux",
@@ -243,7 +249,8 @@
           "max": 1,
           "step": 0.0001,
           "ui:suffix": "ratio 0–1",
-          "required": false
+          "required": false,
+          "tooltip": "Taux d’impayés de la copropriété (impayés totaux / charges totales)."
         },
         {
           "path": "copropriete.assurance.assureur",
@@ -500,6 +507,20 @@
           "required": true
         },
         {
+          "path": "financier_lot.solde_crediteur_exercice_anterieur",
+          "suggestionRef": "solde_crediteur_exercice_anterieur",
+          "id": "solde-crediteur-exercice-anterieur",
+          "label": "Solde créditeur exercice antérieur non imputé (EUR)",
+          "name": "solde_crediteur_exercice_anterieur",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false,
+          "tooltip": "Solde créditeur de l'exercice antérieur approuvé non imputé sur le compte du vendeur."
+        },
+
+        {
           "path": "financier_lot.appels_echus_non_payes",
           "suggestionRef": "financier_lot_appels_echus_non_payes",
           "id": "financier_lot-appels-echus-non-payes",
@@ -542,11 +563,63 @@
                 "step": 0.01,
                 "ui:prefix": "€",
                 "required": true,
-                "icon": "calendar_dots_fill"
+                "icon": "hand_coins_fill"
               }
             ]
           }
         },
+        {
+          "path": "financier_lot.sommes_dues_cedant.provisions_budget_previsionnel_exigibles",
+          "suggestionRef": "cedant_provisions_budget_previsionnel_exigibles",
+          "id": "cedant-provisions-budget-previsionnel-exigibles",
+          "label": "Provisions du budget prévisionnel exigibles",
+          "name": "cedant_provisions_bp_exigibles",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false,
+          "tooltip": "Appels du budget prévisionnel arrivés à échéance à la date de la vente et dus par le vendeur s’ils ne sont pas payés."
+        },
+        {
+          "path": "financier_lot.sommes_dues_cedant.provisions_hors_budget_exigibles",
+          "suggestionRef": "cedant_provisions_hb_exigibles",
+          "id": "cedant-provisions-hb-exigibles",
+          "label": "Provisions hors budget exigibles",
+          "name": "cedant_provisions_hb_exigibles",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false,
+          "tooltip": "Appels hors budget arrivés à échéance à la date de la vente et dus par le vendeur s’ils ne sont pas payés."
+        },
+        {
+          "path": "financier_lot.sommes_dues_cedant.charges_impayees_anterieures",
+          "suggestionRef": "charges_impayees_anterieures_dues_par_le_cedant",
+          "id": "cedant-charges-impayees-anterieures",
+          "label": "Charges impayées antérieures (EUR)",
+          "name": "cedant_charges_impayees_anterieures",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.sommes_dues_cedant.provisions_posterieures_exigibles",
+          "suggestionRef": "cedant_provisions_posterieures_exigibles",
+          "id": "cedant-provisions-posterieures-exigibles",
+          "label": "Provisions postérieures rendues exigibles (EUR)",
+          "name": "cedant_provisions_posterieures_exigibles",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false,
+          "tooltip": "Provisions encaissées pour des périodes postérieures et rendues exigibles (art. 19-2 loi du 10/07/1965)."
+        },
+
         {
           "path": "financier_lot.avances_provisions.generale",
           "suggestionRef": "financier_lot_avances_provisions_generale",
@@ -558,7 +631,8 @@
           "min": 0,
           "step": 0.01,
           "ui:prefix": "€",
-          "required": false
+          "required": false,
+          "tooltip": "Avance de trésorerie / fonds de roulement versée antérieurement par le vendeur. Montant crédité sur son compte, non consommé à la date de la vente."
         },
         {
           "path": "financier_lot.avances_provisions.travaux",
@@ -571,6 +645,17 @@
           "min": 0,
           "step": 0.01,
           "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.avances_provisions.modalites_remboursement",
+          "suggestionRef": "modalites_remboursement_sommes_dues_par_syndic",
+          "label": "Modalités de remboursement",
+          "name": "financier_lot_modalites_remboursement",
+          "type": "select",
+          "options": ["Transfert à l’acquéreur", "Remboursement au cédant"],
+          "placeholder": "Sélectionner si applicable",
+          "icon": "gear_six_fill",
           "required": false
         },
         {
@@ -626,6 +711,7 @@
           "label": "Charges N-1 — Courantes (EUR)",
           "name": "financier_lot_charges_N_1_courantes",
           "type": "number",
+          "placeholder": "0 si aucune",
           "min": 0,
           "step": 0.01,
           "ui:prefix": "€",
@@ -638,41 +724,96 @@
           "label": "Charges N-1 — Hors budget (EUR)",
           "name": "financier_lot_charges_N_1_hors_budget",
           "type": "number",
+          "placeholder": "0 si aucune",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": true
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.reserve",
+          "id": "acq-reconstitution-reserve",
+          "label": "Reconstitution – Réserve (EUR)",
+          "name": "acq_reconstitution_reserve",
+          "type": "number",
           "min": 0,
           "step": 0.01,
           "ui:prefix": "€",
           "required": false
         },
         {
-          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente",
-          "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente",
-          "id": "financier_lot-sommes-a-la-charge-acquereur-post-vente",
-          "required": false,
-          "label": "Sommes à la charge de l’acquéreur après vente",
-          "name": "financier_lot_sommes_a_la_charge_acquereur_post_vente",
-          "minItems": 0,
-          "maxItems": 100,
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.provisions_speciales",
+          "id": "acq-reconstitution-provisions-speciales",
+          "label": "Reconstitution – Provisions spéciales (EUR)",
+          "name": "acq_reconstitution_provisions_speciales",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.avances_emprunts",
+          "id": "acq-reconstitution-avances-emprunts",
+          "label": "Reconstitution – Avances (emprunts) (EUR)",
+          "name": "acq_reconstitution_avances_emprunts",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.budget_previsionnel",
+          "id": "acq-pnee-bp",
+          "label": "Provisions non encore exigibles — Budget prévisionnel",
+          "name": "acq_pnee_bp",
           "type": "array",
-          "itemLabel": "Somme {{index}}",
+          "required": false,
+          "itemLabel": "Échéance BP {{index}}",
           "itemSchema": {
             "fields": [
               {
-                "path": "decision_ag",
-                "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente_decision_ag",
-                "label": "Décision d’AG",
-                "type": "text"
+                "path": "date",
+                "label": "Date d’exigibilité",
+                "type": "date",
+                "required": true,
+                "icon": "calendar_dots_fill"
               },
               {
                 "path": "montant",
-                "suggestionRef": "financier_lot_sommes_a_la_charge_acquereur_post_vente_montant",
                 "label": "Montant (EUR)",
                 "type": "number",
                 "min": 0,
                 "step": 0.01,
-                "ui:prefix": "€"
+                "ui:prefix": "€",
+                "required": true
               }
             ]
           }
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.hors_budget.date",
+          "id": "acq-pnee-hb-date",
+          "label": "Hors budget — Date d’exigibilité",
+          "name": "acq_pnee_hb_date",
+          "placeholder": "Date d’exigibilité",
+          "type": "date",
+          "required": false,
+          "icon": "calendar_dots_fill"
+        },
+        {
+          "path": "financier_lot.sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.hors_budget.montant",
+          "id": "acq-pnee-hb-montant",
+          "label": "Hors budget — Montant (EUR)",
+          "name": "acq_pnee_hb_montant",
+          "placeholder": "1000",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "ui:prefix": "€",
+          "required": false,
+          "tooltip": "Provisions hors budget non encore exigibles à la date de la vente et à la charge de l’acquéreur."
         }
       ]
     }

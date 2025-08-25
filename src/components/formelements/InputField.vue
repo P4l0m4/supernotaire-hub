@@ -16,6 +16,7 @@ interface Props {
   min?: number;
   max?: number;
   step?: number;
+  tooltip?: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -107,7 +108,19 @@ function toggleShowPassword() {
       @click="toggleShowPassword"
       @keydown.enter="toggleShowPassword"
       @keydown.space="toggleShowPassword"
-    /><span class="input-field__error" v-if="error">{{ error }}</span>
+    />
+
+    <UIIconComponent
+      icon="question"
+      class="input-field__icon"
+      style="cursor: pointer"
+      :color="colors['text-color-faded']"
+      size="1.5rem"
+      v-if="tooltip"
+      v-tooltip="tooltip"
+    />
+
+    <span class="input-field__error" v-if="error">{{ error }}</span>
   </div>
 </template>
 <style lang="scss" scoped>

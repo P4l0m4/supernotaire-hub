@@ -76,6 +76,7 @@ const errorMessage = computed(() => {
       :required="formField.required"
       :icon="formField.icon || ''"
       :error="errorMessage"
+      :tooltip="formField.tooltip || ''"
     />
     <ClientOnly v-else-if="formField.type === 'date'">
       <FormElementsDateField
