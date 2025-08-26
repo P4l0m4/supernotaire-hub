@@ -227,38 +227,40 @@ useHead({
           Générateur de Pré-état daté gratuit
         </h1>
         <span class="pre-etat-date__headlines__subtitle paragraphs"
-          >Remplissez le formulaire pour générer rapidement un Pré-état daté
+          >Remplissez le formulaire pour créer rapidement un Pré-état daté
           valide
         </span>
       </div>
+
       <Transition>
-        <div class="first-action" v-if="showFirstAction">
+        <div class="action" v-if="showFirstAction">
           <img
-            class="first-action__image"
+            class="action__image"
             src="@/assets/images/checklist-71-blue.svg"
             alt="Avant de commencer"
           />
 
-          <ul class="first-action__list">
-            <span class="first-action__list__title">Avant de commencer...</span>
-            <span class="first-action__list__subtitle"
+          <ul class="action__list">
+            <span class="action__list__title">Avant de commencer...</span>
+            <span class="action__list__subtitle"
               >Munissez-vous des documents (digitalisés) suivants:
             </span>
             <li
               v-for="document in documents"
               :key="document"
-              class="first-action__list__item"
+              class="action__list__item"
             >
               {{ document }}
             </li>
-
-            <PrimaryButton
-              icon="arrow_right"
-              variant="accent-color"
-              @click="showFirstAction = false"
-              style="margin-top: 1rem"
-              >Commencer</PrimaryButton
-            >
+            <div class="action__list__buttons">
+              <PrimaryButton
+                icon="arrow_right"
+                variant="accent-color"
+                @click="showFirstAction = false"
+                style="margin-top: 1rem"
+                >Commencer</PrimaryButton
+              >
+            </div>
           </ul>
         </div></Transition
       ><Transition>
@@ -270,36 +272,59 @@ useHead({
           @complete="showFinalAction = true"
       /></Transition>
       <Transition>
-        <div class="final-action" v-if="showFinalAction">
-          <ul class="final-action__list">
-            <span class="final-action__list__title"> Avant de partir...</span>
-            <span class="final-action__list__subtitle">
+        <div class="action" v-if="showFinalAction">
+          <img
+            class="action__image"
+            src="@/assets/images/achievement-45.svg"
+            alt="Avant de commencer"
+          />
+          <ul class="action__list">
+            <span class="action__list__title">C'est prêt !</span>
+            <span class="action__list__subtitle">
+              Votre Pré-état daté est prêt à être téléchargé.
+            </span>
+            <TrustPilot />
+            <div class="action__list__buttons">
+              <UISecondaryButton
+                variant="accent-color"
+                icon="arrow_left"
+                :reverse="true"
+                @click="showFinalAction = false"
+                @keydown.enter="showFinalAction = false"
+                @keydown.space="showFinalAction = false"
+              >
+                Revenir au formulaire
+              </UISecondaryButton>
+              <UIPrimaryButton
+                @click="generatePdf()"
+                :disabled="!ready"
+                variant="accent-color"
+                icon="download"
+                >Télécharger le Pré-état daté</UIPrimaryButton
+              >
+            </div>
+          </ul>
+        </div> </Transition
+      ><Transition>
+        <div class="action" v-if="showFinalAction">
+          <img
+            class="action__image"
+            src="@/assets/images/files-and-folder-78.svg"
+            alt="Avant de commencer"
+          />
+          <ul class="action__list">
+            <span class="action__list__title"> Avant de partir...</span>
+            <span class="action__list__subtitle">
               Documents à joindre en annexe de votre pré-état daté
             </span>
             <li
-              class="final-action__list__item"
+              class="action__list__item"
               v-for="annexe in annexes"
               :key="annexe"
             >
               {{ annexe }}
             </li>
           </ul>
-
-          <UIPrimaryButton
-            @click="generatePdf()"
-            :disabled="!ready"
-            variant="success-color"
-            icon="download"
-            >Télécharger le Pré-état daté</UIPrimaryButton
-          ><UITertiaryButton
-            variant="text-color"
-            @click="showFinalAction = false"
-            @keydown.enter="showFinalAction = false"
-            @keydown.space="showFinalAction = false"
-            style="margin-top: -2rem"
-          >
-            Revenir au formulaire
-          </UITertiaryButton>
         </div>
       </Transition>
     </div>
@@ -348,7 +373,7 @@ useHead({
   }
 }
 
-.first-action {
+.action {
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -365,6 +390,7 @@ useHead({
     gap: 3rem;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
   }
 
   &__image {
@@ -374,16 +400,18 @@ useHead({
   }
 
   &__list {
+    width: 100%;
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     height: 100%;
     min-height: 100%;
-    justify-content: space-between;
+    max-width: 25rem;
 
-    @media (min-width: $big-tablet-screen) {
+    @media (min-width: $laptop-screen) {
       min-height: 18.87rem;
+      max-width: 50rem;
     }
 
     &__title {
@@ -405,6 +433,7 @@ useHead({
       gap: 0.5rem;
       align-items: center;
       font-size: 1.05rem;
+      text-wrap: balance;
 
       &::before {
         content: "";
@@ -415,65 +444,15 @@ useHead({
         border: 1px solid $text-color;
       }
     }
-  }
-}
 
-.final-action {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  gap: 2rem;
-  border-radius: $radius;
-  background-color: $primary-color;
-  width: 100%;
-  min-width: 280px;
-  scroll-margin-top: 2rem;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 1.5rem;
-    gap: 3rem;
-  }
-
-  &__list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 100%;
-    min-height: 100%;
-    justify-content: space-between;
-
-    @media (min-width: $big-tablet-screen) {
-      min-height: 18.87rem;
-    }
-
-    &__title {
-      font-size: 2.5rem;
-      font-weight: $semi-bold;
-      text-wrap: balance;
-      max-width: 600px;
-    }
-
-    &__subtitle {
-      font-size: 1.25rem;
-      font-weight: $regular;
-      text-wrap: balance;
-      margin-bottom: 1rem;
-    }
-
-    &__item {
+    &__buttons {
       display: flex;
+      flex-direction: column;
       gap: 0.5rem;
-      align-items: center;
-      font-size: 1.05rem;
+      margin-top: auto;
 
-      &::before {
-        content: "";
-        display: inline-block;
-        height: 1rem;
-        width: 1rem;
-        min-width: 1rem;
-        border: 1px solid $text-color;
+      @media (min-width: $laptop-screen) {
+        flex-direction: row;
       }
     }
   }
