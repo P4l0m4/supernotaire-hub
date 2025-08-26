@@ -8,7 +8,7 @@ import type { FormDefinition } from "@/utils/types/forms";
 
 const props = defineProps<{
   formDefinition: FormDefinition;
-  suggestions: Record<string, any>;
+  suggestions?: Record<string, any>;
 }>();
 const emit = defineEmits<{
   (e: "complete"): void;

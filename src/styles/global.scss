@@ -223,6 +223,7 @@ input[type="checkbox"] {
   min-height: calc(100vh - 87px);
   gap: 2rem;
   color: $text-color;
+  width: 100%;
 
   @media (min-width: $laptop-screen) {
     padding: 4rem 0;
@@ -358,7 +359,7 @@ details > summary::-webkit-details-marker /* Safari */ {
 .subtitles {
   font-size: calc($subtitles - 0.25rem);
   line-height: 1.25;
-  font-weight: $medium;
+  font-weight: $regular;
   color: $text-color-faded;
 
   @media (min-width: $tablet-screen) {

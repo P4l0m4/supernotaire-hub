@@ -72,7 +72,7 @@ const plans = ref([
   <div class="tarifs">
     <div class="tarifs__headlines">
       <h3 class="tarifs__headlines__title">Nos tarifs</h3>
-      <p class="tarifs__headlines__subtitle">
+      <p class="tarifs__headlines__subtitle subtitles">
         Commencez à gagner du temps facturable gratuitement ou décuplez votre
         impact grâce aux fonctionnalités premium.
       </p>
@@ -197,14 +197,10 @@ const plans = ref([
     }
 
     &__subtitle {
-      font-size: 1rem;
-      line-height: 1.35;
-      font-weight: $regular;
       margin-top: -1rem;
       text-wrap: balance;
 
       @media (min-width: $big-tablet-screen) {
-        font-size: 1.25rem;
         margin-top: -3rem;
       }
     }

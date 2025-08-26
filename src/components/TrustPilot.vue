@@ -58,7 +58,6 @@ onMounted(async () => {
 </template>
 <style lang="scss" scoped>
 .trustpilot {
-  border: 1px solid #00b67a;
   background-color: rgba(#00b67a, 0.1);
   border-radius: calc($radius * 0.5);
   padding: 1rem;

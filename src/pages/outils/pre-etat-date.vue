@@ -226,7 +226,7 @@ useHead({
         <h1 class="pre-etat-date__headlines__title titles">
           Générateur de Pré-état daté gratuit
         </h1>
-        <span class="pre-etat-date__headlines__subtitle paragraphs"
+        <span class="pre-etat-date__headlines__subtitle subtitles"
           >Remplissez le formulaire pour créer rapidement un Pré-état daté
           valide
         </span>
@@ -334,7 +334,7 @@ useHead({
     <div class="faq">
       <div class="faq__headlines">
         <h2 class="titles">Questions fréquentes sur le Pré-état daté</h2>
-        <h3 class="paragraphs">
+        <h3 class="subtitles">
           Tarif, délais, validité, documents à fournir, etc.
         </h3>
       </div>

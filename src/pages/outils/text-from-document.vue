@@ -170,6 +170,7 @@ function reset() {
   gap: 2rem;
   height: fit-content;
   padding: 2rem 1rem;
+  width: 100%;
   border: 1px dashed $secondary-color;
   color: $text-color;
   border-radius: calc($radius / 2);

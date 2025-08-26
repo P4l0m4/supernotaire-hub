@@ -3,12 +3,21 @@
     <nav class="header__nav">
       <ul class="header__nav__ul">
         <li class="header__nav__ul__li">
-          <NuxtLink to="/" exact-active
+          <NuxtLink to="/"
             ><img
               class="logo"
               src="@/assets/images/logo-dark.svg"
               alt="logo supernotaire"
           /></NuxtLink>
+        </li>
+        <li class="header__nav__ul__li" style="margin-left: auto">
+          <NuxtLink to="/notaires" exact>Notaires</NuxtLink>
+        </li>
+        <li class="header__nav__ul__li">
+          <NuxtLink to="/vendeurs" exact>Vendeurs de biens</NuxtLink>
+        </li>
+        <li class="header__nav__ul__li">
+          <NuxtLink to="/outils" exact>Outils</NuxtLink>
         </li>
         <li class="header__nav__ul__li">
           <NuxtLink to="/comment-ca-marche" exact>Comment ça marche ?</NuxtLink>
@@ -28,9 +37,9 @@
   </header>
 </template>
 <style lang="scss" scoped>
-// .router-link-exact-active {
-//   border-bottom: 2px solid $accent-color;
-// }
+.router-link-exact-active {
+  border-bottom: 2px solid $accent-color;
+}
 
 .logo {
 }
@@ -50,7 +59,7 @@
   right: 0;
   margin: 0 auto;
 
-  @media (min-width: $big-tablet-screen) {
+  @media (min-width: $laptop-screen) {
     display: flex;
     padding: 0.5rem 4rem;
     height: fit-content;
@@ -70,7 +79,7 @@
     &__ul {
       list-style: none;
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       align-items: center;
       width: 100%;
       justify-content: space-between;

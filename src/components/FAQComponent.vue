@@ -24,6 +24,7 @@ function toggleQuestion(index: number) {
   <div class="faq-component">
     <div
       class="faq-component__card"
+      :class="{ 'faq-component__card--opened': questionOpened === index }"
       v-for="(question, index) in questions"
       :key="index"
       @click="toggleQuestion(index)"
@@ -67,7 +68,7 @@ function toggleQuestion(index: number) {
     gap: 1rem;
     padding: 1rem;
     cursor: pointer;
-    background-color: darken($base-color, 2%);
+    background-color: $base-color;
     border: 1px solid darken($base-color, 5%);
 
     @media (min-width: $big-tablet-screen) {
@@ -76,7 +77,9 @@ function toggleQuestion(index: number) {
       min-height: 6.5rem;
     }
 
-    @media (min-width: $laptop-screen) {
+    &--opened {
+      background-color: darken($base-color, 2%);
+      border: 1px solid transparent;
     }
 
     &__question {

@@ -78,7 +78,7 @@ const perks = [
     <div class="headlines">
       <h1 class="headlines__title">Supernotaire.fr</h1>
       <p class="headlines__subtitle paragraphs">
-        Gagner du temps sans jamais compromettre la sécurité ni la déontologie
+        Gagner du temps sans compromettre la sécurité ni la déontologie
         notariale
       </p>
     </div>
@@ -130,7 +130,7 @@ const perks = [
   &__subtitle {
     text-align: center;
     text-wrap: balance;
-    color: $text-color-faded;
+    color: $text-color;
   }
 }
 
