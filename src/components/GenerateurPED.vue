@@ -35,6 +35,10 @@ const documents = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
   "Fiche synthétique de la copropriété.",
   "Attestation de propriété.",
+  "Relevé individuel de compte.",
+  "État des dettes et créances.",
+  "Comptes annuels approuvés et annexes.",
+  "Tableau des travaux et financements votés en AG.",
 ];
 
 const formData = reactive({} as PreEtatDate);
