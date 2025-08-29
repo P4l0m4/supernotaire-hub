@@ -50,7 +50,7 @@ const features = ref([
     subtitle:
       "Sans frais, de l’ouverture du dossier à la signature de l’acte de vente",
     description:
-      "Ouverture et constitution autonomes des dossiers, pré-rédaction des actes et signatures qualifiées gratuites, sans quitter votre navigateur.",
+      "Ouverture et constitution autonomes des dossiers, pré-rédaction des actes, visioconférences et signatures sécurisées gratuites, sans quitter votre navigateur.",
     image: coins,
     color: colors["success-color"],
   },

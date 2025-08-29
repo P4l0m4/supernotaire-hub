@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { colors } from "@/utils/colors";
 
 defineProps<{
@@ -7,9 +8,53 @@ defineProps<{
   id: string;
   label: string;
   icon?: string;
+  mode: "year-picker" | "month-picker" | "date-picker";
 }>();
 
-const model = defineModel<string | number | boolean>();
+const model = defineModel<string>();
+
+// pont année: number/Date -> string "AAAA"
+const yearBridge = computed<number | null>({
+  get() {
+    const y = Number(model.value);
+    return Number.isFinite(y) ? y : null;
+  },
+  set(v) {
+    if (v == null) model.value = "";
+    else if (typeof v === "number") model.value = String(v);
+    else if (v instanceof Date) model.value = String(v.getFullYear());
+    else model.value = String(v as any);
+  },
+});
+
+// pont mois: Date/number/objet -> string "MM"
+const monthBridge = computed<Date | number | null>({
+  get() {
+    const m = Number(model.value);
+    return Number.isFinite(m) && m >= 1 && m <= 12
+      ? new Date(new Date().getFullYear(), m - 1, 1)
+      : null;
+  },
+  set(v) {
+    if (!v) {
+      model.value = "";
+      return;
+    }
+    if (v instanceof Date) {
+      model.value = String(v.getMonth() + 1).padStart(2, "0");
+      return;
+    }
+    if (typeof v === "number") {
+      model.value = String(v).padStart(2, "0");
+      return;
+    }
+    if (typeof v === "object" && "month" in (v as any)) {
+      model.value = String((v as any).month).padStart(2, "0");
+      return;
+    }
+    model.value = String(v as any);
+  },
+});
 </script>
 <template>
   <div
@@ -23,6 +68,42 @@ const model = defineModel<string | number | boolean>();
       size="1rem"
     />
     <VueDatePicker
+      v-if="mode === 'year-picker'"
+      :key="'year-' + id"
+      :id="id"
+      :label="label"
+      v-model="yearBridge"
+      locale="fr"
+      cancelText="Annuler"
+      selectText="Sélectionner"
+      auto-apply
+      year-picker
+      start-date="2000-01-01"
+      :max-date="new Date()"
+      :year-range="[1700, new Date().getFullYear()]"
+      :placeholder="placeholder || ''"
+      time-picker-inline
+      :enable-time-picker="false"
+    ></VueDatePicker>
+    <VueDatePicker
+      v-else-if="mode === 'month-picker'"
+      :key="'month-' + id"
+      :id="id"
+      :label="label"
+      v-model="monthBridge"
+      locale="fr"
+      cancelText="Annuler"
+      selectText="Sélectionner"
+      auto-apply
+      month-picker
+      time-picker-inline
+      :enable-time-picker="false"
+      :placeholder="placeholder || ''"
+    ></VueDatePicker>
+
+    <VueDatePicker
+      v-else-if="mode === 'date-picker'"
+      :key="'date-' + id"
       :id="id"
       :label="label"
       v-model="model"

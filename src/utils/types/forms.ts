@@ -1,12 +1,19 @@
+import type { RangeOption } from "@/components/formElements/RangeInput.vue";
+
 type FieldType =
   | "text"
   | "number"
   | "date"
   | "select"
   | "checkbox"
+  | "radio"
+  | "textarea"
+  | "checkbox-group"
   | "array"
   | "email"
-  | "file";
+  | "file"
+  | "segmented-control"
+  | "range";
 
 export interface BaseField {
   path: string;
@@ -14,23 +21,25 @@ export interface BaseField {
   suggestionRef?: string;
   label: string;
   name: string;
-  type: Exclude<FieldType, "array">; // tous sauf "array"
-  ui?: { prefix?: string };
-  step?: number;
-  min?: number;
-  max?: number;
-  options?: Array<string>; // pour select
+  type: Exclude<FieldType, "array">;
   required?: boolean;
   placeholder?: string;
   icon?: string;
-  accept?: string[]; // pour file
-  multiple?: boolean; // pour file
   TS_TYPE?: string; // pour extraction AI
   tooltip?: string; // pour info bulle
   pattern?: string; // pour validation par regex
 }
 
-// Spécifique aux tableaux
+export interface CheckBoxOption {
+  label: string;
+  value: boolean;
+  belongsTo?: string[]; // pour afficher les checkbox en fonction d'une autre valeur
+}
+
+export interface CheckBoxField extends BaseField {
+  options: CheckBoxOption[];
+}
+
 export interface ArrayField extends Omit<BaseField, "type"> {
   type: "array";
   itemLabel?: string;
@@ -39,7 +48,55 @@ export interface ArrayField extends Omit<BaseField, "type"> {
   maxItems?: number;
 }
 
-export type FormField = BaseField | ArrayField;
+export interface NumberField extends BaseField {
+  type: "number";
+  step?: number;
+  min?: number;
+  max?: number;
+}
+
+export interface FileField extends BaseField {
+  type: "file";
+  accept?: string[]; // types de fichiers acceptés, ex: ['image/png', 'application/pdf']
+  multiple?: boolean; // permet la sélection de plusieurs fichiers
+}
+
+export interface RangeField extends BaseField {
+  type: "range";
+  options: RangeOption[];
+}
+
+export interface CheckBoxGroupField extends BaseField {
+  type: "checkbox-group";
+  options: CheckBoxOption[];
+}
+
+export interface SelectField extends BaseField {
+  type: "select";
+  options: string[];
+}
+
+export interface SegmentedControlField extends BaseField {
+  type: "segmented-control";
+  options: string[];
+}
+
+export interface DateField extends BaseField {
+  type: "date";
+  mode: "year-picker" | "month-picker" | "date-picker";
+}
+
+export type FormField =
+  | BaseField
+  | ArrayField
+  | NumberField
+  | RangeField
+  | CheckBoxGroupField
+  | CheckBoxField
+  | SelectField
+  | SegmentedControlField
+  | FileField
+  | DateField;
 
 export interface FormDefinition {
   title: string;

@@ -8,11 +8,19 @@ export interface PreEtatDate {
   syndic: Syndic;
   ag: AG;
   financier_lot: FinancierLot;
+  financier_lot_sommes_dues_cedant?: FinancierLotSommesDuesCedant;
+  financier_lot_autres?: FinancierLotAutres;
+  financier_lot_sommes_a_la_charge_acquereur_post_vente?: FinancierLotSommesALaChargeAcquereurPostVente;
 }
 
 export interface Documents {
-  dernier_pv_ag: File;
-  fiche_synthetique_copropriete: File;
+  dernier_pv_ag?: File;
+  fiche_synthetique_copropriete?: File;
+  attestation_de_propriete?: File;
+  releve_individuel_compte?: File;
+  etat_dettes_creances?: File;
+  comptes_annuels_approuves_annexes?: File;
+  tableau_travaux_financements?: File;
 }
 
 export interface Bien {
@@ -25,6 +33,7 @@ export interface Bien {
   };
   lots: Lot[];
 }
+
 export interface Lot {
   numero: string;
   usage: string;
@@ -40,17 +49,10 @@ export interface Lot {
 
 export interface Copropriete {
   arrete_au: ISODate;
-  nombre_lots_principaux: number;
-  fonds_travaux: { montant: Euro; date_arret: ISODate };
-  impayes: { total: Euro; taux: number };
-  assurance: { assureur: string; police: string; echeance: ISODate };
-  procedures: Procedure[];
+  fonds_travaux: { existance: boolean; montant: Euro };
+  impayes: { total: Euro };
+  dettes_syndic_fournisseurs: number;
   emprunts: Emprunt[];
-}
-export interface Procedure {
-  type: string;
-  etat: string;
-  montant: Euro;
 }
 
 export interface Emprunt {
@@ -73,42 +75,71 @@ export interface AG {
   };
 }
 
+export interface Provision {
+  date: ISODate;
+  montant: Euro;
+}
+
 export interface FinancierLot {
   arrete_au: ISODate;
   solde_compte: Euro;
   solde_crediteur_exercice_anterieur?: Euro;
   appels_echus_non_payes: Euro;
-  echeances_a_venir: { date: ISODate; montant: Euro }[];
-  sommes_dues_cedant?: {
-    provisions_budget_previsionnel_exigibles?: Euro;
-    provisions_hors_budget_exigibles?: Euro;
-    charges_impayees_anterieures?: Euro;
-    provisions_posterieures_exigibles?: Euro;
+  echeances_a_venir?: { date: ISODate; montant: Euro }[];
+}
+
+export interface FinancierLotSommesDuesCedant {
+  provisions_exigibles?: {
+    budget_previsionnel?: Euro;
+    hors_budget?: Euro;
   };
+  charges_impayees_anterieures?: Euro;
+  cotisations_fonds_travaux_exigibles?: Euro;
+  autres_sommes_exigibles?: {
+    pret_quote_part_vendeur?: Euro;
+    condamnations?: Euro;
+    autres?: Euro;
+    a_des_tiers_emprunts_geres_par_syndic?: Euro;
+  };
+}
+
+export interface FinancierLotAutres {
+  sommes_dont_syndicat_pourrait_etre_debiteur?: {
+    provisions_posterieures_rendues_exigibles?: Euro;
+    // NB : les “Avances perçues” A1/A2/A3 réutilisent avances_provisions + emprunts
+  };
+
   avances_provisions: {
     generale: Euro;
     travaux: Euro;
     modalites_remboursement: string;
   };
+
   charges: {
-    N: { courantes: Euro; hors_budget: Euro; année_exercice: string };
-    N_1: { courantes: Euro; hors_budget: Euro; année_exercice: string };
-  };
-  sommes_a_la_charge_acquereur_post_vente: {
-    reconstitution_avances: {
-      reserve: Euro;
-      provisions_speciales: Euro;
-      avances_emprunts: Euro;
+    N_1: {
+      bp_appelee: Euro;
+      bp_reelle: Euro;
+      hb_appelee: Euro;
+      hb_reelle: Euro;
     };
-    provisions_non_encore_exigibles: {
-      budget_previsionnel: {
-        date: ISODate;
-        montant: Euro;
-      }[];
-      hors_budget: {
-        date: ISODate;
-        montant: Euro;
-      };
+    N_2: {
+      bp_appelee: Euro;
+      bp_reelle: Euro;
+      hb_appelee: Euro;
+      hb_reelle: Euro;
     };
   };
+}
+
+export interface FinancierLotSommesALaChargeAcquereurPostVente {
+  reconstitution_avances: {
+    reserve: Euro;
+    provisions_speciales: Euro;
+    avances_emprunts: Euro;
+  };
+  provisions_non_encore_exigibles: {
+    budget_previsionnel: Provision[];
+    hors_budget: Provision[];
+  };
+  fonds_travaux_non_encore_exigibles: Provision[];
 }

@@ -67,6 +67,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 20px $primary-color inset !important;
   -webkit-text-fill-color: $text-color !important;
+  font-family: "Figtree", sans-serif !important;
 }
 input[type="search"] {
   -webkit-appearance: none;
@@ -357,7 +358,7 @@ details > summary::-webkit-details-marker /* Safari */ {
 }
 
 .subtitles {
-  font-size: calc($subtitles - 0.25rem);
+  font-size: calc($subtitles - 0.2rem);
   line-height: 1.25;
   font-weight: $regular;
   color: $text-color-faded;

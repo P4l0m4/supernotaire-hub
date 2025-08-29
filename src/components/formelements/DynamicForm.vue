@@ -107,8 +107,20 @@ function buildRules(def?: FormDefinition) {
       const st = stepValidator(f.step);
       if (st) r.step = st;
     }
-    if (f.type === "select" && f.options) r.oneOf = fr.oneOf(f.options);
-    if (f.type === "date") r.isDate = fr.isDate;
+    if ((f.type === "select" || f.type === "segmented-control") && f.options)
+      r.oneOf = fr.oneOf(f.options);
+    if (f.type === "range" && f.options)
+      r.oneOf = fr.oneOf(f.options.map((o: any) => o.value));
+    if (f.type === "checkbox-group" && f.options) {
+      if (f.required) r.minLength = fr.minLength(1); // au moins 1 coche si requis
+    }
+    if (f.type === "date" && f.mode === "year-picker") {
+      r.isYear = fr.isYear;
+    } else if (f.type === "date" && f.mode === "month-picker") {
+      r.isMonth = fr.isMonth;
+    } else if (f.type === "date" && f.mode === "date-picker") {
+      r.isDate = fr.isDate;
+    }
     if (f.type === "email") r.email = fr.email;
     if (f.pattern) {
       const rg = regexFrom(f.pattern);
@@ -120,40 +132,6 @@ function buildRules(def?: FormDefinition) {
   const addFieldRules = (field: any, basePath: string[] = []) => {
     const p = field.path.split(".");
     const full = [...basePath, ...p];
-
-    // if (field.type === "array") {
-    //   const arrRules: any = {};
-    //   if (field.required) arrRules.required = required;
-    //   if (field.minItems != null)
-    //     arrRules.minLength = fr.minLength(field.minItems);
-    //   if (field.maxItems != null)
-    //     arrRules.maxLength = fr.maxLength(field.maxItems);
-
-    //   setDeep(rules, full, {
-    //     ...(field.required ? { required } : {}),
-    //     ...(field.minItems != null
-    //       ? { minLength: minLength(field.minItems) }
-    //       : {}),
-    //     ...(field.maxItems != null
-    //       ? { maxLength: maxLength(field.maxItems) }
-    //       : {}),
-    //   });
-
-    //   const itemShape: any = {};
-    //   for (const sub of field.itemSchema?.fields ?? []) {
-    //     const leaf = rulesForScalar(sub);
-    //     if (leaf) setDeep(itemShape, sub.path.split("."), leaf);
-    //   }
-
-    //   const arrInModel = (getDeep(model.value, full) as any[]) || [];
-    //   for (let i = 0; i < arrInModel.length; i++) {
-    //     // important: cloner pour éviter les références partagées
-    //     const perItem = JSON.parse(JSON.stringify(itemShape));
-    //     setDeep(rules, [...full, String(i)], perItem);
-    //   }
-
-    //   return;
-    // }
 
     if (field.type === "array") {
       // règles du conteneur
@@ -167,26 +145,29 @@ function buildRules(def?: FormDefinition) {
           : {}),
       });
 
-      // shape d'un item
       const itemShape: any = {};
       for (const sub of field.itemSchema?.fields ?? []) {
         const leaf = rulesForScalar(sub);
         if (leaf) setDeep(itemShape, sub.path.split("."), leaf);
       }
 
-      // règles par index existant (sans JSON.stringify)
       const arrInModel = (getDeep(model.value, full) as any[]) || [];
       for (let i = 0; i < arrInModel.length; i++) {
-        // réutilise la même shape (les validateurs sont des fonctions pures)
         setDeep(rules, [...full, String(i)], itemShape);
-        // Variante si tu veux un léger découplage au 1er niveau :
-        // setDeep(rules, [...full, String(i)], { ...itemShape });
       }
       return;
     }
 
     const leaf = rulesForScalar(field);
     if (leaf) setDeep(rules, full, leaf);
+
+    if (field.type === "checkbox-group" && field.options) {
+      const allowed = field.options.map((o: any) => o.value);
+      const arr = (getDeep(model.value, full) as any[]) || [];
+      for (let i = 0; i < arr.length; i++) {
+        setDeep(rules, [...full, String(i)], { oneOf: fr.oneOf(allowed) });
+      }
+    }
   };
 
   for (const s of def.sections) for (const f of s.fields) addFieldRules(f);
@@ -214,49 +195,98 @@ function inSectionPath(errPath: string, sectionPaths: string[]) {
   return sectionPaths.some((sp) => p.startsWith(norm(sp)));
 }
 
+// async function validateCurrentSection() {
+//   await nextTick();
+//   await v$.value.$validate(); // déclenche aussi les validations imbriquées des enfants
+
+//   const section = props.formDefinition.sections[currentSection.value];
+//   if (!section) return true;
+
+//   const paths = section.fields.map((f) => f.path);
+
+//   const sectionErrors = v$.value.$errors.filter((e) =>
+//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+//   );
+
+//   return sectionErrors.length === 0;
+// }
+
+const sections = computed(() => props.formDefinition?.sections ?? []);
+
 async function validateCurrentSection() {
   await nextTick();
-  await v$.value.$validate(); // déclenche aussi les validations imbriquées des enfants
-
-  const section = props.formDefinition.sections[currentSection.value];
-  const paths = section.fields.map((f) => f.path);
-
-  const sectionErrors = v$.value.$errors.filter((e) =>
+  await v$.value.$validate();
+  const s = sections.value[currentSection.value];
+  if (!s) return true;
+  const paths = s.fields.map((f) => f.path);
+  return !v$.value.$errors.some((e) =>
     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
   );
-
-  return sectionErrors.length === 0;
 }
 
-const isCurrentStepInvalid = computed(() => {
-  const section = props.formDefinition.sections[currentSection.value];
-  const paths = section.fields.map((f) => f.path);
+// const isCurrentStepInvalid = computed(() => {
+//   const section = props.formDefinition.sections[currentSection.value];
+//   const paths = section.fields.map((f) => f.path);
 
-  const sectionErrors = v$.value.$errors.filter((e) =>
+//   const sectionErrors = v$.value.$errors.filter((e) =>
+//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+//   );
+
+//   return sectionErrors.length > 0;
+// });
+
+const isCurrentStepInvalid = computed(() => {
+  const s = sections.value[currentSection.value];
+  if (!s) return false;
+  const paths = s.fields.map((f) => f.path);
+  return v$.value.$errors.some((e) =>
     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
   );
-
-  return sectionErrors.length > 0;
 });
+
+// async function next() {
+//   try {
+//     if (await validateCurrentSection()) {
+//       currentSection.value++;
+
+//       if (formRef.value) {
+//         formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
+//         console.log("Scrolled to top of form");
+//       }
+
+//       if (currentSection.value >= props.formDefinition.sections.length) {
+//         emit("complete");
+//       }
+//     }
+//   } catch (e) {
+//     console.error("[DynamicForm/next]", e);
+//   }
+// }
 
 async function next() {
   try {
-    if (await validateCurrentSection()) {
-      currentSection.value++;
-
-      if (formRef.value) {
-        formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
-        console.log("Scrolled to top of form");
-      }
-
-      if (currentSection.value >= props.formDefinition.sections.length) {
-        emit("complete");
-      }
+    if (!(await validateCurrentSection())) return;
+    const nextIdx = currentSection.value + 1;
+    if (nextIdx >= sections.value.length) {
+      emit("complete");
+      return;
     }
+    currentSection.value = nextIdx;
+    formRef.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) {
     console.error("[DynamicForm/next]", e);
   }
 }
+
+watch(sections, (list) => {
+  if (!list.length) {
+    currentSection.value = 0;
+    return;
+  }
+  if (currentSection.value > list.length - 1) {
+    currentSection.value = list.length - 1;
+  }
+});
 
 function prev() {
   currentSection.value--;
@@ -369,7 +399,7 @@ const getSuggestion = (k?: string) => {
   background-color: $primary-color;
   width: 100%;
   min-width: 280px;
-  scroll-margin-top: 0rem;
+  scroll-margin-top: 4rem;
 
   @media (min-width: $big-tablet-screen) {
     padding: 1.5rem;
@@ -391,7 +421,7 @@ const getSuggestion = (k?: string) => {
     &__fields {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
 
       @media (min-width: $big-tablet-screen) {

@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+export type Status =
+  | "not started"
+  | "pending"
+  | "processing"
+  | "completed"
+  | "failed";
+
 const props = defineProps<{
-  status: string;
+  status: Status;
+  error?: string;
 }>();
 
 const statusText = computed(() => {
@@ -10,13 +18,13 @@ const statusText = computed(() => {
     case "not started":
       return "";
     case "pending":
-      return "Récupération du document";
+      return "Récupération des données";
     case "processing":
       return "Traitement en cours";
     case "completed":
       return "Traitement terminé";
     case "failed":
-      return `Échec: ${error.value}`;
+      return `Échec du traitement: ${props.error ?? "Erreur inconnue"}`;
     default:
       return "Statut inconnu";
   }

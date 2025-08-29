@@ -14,7 +14,7 @@ type ArrayItem = { __id: string } & Record<string, any>;
 
 const props = defineProps<{
   field: ArrayField;
-  suggestion?: object;
+  suggestion?: any[];
   parentError?: string | null;
 }>();
 
@@ -196,13 +196,21 @@ const childrenErrors = computed(() => {
           :color="colors['error-color']"
         />
       </h4>
+
+      <UITagComponent
+        v-if="suggestion"
+        icon="lightbulb_fill"
+        :color="colors['purple-color']"
+        style="margin-left: auto"
+      >
+        {{ suggestion.length }} éléments trouvés</UITagComponent
+      >
       <UISecondaryButton
         variant="accent-color"
         icon="plus_circle"
         @click="addItem"
         @keydown.enter="addItem"
         @keydown.space="addItem"
-        style="width: fit-content"
       >
         Ajouter
       </UISecondaryButton>
@@ -300,6 +308,7 @@ const childrenErrors = computed(() => {
                 :model-value="getByPath(item, f.path)"
                 @update:modelValue="(val) => updateItem(idx, f.path, val)"
                 :placeholder="f.placeholder || ''"
+                :mode="f.mode"
                 :error="firstItemMsg(idx, f.path)"
               />
             </ClientOnly>
@@ -363,13 +372,20 @@ const childrenErrors = computed(() => {
 
   &__header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (min-width: $big-tablet-screen) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &__label {
     color: $text-color;
     font-weight: $regular;
+    display: flex;
   }
 }
 
@@ -379,9 +395,13 @@ const childrenErrors = computed(() => {
   border: 1px solid rgba($text-color, 0.1);
   border-radius: calc($radius / 2);
   padding: 0.75rem;
-  gap: 1rem;
+  gap: 1.75rem;
   scroll-margin-top: 8rem;
   background-color: $primary-color;
+
+  @media (min-width: $big-tablet-screen) {
+    scroll-margin-top: 12rem;
+  }
 
   &--children-have-errors {
     border: 1px solid rgba($error-color, 0.2);
@@ -406,7 +426,7 @@ const childrenErrors = computed(() => {
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 0.75rem;
+    gap: 1.5rem;
   }
 }
 

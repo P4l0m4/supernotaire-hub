@@ -25,6 +25,7 @@ export const fr = {
   minValue: (n: number) => helpers.withMessage(`Doit être ≥ ${n}`, minValue(n)),
   maxValue: (n: number) => helpers.withMessage(`Doit être ≤ ${n}`, maxValue(n)),
   email: helpers.withMessage("Email invalide", email),
+
   isDate: helpers.withMessage(
     "Format de date invalide (JJ-MM-AAAA)",
     (v: unknown) => {
@@ -41,6 +42,27 @@ export const fr = {
       );
     }
   ),
+  isYear: helpers.withMessage(
+    "Format d'année invalide (AAAA)",
+    (v: unknown) => {
+      if (v == null || v === "") return true;
+      if (typeof v !== "string") return false;
+      const m = v.match(/^(\d{4})$/);
+      if (!m) return false;
+      const y = Number(m[1]);
+      const dt = new Date(y, 0, 1);
+      return dt.getFullYear() === y;
+    }
+  ),
+  isMonth: helpers.withMessage("Format de mois invalide (MM)", (v: unknown) => {
+    if (v == null || v === "") return true;
+    if (typeof v !== "string") return false;
+    const m = v.match(/^(\d{2})$/);
+    if (!m) return false;
+    const month = Number(m[1]);
+    return month >= 1 && month <= 12;
+  }),
+
   oneOf: (opts: readonly string[]) =>
     helpers.withMessage(
       "Valeur non autorisée",

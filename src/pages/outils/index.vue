@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const tools = [
   {
-    name: "Extraire le texte d'un document",
-    path: "/outils/text-from-document",
-    description:
-      "Extraitre le texte d'un document PDF (scannés ou à base de texte) ou d'une image.",
-  },
-  {
     name: "Créer un Pré-état daté",
     path: "/outils/pre-etat-date",
     description:
       "Créer un pré-état daté conforme à la réglementation en quelques minutes.",
+  },
+  {
+    name: "Estimer une valeur foncière",
+    path: "/outils/valeur-fonciere",
+    description:
+      "Obtenez une estimation rapide et fiable de la valeur foncière de votre bien immobilier.",
   },
   {
     name: "Signer des documents administratifs",
@@ -25,6 +25,12 @@ const tools = [
     description:
       "Fusionner et combiner des fichiers PDF et les mettre dans l'ordre que vous voulez.",
     target: "_blank",
+  },
+  {
+    name: "Extraire le texte d'un document",
+    path: "/outils/text-from-document",
+    description:
+      "Extraitre le texte d'un document PDF (scanné ou à base de texte) ou d'une image.",
   },
 ];
 </script>

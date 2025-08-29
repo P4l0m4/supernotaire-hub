@@ -30,6 +30,7 @@ watch(
 </script>
 <template>
   <div class="form-steps">
+    <!-- first and last step should not have a left and right padding -->
     <div
       v-for="(stepLabel, index) in stepsLabels"
       :key="index"
@@ -37,6 +38,10 @@ watch(
       :class="{
         'form-steps__item--active': index === currentStep - 1,
         'form-steps__item--completed': index < currentStep - 1,
+      }"
+      :style="{
+        paddingLeft: index === 0 ? '0' : '',
+        paddingRight: index === stepsLabels.length - 1 ? '0' : '',
       }"
       @click="emit('changeStep', index)"
       @keydown.enter="emit('changeStep', index)"
@@ -49,12 +54,15 @@ watch(
           size="1rem"
           :color="colors['accent-color']"
         />
-        <span v-else class="form-steps__item__circle__number">{{
-          index + 1
-        }}</span>
+        <span v-else class="form-steps__item__circle__number"
+          >0{{ index + 1 }}</span
+        >
       </div>
-
-      <span class="form-steps__item__label">{{ stepLabel }} </span>
+      <Transition>
+        <span class="form-steps__item__label"
+          >{{ stepLabel }}
+        </span></Transition
+      >
     </div>
   </div>
 </template>
@@ -91,42 +99,39 @@ watch(
     gap: 0.5rem;
     width: fit-content;
     background-color: $primary-color;
-    border: 1px solid rgba($text-color, 0.1);
-    padding: 0.25rem 0.5rem;
     border-radius: $radius;
     color: $text-color-faded;
     z-index: 1;
+    transition: color linear 0.3s, background-color linear 0.3s,
+      border linear 0.3s;
 
     &--active {
       color: $accent-color;
-      background-color: rgba($accent-color, 0.1);
-      border: 1px solid rgba($accent-color, 0.1);
+      background-color: $primary-color;
+      border: none;
 
-      @media (min-width: $desktop-screen) {
-        background-color: $primary-color;
-        border: none;
+      & > .form-steps__item__circle {
+        background-color: $accent-color;
+        border-color: $accent-color;
 
-        & > .form-steps__item__circle {
-          background-color: $accent-color;
+        & > .form-steps__item__circle__number {
           color: $primary-color;
-          border-color: $accent-color;
         }
+      }
+
+      & > .form-steps__item__label {
+        display: flex;
       }
     }
 
     &--completed {
       color: rgba($accent-color, 0.6);
-      background-color: rgba($accent-color, 0.1);
-      border: 1px solid rgba($accent-color, 0.1);
+      background-color: $primary-color;
+      border: none;
 
-      @media (min-width: $desktop-screen) {
-        background-color: $primary-color;
-        border: none;
-
-        & > .form-steps__item__circle {
-          background-color: $accent-color-faded;
-          color: $primary-color;
-        }
+      & > .form-steps__item__circle {
+        background-color: $accent-color-faded;
+        color: $primary-color;
       }
     }
 
@@ -138,42 +143,31 @@ watch(
 
     &__circle {
       display: flex;
-
-      @media (min-width: $desktop-screen) {
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        background-color: rgba($text-color, 0.4);
-        padding: 1rem;
-        height: 1.5rem;
-        min-height: 1.5rem;
-        width: 1.5rem;
-        min-width: 1.5rem;
-      }
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: rgba($accent-color, 0.1);
+      padding: 1rem;
+      height: 2.75rem;
+      min-height: 2.75rem;
+      width: 2.75rem;
+      min-width: 2.75rem;
+      transition: background-color linear 0.3s, border-color linear 0.3s,
+        color linear 0.3s;
 
       &__number {
-        font-weight: $medium;
-        font-size: 1rem;
+        font-weight: $regular;
+        font-size: 1.25rem;
         display: flex;
-
-        &::after {
-          content: ".";
-        }
-
-        @media (min-width: $desktop-screen) {
-          color: $primary-color;
-
-          &::after {
-            content: "";
-          }
-        }
+        color: $accent-color;
       }
     }
 
     &__label {
-      font-size: 1rem;
-      font-weight: $medium;
+      font-size: 1.25rem;
+      font-weight: $regular;
       white-space: nowrap;
+      display: none;
     }
   }
 }

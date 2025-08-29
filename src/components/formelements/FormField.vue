@@ -28,16 +28,61 @@ const valueRef = computed({
   set: (v) => setByPath(model.value, props.formField.path, v),
 });
 
+// const arrayRef = computed<any[]>({
+//   get: () => {
+//     const v = getByPath(model.value, props.formField.path);
+//     if (Array.isArray(v)) return v;
+//     setByPath(model.value, props.formField.path, []); // write-through
+//     return [];
+//   },
+//   set: (v) =>
+//     setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []),
+// });
+
+// const checkBoxGroupRef = computed<string[]>({
+//   get: () => {
+//     const v = getByPath(model.value, props.formField.path);
+//     if (Array.isArray(v)) return v;
+//     setByPath(model.value, props.formField.path, []); // write-through
+//     return [];
+//   },
+//   set: (v) => {
+//     setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []);
+//   },
+// });
+
 const arrayRef = computed<any[]>({
   get: () => {
     const v = getByPath(model.value, props.formField.path);
-    if (Array.isArray(v)) return v;
-    setByPath(model.value, props.formField.path, []); // write-through
-    return [];
+    return Array.isArray(v) ? v : [];
   },
-  set: (v) =>
-    setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []),
+  set: (v) => {
+    if (props.formField.type === "array") {
+      setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []);
+    }
+  },
 });
+
+const checkBoxGroupRef = computed<string[]>({
+  get: () => {
+    const v = getByPath(model.value, props.formField.path);
+    return Array.isArray(v) ? v : [];
+  },
+  set: (v) => {
+    if (props.formField.type === "checkbox-group") {
+      setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []);
+    }
+  },
+});
+
+function isChecked(val: string) {
+  return checkBoxGroupRef.value.includes(val);
+}
+function setChecked(val: string, checked: boolean) {
+  const s = new Set(checkBoxGroupRef.value);
+  checked ? s.add(val) : s.delete(val);
+  checkBoxGroupRef.value = Array.from(s);
+}
 
 const errorMessage = computed(() => {
   if (!props.validation || !props.validation.$dirty || !props.validation.$error)
@@ -52,7 +97,7 @@ const errorMessage = computed(() => {
     :style="{ gridColumn: formField.type === 'array' ? '1 / -1' : '' }"
   >
     <label
-      v-if="!formField.itemLabel"
+      v-if="!formField.itemLabel && formField.type !== 'checkbox'"
       :for="formField.id"
       class="form-field__label"
       >{{ formField.label }}
@@ -84,6 +129,7 @@ const errorMessage = computed(() => {
         :label="formField.label"
         v-model="valueRef"
         :placeholder="formField.placeholder || ''"
+        :mode="formField.mode"
         :icon="formField.icon"
         :error="errorMessage"
       />
@@ -104,6 +150,12 @@ const errorMessage = computed(() => {
       :icon="formField.icon || ''"
       :error="errorMessage"
     />
+    <FormElementsSegmentedControl
+      v-else-if="formField.type === 'segmented-control'"
+      v-model="valueRef"
+      :options="formField.options || []"
+      :error="errorMessage"
+    />
     <FormElementsFileField
       v-else-if="formField.type === 'file'"
       :id="formField.id"
@@ -117,7 +169,35 @@ const errorMessage = computed(() => {
       :multiple="formField.multiple || false"
       :TS_TYPE="formField.TS_TYPE || ''"
     />
+    <FormElementsRangeInput
+      v-else-if="formField.type === 'range'"
+      v-model="valueRef"
+      :options="formField.options"
+      :error="errorMessage"
+    />
 
+    <FormElementsDropDown
+      v-if="formField.type === 'checkbox-group'"
+      :label="formField.placeholder"
+      :icon="formField.icon"
+    >
+      <FormElementsCheckboxField
+        v-for="(option, index) in formField.options"
+        :key="index"
+        :id="`${formField.id}-${index}`"
+        :name="formField.name"
+        :label="option.label"
+        :modelValue="isChecked(option.value)"
+        @update:modelValue="(val) => setChecked(option.value, val)"
+      />
+    </FormElementsDropDown>
+    <FormElementsCheckboxField
+      v-if="formField.type === 'checkbox'"
+      :label="formField.label"
+      :id="formField.id"
+      :name="formField.name"
+      v-model="valueRef"
+    />
     <UISmartSuggestion
       v-if="
         suggestion !== undefined &&
