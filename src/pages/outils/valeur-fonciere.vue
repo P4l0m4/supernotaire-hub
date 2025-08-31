@@ -85,7 +85,7 @@ useHead({
 </script>
 <template>
   <Container>
-    <div class="valeur-fonciere">
+    <div id="valeur-fonciere" class="valeur-fonciere">
       <div class="valeur-fonciere__headlines">
         <h1 class="valeur-fonciere__headlines__title titles">
           Calculateur de valeur foncière
@@ -112,6 +112,27 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
+  <Container>
+    <UIDidYouKnow title="Servez-vous, c'est gratuit !">
+      <template #text>
+        Depuis quelques années, les bases de données de l'administration fiscale
+        relatives aux transactions immobilières sont en accès libre sur
+        internet. Les données sont issues des actes notariés et des informations
+        cadastrales. Nous les utilisons pour vous fournir une estimation fiable
+        de la valeur foncière des biens.
+      </template>
+      <template #cta>
+        <NuxtLink
+          to="/outils/valeur-fonciere#valeur-fonciere"
+          aria-label="Estimer un bien immobilier"
+        >
+          <UIPrimaryButton variant="accent-color"
+            >Estimer un bien immobilier</UIPrimaryButton
+          >
+        </NuxtLink>
+      </template>
+    </UIDidYouKnow></Container
+  >
 </template>
 <style scoped lang="scss">
 .valeur-fonciere {

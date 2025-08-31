@@ -94,7 +94,7 @@ useHead({
 
 <template>
   <Container>
-    <div class="pre-etat-date">
+    <div id="pre-etat-date" class="pre-etat-date">
       <div class="pre-etat-date__headlines">
         <h1 class="pre-etat-date__headlines__title titles">
           Générateur de Pré-état daté gratuit
@@ -120,6 +120,28 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
+
+  <Container>
+    <UIDidYouKnow title="Pas besoin du syndic, faites-le vous-même !">
+      <template #text>
+        Depuis le 1er janvier 2015, les syndics sont tenus de proposer aux
+        copropriétaires un accès en ligne sécurisé aux documents dématérialisés
+        relatifs à la gestion de l'immeuble. Vous pouvez ainsi obtenir les
+        informations requises pour établir le pré-état daté sans passer par le
+        syndic et le créer vous-même.
+      </template>
+      <template #cta>
+        <NuxtLink
+          to="/outils/pre-etat-date#pre-etat-date"
+          aria-label="Créer mon pré-état daté"
+        >
+          <UIPrimaryButton variant="accent-color"
+            >Créer mon pré-état daté</UIPrimaryButton
+          >
+        </NuxtLink>
+      </template>
+    </UIDidYouKnow></Container
+  >
 </template>
 <style scoped lang="scss">
 .pre-etat-date {

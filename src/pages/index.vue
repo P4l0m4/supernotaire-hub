@@ -5,6 +5,8 @@ import seller from "@/assets/images/real-estate-agent-76.svg";
 import hero from "@/assets/images/super-hero.svg";
 import dots from "@/assets/images/dots-big.svg";
 
+import type { Decoration } from "@/components/UI/profile.vue";
+
 const url = ref();
 
 const profiles = ref([
@@ -14,7 +16,7 @@ const profiles = ref([
     subtitle: "Gagnez du temps facturable et élargissez votre clientèle.",
     link: "/notaires#features",
     linkText: "Montrez-moi comment",
-    decoration: "left",
+    decoration: "left" as Decoration,
   },
   {
     image: seller,
@@ -23,7 +25,7 @@ const profiles = ref([
       "Facilitez vos démarches et accédez plus rapidement à un notaire.",
     link: "/vendeurs#features",
     linkText: "Montrez-moi comment",
-    decoration: "right",
+    decoration: "right" as Decoration,
   },
 ]);
 
@@ -119,6 +121,23 @@ onMounted(() => {
       />
     </div>
   </Container>
+  <Container>
+    <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
+      <template #text>
+        Nous avons conçu des outils intuitifs et en accès libre pour vous aider
+        à avancer dans vos démarches immobilières: création de pré-état daté,
+        estimation de valeur foncière, etc. Aucune inscription n'est requise.
+      </template>
+      <template #cta>
+        <NuxtLink to="/outils" aria-label="Découvrir nos outils">
+          <UIPrimaryButton variant="accent-color"
+            >Découvrir nos outils</UIPrimaryButton
+          >
+        </NuxtLink>
+      </template>
+    </UIDidYouKnow></Container
+  >
+
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
@@ -132,9 +151,12 @@ onMounted(() => {
 
   @media (min-width: $big-tablet-screen) {
     flex-direction: row;
-    gap: 4rem;
     justify-content: space-between;
     height: fit-content;
+  }
+
+  @media (min-width: $desktop-screen) {
+    gap: 4rem;
   }
 }
 </style>

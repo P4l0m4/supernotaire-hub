@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Decoration = "left" | "right";
+export type Decoration = "left" | "right";
 
 defineProps<{
   image: string;
@@ -19,8 +19,13 @@ defineProps<{
     }"
     :to="link"
     aria-label="montrez-moi comment"
-  >
-    <img class="profile__image" :src="image" :alt="`image de ${title}`" />
+    ><div class="profile__illustration">
+      <img
+        class="profile__illustration__image"
+        :src="image"
+        :alt="`image de ${title}`"
+      />
+    </div>
     <h2 class="profile__title">{{ title }}</h2>
     <p class="profile__subtitle">{{ subtitle }}</p>
 
@@ -58,14 +63,14 @@ defineProps<{
   &--left {
     &::before {
       left: -2rem;
-      bottom: -2rem;
+      top: -2rem;
     }
   }
 
   &--right {
     &::before {
       right: -2rem;
-      top: -2rem;
+      bottom: -2rem;
     }
   }
 
@@ -74,9 +79,41 @@ defineProps<{
     padding: 2rem;
   }
 
-  &__image {
+  &__illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 21.25rem;
-    width: fit-content;
+    width: 100%;
+    position: relative;
+
+    &__image {
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: rgba($accent-color, 0.1);
+      width: 15rem;
+      height: 15rem;
+      border-radius: 50%;
+      z-index: 0;
+      inset: 0;
+      margin: auto;
+
+      @media (min-width: $tablet-screen) {
+        width: 18rem;
+        height: 18rem;
+      }
+
+      @media (min-width: $laptop-screen) {
+        width: 21rem;
+        height: 21rem;
+      }
+    }
   }
 
   &__title {

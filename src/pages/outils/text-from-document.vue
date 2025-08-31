@@ -107,6 +107,7 @@ function reset() {
     <label
       v-if="!progress && !isProcessing"
       for="images"
+      id="text-from-document"
       ref="dropcontainerRef"
       class="drop-zone"
       @dragover.prevent
