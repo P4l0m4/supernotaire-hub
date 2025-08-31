@@ -49,7 +49,7 @@ defineProps<{
     border-radius: $radius;
     background-image: linear-gradient(
       135deg,
-      transparent 10%,
+      transparent 30%,
       rgba($accent-color, 1)
     );
     height: 100%;
@@ -119,15 +119,25 @@ defineProps<{
       content: "";
       position: absolute;
       background-color: rgba($accent-color, 0.1);
-      width: 17rem;
-      height: 17rem;
+      width: 12rem;
+      height: 12rem;
       border-radius: 50%;
       z-index: -1;
       top: 10%;
       bottom: 0;
       left: 0;
 
+      @media (min-width: $tablet-screen) {
+        width: 14rem;
+        height: 14rem;
+      }
+
       @media (min-width: $big-tablet-screen) {
+        width: 16rem;
+        height: 16rem;
+      }
+
+      @media (min-width: $laptop-screen) {
         width: 20rem;
         height: 20rem;
         bottom: 0;

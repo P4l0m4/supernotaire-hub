@@ -187,11 +187,13 @@ watch(
 </script>
 <template>
   <div class="action" v-if="showFirstAction">
-    <img
-      class="action__image"
-      src="@/assets/images/checklist-71-blue.svg"
-      alt="Avant de commencer"
-    />
+    <div class="action__illustration">
+      <img
+        class="action__illustration__image"
+        src="@/assets/images/checklist-71-blue.svg"
+        alt="Avant de commencer"
+      />
+    </div>
 
     <ul class="action__list">
       <span class="action__list__title">Avant de commencer...</span>
@@ -224,11 +226,13 @@ watch(
     @complete="showLastAction = true"
   />
   <div class="action" v-if="showLastAction">
-    <img
-      class="action__image"
-      src="@/assets/images/achievement-45.svg"
-      alt="Avant de partir"
-    />
+    <div class="action__illustration">
+      <img
+        class="action__illustration__image"
+        src="@/assets/images/achievement-45.svg"
+        alt="Avant de partir"
+      />
+    </div>
     <ul class="action__list">
       <span class="action__list__title">C'est prêt !</span>
       <span class="action__list__subtitle">
@@ -257,11 +261,13 @@ watch(
     </ul>
   </div>
   <div class="action" v-if="showLastAction">
-    <img
-      class="action__image"
-      src="@/assets/images/files-and-folder-78.svg"
-      alt="Avant de commencer"
-    />
+    <div class="action__illustration">
+      <img
+        class="action__illustration__image"
+        src="@/assets/images/files-and-folder-78.svg"
+        alt="Avant de commencer"
+      />
+    </div>
     <ul class="action__list">
       <span class="action__list__title"> Avant de partir...</span>
       <span class="action__list__subtitle">
@@ -274,89 +280,5 @@ watch(
   </div>
 </template>
 <style lang="scss" scoped>
-.action {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  gap: 2rem;
-  border-radius: $radius;
-  background-color: $primary-color;
-  width: 100%;
-  min-width: 280px;
-  min-height: 21.87rem;
-  scroll-margin-top: 4rem;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 1.5rem;
-    gap: 3rem;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-height: 32rem;
-  }
-
-  &__image {
-    width: 100%;
-    max-width: 300px;
-    height: 100%;
-  }
-
-  &__list {
-    width: 100%;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 100%;
-    min-height: 100%;
-    max-width: 25rem;
-
-    @media (min-width: $laptop-screen) {
-      min-height: 27rem;
-      max-width: 50rem;
-    }
-
-    &__title {
-      font-size: 2.5rem;
-      font-weight: $semi-bold;
-      text-wrap: balance;
-      max-width: 600px;
-    }
-
-    &__subtitle {
-      font-size: 1.25rem;
-      font-weight: $regular;
-      text-wrap: balance;
-      margin-bottom: 1rem;
-    }
-
-    &__item {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      font-size: 1.05rem;
-      text-wrap: balance;
-
-      &::before {
-        content: "";
-        display: inline-block;
-        height: 1rem;
-        width: 1rem;
-        min-width: 1rem;
-        border: 1px solid $text-color;
-      }
-    }
-
-    &__buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: auto;
-
-      @media (min-width: $laptop-screen) {
-        flex-direction: row;
-      }
-    }
-  }
-}
+@import "@/styles/action.scss";
 </style>
