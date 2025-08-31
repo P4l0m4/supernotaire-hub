@@ -31,7 +31,7 @@ defineProps<{
 
     <UITertiaryButton
       class="profile__link"
-      variant="text-color-faded"
+      variant="text-color"
       icon="arrow_right"
       >{{ linkText }}</UITertiaryButton
     >
@@ -49,6 +49,15 @@ defineProps<{
   width: 100%;
   background-color: $base-color;
   position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease,
+    background-color 0.2s ease, border 0.2s ease;
+
+  &:hover {
+    box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
+    transform: translateY(-3px);
+    background-color: rgba($primary-color, 0.1);
+    border: 1px solid transparent;
+  }
 
   &::before {
     content: "";
@@ -99,7 +108,8 @@ defineProps<{
       background-color: rgba($accent-color, 0.1);
       width: 15rem;
       height: 15rem;
-      border-radius: 50%;
+      border-radius:  /* horizontal */ 100% 30% 60% 70% / /* vertical */ 50% 40%
+        70% 70%;
       z-index: 0;
       inset: 0;
       margin: auto;

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { colors } from "@/utils/colors";
-
 interface Props {
   variant?:
     | "secondary-color"
@@ -22,28 +20,6 @@ const props = withDefaults(defineProps<Props>(), {
   direction: "row",
   fontSize: "1rem",
   iconSize: "1.25rem",
-  radius: "",
-});
-
-const iconColor = computed(() => {
-  switch (props.variant) {
-    case "base-color":
-      return colors["secondary-color-faded"];
-    case "primary-color":
-      return colors["accent-color"];
-    case "secondary-color":
-      return colors["primary-color"];
-    case "text-color":
-      return colors["primary-color"];
-    case "text-color-faded":
-      return colors["text-color-faded"];
-    case "accent-color":
-      return colors["primary-color"];
-    case "error-color":
-      return colors["primary-color"];
-    default:
-      return colors["base-color-faded"];
-  }
 });
 </script>
 <template>
@@ -64,7 +40,7 @@ const iconColor = computed(() => {
       class="icon"
       :icon
       :size="iconSize || undefined"
-      :color="iconColor"
+      :color="variant ? colors[variant] : colors['text-color']"
     />
   </span>
 </template>
@@ -78,7 +54,7 @@ const iconColor = computed(() => {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  font-weight: $regular;
+  font-weight: $medium;
   font-size: 0.875rem;
   margin-top: auto;
   transition: transform 0.2s linear, color 0.2s linear;
@@ -89,10 +65,6 @@ const iconColor = computed(() => {
         transform: translateX(0.5rem);
       }
     }
-  }
-
-  &__text {
-    text-decoration: underline;
   }
 }
 

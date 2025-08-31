@@ -9,7 +9,7 @@ defineProps<{
       <h2 class="did-you-know__content__title titles">Le saviez-vous ?</h2>
       <h3 class="did-you-know__content__subtitle subtitles">{{ title }}</h3>
       <p class="did-you-know__content__text paragraphs"><slot name="text" /></p>
-      <slot name="cta" />
+      <div class="did-you-know__content__cta"><slot name="cta" /></div>
     </div>
     <div class="did-you-know__illustration">
       <img
@@ -27,12 +27,14 @@ defineProps<{
   flex-direction: column;
   padding: 1rem;
   gap: 2rem;
-  background-color: rgba($accent-color, 0.1);
   border-radius: $radius;
   width: 100%;
   min-width: 280px;
   min-height: 21.87rem;
   position: relative;
+  background-color: rgba($accent-color, 0.1);
+  box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
+  overflow: hidden;
 
   @media (min-width: $big-tablet-screen) {
     padding: 1.5rem;
@@ -43,55 +45,68 @@ defineProps<{
     min-height: 28rem;
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    border-radius: $radius;
-    background-image: linear-gradient(
-      135deg,
-      transparent 30%,
-      rgba($accent-color, 1)
-    );
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-    z-index: -1;
-    opacity: 0.3;
-    left: 0;
-    top: 0;
-  }
-
   &__content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     height: 100%;
     min-height: 100%;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-image: radial-gradient(
+        circle at center,
+        rgba($primary-color, 1),
+        transparent
+      );
+      filter: blur(40px);
+      height: 30rem;
+      width: 30rem;
+      left: 0;
+      top: 0;
+      border-radius: 50%;
+      z-index: 0;
+    }
 
     @media (min-width: $laptop-screen) {
       min-height: 27rem;
       max-width: 50rem;
       justify-content: center;
+
+      &::before {
+        inset: 0;
+        margin: auto;
+        height: 40rem;
+        width: 40rem;
+      }
     }
 
     &__title {
-      font-size: 2.5rem;
       font-weight: $semi-bold;
       text-wrap: balance;
       max-width: 600px;
+      z-index: 1;
     }
 
     &__subtitle {
-      font-size: 1.25rem;
       font-weight: $regular;
       color: $text-color;
       text-wrap: balance;
       margin-top: -1rem;
+      z-index: 1;
     }
 
     &__text {
       text-wrap: balance;
       max-width: 35rem;
+      color: $text-color-faded;
+      z-index: 1;
+    }
+
+    &__cta {
+      z-index: 1;
     }
   }
 
@@ -121,7 +136,8 @@ defineProps<{
       background-color: rgba($accent-color, 0.1);
       width: 12rem;
       height: 12rem;
-      border-radius: 50%;
+      border-radius:  /* horizontal */ 80% 50% 70% 70% / /* vertical */ 100% 30%
+        60% 70%;
       z-index: -1;
       top: 10%;
       bottom: 0;
