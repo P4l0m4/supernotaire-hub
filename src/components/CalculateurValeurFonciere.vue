@@ -133,7 +133,6 @@ watch(
 );
 </script>
 <template>
-  {{ showFirstAction }}
   <div class="action" v-if="showFirstAction">
     <div class="location">
       <label for="location-form-input" class="location-label"
@@ -143,6 +142,7 @@ watch(
           :color="colors['error-color']"
       /></label>
       <ClientOnly fallback="Chargement…">
+        <div>client OK</div>
         <FormElementsLocationForm @address="updateAddress"
       /></ClientOnly>
     </div>
