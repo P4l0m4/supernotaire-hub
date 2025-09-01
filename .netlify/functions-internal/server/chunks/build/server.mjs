@@ -392,32 +392,32 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-Cv5JUPZd.mjs')
+    component: () => import('./index-DjVkBI7R.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-Bi7kXfMk.mjs')
+    component: () => import('./contact-Dk19c0Z4.mjs')
   },
   {
     name: "notaires",
     path: "/notaires",
-    component: () => import('./notaires-Bz6YZwx3.mjs')
+    component: () => import('./notaires-Bkzcyoxr.mjs')
   },
   {
     name: "vendeurs",
     path: "/vendeurs",
-    component: () => import('./vendeurs-Du0AQUle.mjs')
+    component: () => import('./vendeurs-Cf3cckA1.mjs')
   },
   {
     name: "tutoriels",
     path: "/tutoriels",
-    component: () => import('./tutoriels-n_CXwPfO.mjs')
+    component: () => import('./tutoriels-BOJsf5Vw.mjs')
   },
   {
     name: "inscription",
     path: "/inscription",
-    component: () => import('./inscription-pZpOrxP3.mjs')
+    component: () => import('./inscription-CIodA5CF.mjs')
   },
   {
     name: "faq-notaires",
@@ -447,22 +447,22 @@ const _routes = [
   {
     name: "comment-ca-marche",
     path: "/comment-ca-marche",
-    component: () => import('./comment-ca-marche-DD8mg15p.mjs')
+    component: () => import('./comment-ca-marche-Bq8Makd5.mjs')
   },
   {
     name: "outils-pre-etat-date",
     path: "/outils/pre-etat-date",
-    component: () => import('./pre-etat-date-BCQaztxp.mjs')
+    component: () => import('./pre-etat-date-3m0J-m9o.mjs')
   },
   {
     name: "outils-valeur-fonciere",
     path: "/outils/valeur-fonciere",
-    component: () => import('./valeur-fonciere-zF685O5c.mjs')
+    component: () => import('./valeur-fonciere-CxVh725Z.mjs')
   },
   {
     name: "outils-text-from-document",
     path: "/outils/text-from-document",
-    component: () => import('./text-from-document-BTJO9kCd.mjs')
+    component: () => import('./text-from-document-CmZ9o6h5.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -800,7 +800,7 @@ defineComponent({
   }
 });
 const clientOnlySymbol = Symbol.for("nuxt:client-only");
-const __nuxt_component_1$2 = defineComponent({
+const __nuxt_component_2 = defineComponent({
   name: "ClientOnly",
   inheritAttrs: false,
   props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
@@ -1139,7 +1139,7 @@ function defineNuxtLink(options) {
     // }) as unknown as DefineComponent<NuxtLinkProps, object, object, ComputedOptions, MethodOptions, object, object, EmitsOptions, string, object, NuxtLinkProps, object, SlotsType<NuxtLinkSlots>>
   });
 }
-const __nuxt_component_0$4 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -2226,7 +2226,7 @@ const plugins = [
   floating_vue_DYtxgD1IQQTog08Eg9fugMY12CnQHyqF_4NdXKbKn74
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-CSCzWfbb.mjs').then((m2) => m2.default || m2))
+  default: defineAsyncComponent(() => import('./default-qTnwtxw5.mjs').then((m2) => m2.default || m2))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -2249,7 +2249,7 @@ const nuxtLayoutProps = {
     default: null
   }
 };
-const __nuxt_component_0$3 = defineComponent({
+const __nuxt_component_0$2 = defineComponent({
   name: "NuxtLayout",
   inheritAttrs: false,
   props: nuxtLayoutProps,
@@ -2388,7 +2388,7 @@ const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   }
 });
 const RouteProvider = defineRouteProvider();
-const __nuxt_component_1$1 = defineComponent({
+const __nuxt_component_1$2 = defineComponent({
   name: "NuxtPage",
   inheritAttrs: false,
   props: {
@@ -2448,8 +2448,8 @@ const _export_sfc = (sfc, props) => {
 };
 const _sfc_main$6 = {};
 function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLayout = __nuxt_component_0$3;
-  const _component_NuxtPage = __nuxt_component_1$1;
+  const _component_NuxtLayout = __nuxt_component_0$2;
+  const _component_NuxtPage = __nuxt_component_1$2;
   _push(ssrRenderComponent(_component_NuxtLayout, _attrs, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
       if (_push2) {
@@ -2493,7 +2493,7 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/UI/IconComponent.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-20250a55"]]);
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-20250a55"]]);
 const colors = {
   "base-color": "#f7f7f7",
   "primary-color": "#FFFDFA",
@@ -2549,7 +2549,7 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UIIconComponent = __nuxt_component_1;
+      const _component_UIIconComponent = __nuxt_component_1$1;
       _push(`<span${ssrRenderAttrs(mergeProps({
         role: "button",
         tabindex: "0",
@@ -2577,12 +2577,12 @@ _sfc_main$4.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/UI/PrimaryButton.vue");
   return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
-const __nuxt_component_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-5534223a"]]);
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-5534223a"]]);
 const _imports_0 = "" + __buildAssetsURL("logo-dark.KgTey4VC.svg");
 const _sfc_main$3 = {};
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLink = __nuxt_component_0$4;
-  const _component_UIPrimaryButton = __nuxt_component_0$2;
+  const _component_NuxtLink = __nuxt_component_0$3;
+  const _component_UIPrimaryButton = __nuxt_component_1;
   _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-efe49368><nav class="header__nav" data-v-efe49368><ul class="header__nav__ul" data-v-efe49368><li class="header__nav__ul__li" data-v-efe49368>`);
   _push(ssrRenderComponent(_component_NuxtLink, { to: "/" }, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -2729,8 +2729,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     return (_ctx, _push, _parent, _attrs) => {
       const _component_HeaderComponent = __nuxt_component_0$1;
       const _component_Container = __nuxt_component_0;
-      const _component_NuxtLink = __nuxt_component_0$4;
-      const _component_UIPrimaryButton = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_UIPrimaryButton = __nuxt_component_1;
       _push(`<!--[-->`);
       _push(ssrRenderComponent(_component_HeaderComponent, null, null, _parent));
       _push(ssrRenderComponent(_component_Container, null, {
@@ -2883,5 +2883,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { Je as J, __nuxt_component_0$4 as _, _export_sfc as a, __nuxt_component_0 as b, __nuxt_component_0$2 as c, colors as d, entry$1 as default, __nuxt_component_1 as e, useNuxtApp as f, asyncDataDefaults as g, createError as h, useRoute as i, __nuxt_component_1$2 as j, _imports_0 as k, __nuxt_component_0$1 as l, tryUseNuxtApp as t, useState as u };
+export { Je as J, __nuxt_component_0$3 as _, _export_sfc as a, __nuxt_component_0 as b, __nuxt_component_1 as c, colors as d, entry$1 as default, __nuxt_component_1$1 as e, useNuxtApp as f, asyncDataDefaults as g, createError as h, useRoute as i, __nuxt_component_2 as j, _imports_0 as k, __nuxt_component_0$1 as l, tryUseNuxtApp as t, useState as u };
 //# sourceMappingURL=server.mjs.map

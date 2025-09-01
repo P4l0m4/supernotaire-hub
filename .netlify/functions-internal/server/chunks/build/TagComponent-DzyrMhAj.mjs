@@ -1,4 +1,4 @@
-import { a as _export_sfc, d as colors, e as __nuxt_component_1 } from './server.mjs';
+import { a as _export_sfc, d as colors, e as __nuxt_component_1$1 } from './server.mjs';
 import { defineComponent, mergeProps, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderSlot } from 'vue/server-renderer';
 
@@ -11,7 +11,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UIIconComponent = __nuxt_component_1;
+      const _component_UIIconComponent = __nuxt_component_1$1;
       _push(`<span${ssrRenderAttrs(mergeProps({
         class: "tag",
         style: {

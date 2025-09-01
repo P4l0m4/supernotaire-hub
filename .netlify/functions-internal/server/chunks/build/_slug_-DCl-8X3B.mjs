@@ -1,4 +1,4 @@
-import { a as _export_sfc, i as useRoute, b as __nuxt_component_0, _ as __nuxt_component_0$4 } from './server.mjs';
+import { a as _export_sfc, i as useRoute, b as __nuxt_component_0, _ as __nuxt_component_0$3 } from './server.mjs';
 import { defineComponent, withAsyncContext, withCtx, unref, createTextVNode, toDisplayString, createBlock, createCommentVNode, openBlock, createVNode, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrInterpolate } from 'vue/server-renderer';
 import { u as useAsyncData } from './asyncData-Dm5ojLGe.mjs';
@@ -45,7 +45,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     )), __temp = await __temp, __restore(), __temp);
     return (_ctx, _push, _parent, _attrs) => {
       const _component_Container = __nuxt_component_0;
-      const _component_NuxtLink = __nuxt_component_0$4;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(ssrRenderComponent(_component_Container, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {

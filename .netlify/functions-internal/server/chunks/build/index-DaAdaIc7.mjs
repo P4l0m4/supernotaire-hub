@@ -1,4 +1,4 @@
-import { a as _export_sfc, b as __nuxt_component_0, _ as __nuxt_component_0$4 } from './server.mjs';
+import { a as _export_sfc, b as __nuxt_component_0, _ as __nuxt_component_0$3 } from './server.mjs';
 import { defineComponent, withCtx, createTextVNode, createVNode, toDisplayString, createBlock, openBlock, Fragment, renderList, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderList, ssrInterpolate } from 'vue/server-renderer';
 import '../_/nitro.mjs';
@@ -57,7 +57,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     ];
     return (_ctx, _push, _parent, _attrs) => {
       const _component_Container = __nuxt_component_0;
-      const _component_NuxtLink = __nuxt_component_0$4;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(ssrRenderComponent(_component_Container, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {

@@ -1,4 +1,4 @@
-import { a as _export_sfc, b as __nuxt_component_0, _ as __nuxt_component_0$4, e as __nuxt_component_1$1, d as colors } from './server.mjs';
+import { a as _export_sfc, b as __nuxt_component_0, _ as __nuxt_component_0$3, e as __nuxt_component_1$1, d as colors } from './server.mjs';
 import { defineComponent, ref, watch, withCtx, createVNode, createTextVNode, toDisplayString, createBlock, openBlock, Fragment, renderList, computed, mergeProps, unref, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttrs, ssrRenderAttr } from 'vue/server-renderer';
 import { useDebounceFn } from '@vueuse/core';
@@ -112,7 +112,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     return (_ctx, _push, _parent, _attrs) => {
       const _component_Container = __nuxt_component_0;
       const _component_FormElementsSearchBar = __nuxt_component_1;
-      const _component_NuxtLink = __nuxt_component_0$4;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(ssrRenderComponent(_component_Container, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           var _a2, _b2;
