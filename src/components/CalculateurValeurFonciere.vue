@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { colors } from "@/utils/colors";
+
 import achievement from "/achievement-45.svg?url";
+
+import FormElementsLocationForm from "@/components/formElements/LocationForm.vue";
+
 import { estimateFromForm, type ValuationResult } from "@/utils/calculateDVF";
 import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 
@@ -139,7 +143,7 @@ watch(
           size="0.75rem"
           :color="colors['error-color']"
       /></label>
-      <ClientOnly>
+      <ClientOnly fallback="Chargement…">
         <FormElementsLocationForm @address="updateAddress"
       /></ClientOnly>
     </div>
