@@ -1,0 +1,446 @@
+<script setup lang="ts">
+import { ref, computed, onBeforeMount, nextTick, watch } from "vue";
+import { fr } from "@/utils/validators-fr";
+import useVuelidate from "@vuelidate/core";
+import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
+
+import type { FormDefinition } from "@/utils/types/forms";
+
+const props = defineProps<{
+  formDefinition: FormDefinition;
+  suggestions?: Record<string, any>;
+}>();
+const emit = defineEmits<{
+  (e: "complete"): void;
+}>();
+
+const formRef = ref<HTMLFormElement | null>(null);
+
+const currentSection = ref(0);
+
+const stopNextStep = ref(false);
+
+const model = defineModel<any>({ default: {} });
+
+function ensureArrayPaths(def?: FormDefinition) {
+  if (!def) return;
+  for (const s of def.sections) {
+    for (const f of s.fields) {
+      if (f.type !== "array") continue;
+      const segs = f.path.split(".");
+      let cur = model.value;
+      for (let i = 0; i < segs.length - 1; i++) cur = cur[segs[i]] ??= {};
+      const key = segs.at(-1)!;
+      if (!Array.isArray(cur[key])) cur[key] = []; // <-- garantit un []
+    }
+  }
+}
+
+ensureArrayPaths(props.formDefinition);
+
+const regexFrom = (p?: string | RegExp) => {
+  if (!p) return null;
+  const re = typeof p === "string" ? new RegExp(p) : p;
+  return helpers.withMessage(
+    "Format invalide",
+    (v) => v == null || v === "" || re.test(String(v))
+  );
+};
+
+const stepValidator = (step?: number | null) =>
+  step == null
+    ? null
+    : helpers.withMessage("Doit respecter le pas " + step, (v) => {
+        if (v == null || v === "") return true;
+        const n = Number(v);
+        if (!Number.isFinite(n)) return false;
+        const r = n / step;
+        return Math.abs(r - Math.round(r)) < 1e-9;
+      });
+
+// function hasBadLeaf(obj: any): boolean {
+//   const stack = [obj];
+//   while (stack.length) {
+//     const cur = stack.pop();
+//     for (const k in cur) {
+//       const v = cur[k];
+//       if (
+//         v &&
+//         typeof v === "object" &&
+//         !("$validator" in v) &&
+//         !Array.isArray(v)
+//       ) {
+//         stack.push(v);
+//         continue;
+//       }
+//       if (!(typeof v === "function" || typeof v?.$validator === "function"))
+//         return true;
+//     }
+//   }
+//   return false;
+// }
+
+function getDeep(obj: any, path: string[]) {
+  return path.reduce((o, k) => (o ? o[k] : undefined), obj);
+}
+
+const setDeep = (obj: any, path: string[], val: any) => {
+  let cur = obj;
+  for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]] ??= {};
+  cur[path[path.length - 1]] = Object.assign(
+    cur[path[path.length - 1]] ?? {},
+    val
+  );
+};
+
+function buildRules(def?: FormDefinition) {
+  const rules: any = {};
+  if (!def) return rules;
+
+  const rulesForScalar = (f: any) => {
+    const r: any = {};
+    if (f.required) r.required = fr.required;
+    if (f.type === "number") {
+      r.numeric = fr.numeric;
+      if (f.min != null) r.minValue = fr.minValue(f.min);
+      if (f.max != null) r.maxValue = fr.maxValue(f.max);
+      const st = stepValidator(f.step);
+      if (st) r.step = st;
+    }
+    if ((f.type === "select" || f.type === "segmented-control") && f.options)
+      r.oneOf = fr.oneOf(f.options);
+    if (f.type === "range" && f.options)
+      r.oneOf = fr.oneOf(f.options.map((o: any) => o.value));
+    if (f.type === "checkbox-group" && f.options) {
+      if (f.required) r.minLength = fr.minLength(1); // au moins 1 coche si requis
+    }
+    if (f.type === "date" && f.mode === "year-picker") {
+      r.isYear = fr.isYear;
+    } else if (f.type === "date" && f.mode === "month-picker") {
+      r.isMonth = fr.isMonth;
+    } else if (f.type === "date" && f.mode === "date-picker") {
+      r.isDate = fr.isDate;
+    }
+    if (f.type === "email") r.email = fr.email;
+    if (f.pattern) {
+      const rg = regexFrom(f.pattern);
+      if (rg) r.pattern = rg;
+    }
+    return Object.keys(r).length ? r : null;
+  };
+
+  const addFieldRules = (field: any, basePath: string[] = []) => {
+    const p = field.path.split(".");
+    const full = [...basePath, ...p];
+
+    if (field.type === "array") {
+      // règles du conteneur
+      setDeep(rules, full, {
+        ...(field.required ? { required } : {}),
+        ...(field.minItems != null
+          ? { minLength: minLength(field.minItems) }
+          : {}),
+        ...(field.maxItems != null
+          ? { maxLength: maxLength(field.maxItems) }
+          : {}),
+      });
+
+      const itemShape: any = {};
+      for (const sub of field.itemSchema?.fields ?? []) {
+        const leaf = rulesForScalar(sub);
+        if (leaf) setDeep(itemShape, sub.path.split("."), leaf);
+      }
+
+      const arrInModel = (getDeep(model.value, full) as any[]) || [];
+      for (let i = 0; i < arrInModel.length; i++) {
+        setDeep(rules, [...full, String(i)], itemShape);
+      }
+      return;
+    }
+
+    const leaf = rulesForScalar(field);
+    if (leaf) setDeep(rules, full, leaf);
+
+    if (field.type === "checkbox-group" && field.options) {
+      const allowed = field.options.map((o: any) => o.value);
+      const arr = (getDeep(model.value, full) as any[]) || [];
+      for (let i = 0; i < arr.length; i++) {
+        setDeep(rules, [...full, String(i)], { oneOf: fr.oneOf(allowed) });
+      }
+    }
+  };
+
+  for (const s of def.sections) for (const f of s.fields) addFieldRules(f);
+
+  return rules;
+}
+
+const rules = computed(() => buildRules(props.formDefinition));
+
+const v$ = useVuelidate(rules, model, { $autoDirty: false, $lazy: true });
+
+function nodeFor(path: string) {
+  const segs = path.split(".");
+  let n: any = v$.value;
+  for (const k of segs) {
+    if (!n?.[k]) return null;
+    n = n[k];
+  }
+  return n;
+}
+
+function inSectionPath(errPath: string, sectionPaths: string[]) {
+  const norm = (s: string) => s.replace(/\[(\d+)\]/g, ".$1");
+  const p = norm(errPath);
+  return sectionPaths.some((sp) => p.startsWith(norm(sp)));
+}
+
+// async function validateCurrentSection() {
+//   await nextTick();
+//   await v$.value.$validate(); // déclenche aussi les validations imbriquées des enfants
+
+//   const section = props.formDefinition.sections[currentSection.value];
+//   if (!section) return true;
+
+//   const paths = section.fields.map((f) => f.path);
+
+//   const sectionErrors = v$.value.$errors.filter((e) =>
+//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+//   );
+
+//   return sectionErrors.length === 0;
+// }
+
+const sections = computed(() => props.formDefinition?.sections ?? []);
+
+async function validateCurrentSection() {
+  await nextTick();
+  await v$.value.$validate();
+  const s = sections.value[currentSection.value];
+  if (!s) return true;
+  const paths = s.fields.map((f) => f.path);
+  return !v$.value.$errors.some((e) =>
+    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+  );
+}
+
+// const isCurrentStepInvalid = computed(() => {
+//   const section = props.formDefinition.sections[currentSection.value];
+//   const paths = section.fields.map((f) => f.path);
+
+//   const sectionErrors = v$.value.$errors.filter((e) =>
+//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+//   );
+
+//   return sectionErrors.length > 0;
+// });
+
+const isCurrentStepInvalid = computed(() => {
+  const s = sections.value[currentSection.value];
+  if (!s) return false;
+  const paths = s.fields.map((f) => f.path);
+  return v$.value.$errors.some((e) =>
+    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+  );
+});
+
+// async function next() {
+//   try {
+//     if (await validateCurrentSection()) {
+//       currentSection.value++;
+
+//       if (formRef.value) {
+//         formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
+//         console.log("Scrolled to top of form");
+//       }
+
+//       if (currentSection.value >= props.formDefinition.sections.length) {
+//         emit("complete");
+//       }
+//     }
+//   } catch (e) {
+//     console.error("[DynamicForm/next]", e);
+//   }
+// }
+
+async function next() {
+  try {
+    if (!(await validateCurrentSection())) return;
+    const nextIdx = currentSection.value + 1;
+    if (nextIdx >= sections.value.length) {
+      emit("complete");
+      return;
+    }
+    currentSection.value = nextIdx;
+    formRef.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) {
+    console.error("[DynamicForm/next]", e);
+  }
+}
+
+watch(sections, (list) => {
+  if (!list.length) {
+    currentSection.value = 0;
+    return;
+  }
+  if (currentSection.value > list.length - 1) {
+    currentSection.value = list.length - 1;
+  }
+});
+
+function prev() {
+  currentSection.value--;
+
+  if (formRef.value) {
+    formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
+    console.log("Scrolled to top of form");
+  }
+}
+
+async function changeStep(step: number) {
+  if (step < 0 || step >= props.formDefinition.sections.length) return;
+
+  if (step === currentSection.value) return;
+
+  if (step < currentSection.value) {
+    currentSection.value = step;
+    return;
+  } else if (step > currentSection.value) {
+    if (await validateCurrentSection()) {
+      currentSection.value = step;
+    }
+    return;
+  }
+}
+
+if (import.meta.client) {
+  onBeforeMount(() => {
+    ensureArrayPaths(props.formDefinition);
+  });
+  watch(
+    () => props.formDefinition,
+    (d) => ensureArrayPaths(d),
+    { immediate: true }
+  );
+}
+
+const getSuggestion = (k?: string) => {
+  if (!k) return "";
+  const arr = Array.isArray(props.suggestions) ? props.suggestions : [];
+  const hit = arr.find((it) => it && it.key === k);
+  return hit?.value ?? "";
+};
+</script>
+
+<template>
+  <form
+    ref="formRef"
+    class="dynamic-form"
+    @submit.prevent
+    v-if="formDefinition"
+  >
+    <span class="dynamic-form__title sr-only">{{ formDefinition?.title }}</span>
+    <FormElementsFormSteps
+      v-if="formDefinition?.sections.length > 1"
+      :steps-labels="formDefinition.sections.map((s) => s.label)"
+      :currentStep="currentSection + 1"
+      @changeStep="changeStep"
+    />
+    <div
+      v-for="(section, index) in formDefinition?.sections || []"
+      :key="section.id"
+      :id="section.id"
+      class="dynamic-form__section"
+      v-show="currentSection === index"
+    >
+      <div class="dynamic-form__section__fields">
+        <FormElementsFormField
+          v-for="field in section.fields"
+          :key="field.path"
+          :formField="field"
+          :suggestion="getSuggestion(field.suggestionRef)"
+          v-model="model"
+          :validation="nodeFor(field.path)"
+          @hasErrors="stopNextStep = $event.hasErrors"
+        />
+      </div>
+    </div>
+    <div class="dynamic-form__buttons">
+      <UIPrimaryButton
+        :variant="isCurrentStepInvalid ? 'error-color' : 'accent-color'"
+        icon="arrow_right"
+        @click="next"
+        @keydown.enter="next"
+        @keydown.space="next"
+      >
+        Suivant
+      </UIPrimaryButton>
+      <UISecondaryButton
+        v-if="currentSection > 0"
+        variant="accent-color"
+        icon="arrow_left"
+        :reverse="true"
+        @click="prev"
+        @keydown.enter="prev"
+        @keydown.space="prev"
+      >
+        Précédent
+      </UISecondaryButton>
+    </div>
+  </form>
+</template>
+<style scoped lang="scss">
+.dynamic-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 2rem;
+  border-radius: $radius;
+  background-color: $primary-color;
+  width: 100%;
+  min-width: 280px;
+  scroll-margin-top: 4rem;
+
+  @media (min-width: $big-tablet-screen) {
+    padding: 1.5rem;
+  }
+
+  &__title {
+    color: $text-color;
+    font-size: 1.5rem;
+    font-weight: $semi-bold;
+    text-align: center;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+
+    &__fields {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+
+      @media (min-width: $big-tablet-screen) {
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (min-width: $tablet-screen) {
+      flex-direction: row-reverse;
+      gap: 2rem;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+}
+</style>
