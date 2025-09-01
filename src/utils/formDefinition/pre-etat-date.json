@@ -162,6 +162,16 @@
           "itemSchema": {
             "fields": [
               {
+                "path": "designation",
+                "suggestionRef": "bien_lots_designation",
+                "label": "Numéro",
+                "name": "designation",
+                "type": "text",
+                "required": true,
+                "placeholder": "cave 754, parking 12, appartement T3, etc",
+                "icon": "hash_fill"
+              },
+              {
                 "path": "numero",
                 "suggestionRef": "bien_lots_numero",
                 "label": "Numéro",
@@ -171,6 +181,7 @@
                 "placeholder": "56",
                 "icon": "hash_fill"
               },
+
               {
                 "path": "usage",
                 "suggestionRef": "bien_lots_usage",
@@ -187,69 +198,6 @@
                 "placeholder": "Sélectionner un usage",
                 "icon": "gear_six_fill",
                 "required": true
-              },
-              {
-                "path": "tantiemes",
-                "suggestionRef": "bien_lots_tantiemes",
-                "label": "Tantièmes",
-                "name": "tantiemes",
-                "type": "text",
-                "placeholder": "125/10000",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "required": true,
-                "tooltip": "Tantièmes généraux du lot (figurant sur votre acte de propriété)."
-              },
-              {
-                "path": "tantiemes_speciaux.ascenseur",
-                "suggestionRef": "bien_lots_tantiemes_speciaux_ascenseur",
-                "label": "Tantièmes spéciaux — Ascenseur",
-                "name": "tantiemes_speciaux_ascenseur",
-                "type": "text",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "placeholder": "20/10000",
-                "required": false,
-                "icon": "elevator_fill"
-              },
-              {
-                "path": "tantiemes_speciaux.chauffage",
-                "suggestionRef": "bien_lots_tantiemes_speciaux_chauffage",
-                "label": "Tantièmes spéciaux — Chauffage",
-                "name": "tantiemes_speciaux_chauffage",
-                "type": "text",
-                "placeholder": "35/10000",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "required": false,
-                "icon": "thermometer_simple_bold"
-              },
-              {
-                "path": "tantiemes_speciaux.eau",
-                "suggestionRef": "bien_lots_tantiemes_speciaux_eau",
-                "label": "Tantièmes spéciaux — Eau",
-                "name": "tantiemes_speciaux_eau",
-                "type": "text",
-                "placeholder": "45/10000",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "required": false
-              },
-              {
-                "path": "tantiemes_speciaux.gardiennage",
-                "suggestionRef": "bien_lots_tantiemes_speciaux_gardiennage",
-                "label": "Tantièmes spéciaux — Gardiennage",
-                "name": "tantiemes_speciaux_gardiennage",
-                "type": "text",
-                "placeholder": "55/10000",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "required": false
-              },
-              {
-                "path": "tantiemes_speciaux.espaces_verts",
-                "suggestionRef": "bien_lots_tantiemes_speciaux_espaces_verts",
-                "label": "Tantièmes spéciaux — Espaces verts",
-                "name": "tantiemes_speciaux_espaces_verts",
-                "type": "text",
-                "placeholder": "65/10000",
-                "pattern": "^\\d{1,6}\\s*/\\s*\\d{1,6}$",
-                "required": false
               }
             ]
           }
@@ -376,101 +324,6 @@
           "type": "email",
           "placeholder": "syndic@email.com",
           "required": true
-        },
-        {
-          "path": "syndic.contact.telephone",
-          "suggestionRef": "telephone_du_syndic",
-          "id": "syndic-contact-telephone",
-          "label": "Téléphone",
-          "name": "syndic_contact_telephone",
-          "type": "text",
-          "placeholder": "Téléphone du syndic",
-          "required": true
-        },
-        {
-          "path": "syndic.fin_du_mandat",
-          "suggestionRef": "date_fin_du_mandat_syndic",
-          "id": "syndic-fin-du-mandat",
-          "label": "Fin du mandat",
-          "name": "syndic_fin_du_mandat",
-          "type": "date",
-          "mode": "date-picker",
-          "placeholder": "Fin du mandat",
-          "required": true,
-          "icon": "calendar_dots_fill"
-        },
-        {
-          "path": "syndic.date_designation_ag",
-          "suggestionRef": "date_designation_ag_syndic",
-          "id": "syndic-date-designation-ag",
-          "label": "Date de désignation (AG)",
-          "name": "syndic_date_designation_ag",
-          "type": "date",
-          "mode": "date-picker",
-          "placeholder": "Date de désignation (AG)",
-          "required": true,
-          "icon": "calendar_dots_fill"
-        }
-      ]
-    },
-    {
-      "id": "ag",
-      "label": "L'assemblée générale",
-      "fields": [
-        {
-          "path": "ag.derniere_ag.date",
-          "suggestionRef": "date_derniere_ag",
-          "id": "ag-derniere-ag-date",
-          "name": "ag_derniere_ag_date",
-          "label": "Date de la dernière AG",
-          "type": "date",
-          "mode": "date-picker",
-          "placeholder": "Date de la dernière AG",
-          "required": true,
-          "icon": "calendar_dots_fill"
-        },
-        {
-          "path": "ag.derniere_ag.travaux_votes",
-          "suggestionRef": "travaux_votes_derniere_ag",
-          "id": "ag-derniere-ag-travaux-votes",
-          "required": false,
-          "label": "Travaux votés",
-          "name": "ag_derniere_ag_travaux_votes",
-          "minItems": 0,
-          "maxItems": 100,
-          "type": "array",
-          "itemLabel": "Travaux {{index}}",
-          "itemSchema": {
-            "fields": [
-              {
-                "path": "objet",
-                "suggestionRef": "derniere_ag_travaux_votes_objet",
-                "label": "Objet",
-                "type": "text",
-                "placeholder": "Réparation ascenseur",
-                "required": true
-              },
-              {
-                "path": "budget",
-                "suggestionRef": "derniere_ag_travaux_votes_budget",
-                "label": "Budget",
-                "type": "number",
-                "placeholder": "1000",
-                "min": 0,
-                "step": 0.01,
-                "required": true
-              },
-              {
-                "path": "etat",
-                "suggestionRef": "derniere_ag_travaux_votes_etat",
-                "label": "État",
-                "type": "select",
-                "placeholder": "Sélectionner un état",
-                "options": ["non soldé", "soldé", "en cours"],
-                "required": true
-              }
-            ]
-          }
         }
       ]
     },

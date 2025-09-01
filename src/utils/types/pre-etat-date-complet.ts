@@ -6,7 +6,6 @@ export interface PreEtatDate {
   bien: Bien;
   copropriete: Copropriete;
   syndic: Syndic;
-  ag: AG;
   financier_lot: FinancierLot;
   financier_lot_sommes_dues_cedant?: FinancierLotSommesDuesCedant;
   financier_lot_autres?: FinancierLotAutres;
@@ -35,16 +34,9 @@ export interface Bien {
 }
 
 export interface Lot {
+  designation: string;
   numero: string;
   usage: string;
-  tantiemes: string;
-  tantiemes_speciaux: {
-    ascenseur: string;
-    chauffage: string;
-    eau: string;
-    gardiennage: string;
-    espaces_verts: string;
-  };
 }
 
 export interface Copropriete {
@@ -62,17 +54,7 @@ export interface Emprunt {
 
 export interface Syndic {
   nom: string;
-  contact: { email: string; telephone: string };
-  fin_du_mandat: ISODate;
-  date_designation_ag: ISODate;
-}
-
-export interface AG {
-  derniere_ag: {
-    date: ISODate;
-    ref_proces_verbal: string;
-    travaux_votes: { objet: string; budget: Euro; etat: string }[];
-  };
+  contact: { email: string };
 }
 
 export interface Provision {
@@ -89,9 +71,9 @@ export interface FinancierLot {
 }
 
 export interface FinancierLotSommesDuesCedant {
-  provisions_exigibles?: {
-    budget_previsionnel?: Euro;
-    hors_budget?: Euro;
+  provisions_exigibles: {
+    budget_previsionnel: Euro;
+    hors_budget: Euro;
   };
   charges_impayees_anterieures?: Euro;
   cotisations_fonds_travaux_exigibles?: Euro;

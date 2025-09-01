@@ -23,29 +23,23 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   };
 
   const lotCard = (l: any) => {
-    const t = toNum(l.tantiemes);
-    const ts = l.tantiemes_speciaux ?? {};
-    const specRows = Object.entries(ts).map(([k, v]) => [
-      `Tantièmes spéciaux — ${k.replaceAll("_", " ")}`,
-      toNum(v) ?? "-",
-    ]);
+    const designation = l.designation || "-";
+    const numero = l.numero || "-";
+    const usage = l.usage || "-";
 
     return {
       table: {
         widths: ["*", "auto"],
         body: [
           [
+            { text: designation, style: "tableHeader", fillColor: "#f5f5f5" },
             {
-              text: `Lot ${l.numero}`,
-              colSpan: 2,
+              text: `Lot ${numero}`,
               style: "tableHeader",
               fillColor: "#f5f5f5",
             },
-            {},
           ],
-          ["Usage", l.usage || "-"],
-          ["Tantièmes", t ?? "-"],
-          ...specRows,
+          ["Usage", usage],
         ],
       },
       layout: "lightHorizontalLines",
@@ -58,11 +52,6 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const emprunts = (d.copropriete?.emprunts ?? []).map((e) => [
     e.objet ?? "-",
     fmtEur(e.capital_restant_du),
-  ]);
-  const travauxVotes = (d.ag?.derniere_ag?.travaux_votes ?? []).map((t) => [
-    t.objet ?? "-",
-    fmtEur(t.budget),
-    t.etat ?? "-",
   ]);
 
   const echeances = Array.isArray(FL.echeances_a_venir)
@@ -250,36 +239,11 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           body: [
             ["Nom du syndic", d.syndic?.nom ?? "-"],
             ["Email", d.syndic?.contact?.email ?? "-"],
-            ["Téléphone", d.syndic?.contact?.telephone ?? "-"],
-            ["Fin du mandat", d.syndic?.fin_du_mandat ?? "-"],
-            ["Date de désignation (AG)", d.syndic?.date_designation_ag ?? "-"],
           ],
         },
         layout: "lightHorizontalLines",
         margin: [0, 0, 0, 24],
       },
-
-      // AG
-      { text: "La dernière Assemblée Générale", style: "h2" },
-      {
-        table: {
-          widths: ["*", "auto"],
-          body: [["Date", d.ag?.derniere_ag?.date ?? "-"]],
-        },
-        layout: "lightHorizontalLines",
-        margin: [0, 0, 0, 6],
-      },
-      { text: "Travaux votés", style: "h3" },
-      travauxVotes.length
-        ? {
-            table: {
-              widths: ["*", "auto", "auto"],
-              body: [["Objet", "Budget", "État"], ...travauxVotes],
-            },
-            layout: "lightHorizontalLines",
-            margin: [0, 0, 0, 24],
-          }
-        : { text: "Aucun", margin: [0, 0, 0, 24] },
 
       // Lot – Financier (+ date d’arrêté visible)
       { text: "La situation financière du lot", style: "h2" },
@@ -404,19 +368,19 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           body: [
             [
               "Provisions budget prévisionnel exigibles",
-              fmtEur(SDC.provisions_exigibles?.budget_previsionnel),
+              fmtEur(SDC?.provisions_exigibles?.budget_previsionnel),
             ],
             [
               "Provisions hors budget exigibles",
-              fmtEur(SDC.provisions_exigibles?.hors_budget),
+              fmtEur(SDC?.provisions_exigibles?.hors_budget),
             ],
             [
               "Charges impayées antérieures",
-              fmtEur(SDC.charges_impayees_anterieures),
+              fmtEur(SDC?.charges_impayees_anterieures),
             ],
             [
               "Cotisations au fonds de travaux exigibles",
-              fmtEur(SDC.cotisations_fonds_travaux_exigibles),
+              fmtEur(SDC?.cotisations_fonds_travaux_exigibles),
             ],
           ],
         },
