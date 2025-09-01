@@ -1,35 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, nextTick } from "vue";
 import { onClickOutside, useDebounceFn } from "@vueuse/core";
-import { useTemplateRef } from "vue";
 import { useIsMobile } from "@/utils/otherFunctions";
 
-export interface Adresse {
-  geometry: {
-    coordinates: number[];
-    type: string;
-  };
-
-  properties: {
-    _type: string;
-    banId: string;
-    city: string;
-    citycode: string;
-    context: string;
-    housenumber: string;
-    id: string;
-    importance: number;
-    label: string;
-    name: string;
-    postcode: string;
-    score: number;
-    street: string;
-    type: string;
-    x: number;
-    y: number;
-  };
-  type: string;
-}
+import type { Adresse } from "@/utils/types/adresse";
 
 const emit = defineEmits(["address"]);
 
