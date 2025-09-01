@@ -26,3 +26,6 @@ logs
 .output/
 .netlify/
 node_modules/
+.netlify/
+.nuxt/
+.output/
