@@ -151,6 +151,14 @@ watch(
           size="0.75rem"
           :color="colors['error-color']"
       /></label>
+      <FormElementsInputField
+        id="hello"
+        name="hello"
+        label="hello"
+        type="text"
+        :required="true"
+        placeholder="Commencez à taper une adresse..."
+      />
       <ClientOnly>
         <FormElementsLocationForm @address="updateAddress" />
       </ClientOnly>
