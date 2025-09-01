@@ -1,4 +1,0 @@
-const InscriptionComponent_vue_vue_type_style_index_0_scoped_72732bcd_lang = ".inscription-component[data-v-72732bcd]{align-items:end;gap:1.5rem;height:-moz-fit-content;height:fit-content;margin:0 auto;max-width:700px;padding:0!important}.buttons[data-v-72732bcd],.inscription-component[data-v-72732bcd]{display:flex;flex-direction:column;width:100%}.buttons[data-v-72732bcd]{gap:1rem}.form-beta[data-v-72732bcd]{display:flex;flex-direction:column;gap:.75rem;width:100%}@media (min-width:768px){.form-beta[data-v-72732bcd]{flex-direction:row}}.form-beta__success-message[data-v-72732bcd]{align-items:center;color:#48d664;display:flex;font-size:1rem;font-weight:500;height:55px;justify-content:center;width:100%}";
-
-export { InscriptionComponent_vue_vue_type_style_index_0_scoped_72732bcd_lang as I };
-//# sourceMappingURL=InscriptionComponent-styles-1.mjs-CGg3h76u.mjs.map

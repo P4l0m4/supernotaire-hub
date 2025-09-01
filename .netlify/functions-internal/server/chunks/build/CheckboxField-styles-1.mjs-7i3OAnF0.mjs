@@ -1,4 +1,0 @@
-const CheckboxField_vue_vue_type_style_index_0_scoped_31194cd9_lang = '.checkbox[data-v-31194cd9]{align-items:center;cursor:pointer;display:flex;gap:.5rem;-webkit-user-select:none;-moz-user-select:none;user-select:none}.checkbox__input[data-v-31194cd9]{display:none}.checkbox__input:checked+.checkbox__custom[data-v-31194cd9]{background:#3185ff;border-color:#3185ff}.checkbox__input:checked+.checkbox__custom[data-v-31194cd9]:after{background:#f7f7f7;border-radius:2px;content:"";top:3px;right:3px;bottom:3px;left:3px;position:absolute}.checkbox__custom[data-v-31194cd9]{background:#f7f7f7;border:1px solid rgba(34,38,46,.6);border-radius:4px;height:24px;min-width:24px;position:relative;transition:background .2s;width:24px}.checkbox__label[data-v-31194cd9]{font-size:1rem}';
-
-export { CheckboxField_vue_vue_type_style_index_0_scoped_31194cd9_lang as C };
-//# sourceMappingURL=CheckboxField-styles-1.mjs-7i3OAnF0.mjs.map
