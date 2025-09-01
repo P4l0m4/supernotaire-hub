@@ -135,6 +135,7 @@ watch(
 );
 </script>
 <template>
+  {{ showFirstAction }}
   <div class="action" v-if="showFirstAction">
     <div class="location">
       <label for="location-form-input" class="location-label"
