@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import image from "/creative-process-11.svg?url";
 defineProps<{
   title: string;
 }>();
@@ -14,7 +15,7 @@ defineProps<{
     <div class="did-you-know__illustration">
       <img
         class="did-you-know__illustration__image"
-        src="@/assets/images/creative-process-11.svg"
+        :src="image"
         alt="Le saviez-vous ?"
       />
     </div>
@@ -53,34 +54,10 @@ defineProps<{
     min-height: 100%;
     position: relative;
 
-    &::before {
-      content: "";
-      position: absolute;
-      background-image: radial-gradient(
-        circle at center,
-        rgba($primary-color, 1),
-        transparent
-      );
-      filter: blur(40px);
-      height: 30rem;
-      width: 30rem;
-      left: 0;
-      top: 0;
-      border-radius: 50%;
-      z-index: 0;
-    }
-
     @media (min-width: $laptop-screen) {
       min-height: 27rem;
       max-width: 50rem;
       justify-content: center;
-
-      &::before {
-        inset: 0;
-        margin: auto;
-        height: 40rem;
-        width: 40rem;
-      }
     }
 
     &__title {
