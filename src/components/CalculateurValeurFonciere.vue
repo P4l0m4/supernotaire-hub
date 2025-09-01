@@ -4,15 +4,15 @@ import { colors } from "@/utils/colors";
 
 import achievement from "/achievement-45.svg?url";
 
-import { defineAsyncComponent } from "vue";
+// import { defineAsyncComponent } from "vue";
 
-const LocationForm = defineAsyncComponent({
-  loader: () => import("@/components/FormElements/LocationForm.vue"),
-  onError(err, _retry, fail) {
-    console.error("LocationForm load failed", err);
-    fail(err);
-  },
-});
+// const LocationForm = defineAsyncComponent({
+//   loader: () => import("@/components/FormElements/LocationForm.vue"),
+//   onError(err, _retry, fail) {
+//     console.error("LocationForm load failed", err);
+//     fail(err);
+//   },
+// });
 
 import { estimateFromForm, type ValuationResult } from "@/utils/calculateDVF";
 import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
@@ -152,9 +152,7 @@ watch(
           :color="colors['error-color']"
       /></label>
       <ClientOnly>
-        <!-- <FormElementsLocationForm @address="updateAddress"
-      /> -->
-        <component :is="LocationForm" @address="updateAddress" />
+        <FormElementsLocationForm @address="updateAddress" />
       </ClientOnly>
     </div>
   </div>
