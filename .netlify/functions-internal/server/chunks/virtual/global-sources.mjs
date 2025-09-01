@@ -17,16 +17,46 @@ const sources = [
         },
         "urls": [
             {
-                "loc": "/faq"
+                "loc": "/"
             },
             {
-                "loc": "/"
+                "loc": "/contact"
+            },
+            {
+                "loc": "/notaires"
+            },
+            {
+                "loc": "/vendeurs"
+            },
+            {
+                "loc": "/tutoriels"
+            },
+            {
+                "loc": "/inscription"
             },
             {
                 "loc": "/faq-notaires"
             },
             {
+                "loc": "/faq-vendeurs"
+            },
+            {
+                "loc": "/outils"
+            },
+            {
+                "loc": "/annuaire"
+            },
+            {
                 "loc": "/comment-ca-marche"
+            },
+            {
+                "loc": "/outils/pre-etat-date"
+            },
+            {
+                "loc": "/outils/valeur-fonciere"
+            },
+            {
+                "loc": "/outils/text-from-document"
             }
         ],
         "sourceType": "app"

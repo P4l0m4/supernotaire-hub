@@ -4003,7 +4003,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "1cc27a8d-6cab-4902-bd86-e89aa21045be",
+    "buildId": "ec8ead85-01c9-4373-88d4-b7df74dc13a5",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4036,7 +4036,22 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {},
+  "public": {
+    "STORYBLOK_KEY": "HywsRInkperCxQGCRiQGhAtt",
+    "GEMINI_KEY": "AIzaSyB1X9Copk9i8lLWsMLOmgjx4wAoFlT_66c",
+    "storyblok": {
+      "accessToken": "HywsRInkperCxQGCRiQGhAtt",
+      "enableSudoMode": false,
+      "usePlugin": true,
+      "bridge": true,
+      "devtools": false,
+      "componentsDir": "~/storyblok",
+      "apiOptions": {
+        "region": "fr"
+      },
+      "cacheProvider": "memory"
+    }
+  },
   "sitemap": {
     "isI18nMapped": false,
     "sitemapName": "sitemap.xml",

@@ -1,11 +1,12 @@
-import { defineComponent, shallowRef, h, resolveComponent, hasInjectionContext, getCurrentInstance, mergeProps, computed, withCtx, createVNode, createTextVNode, createElementBlock, provide, cloneVNode, defineAsyncComponent, inject, unref, shallowReactive, ref, Suspense, Fragment, useSSRContext, createApp, toRef, onErrorCaptured, onServerPrefetch, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, getCurrentScope, nextTick } from 'vue';
-import { p as parseQuery, k as hasProtocol, l as joinURL, m as getContext, w as withQuery, o as withTrailingSlash, q as withoutTrailingSlash, r as isScriptProtocol, s as sanitizeStatusCode, $ as $fetch, t as createHooks, v as executeAsync, h as createError$1, x as toRouteMatcher, y as createRouter$1, z as defu } from '../_/nitro.mjs';
+import { defineComponent, shallowRef, h, resolveComponent, hasInjectionContext, inject, getCurrentInstance, provide, cloneVNode, createElementBlock, toRef, isRef, computed, mergeProps, withCtx, createVNode, createTextVNode, version, defineAsyncComponent, unref, shallowReactive, ref, Suspense, Fragment, useSSRContext, createApp, createBlock, createCommentVNode, toDisplayString, openBlock, onErrorCaptured, onServerPrefetch, resolveDynamicComponent, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, getCurrentScope, watch, nextTick, watchEffect } from 'vue';
+import { p as parseQuery, h as createError$1, k as hasProtocol, l as joinURL, m as getContext, w as withQuery, o as withTrailingSlash, q as withoutTrailingSlash, r as isScriptProtocol, s as sanitizeStatusCode, $ as $fetch, t as createHooks, v as executeAsync, x as toRouteMatcher, y as createRouter$1, z as defu } from '../_/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import utc from 'dayjs/plugin/utc.js';
-import { ssrRenderAttrs, ssrInterpolate, ssrRenderSlot, ssrRenderComponent, ssrRenderAttr, ssrRenderSuspense, ssrRenderVNode } from 'vue/server-renderer';
+import FloatingVue from 'floating-vue';
+import { ssrRenderAttrs, ssrRenderSlot, ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderStyle, ssrRenderSuspense, ssrRenderVNode } from 'vue/server-renderer';
 import 'node:http';
 import 'node:https';
 import 'node:events';
@@ -30,6 +31,7 @@ if (!("global" in globalThis)) {
 }
 const appLayoutTransition = false;
 const nuxtLinkDefaults = { "componentName": "NuxtLink" };
+const asyncDataDefaults = { "value": null, "errorValue": null, "deep": true };
 const appId = "nuxt-app";
 function getNuxtAppCtx(id = appId) {
   return getContext(id, {
@@ -388,24 +390,79 @@ async function getRouteRules(arg) {
 }
 const _routes = [
   {
-    name: "faq",
-    path: "/faq",
-    component: () => import('./faq-Be_ycjDo.mjs')
-  },
-  {
     name: "index",
     path: "/",
-    component: () => import('./index-BrTP9ahv.mjs')
+    component: () => import('./index-Cv5JUPZd.mjs')
+  },
+  {
+    name: "contact",
+    path: "/contact",
+    component: () => import('./contact-Bi7kXfMk.mjs')
+  },
+  {
+    name: "notaires",
+    path: "/notaires",
+    component: () => import('./notaires-Bz6YZwx3.mjs')
+  },
+  {
+    name: "vendeurs",
+    path: "/vendeurs",
+    component: () => import('./vendeurs-Du0AQUle.mjs')
+  },
+  {
+    name: "tutoriels",
+    path: "/tutoriels",
+    component: () => import('./tutoriels-n_CXwPfO.mjs')
+  },
+  {
+    name: "inscription",
+    path: "/inscription",
+    component: () => import('./inscription-pZpOrxP3.mjs')
   },
   {
     name: "faq-notaires",
     path: "/faq-notaires",
-    component: () => import('./faq-notaires-C-exTVWW.mjs')
+    component: () => import('./faq-notaires-B5mlrl6w.mjs')
+  },
+  {
+    name: "faq-vendeurs",
+    path: "/faq-vendeurs",
+    component: () => import('./faq-vendeurs-DM42ea-4.mjs')
+  },
+  {
+    name: "outils",
+    path: "/outils",
+    component: () => import('./index-DaAdaIc7.mjs')
+  },
+  {
+    name: "annuaire",
+    path: "/annuaire",
+    component: () => import('./index-DiaLEVT4.mjs')
+  },
+  {
+    name: "annuaire-slug",
+    path: "/annuaire/:slug()",
+    component: () => import('./_slug_-DCl-8X3B.mjs')
   },
   {
     name: "comment-ca-marche",
     path: "/comment-ca-marche",
-    component: () => import('./comment-ca-marche-CgKIjZbU.mjs')
+    component: () => import('./comment-ca-marche-DD8mg15p.mjs')
+  },
+  {
+    name: "outils-pre-etat-date",
+    path: "/outils/pre-etat-date",
+    component: () => import('./pre-etat-date-BCQaztxp.mjs')
+  },
+  {
+    name: "outils-valeur-fonciere",
+    path: "/outils/valeur-fonciere",
+    component: () => import('./valeur-fonciere-zF685O5c.mjs')
+  },
+  {
+    name: "outils-text-from-document",
+    path: "/outils/text-from-document",
+    component: () => import('./text-from-document-BTJO9kCd.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -743,7 +800,7 @@ defineComponent({
   }
 });
 const clientOnlySymbol = Symbol.for("nuxt:client-only");
-defineComponent({
+const __nuxt_component_1$2 = defineComponent({
   name: "ClientOnly",
   inheritAttrs: false,
   props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
@@ -887,7 +944,7 @@ function defineNuxtLink(options) {
       isActive: (link == null ? void 0 : link.isActive) ?? computed(() => to.value === router.currentRoute.value.path),
       isExactActive: (link == null ? void 0 : link.isExactActive) ?? computed(() => to.value === router.currentRoute.value.path),
       route: (link == null ? void 0 : link.route) ?? computed(() => router.resolve(to.value)),
-      async navigate(_e) {
+      async navigate(_e2) {
         await navigateTo(href.value, { replace: props.replace, external: isExternal.value || hasTarget.value });
       }
     };
@@ -1082,7 +1139,7 @@ function defineNuxtLink(options) {
     // }) as unknown as DefineComponent<NuxtLinkProps, object, object, ComputedOptions, MethodOptions, object, object, EmitsOptions, string, object, NuxtLinkProps, object, SlotsType<NuxtLinkSlots>>
   });
 }
-const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$4 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -1133,20 +1190,1043 @@ const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__
 const components_plugin_z4hgvsiddfKkfXTP6M8M4zG5Cb7sGnDhcryKVM45Di4 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:global-components"
 });
+function ge(s, e) {
+  if (!e)
+    return { src: s, attrs: {} };
+  let t = 0, o = 0;
+  const r = {}, n = [];
+  function a(i, u, f, y, R) {
+    typeof i != "number" || i <= u || i >= f ? console.warn(`[StoryblokRichText] - ${y.charAt(0).toUpperCase() + y.slice(1)} value must be a number between ${u} and ${f} (inclusive)`) : R.push(`${y}(${i})`);
+  }
+  if (typeof e == "object") {
+    if (typeof e.width == "number" && e.width > 0 ? (r.width = e.width, t = e.width) : console.warn("[StoryblokRichText] - Width value must be a number greater than 0"), e.height && typeof e.height == "number" && e.height > 0 ? (r.height = e.height, o = e.height) : console.warn("[StoryblokRichText] - Height value must be a number greater than 0"), e.loading && ["lazy", "eager"].includes(e.loading) && (r.loading = e.loading), e.class && (r.class = e.class), e.filters) {
+      const { filters: i } = e || {}, { blur: u, brightness: f, fill: y, format: R, grayscale: _, quality: A, rotate: L } = i || {};
+      u && a(u, 0, 100, "blur", n), A && a(A, 0, 100, "quality", n), f && a(f, 0, 100, "brightness", n), y && n.push(`fill(${y})`), _ && n.push("grayscale()"), L && [0, 90, 180, 270].includes(e.filters.rotate || 0) && n.push(`rotate(${L})`), R && ["webp", "png", "jpeg"].includes(R) && n.push(`format(${R})`);
+    }
+    e.srcset && (r.srcset = e.srcset.map((i) => {
+      if (typeof i == "number")
+        return `${s}/m/${i}x0/${n.length > 0 ? `filters:${n.join(":")}` : ""} ${i}w`;
+      if (Array.isArray(i) && i.length === 2) {
+        const [u, f] = i;
+        return `${s}/m/${u}x${f}/${n.length > 0 ? `filters:${n.join(":")}` : ""} ${u}w`;
+      } else {
+        console.warn("[StoryblokRichText] - srcset entry must be a number or a tuple of two numbers");
+        return;
+      }
+    }).join(", ")), e.sizes && (r.sizes = e.sizes.join(", "));
+  }
+  let c = `${s}/m/`;
+  return t > 0 && o > 0 && (c = `${c}${t}x${o}/`), n.length > 0 && (c = `${c}filters:${n.join(":")}`), {
+    src: c,
+    attrs: r
+  };
+}
+var g = /* @__PURE__ */ ((s) => (s.DOCUMENT = "doc", s.HEADING = "heading", s.PARAGRAPH = "paragraph", s.QUOTE = "blockquote", s.OL_LIST = "ordered_list", s.UL_LIST = "bullet_list", s.LIST_ITEM = "list_item", s.CODE_BLOCK = "code_block", s.HR = "horizontal_rule", s.BR = "hard_break", s.IMAGE = "image", s.EMOJI = "emoji", s.COMPONENT = "blok", s.TABLE = "table", s.TABLE_ROW = "tableRow", s.TABLE_CELL = "tableCell", s.TABLE_HEADER = "tableHeader", s))(g || {}), $ = /* @__PURE__ */ ((s) => (s.BOLD = "bold", s.STRONG = "strong", s.STRIKE = "strike", s.UNDERLINE = "underline", s.ITALIC = "italic", s.CODE = "code", s.LINK = "link", s.ANCHOR = "anchor", s.STYLED = "styled", s.SUPERSCRIPT = "superscript", s.SUBSCRIPT = "subscript", s.TEXT_STYLE = "textStyle", s.HIGHLIGHT = "highlight", s))($ || {}), Z = /* @__PURE__ */ ((s) => (s.TEXT = "text", s))(Z || {}), S = /* @__PURE__ */ ((s) => (s.URL = "url", s.STORY = "story", s.ASSET = "asset", s.EMAIL = "email", s))(S || {});
+const ve = [
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr"
+], ke = (s = {}) => Object.keys(s).map((e) => `${e}="${s[e]}"`).join(" "), we = (s = {}) => Object.keys(s).map((e) => `${e}: ${s[e]}`).join("; ");
+function _e(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+const O = (s) => Object.fromEntries(Object.entries(s).filter(([e, t]) => t !== void 0));
+function F(s, e = {}, t) {
+  const o = ke(e), r = o ? `${s} ${o}` : s, n = Array.isArray(t) ? t.join("") : t || "";
+  if (s) {
+    if (ve.includes(s))
+      return `<${r}>`;
+  } else return n;
+  return `<${r}>${n}</${s}>`;
+}
+function ee(s = {}) {
+  const e = /* @__PURE__ */ new Map(), {
+    renderFn: t = F,
+    textFn: o = _e,
+    resolvers: r = {},
+    optimizeImages: n = false,
+    keyedResolvers: a = false
+  } = s, c = t !== F, i = (l) => (h2, d) => {
+    const p = h2.attrs || {};
+    return d.render(l, p, h2.children || null);
+  }, u = (l, h2) => {
+    const { src: d, alt: p, title: b, srcset: w, sizes: v } = l.attrs || {};
+    let k = d, T = {};
+    if (n) {
+      const { src: ue, attrs: he } = ge(d, n);
+      k = ue, T = he;
+    }
+    const ce = {
+      src: k,
+      alt: p,
+      title: b,
+      srcset: w,
+      sizes: v,
+      ...T
+    };
+    return h2.render("img", O(ce));
+  }, f = (l, h2) => {
+    const { level: d, ...p } = l.attrs || {};
+    return h2.render(`h${d}`, p, l.children);
+  }, y = (l, h2) => {
+    var d, p, b, w;
+    const v = h2.render("img", {
+      src: (d = l.attrs) == null ? void 0 : d.fallbackImage,
+      alt: (p = l.attrs) == null ? void 0 : p.alt,
+      style: "width: 1.25em; height: 1.25em; vertical-align: text-top",
+      draggable: "false",
+      loading: "lazy"
+    });
+    return h2.render("span", {
+      "data-type": "emoji",
+      "data-name": (b = l.attrs) == null ? void 0 : b.name,
+      "data-emoji": (w = l.attrs) == null ? void 0 : w.emoji
+    }, v);
+  }, R = (l, h2) => h2.render(
+    "pre",
+    l.attrs || {},
+    h2.render("code", {}, l.children || "")
+  ), _ = (l, h2 = false) => ({ text: d, attrs: p }, b) => {
+    const { class: w, id: v, ...k } = p || {}, T = h2 ? {
+      class: w,
+      id: v,
+      style: we(k) || void 0
+    } : p || {};
+    return b.render(l, O(T), d);
+  }, A = (l) => x(l), L = (l) => {
+    const { marks: h2, ...d } = l;
+    if ("text" in l) {
+      if (h2)
+        return h2.reduce(
+          (b, w) => A({ ...w, text: b }),
+          A({ ...d, children: d.children })
+        );
+      const p = l.attrs || {};
+      if (a) {
+        const b = e.get("txt") || 0;
+        e.set("txt", b + 1), p.key = `txt-${b}`;
+      }
+      return o(d.text, p);
+    }
+    return "";
+  }, D = (l, h2) => {
+    const { linktype: d, href: p, anchor: b, ...w } = l.attrs || {};
+    let v = "";
+    switch (d) {
+      case S.ASSET:
+      case S.URL:
+        v = p;
+        break;
+      case S.EMAIL:
+        v = `mailto:${p}`;
+        break;
+      case S.STORY:
+        v = p, b && (v = `${v}#${b}`);
+        break;
+      default:
+        v = p;
+        break;
+    }
+    const k = { ...w };
+    return v && (k.href = v), h2.render("a", k, l.text);
+  }, re = (l, h2) => {
+    var d, p;
+    return console.warn("[StoryblokRichtText] - BLOK resolver is not available for vanilla usage"), h2.render("span", {
+      blok: (d = l == null ? void 0 : l.attrs) == null ? void 0 : d.body[0],
+      id: (p = l.attrs) == null ? void 0 : p.id,
+      style: "display: none"
+    });
+  }, oe = (l, h2) => {
+    const d = {}, p = h2.render("tbody", {}, l.children);
+    return h2.render("table", d, p);
+  }, ne = (l, h2) => {
+    const d = {};
+    return h2.render("tr", d, l.children);
+  }, ie = (l, h2) => {
+    const { colspan: d, rowspan: p, colwidth: b, backgroundColor: w, ...v } = l.attrs || {}, k = {
+      ...v
+    };
+    d > 1 && (k.colspan = d), p > 1 && (k.rowspan = p);
+    const T = [];
+    return b && T.push(`width: ${b}px;`), w && T.push(`background-color: ${w};`), T.length > 0 && (k.style = T.join(" ")), h2.render("td", O(k), l.children);
+  }, ae = (l, h2) => {
+    const { colspan: d, rowspan: p, colwidth: b, backgroundColor: w, ...v } = l.attrs || {}, k = {
+      ...v
+    };
+    d > 1 && (k.colspan = d), p > 1 && (k.rowspan = p);
+    const T = [];
+    return b && T.push(`width: ${b}px;`), w && T.push(`background-color: ${w};`), T.length > 0 && (k.style = T.join(" ")), h2.render("th", O(k), l.children);
+  }, B = /* @__PURE__ */ new Map([
+    [g.DOCUMENT, i("")],
+    [g.HEADING, f],
+    [g.PARAGRAPH, i("p")],
+    [g.UL_LIST, i("ul")],
+    [g.OL_LIST, i("ol")],
+    [g.LIST_ITEM, i("li")],
+    [g.IMAGE, u],
+    [g.EMOJI, y],
+    [g.CODE_BLOCK, R],
+    [g.HR, i("hr")],
+    [g.BR, i("br")],
+    [g.QUOTE, i("blockquote")],
+    [g.COMPONENT, re],
+    [Z.TEXT, L],
+    [$.LINK, D],
+    [$.ANCHOR, D],
+    [$.STYLED, _("span", true)],
+    [$.BOLD, _("strong")],
+    [$.TEXT_STYLE, _("span", true)],
+    [$.ITALIC, _("em")],
+    [$.UNDERLINE, _("u")],
+    [$.STRIKE, _("s")],
+    [$.CODE, _("code")],
+    [$.SUPERSCRIPT, _("sup")],
+    [$.SUBSCRIPT, _("sub")],
+    [$.HIGHLIGHT, _("mark")],
+    [g.TABLE, oe],
+    [g.TABLE_ROW, ne],
+    [g.TABLE_CELL, ie],
+    [g.TABLE_HEADER, ae]
+  ]), M = new Map([
+    ...B,
+    ...Object.entries(r).map(([l, h2]) => [l, h2])
+  ]), le = () => ({
+    render: (l, h2 = {}, d) => {
+      if (a && l) {
+        const p = e.get(l) || 0;
+        e.set(l, p + 1), h2.key = `${l}-${p}`;
+      }
+      return t(l, h2, d);
+    },
+    originalResolvers: B,
+    mergedResolvers: M
+  });
+  function C(l) {
+    const h2 = M.get(l.type);
+    if (!h2)
+      return console.error("<Storyblok>", `No resolver found for node type ${l.type}`), "";
+    const d = le();
+    if (l.type === "text")
+      return h2(l, d);
+    const p = l.content ? l.content.map(x) : void 0;
+    return h2({
+      ...l,
+      children: p
+    }, d);
+  }
+  function x(l) {
+    return l.type === "doc" ? c ? l.content.map(C) : l.content.map(C).join("") : Array.isArray(l) ? l.map(C) : C(l);
+  }
+  return {
+    render: x
+  };
+}
+var Re = Object.defineProperty, $e = (s, e, t) => e in s ? Re(s, e, { enumerable: true, configurable: true, writable: true, value: t }) : s[e] = t, m = (s, e, t) => $e(s, typeof e != "symbol" ? e + "" : e, t);
+class Ee extends Error {
+  constructor(e) {
+    super(e), this.name = "AbortError";
+  }
+}
+function Ae(s, e, t) {
+  if (!Number.isFinite(e))
+    throw new TypeError("Expected `limit` to be a finite number");
+  if (!Number.isFinite(t))
+    throw new TypeError("Expected `interval` to be a finite number");
+  const o = [];
+  let r = [], n = 0, a = false;
+  const c = async () => {
+    n++;
+    const u = o.shift();
+    if (u)
+      try {
+        const y = await s(...u.args);
+        u.resolve(y);
+      } catch (y) {
+        u.reject(y);
+      }
+    const f = setTimeout(() => {
+      n--, o.length > 0 && c(), r = r.filter((y) => y !== f);
+    }, t);
+    r.includes(f) || r.push(f);
+  }, i = (...u) => a ? Promise.reject(
+    new Error(
+      "Throttled function is already aborted and not accepting new promises"
+    )
+  ) : new Promise((f, y) => {
+    o.push({
+      resolve: f,
+      reject: y,
+      args: u
+    }), n < e && c();
+  });
+  return i.abort = () => {
+    a = true, r.forEach(clearTimeout), r = [], o.forEach(
+      (u) => u.reject(() => new Ee("Throttle function aborted"))
+    ), o.length = 0;
+  }, i;
+}
+const G = (s = "") => s.includes("/cdn/"), Se = (s, e = 25, t = 1) => ({
+  ...s,
+  per_page: e,
+  page: t
+}), Ie = (s) => new Promise((e) => setTimeout(e, s)), Le = (s = 0, e) => Array.from({ length: s }, e), Ce = (s = 0, e = s) => {
+  const t = Math.abs(e - s) || 0, o = s < e ? 1 : -1;
+  return Le(t, (r, n) => n * o + s);
+}, Oe = async (s, e) => Promise.all(s.map(e)), je = (s = [], e) => s.map(e).reduce((t, o) => [...t, ...o], []), U = (s, e, t) => {
+  const o = [];
+  for (const r in s) {
+    if (!Object.prototype.hasOwnProperty.call(s, r))
+      continue;
+    const n = s[r];
+    if (n == null)
+      continue;
+    const a = t ? "" : encodeURIComponent(r);
+    let c;
+    typeof n == "object" ? c = U(
+      n,
+      e ? e + encodeURIComponent(`[${a}]`) : a,
+      Array.isArray(n)
+    ) : c = `${e ? e + encodeURIComponent(`[${a}]`) : a}=${encodeURIComponent(n)}`, o.push(c);
+  }
+  return o.join("&");
+}, q = (s) => {
+  const e = {
+    eu: "api.storyblok.com",
+    us: "api-us.storyblok.com",
+    cn: "app.storyblokchina.cn",
+    ap: "api-ap.storyblok.com",
+    ca: "api-ca.storyblok.com"
+  };
+  return e[s] ?? e.eu;
+};
+class Pe {
+  constructor(e) {
+    m(this, "baseURL"), m(this, "timeout"), m(this, "headers"), m(this, "responseInterceptor"), m(this, "fetch"), m(this, "ejectInterceptor"), m(this, "url"), m(this, "parameters"), m(this, "fetchOptions"), this.baseURL = e.baseURL, this.headers = e.headers || new Headers(), this.timeout = e != null && e.timeout ? e.timeout * 1e3 : 0, this.responseInterceptor = e.responseInterceptor, this.fetch = (...t) => e.fetch ? e.fetch(...t) : fetch(...t), this.ejectInterceptor = false, this.url = "", this.parameters = {}, this.fetchOptions = {};
+  }
+  /**
+   *
+   * @param url string
+   * @param params ISbStoriesParams
+   * @returns Promise<ISbResponse | Error>
+   */
+  get(e, t) {
+    return this.url = e, this.parameters = t, this._methodHandler("get");
+  }
+  post(e, t) {
+    return this.url = e, this.parameters = t, this._methodHandler("post");
+  }
+  put(e, t) {
+    return this.url = e, this.parameters = t, this._methodHandler("put");
+  }
+  delete(e, t) {
+    return this.url = e, this.parameters = t ?? {}, this._methodHandler("delete");
+  }
+  async _responseHandler(e) {
+    const t = [], o = {
+      data: {},
+      headers: {},
+      status: 0,
+      statusText: ""
+    };
+    e.status !== 204 && await e.json().then((r) => {
+      o.data = r;
+    });
+    for (const r of e.headers.entries())
+      t[r[0]] = r[1];
+    return o.headers = { ...t }, o.status = e.status, o.statusText = e.statusText, o;
+  }
+  async _methodHandler(e) {
+    let t = `${this.baseURL}${this.url}`, o = null;
+    e === "get" ? t = `${this.baseURL}${this.url}?${U(this.parameters)}` : o = JSON.stringify(this.parameters);
+    const r = new URL(t), n = new AbortController(), { signal: a } = n;
+    let c;
+    this.timeout && (c = setTimeout(() => n.abort(), this.timeout));
+    try {
+      const i = await this.fetch(`${r}`, {
+        method: e,
+        headers: this.headers,
+        body: o,
+        signal: a,
+        ...this.fetchOptions
+      });
+      this.timeout && clearTimeout(c);
+      const u = await this._responseHandler(
+        i
+      );
+      return this.responseInterceptor && !this.ejectInterceptor ? this._statusHandler(this.responseInterceptor(u)) : this._statusHandler(u);
+    } catch (i) {
+      return {
+        message: i
+      };
+    }
+  }
+  setFetchOptions(e = {}) {
+    Object.keys(e).length > 0 && "method" in e && delete e.method, this.fetchOptions = { ...e };
+  }
+  eject() {
+    this.ejectInterceptor = true;
+  }
+  /**
+   * Normalizes error messages from different response structures
+   * @param data The response data that might contain error information
+   * @returns A normalized error message string
+   */
+  _normalizeErrorMessage(e) {
+    if (Array.isArray(e))
+      return e[0] || "Unknown error";
+    if (e && typeof e == "object") {
+      if (e.error)
+        return e.error;
+      for (const t in e) {
+        if (Array.isArray(e[t]))
+          return `${t}: ${e[t][0]}`;
+        if (typeof e[t] == "string")
+          return `${t}: ${e[t]}`;
+      }
+      if (e.slug)
+        return e.slug;
+    }
+    return "Unknown error";
+  }
+  _statusHandler(e) {
+    const t = /20[0-6]/g;
+    return new Promise((o, r) => {
+      if (t.test(`${e.status}`))
+        return o(e);
+      const n = {
+        message: this._normalizeErrorMessage(e.data),
+        status: e.status,
+        response: e
+      };
+      r(n);
+    });
+  }
+}
+const J = "SB-Agent", H = {
+  defaultAgentName: "SB-JS-CLIENT",
+  defaultAgentVersion: "SB-Agent-Version",
+  packageVersion: "7.0.0"
+}, xe = {
+  PUBLISHED: "published"
+};
+let j = {};
+const E = {};
+class Ne {
+  /**
+   *
+   * @param config ISbConfig interface
+   * @param pEndpoint string, optional
+   */
+  constructor(e, t) {
+    m(this, "client"), m(this, "maxRetries"), m(this, "retriesDelay"), m(this, "throttle"), m(this, "accessToken"), m(this, "cache"), m(this, "resolveCounter"), m(this, "relations"), m(this, "links"), m(this, "version"), m(this, "richTextResolver"), m(this, "resolveNestedRelations"), m(this, "stringifiedStoriesCache"), m(this, "inlineAssets");
+    let o = e.endpoint || t;
+    if (!o) {
+      const a = e.https === false ? "http" : "https";
+      e.oauthToken ? o = `${a}://${q(e.region)}/v1` : o = `${a}://${q(e.region)}/v2`;
+    }
+    const r = new Headers();
+    r.set("Content-Type", "application/json"), r.set("Accept", "application/json"), e.headers && (e.headers.constructor.name === "Headers" ? e.headers.entries().toArray() : Object.entries(e.headers)).forEach(([a, c]) => {
+      r.set(a, c);
+    }), r.has(J) || (r.set(J, H.defaultAgentName), r.set(
+      H.defaultAgentVersion,
+      H.packageVersion
+    ));
+    let n = 5;
+    e.oauthToken && (r.set("Authorization", e.oauthToken), n = 3), e.rateLimit && (n = e.rateLimit), this.maxRetries = e.maxRetries || 10, this.retriesDelay = 300, this.throttle = Ae(
+      this.throttledRequest.bind(this),
+      n,
+      1e3
+    ), this.accessToken = e.accessToken || "", this.relations = {}, this.links = {}, this.cache = e.cache || { clear: "manual" }, this.resolveCounter = 0, this.resolveNestedRelations = e.resolveNestedRelations || true, this.stringifiedStoriesCache = {}, this.version = e.version || xe.PUBLISHED, this.inlineAssets = e.inlineAssets || false, this.client = new Pe({
+      baseURL: o,
+      timeout: e.timeout || 0,
+      headers: r,
+      responseInterceptor: e.responseInterceptor,
+      fetch: e.fetch
+    });
+  }
+  parseParams(e) {
+    return e.token || (e.token = this.getToken()), e.cv || (e.cv = E[e.token]), Array.isArray(e.resolve_relations) && (e.resolve_relations = e.resolve_relations.join(",")), typeof e.resolve_relations < "u" && (e.resolve_level = 2), e;
+  }
+  factoryParamOptions(e, t) {
+    return G(e) ? this.parseParams(t) : t;
+  }
+  makeRequest(e, t, o, r, n) {
+    const a = this.factoryParamOptions(
+      e,
+      Se(t, o, r)
+    );
+    return this.cacheResponse(e, a, void 0, n);
+  }
+  get(e, t = {}, o) {
+    t || (t = {});
+    const r = `/${e}`;
+    G(r) && (t.version = t.version || this.version);
+    const n = this.factoryParamOptions(r, t);
+    return this.cacheResponse(r, n, void 0, o);
+  }
+  async getAll(e, t = {}, o, r) {
+    const n = (t == null ? void 0 : t.per_page) || 25, a = `/${e}`.replace(/\/$/, ""), c = o ?? a.substring(a.lastIndexOf("/") + 1);
+    t.version = t.version || this.version;
+    const i = 1, u = await this.makeRequest(
+      a,
+      t,
+      n,
+      i,
+      r
+    ), f = u.total ? Math.ceil(u.total / n) : 1, y = await Oe(
+      Ce(i, f),
+      (R) => this.makeRequest(a, t, n, R + 1, r)
+    );
+    return je([u, ...y], (R) => Object.values(R.data[c]));
+  }
+  post(e, t = {}, o) {
+    const r = `/${e}`;
+    return this.throttle("post", r, t, o);
+  }
+  put(e, t = {}, o) {
+    const r = `/${e}`;
+    return this.throttle("put", r, t, o);
+  }
+  delete(e, t = {}, o) {
+    t || (t = {});
+    const r = `/${e}`;
+    return this.throttle("delete", r, t, o);
+  }
+  getStories(e = {}, t) {
+    return this._addResolveLevel(e), this.get("cdn/stories", e, t);
+  }
+  getStory(e, t = {}, o) {
+    return this._addResolveLevel(t), this.get(`cdn/stories/${e}`, t, o);
+  }
+  getToken() {
+    return this.accessToken;
+  }
+  ejectInterceptor() {
+    this.client.eject();
+  }
+  _addResolveLevel(e) {
+    typeof e.resolve_relations < "u" && (e.resolve_level = 2);
+  }
+  _cleanCopy(e) {
+    return JSON.parse(JSON.stringify(e));
+  }
+  _insertLinks(e, t, o) {
+    const r = e[t];
+    r && r.fieldtype === "multilink" && r.linktype === "story" && typeof r.id == "string" && this.links[o][r.id] ? r.story = this._cleanCopy(this.links[o][r.id]) : r && r.linktype === "story" && typeof r.uuid == "string" && this.links[o][r.uuid] && (r.story = this._cleanCopy(this.links[o][r.uuid]));
+  }
+  /**
+   *
+   * @param resolveId A counter number as a string
+   * @param uuid The uuid of the story
+   * @returns string | object
+   */
+  getStoryReference(e, t) {
+    return this.relations[e][t] ? JSON.parse(this.stringifiedStoriesCache[t] || JSON.stringify(this.relations[e][t])) : t;
+  }
+  /**
+   * Resolves a field's value by replacing UUIDs with their corresponding story references
+   * @param jtree - The JSON tree object containing the field to resolve
+   * @param treeItem - The key of the field to resolve
+   * @param resolveId - The unique identifier for the current resolution context
+   *
+   * This method handles both single string UUIDs and arrays of UUIDs:
+   * - For single strings: directly replaces the UUID with the story reference
+   * - For arrays: maps through each UUID and replaces with corresponding story references
+   */
+  _resolveField(e, t, o) {
+    const r = e[t];
+    typeof r == "string" ? e[t] = this.getStoryReference(o, r) : Array.isArray(r) && (e[t] = r.map(
+      (n) => this.getStoryReference(o, n)
+    ).filter(Boolean));
+  }
+  /**
+   * Inserts relations into the JSON tree by resolving references
+   * @param jtree - The JSON tree object to process
+   * @param treeItem - The current field being processed
+   * @param fields - The relation patterns to resolve (string or array of strings)
+   * @param resolveId - The unique identifier for the current resolution context
+   *
+   * This method handles two types of relation patterns:
+   * 1. Nested relations: matches fields that end with the current field name
+   *    Example: If treeItem is "event_type", it matches patterns like "*.event_type"
+   *
+   * 2. Direct component relations: matches exact component.field patterns
+   *    Example: "event.event_type" for component "event" and field "event_type"
+   *
+   * The method supports both string and array formats for the fields parameter,
+   * allowing flexible specification of relation patterns.
+   */
+  _insertRelations(e, t, o, r) {
+    if (Array.isArray(o) ? o.find((a) => a.endsWith(`.${t}`)) : o.endsWith(`.${t}`)) {
+      this._resolveField(e, t, r);
+      return;
+    }
+    const n = e.component ? `${e.component}.${t}` : t;
+    (Array.isArray(o) ? o.includes(n) : o === n) && this._resolveField(e, t, r);
+  }
+  /**
+   * Recursively traverses and resolves relations in the story content tree
+   * @param story - The story object containing the content to process
+   * @param fields - The relation patterns to resolve
+   * @param resolveId - The unique identifier for the current resolution context
+   */
+  iterateTree(e, t, o) {
+    const r = (n, a = "") => {
+      if (!(!n || n._stopResolving)) {
+        if (Array.isArray(n))
+          n.forEach((c, i) => r(c, `${a}[${i}]`));
+        else if (typeof n == "object")
+          for (const c in n) {
+            const i = a ? `${a}.${c}` : c;
+            (n.component && n._uid || n.type === "link") && (this._insertRelations(n, c, t, o), this._insertLinks(n, c, o)), r(n[c], i);
+          }
+      }
+    };
+    r(e.content);
+  }
+  async resolveLinks(e, t, o) {
+    let r = [];
+    if (e.link_uuids) {
+      const n = e.link_uuids.length, a = [], c = 50;
+      for (let i = 0; i < n; i += c) {
+        const u = Math.min(n, i + c);
+        a.push(e.link_uuids.slice(i, u));
+      }
+      for (let i = 0; i < a.length; i++)
+        (await this.getStories({
+          per_page: c,
+          language: t.language,
+          version: t.version,
+          starts_with: t.starts_with,
+          by_uuids: a[i].join(",")
+        })).data.stories.forEach(
+          (u) => {
+            r.push(u);
+          }
+        );
+    } else
+      r = e.links;
+    r.forEach((n) => {
+      this.links[o][n.uuid] = {
+        ...n,
+        _stopResolving: true
+      };
+    });
+  }
+  async resolveRelations(e, t, o) {
+    let r = [];
+    if (e.rel_uuids) {
+      const n = e.rel_uuids.length, a = [], c = 50;
+      for (let i = 0; i < n; i += c) {
+        const u = Math.min(n, i + c);
+        a.push(e.rel_uuids.slice(i, u));
+      }
+      for (let i = 0; i < a.length; i++)
+        (await this.getStories({
+          per_page: c,
+          language: t.language,
+          version: t.version,
+          starts_with: t.starts_with,
+          by_uuids: a[i].join(","),
+          excluding_fields: t.excluding_fields
+        })).data.stories.forEach((u) => {
+          r.push(u);
+        });
+      r.length > 0 && (e.rels = r, delete e.rel_uuids);
+    } else
+      r = e.rels;
+    r && r.length > 0 && r.forEach((n) => {
+      this.relations[o][n.uuid] = {
+        ...n,
+        _stopResolving: true
+      };
+    });
+  }
+  /**
+   *
+   * @param responseData
+   * @param params
+   * @param resolveId
+   * @description Resolves the relations and links of the stories
+   * @returns Promise<void>
+   *
+   */
+  async resolveStories(e, t, o) {
+    var r, n;
+    let a = [];
+    if (this.links[o] = {}, this.relations[o] = {}, typeof t.resolve_relations < "u" && t.resolve_relations.length > 0 && (typeof t.resolve_relations == "string" && (a = t.resolve_relations.split(",")), await this.resolveRelations(e, t, o)), t.resolve_links && ["1", "story", "url", "link"].includes(t.resolve_links) && ((r = e.links) != null && r.length || (n = e.link_uuids) != null && n.length) && await this.resolveLinks(e, t, o), this.resolveNestedRelations)
+      for (const c in this.relations[o])
+        this.iterateTree(
+          this.relations[o][c],
+          a,
+          o
+        );
+    e.story ? this.iterateTree(e.story, a, o) : e.stories.forEach((c) => {
+      this.iterateTree(c, a, o);
+    }), this.stringifiedStoriesCache = {}, delete this.links[o], delete this.relations[o];
+  }
+  async cacheResponse(e, t, o, r) {
+    const n = U({ url: e, params: t }), a = this.cacheProvider();
+    if (t.version === "published" && e !== "/cdn/spaces/me") {
+      const c = await a.get(n);
+      if (c)
+        return Promise.resolve(c);
+    }
+    return new Promise(async (c, i) => {
+      var u;
+      try {
+        const f = await this.throttle(
+          "get",
+          e,
+          t,
+          r
+        );
+        if (f.status !== 200)
+          return i(f);
+        let y = { data: f.data, headers: f.headers };
+        if ((u = f.headers) != null && u["per-page"] && (y = Object.assign({}, y, {
+          perPage: f.headers["per-page"] ? Number.parseInt(f.headers["per-page"]) : 0,
+          total: f.headers["per-page"] ? Number.parseInt(f.headers.total) : 0
+        })), y.data.story || y.data.stories) {
+          const _ = this.resolveCounter = ++this.resolveCounter % 1e3;
+          await this.resolveStories(y.data, t, `${_}`), y = await this.processInlineAssets(y);
+        }
+        t.version === "published" && e !== "/cdn/spaces/me" && await a.set(n, y);
+        const R = this.cache.clear === "onpreview" && t.version === "draft" || this.cache.clear === "auto";
+        return t.token && y.data.cv && (R && E[t.token] && E[t.token] !== y.data.cv && await this.flushCache(), E[t.token] = y.data.cv), c(y);
+      } catch (f) {
+        if (f.response && f.status === 429 && (o = typeof o > "u" ? 0 : o + 1, o < this.maxRetries))
+          return console.log(
+            `Hit rate limit. Retrying in ${this.retriesDelay / 1e3} seconds.`
+          ), await Ie(this.retriesDelay), this.cacheResponse(e, t, o).then(c).catch(i);
+        i(f);
+      }
+    });
+  }
+  throttledRequest(e, t, o, r) {
+    return this.client.setFetchOptions(r), this.client[e](t, o);
+  }
+  cacheVersions() {
+    return E;
+  }
+  cacheVersion() {
+    return E[this.accessToken];
+  }
+  setCacheVersion(e) {
+    this.accessToken && (E[this.accessToken] = e);
+  }
+  clearCacheVersion() {
+    this.accessToken && (E[this.accessToken] = 0);
+  }
+  cacheProvider() {
+    switch (this.cache.type) {
+      case "memory":
+        return {
+          get(e) {
+            return Promise.resolve(j[e]);
+          },
+          getAll() {
+            return Promise.resolve(j);
+          },
+          set(e, t) {
+            return j[e] = t, Promise.resolve(void 0);
+          },
+          flush() {
+            return j = {}, Promise.resolve(void 0);
+          }
+        };
+      case "custom":
+        if (this.cache.custom)
+          return this.cache.custom;
+      // eslint-disable-next-line no-fallthrough
+      default:
+        return {
+          get() {
+            return Promise.resolve();
+          },
+          getAll() {
+            return Promise.resolve(void 0);
+          },
+          set() {
+            return Promise.resolve(void 0);
+          },
+          flush() {
+            return Promise.resolve(void 0);
+          }
+        };
+    }
+  }
+  async flushCache() {
+    return await this.cacheProvider().flush(), this.clearCacheVersion(), this;
+  }
+  async processInlineAssets(e) {
+    if (!this.inlineAssets)
+      return e;
+    const t = (o) => {
+      if (!o || typeof o != "object")
+        return o;
+      if (Array.isArray(o))
+        return o.map((n) => t(n));
+      let r = { ...o };
+      r.fieldtype === "asset" && Array.isArray(e.data.assets) && (r = {
+        ...r,
+        ...e.data.assets.find((n) => n.id === r.id)
+      });
+      for (const n in r)
+        typeof r[n] == "object" && (r[n] = t(r[n]));
+      return r;
+    };
+    return e.data.story && (e.data.story.content = t(e.data.story.content)), e.data.stories && (e.data.stories = e.data.stories.map((o) => (o.content = t(o.content), o))), e;
+  }
+}
+const Ge = (s = {}) => {
+  const { apiOptions: e } = s;
+  if (!e || !e.accessToken) {
+    console.error(
+      "You need to provide an access token to interact with Storyblok API. Read https://www.storyblok.com/docs/api/content-delivery#topics/authentication"
+    );
+    return;
+  }
+  return { storyblokApi: new Ne(e) };
+}, He = (s) => {
+  if (typeof s != "object" || typeof s._editable > "u")
+    return {};
+  try {
+    const e = JSON.parse(
+      s._editable.replace(/^<!--#storyblok#/, "").replace(/-->$/, "")
+    );
+    return e ? {
+      "data-blok-c": JSON.stringify(e),
+      "data-blok-uid": `${e.id}-${e.uid}`
+    } : {};
+  } catch {
+    return {};
+  }
+};
+const De = (s = {}) => {
+  const {
+    bridge: o,
+    accessToken: r,
+    use: n = [],
+    apiOptions: a = {},
+    bridgeUrl: c
+  } = s;
+  a.accessToken = a.accessToken || r;
+  const i = { bridge: o, apiOptions: a };
+  let u = {};
+  n.forEach((y) => {
+    u = { ...u, ...y(i) };
+  });
+  return u;
+};
+const te = /* @__PURE__ */ defineComponent({
+  __name: "StoryblokComponent",
+  props: {
+    blok: {}
+  },
+  setup(s, { expose: e }) {
+    const t = s, o = ref();
+    e({
+      value: o
+    });
+    const r = typeof resolveDynamicComponent(t.blok.component) != "string", n = inject("VueSDKOptions"), a = ref(t.blok.component);
+    return !r && n && (n.enableFallbackComponent ? (a.value = n.customFallbackComponent ?? "FallbackComponent", typeof resolveDynamicComponent(a.value) == "string" && console.error(
+      `Is the Fallback component "${a.value}" registered properly?`
+    )) : console.error(
+      `Component could not be found for blok "${t.blok.component}"! Is it defined in main.ts as "app.component("${t.blok.component}", ${t.blok.component});"?`
+    )), (c, i) => (openBlock(), createBlock(resolveDynamicComponent(a.value), mergeProps({
+      ref_key: "blokRef",
+      ref: o
+    }, { ...c.$props, ...c.$attrs }), null, 16));
+  }
+}), Be = (s) => {
+  var e, t;
+  return h(
+    te,
+    {
+      blok: (e = s == null ? void 0 : s.attrs) == null ? void 0 : e.body[0],
+      id: (t = s.attrs) == null ? void 0 : t.id
+    },
+    s.children
+  );
+};
+function Me(s) {
+  const e = {
+    renderFn: h,
+    // TODO: Check why this changed.
+    // @ts-expect-error - createTextVNode types has been recently changed.
+    textFn: createTextVNode,
+    keyedResolvers: true,
+    resolvers: {
+      [g.COMPONENT]: Be,
+      ...s.resolvers
+    }
+  };
+  return ee(e);
+}
+const Fe = /* @__PURE__ */ defineComponent({
+  __name: "StoryblokRichText",
+  props: {
+    doc: {},
+    resolvers: {}
+  },
+  setup(s) {
+    const e = s, t = ref(), o = () => t.value;
+    return watch([() => e.doc, () => e.resolvers], ([r, n]) => {
+      const { render: a } = Me({
+        resolvers: n ?? {}
+      });
+      t.value = a(r);
+    }, {
+      immediate: true,
+      deep: true
+    }), (r, n) => (openBlock(), createBlock(o));
+  }
+}), Ve = {
+  beforeMount(s, e) {
+    if (e.value) {
+      const t = He(e.value);
+      Object.keys(t).length > 0 && (s.setAttribute("data-blok-c", t["data-blok-c"]), s.setAttribute("data-blok-uid", t["data-blok-uid"]), s.classList.add("storyblok__outline"));
+    }
+  }
+}, se = (s) => {
+  console.error(`You can't use ${s} if you're not loading apiPlugin. Please provide it on StoryblokVue initialization.
+    `);
+};
+let I = null;
+const Je = () => (I || se("useStoryblokApi"), I), Ye = {
+  install(s, e = {}) {
+    s.directive("editable", Ve), s.component("StoryblokComponent", te), s.component("StoryblokRichText", Fe), e.enableFallbackComponent && !e.customFallbackComponent && s.component(
+      "FallbackComponent",
+      defineAsyncComponent(() => import('./FallbackComponent-Dky11gEu-CtYceWkH.mjs'))
+    );
+    const { storyblokApi: t } = De(e);
+    I = t || null, s.provide("VueSDKOptions", e);
+  }
+};
+const plugin_YOxzu2Rgn246XMgfphZEXZjtzJTMGWdPuDf_KLI_O_0 = /* @__PURE__ */ defineNuxtPlugin(({ vueApp }) => {
+  let { storyblok } = (/* @__PURE__ */ useRuntimeConfig()).public;
+  storyblok = JSON.parse(JSON.stringify(storyblok));
+  vueApp.use(Ye, { ...storyblok, use: [Ge] });
+});
+var activeHead;
+function getActiveHead() {
+  return activeHead;
+}
+version[0] === "3";
+function resolveUnref(r) {
+  return typeof r === "function" ? r() : unref(r);
+}
+function resolveUnrefHeadInput(ref3) {
+  if (ref3 instanceof Promise || ref3 instanceof Date || ref3 instanceof RegExp)
+    return ref3;
+  const root = resolveUnref(ref3);
+  if (!ref3 || !root)
+    return root;
+  if (Array.isArray(root))
+    return root.map((r) => resolveUnrefHeadInput(r));
+  if (typeof root === "object") {
+    const resolved = {};
+    for (const k2 in root) {
+      if (!Object.prototype.hasOwnProperty.call(root, k2)) {
+        continue;
+      }
+      if (k2 === "titleTemplate" || k2[0] === "o" && k2[1] === "n") {
+        resolved[k2] = unref(root[k2]);
+        continue;
+      }
+      resolved[k2] = resolveUnrefHeadInput(root[k2]);
+    }
+    return resolved;
+  }
+  return root;
+}
+var headSymbol = "usehead";
+var _global = typeof globalThis !== "undefined" ? globalThis : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+var globalKey = "__unhead_injection_handler__";
+function injectHead() {
+  if (globalKey in _global) {
+    return _global[globalKey]();
+  }
+  const head = inject(headSymbol);
+  return head || getActiveHead();
+}
+function useHead(input, options = {}) {
+  const head = options.head || injectHead();
+  if (head) {
+    if (!head.ssr)
+      return clientUseHead(head, input, options);
+    return head.push(input, options);
+  }
+}
+function clientUseHead(head, input, options = {}) {
+  const deactivated = ref(false);
+  const resolvedInput = ref({});
+  watchEffect(() => {
+    resolvedInput.value = deactivated.value ? {} : resolveUnrefHeadInput(input);
+  });
+  const entry2 = head.push(resolvedInput.value, options);
+  watch(resolvedInput, (e) => {
+    entry2.patch(e);
+  });
+  getCurrentInstance();
+  return entry2;
+}
+var vuePlugin = {
+  install(Vue) {
+    Vue.mixin({
+      created() {
+        var _a;
+        if (typeof ((_a = this.$options) == null ? void 0 : _a.jsonld) !== "function") {
+          return;
+        }
+        const jsonComputed = computed(() => this.$options.jsonld.call(this));
+        useHead(() => ({
+          script: [
+            {
+              type: "application/ld+json",
+              innerHTML: jsonComputed.value ? JSON.stringify(jsonComputed.value, null, "") : void 0
+            }
+          ]
+        }));
+      }
+    });
+  }
+};
+var plugin_default = /* @__PURE__ */ defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(vuePlugin);
+});
 dayjs.extend(updateLocale);
 dayjs.extend(utc);
 dayjs.locale("fr");
 const plugin_A_mOOaCOuJWV5Ht8_pCnoQk4Wr7Lby7kkLEtrwvUQ5w = /* @__PURE__ */ defineNuxtPlugin(async (nuxtApp) => nuxtApp.provide("dayjs", dayjs));
+const floating_vue_DYtxgD1IQQTog08Eg9fugMY12CnQHyqF_4NdXKbKn74 = /* @__PURE__ */ defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(FloatingVue);
+});
 const plugins = [
   unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU,
   plugin,
   _0_siteConfig_tU0SxKrPeVRXWcGu2sOnIfhNDbYiKNfDCvYZhRueG0Q,
   revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms,
   components_plugin_z4hgvsiddfKkfXTP6M8M4zG5Cb7sGnDhcryKVM45Di4,
-  plugin_A_mOOaCOuJWV5Ht8_pCnoQk4Wr7Lby7kkLEtrwvUQ5w
+  plugin_YOxzu2Rgn246XMgfphZEXZjtzJTMGWdPuDf_KLI_O_0,
+  plugin_default,
+  plugin_A_mOOaCOuJWV5Ht8_pCnoQk4Wr7Lby7kkLEtrwvUQ5w,
+  floating_vue_DYtxgD1IQQTog08Eg9fugMY12CnQHyqF_4NdXKbKn74
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-BpBYoSRa.mjs').then((m) => m.default || m))
+  default: defineAsyncComponent(() => import('./default-CSCzWfbb.mjs').then((m2) => m2.default || m2))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -1169,7 +2249,7 @@ const nuxtLayoutProps = {
     default: null
   }
 };
-const __nuxt_component_0$2 = defineComponent({
+const __nuxt_component_0$3 = defineComponent({
   name: "NuxtLayout",
   inheritAttrs: false,
   props: nuxtLayoutProps,
@@ -1366,9 +2446,9 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$5 = {};
-function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLayout = __nuxt_component_0$2;
+const _sfc_main$6 = {};
+function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+  const _component_NuxtLayout = __nuxt_component_0$3;
   const _component_NuxtPage = __nuxt_component_1$1;
   _push(ssrRenderComponent(_component_NuxtLayout, _attrs, {
     default: withCtx((_, _push2, _parent2, _scopeId) => {
@@ -1383,63 +2463,14 @@ function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
     _: 1
   }, _parent));
 }
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/nuxt/dist/pages/runtime/app.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const AppComponent = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender$1]]);
-const _imports_0 = "" + __buildAssetsURL("logo-dark.KgTey4VC.svg");
-const _sfc_main$4 = {};
-function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtLink = __nuxt_component_0$3;
-  _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-644c33f4><nav class="header__nav" data-v-644c33f4><ul class="header__nav__ul" data-v-644c33f4><li class="header__nav__ul__li" data-v-644c33f4>`);
-  _push(ssrRenderComponent(_component_NuxtLink, {
-    to: "/",
-    "exact-active": ""
-  }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<img class="logo"${ssrRenderAttr("src", _imports_0)} alt="logo supernotaire" data-v-644c33f4${_scopeId}>`);
-      } else {
-        return [
-          createVNode("img", {
-            class: "logo",
-            src: _imports_0,
-            alt: "logo supernotaire"
-          })
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`</li><li class="header__nav__ul__li" data-v-644c33f4>`);
-  _push(ssrRenderComponent(_component_NuxtLink, {
-    to: "/comment-ca-marche",
-    exact: ""
-  }, {
-    default: withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`Comment ça marche ?`);
-      } else {
-        return [
-          createTextVNode("Comment ça marche ?")
-        ];
-      }
-    }),
-    _: 1
-  }, _parent));
-  _push(`</li></ul></nav></header>`);
-}
-const _sfc_setup$4 = _sfc_main$4.setup;
-_sfc_main$4.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/HeaderComponent.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
-};
-const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-644c33f4"]]);
-const _sfc_main$3 = /* @__PURE__ */ defineComponent({
+const AppComponent = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["ssrRender", _sfc_ssrRender$2]]);
+const _sfc_main$5 = /* @__PURE__ */ defineComponent({
   __name: "IconComponent",
   __ssrInlineRender: true,
   props: {
@@ -1452,22 +2483,22 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       _push(`<span${ssrRenderAttrs(mergeProps({
         class: ["icon", { spin: _ctx.icon === "circle_notch" || _ctx.icon === "circle_notch_bold" }],
         style: { color: _ctx.color, fontSize: _ctx.size }
-      }, _attrs))} data-v-817c515c>${ssrInterpolate(_ctx.icon)}</span>`);
+      }, _attrs))} data-v-20250a55>${ssrInterpolate(_ctx.icon)}</span>`);
     };
   }
 });
-const _sfc_setup$3 = _sfc_main$3.setup;
-_sfc_main$3.setup = (props, ctx) => {
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/IconComponent.vue");
-  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/UI/IconComponent.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-817c515c"]]);
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-20250a55"]]);
 const colors = {
   "base-color": "#f7f7f7",
   "primary-color": "#FFFDFA",
   "secondary-color": "#00065c",
-  "accent-color": "#4885DE",
+  "accent-color": "#3185ff",
   "text-color": "#22262e",
   "error-color": "#CB0000",
   "warning-color": "#f0ae00",
@@ -1475,11 +2506,14 @@ const colors = {
   "base-color-faded": "#f7f7f750",
   "secondary-color-faded": "#00065c50",
   "primary-color-faded": "#FFFDFA50",
-  "text-color-faded": "#22262e60",
-  "accent-color-faded": "#4885DE50",
-  "success-color": "#48d664"
+  "text-color-faded": "#22262e70",
+  "accent-color-faded": "#3185ff50",
+  "success-color": "#48d664",
+  "success-color-faded": "#48d66450",
+  "purple-color": "#9035ff",
+  "purple-color-faded": "#9035ff50"
 };
-const _sfc_main$2 = /* @__PURE__ */ defineComponent({
+const _sfc_main$4 = /* @__PURE__ */ defineComponent({
   __name: "PrimaryButton",
   __ssrInlineRender: true,
   props: {
@@ -1487,7 +2521,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     direction: { default: "row" },
     icon: {},
     iconSize: { default: "1.25rem" },
-    fontSize: { default: "1rem" }
+    fontSize: { default: "1rem" },
+    reverse: { type: Boolean, default: false }
   },
   setup(__props) {
     const props = __props;
@@ -1503,6 +2538,10 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
           return colors["primary-color"];
         case "accent-color":
           return colors["primary-color"];
+        case "purple-color":
+          return colors["primary-color"];
+        case "success-color":
+          return colors["primary-color"];
         case "error-color":
           return colors["primary-color"];
         default:
@@ -1510,16 +2549,17 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_IconComponent = __nuxt_component_0;
+      const _component_UIIconComponent = __nuxt_component_1;
       _push(`<span${ssrRenderAttrs(mergeProps({
         role: "button",
         tabindex: "0",
         class: ["button noselect", _ctx.variant],
         style: { flexDirection: _ctx.direction, fontSize: _ctx.fontSize }
-      }, _attrs))} data-v-531320ad>`);
+      }, _attrs))} data-v-5534223a>`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
       if (_ctx.icon) {
-        _push(ssrRenderComponent(_component_IconComponent, {
+        _push(ssrRenderComponent(_component_UIIconComponent, {
+          class: ["icon", { "icon--reverse": _ctx.reverse }],
           icon: _ctx.icon,
           size: _ctx.iconSize || void 0,
           color: iconColor.value
@@ -1531,13 +2571,156 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     };
   }
 });
+const _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/UI/PrimaryButton.vue");
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+const __nuxt_component_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-5534223a"]]);
+const _imports_0 = "" + __buildAssetsURL("logo-dark.KgTey4VC.svg");
+const _sfc_main$3 = {};
+function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
+  const _component_NuxtLink = __nuxt_component_0$4;
+  const _component_UIPrimaryButton = __nuxt_component_0$2;
+  _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-efe49368><nav class="header__nav" data-v-efe49368><ul class="header__nav__ul" data-v-efe49368><li class="header__nav__ul__li" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, { to: "/" }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<img class="logo"${ssrRenderAttr("src", _imports_0)} alt="logo supernotaire" data-v-efe49368${_scopeId}>`);
+      } else {
+        return [
+          createVNode("img", {
+            class: "logo",
+            src: _imports_0,
+            alt: "logo supernotaire"
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</li><li class="header__nav__ul__li" style="${ssrRenderStyle({ "margin-left": "auto" })}" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, {
+    to: "/notaires",
+    exact: ""
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Notaires`);
+      } else {
+        return [
+          createTextVNode("Notaires")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</li><li class="header__nav__ul__li" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, {
+    to: "/vendeurs",
+    exact: ""
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Vendeurs de biens`);
+      } else {
+        return [
+          createTextVNode("Vendeurs de biens")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</li><li class="header__nav__ul__li" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, {
+    to: "/outils",
+    exact: ""
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Outils`);
+      } else {
+        return [
+          createTextVNode("Outils")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</li><li class="header__nav__ul__li" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, {
+    to: "/comment-ca-marche",
+    exact: ""
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`Comment ça marche ?`);
+      } else {
+        return [
+          createTextVNode("Comment ça marche ?")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</li></ul><div class="header__nav__buttons" data-v-efe49368>`);
+  _push(ssrRenderComponent(_component_NuxtLink, { to: "/inscription" }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(ssrRenderComponent(_component_UIPrimaryButton, {
+          variant: "accent-color",
+          icon: "arrow_right"
+        }, {
+          default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+            if (_push3) {
+              _push3(` Inscription `);
+            } else {
+              return [
+                createTextVNode(" Inscription ")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent2, _scopeId));
+      } else {
+        return [
+          createVNode(_component_UIPrimaryButton, {
+            variant: "accent-color",
+            icon: "arrow_right"
+          }, {
+            default: withCtx(() => [
+              createTextVNode(" Inscription ")
+            ]),
+            _: 1
+          })
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</div></nav></header>`);
+}
+const _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/HeaderComponent.vue");
+  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+};
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$1], ["__scopeId", "data-v-efe49368"]]);
+const _sfc_main$2 = {};
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
+  _push(`<section${ssrRenderAttrs(mergeProps({ class: "container" }, _attrs))} data-v-16614633>`);
+  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+  _push(`</section>`);
+}
 const _sfc_setup$2 = _sfc_main$2.setup;
 _sfc_main$2.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/PrimaryButton.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/Container.vue");
   return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-531320ad"]]);
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-16614633"]]);
 const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   __name: "error",
   __ssrInlineRender: true,
@@ -1545,47 +2728,82 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_HeaderComponent = __nuxt_component_0$1;
-      const _component_NuxtLink = __nuxt_component_0$3;
-      const _component_PrimaryButton = __nuxt_component_1;
+      const _component_Container = __nuxt_component_0;
+      const _component_NuxtLink = __nuxt_component_0$4;
+      const _component_UIPrimaryButton = __nuxt_component_0$2;
       _push(`<!--[-->`);
       _push(ssrRenderComponent(_component_HeaderComponent, null, null, _parent));
-      _push(`<div class="error" data-v-3587b31b><div class="error__message" data-v-3587b31b><h1 class="subtitles" data-v-3587b31b>Oooops... erreur ${ssrInterpolate(__props.error.statusCode)}</h1>`);
-      if (__props.error === 404) {
-        _push(`<h2 class="paragraphs" data-v-3587b31b>Cette page n&#39;existe pas.</h2>`);
-      } else if (__props.error === 403) {
-        _push(`<h2 class="paragraphs" data-v-3587b31b> Le lien de confirmation de votre email a expiré. </h2>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(ssrRenderComponent(_component_NuxtLink, { to: "/" }, {
+      _push(ssrRenderComponent(_component_Container, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_component_PrimaryButton, { variant: "accent-color" }, {
+            _push2(`<div class="error" data-v-75e849ee${_scopeId}><div class="error__message" data-v-75e849ee${_scopeId}><h1 class="subtitles" data-v-75e849ee${_scopeId}>Oooops... erreur ${ssrInterpolate(__props.error.statusCode)}</h1>`);
+            if (__props.error === 404) {
+              _push2(`<h2 class="paragraphs" data-v-75e849ee${_scopeId}>Cette page n&#39;existe pas.</h2>`);
+            } else if (__props.error === 403) {
+              _push2(`<h2 class="paragraphs" data-v-75e849ee${_scopeId}> Le lien de confirmation de votre email a expiré. </h2>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(ssrRenderComponent(_component_NuxtLink, { to: "/" }, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
-                  _push3(`Retour à la page d&#39;accueil`);
+                  _push3(ssrRenderComponent(_component_UIPrimaryButton, { variant: "accent-color" }, {
+                    default: withCtx((_3, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        _push4(`Retour à la page d&#39;accueil`);
+                      } else {
+                        return [
+                          createTextVNode("Retour à la page d'accueil")
+                        ];
+                      }
+                    }),
+                    _: 1
+                  }, _parent3, _scopeId2));
                 } else {
                   return [
-                    createTextVNode("Retour à la page d'accueil")
+                    createVNode(_component_UIPrimaryButton, { variant: "accent-color" }, {
+                      default: withCtx(() => [
+                        createTextVNode("Retour à la page d'accueil")
+                      ]),
+                      _: 1
+                    })
                   ];
                 }
               }),
               _: 1
             }, _parent2, _scopeId));
+            _push2(`</div></div>`);
           } else {
             return [
-              createVNode(_component_PrimaryButton, { variant: "accent-color" }, {
-                default: withCtx(() => [
-                  createTextVNode("Retour à la page d'accueil")
-                ]),
-                _: 1
-              })
+              createVNode("div", { class: "error" }, [
+                createVNode("div", { class: "error__message" }, [
+                  createVNode("h1", { class: "subtitles" }, "Oooops... erreur " + toDisplayString(__props.error.statusCode), 1),
+                  __props.error === 404 ? (openBlock(), createBlock("h2", {
+                    key: 0,
+                    class: "paragraphs"
+                  }, "Cette page n'existe pas.")) : __props.error === 403 ? (openBlock(), createBlock("h2", {
+                    key: 1,
+                    class: "paragraphs"
+                  }, " Le lien de confirmation de votre email a expiré. ")) : createCommentVNode("", true),
+                  createVNode(_component_NuxtLink, { to: "/" }, {
+                    default: withCtx(() => [
+                      createVNode(_component_UIPrimaryButton, { variant: "accent-color" }, {
+                        default: withCtx(() => [
+                          createTextVNode("Retour à la page d'accueil")
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  })
+                ])
+              ])
             ];
           }
         }),
         _: 1
       }, _parent));
-      _push(`</div></div><!--]-->`);
+      _push(`<!--]-->`);
     };
   }
 });
@@ -1595,7 +2813,7 @@ _sfc_main$1.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("error.vue");
   return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
 };
-const ErrorComponent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-3587b31b"]]);
+const ErrorComponent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-75e849ee"]]);
 const _sfc_main = {
   __name: "nuxt-root",
   __ssrInlineRender: true,
@@ -1665,5 +2883,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, __nuxt_component_0 as a, __nuxt_component_0$3 as b, colors as c, __nuxt_component_1 as d, entry$1 as default, __nuxt_component_0$1 as e, tryUseNuxtApp as t };
+export { Je as J, __nuxt_component_0$4 as _, _export_sfc as a, __nuxt_component_0 as b, __nuxt_component_0$2 as c, colors as d, entry$1 as default, __nuxt_component_1 as e, useNuxtApp as f, asyncDataDefaults as g, createError as h, useRoute as i, __nuxt_component_1$2 as j, _imports_0 as k, __nuxt_component_0$1 as l, tryUseNuxtApp as t, useState as u };
 //# sourceMappingURL=server.mjs.map

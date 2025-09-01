@@ -1,4 +1,4 @@
-import type { RangeOption } from "@/components/formElements/RangeInput.vue";
+import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
 
 type FieldType =
   | "text"

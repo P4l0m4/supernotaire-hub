@@ -72,7 +72,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[{"rel":"apple-touch-icon","sizes":"180x180","href":"/apple-touch-icon.png"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"fr"}};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"shortcut icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"apple-touch-icon","sizes":"180x180","href":"/apple-touch-icon.png"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"fr"}};
 
 const appRootTag = "div";
 
@@ -412,5 +412,5 @@ const renderer$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty
   default: renderer
 }, Symbol.toStringTag, { value: 'Module' }));
 
-export { buildAssetsURL as a, baseURL as b, headSymbol as h, renderer$1 as r, useHead as u };
+export { buildAssetsURL as a, baseURL as b, headSymbol as h, publicAssetsURL as p, renderer$1 as r, useHead as u };
 //# sourceMappingURL=renderer.mjs.map

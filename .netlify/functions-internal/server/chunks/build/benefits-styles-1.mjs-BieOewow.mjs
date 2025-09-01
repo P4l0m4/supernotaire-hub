@@ -1,0 +1,4 @@
+const benefits_vue_vue_type_style_index_0_scoped_fcc5bbb2_lang = ".benefits[data-v-fcc5bbb2]{display:flex;flex-direction:column;gap:1rem;margin:0 auto;max-width:800px;padding:2rem 0;text-align:center}@media (min-width:768px){.benefits[data-v-fcc5bbb2]{gap:2rem;padding:4rem 0}}.benefits__title[data-v-fcc5bbb2]{color:#3185ff;font-size:1rem;font-weight:500;text-transform:uppercase}@media (min-width:768px){.benefits__title[data-v-fcc5bbb2]{font-size:1.25rem}}.benefits__subtitle[data-v-fcc5bbb2]{font-size:1.5rem;font-weight:600;text-wrap:balance}@media (min-width:768px){.benefits__subtitle[data-v-fcc5bbb2]{font-size:2.5rem}}.benefits__text[data-v-fcc5bbb2]{color:#22262e99;font-size:1rem;line-height:1.35;text-wrap:balance}@media (min-width:768px){.benefits__text[data-v-fcc5bbb2]{font-size:1.25rem}}";
+
+export { benefits_vue_vue_type_style_index_0_scoped_fcc5bbb2_lang as b };
+//# sourceMappingURL=benefits-styles-1.mjs-BieOewow.mjs.map

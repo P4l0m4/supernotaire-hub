@@ -1,4 +1,4 @@
-import type { Adresse } from "@/components/formElements/LocationForm.vue";
+import type { Adresse } from "@/components/FormElements/LocationForm.vue";
 
 export interface ValeurFonciere {
   adresse: Adresse;

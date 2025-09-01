@@ -1,0 +1,4 @@
+const ConfirmationPopUp_vue_vue_type_style_index_0_scoped_69f92839_lang = ".pop-up[data-v-69f92839]{-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);background-color:#3185ff1a;height:100dvh;top:0;right:0;bottom:0;left:0;position:fixed;width:100vw;z-index:1}.pop-up[data-v-69f92839],.pop-up__content[data-v-69f92839]{align-items:center;display:flex;justify-content:center;padding:1rem}.pop-up__content[data-v-69f92839]{background-color:#fffdfa;border-radius:1rem;flex-direction:column;gap:1rem;height:-moz-fit-content;height:fit-content;max-width:450px;text-align:center;white-space:pre-wrap;width:100%}@media (min-width:768px){.pop-up__content[data-v-69f92839]{padding:1.5rem}}.pop-up__content[data-v-69f92839] a{color:#00065c!important;text-decoration:underline!important}";
+
+export { ConfirmationPopUp_vue_vue_type_style_index_0_scoped_69f92839_lang as C };
+//# sourceMappingURL=ConfirmationPopUp-styles-1.mjs-BryROpJa.mjs.map

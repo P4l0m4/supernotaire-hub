@@ -7,7 +7,7 @@ import achievement from "/achievement-45.svg?url";
 import { defineAsyncComponent } from "vue";
 
 const LocationForm = defineAsyncComponent({
-  loader: () => import("@/components/formElements/LocationForm.vue"),
+  loader: () => import("@/components/FormElements/LocationForm.vue"),
   onError(err, _retry, fail) {
     console.error("LocationForm load failed", err);
     fail(err);

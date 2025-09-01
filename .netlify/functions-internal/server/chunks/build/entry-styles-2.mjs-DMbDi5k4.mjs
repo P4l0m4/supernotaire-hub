@@ -1,4 +1,0 @@
-const HeaderComponent_vue_vue_type_style_index_0_scoped_644c33f4_lang = ".header[data-v-644c33f4]{background-color:#f7f7f7;box-shadow:0 0 10px #00000005;display:none;height:72px;left:0;margin:0 auto;max-width:2000px;padding:1rem;position:fixed;right:0;top:0;width:100%;z-index:2}@media (min-width:768px){.header[data-v-644c33f4]{display:flex;padding:1rem 4rem}}.header__nav[data-v-644c33f4],.header__nav__ul[data-v-644c33f4]{align-items:center;display:flex;width:100%}.header__nav__ul[data-v-644c33f4]{gap:1rem;justify-content:space-between;list-style:none}.header__nav__ul__li a[data-v-644c33f4]{align-items:center;color:#22262e;display:flex;font-size:1rem;font-weight:600;gap:.25rem;justify-content:center}.header__nav__ul--dark a[data-v-644c33f4]{color:#f7f7f7}";
-
-export { HeaderComponent_vue_vue_type_style_index_0_scoped_644c33f4_lang as H };
-//# sourceMappingURL=entry-styles-2.mjs-DMbDi5k4.mjs.map
