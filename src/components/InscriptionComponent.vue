@@ -89,14 +89,13 @@ async function validContactState() {
 <template>
   <div class="inscription-component">
     <FormElementsRadioOption
-      v-for="radioOption in radioOptions"
-      :key="radioOption.id"
-      :id="radioOption.id"
-      :name="radioOption.name"
-      :value="radioOption.value"
-      :label="radioOption.label"
-      :description="radioOption.description"
-      :checked="radioOption.value === selectedOption"
+      v-for="opt in radioOptions"
+      :key="opt.id"
+      :id="opt.id"
+      :name="opt.name"
+      :value="opt.value"
+      :label="opt.label"
+      :description="opt.description"
       v-model="selectedOption"
     />
     <UIPrimaryButton
