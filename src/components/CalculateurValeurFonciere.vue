@@ -4,8 +4,6 @@ import { colors } from "@/utils/colors";
 
 import achievement from "/achievement-45.svg?url";
 
-import FormElementsLocationForm from "@/components/formElements/LocationForm.vue";
-
 import { estimateFromForm, type ValuationResult } from "@/utils/calculateDVF";
 import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 
