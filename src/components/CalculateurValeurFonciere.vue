@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { colors } from "@/utils/colors";
+import achievement from "/achievement-45.svg?url";
 import { estimateFromForm, type ValuationResult } from "@/utils/calculateDVF";
 import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 
@@ -160,7 +161,7 @@ watch(
       <div class="action__illustration">
         <img
           class="action__illustration__image"
-          src="@/assets/images/achievement-45.svg"
+          :src="achievement"
           alt="Avant de partir"
         />
       </div>

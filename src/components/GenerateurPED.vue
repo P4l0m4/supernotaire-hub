@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { reactive, watch } from "vue";
 
+import achievement from "/achievement-45.svg?url";
+import checklist from "/checklist-71-blue.svg?url";
+import filesAndFolder from "/files-and-folder-78.svg?url";
+
 import { buildDocDefinition } from "~/utils/docDefinitions/pre-etat-date";
 import formDefinition from "@/utils/formDefinition/pre-etat-date.json";
 import { processDocument } from "@/utils/textFromDocument";
@@ -18,6 +22,7 @@ import { extractDataFromResults } from "@/utils/AIExtraction";
 import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/utils/types/forms";
 import PrimaryButton from "~/components/UI/PrimaryButton.vue";
+import { check } from "zod";
 
 const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
@@ -190,7 +195,7 @@ watch(
     <div class="action__illustration">
       <img
         class="action__illustration__image"
-        src="@/assets/images/checklist-71-blue.svg"
+        :src="checklist"
         alt="Avant de commencer"
       />
     </div>
@@ -229,7 +234,7 @@ watch(
     <div class="action__illustration">
       <img
         class="action__illustration__image"
-        src="@/assets/images/achievement-45.svg"
+        :src="achievement"
         alt="Avant de partir"
       />
     </div>
@@ -264,7 +269,7 @@ watch(
     <div class="action__illustration">
       <img
         class="action__illustration__image"
-        src="@/assets/images/files-and-folder-78.svg"
+        :src="filesAndFolder"
         alt="Avant de commencer"
       />
     </div>
