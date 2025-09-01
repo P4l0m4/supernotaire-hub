@@ -21,8 +21,6 @@ import { extractDataFromResults } from "@/utils/AIExtraction";
 
 import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/utils/types/forms";
-import PrimaryButton from "~/components/UI/PrimaryButton.vue";
-import { check } from "zod";
 
 const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
@@ -213,12 +211,12 @@ watch(
         {{ document }}
       </li>
       <div class="action__list__buttons">
-        <PrimaryButton
+        <UIPrimaryButton
           icon="arrow_right"
           variant="accent-color"
           @click="showFirstAction = false"
           style="margin-top: 1rem"
-          >Commencer</PrimaryButton
+          >Commencer</UIPrimaryButton
         >
       </div>
     </ul>
@@ -255,12 +253,14 @@ watch(
         >
           Revenir au formulaire
         </UISecondaryButton>
-        <UIPrimaryButton
-          @click="generatePdf()"
-          :disabled="!ready"
-          variant="accent-color"
-          icon="download"
-          >Télécharger le Pré-état daté</UIPrimaryButton
+        <ClientOnly>
+          <UIPrimaryButton
+            @click="generatePdf()"
+            :disabled="!ready"
+            variant="accent-color"
+            icon="download"
+            >Télécharger le Pré-état daté</UIPrimaryButton
+          ></ClientOnly
         >
       </div>
     </ul>

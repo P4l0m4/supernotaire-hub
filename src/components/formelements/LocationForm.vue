@@ -2,7 +2,8 @@
 import { ref, watch, onMounted, nextTick } from "vue";
 import { onClickOutside, useDebounceFn } from "@vueuse/core";
 import { useTemplateRef } from "vue";
-import { isMobile } from "@/utils/otherFunctions";
+import { useIsMobile } from "@/utils/otherFunctions";
+import { is } from "zod/locales";
 
 export interface Adresse {
   geometry: {
@@ -33,6 +34,8 @@ export interface Adresse {
 
 const emit = defineEmits(["address"]);
 
+const isMobile = useIsMobile();
+
 const target = useTemplateRef<HTMLElement>("target");
 
 const query = ref("");
@@ -59,7 +62,7 @@ async function fetchSuggestions() {
   suggestions.value = (data.features ?? []).filter(
     (f: any) => f.properties.label !== query.value
   );
-  if (isMobile()) suggestions.value.reverse();
+  if (isMobile) suggestions.value.reverse();
 
   loading.value = false;
   isOpen.value = !!suggestions.value.length;

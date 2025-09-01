@@ -139,7 +139,9 @@ watch(
           size="0.75rem"
           :color="colors['error-color']"
       /></label>
-      <FormElementsLocationForm @address="updateAddress" />
+      <ClientOnly>
+        <FormElementsLocationForm @address="updateAddress"
+      /></ClientOnly>
     </div>
   </div>
 
@@ -220,12 +222,14 @@ watch(
           >
             Revenir au formulaire
           </UISecondaryButton>
-          <UIPrimaryButton
-            @click="generatePdf()"
-            :disabled="!ready"
-            variant="accent-color"
-            icon="download"
-            >Télécharger l'estimation complète</UIPrimaryButton
+          <ClientOnly>
+            <UIPrimaryButton
+              @click="generatePdf()"
+              :disabled="!ready"
+              variant="accent-color"
+              icon="download"
+              >Télécharger l'estimation complète</UIPrimaryButton
+            ></ClientOnly
           >
         </div>
       </ul></template
