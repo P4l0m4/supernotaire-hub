@@ -3,7 +3,6 @@ import { ref, watch, onMounted, nextTick } from "vue";
 import { onClickOutside, useDebounceFn } from "@vueuse/core";
 import { useTemplateRef } from "vue";
 import { useIsMobile } from "@/utils/otherFunctions";
-import { is } from "zod/locales";
 
 export interface Adresse {
   geometry: {
@@ -34,9 +33,9 @@ export interface Adresse {
 
 const emit = defineEmits(["address"]);
 
-const isMobile = useIsMobile();
+const isMobile = ref(false);
 
-const target = useTemplateRef<HTMLElement>("target");
+const target = ref<HTMLElement | null>(null);
 
 const query = ref("");
 const suggestions = ref<any[]>([]);
@@ -62,7 +61,7 @@ async function fetchSuggestions() {
   suggestions.value = (data.features ?? []).filter(
     (f: any) => f.properties.label !== query.value
   );
-  if (isMobile) suggestions.value.reverse();
+  if (isMobile.value) suggestions.value.reverse();
 
   loading.value = false;
   isOpen.value = !!suggestions.value.length;
@@ -109,6 +108,7 @@ onClickOutside(target, () => (isOpen.value = false), {});
 onMounted(async () => {
   await nextTick();
   inputRef.value?.focus();
+  isMobile.value = useIsMobile().value;
 });
 </script>
 
