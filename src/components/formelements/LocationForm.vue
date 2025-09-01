@@ -80,7 +80,6 @@ watch(query, (newVal) => {
 onClickOutside(target, () => (isOpen.value = false), {});
 
 onMounted(async () => {
-  console.log("LocationForm monté");
   await nextTick();
   inputRef.value?.focus();
   isMobile.value = useIsMobile().value;
