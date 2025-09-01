@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+.nuxt/
+.output/
+.netlify/
+node_modules/
