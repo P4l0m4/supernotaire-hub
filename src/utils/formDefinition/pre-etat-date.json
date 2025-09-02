@@ -164,7 +164,7 @@
               {
                 "path": "designation",
                 "suggestionRef": "bien_lots_designation",
-                "label": "Numéro",
+                "label": "Désignation",
                 "name": "designation",
                 "type": "text",
                 "required": true,
