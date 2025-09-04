@@ -167,47 +167,60 @@ watch(
     <template v-else-if="valuation">
       <div class="action__illustration">
         <img
+          v-if="valuation.estimatedValue"
           class="action__illustration__image"
           :src="achievement"
           alt="Avant de partir"
         />
       </div>
       <ul class="action__list">
-        <span class="action__list__title">
-          {{ valuation.estimatedValue?.toLocaleString("fr-FR") ?? "N/A" }}
-          €</span
-        >
-        <span class="action__list__subtitle">Détails de l'estimation :</span>
-        <li class="action__list__item">
-          Valeur de base (hors décote/surcote):
-          {{
-            Math.round(valuation.marketValue ?? 0).toLocaleString("fr-FR") ??
-            "N/A"
-          }}
-          €
-        </li>
-
-        <template v-if="valuation.landValue && valuation.landValue > 0">
+        <template v-if="valuation.estimatedValue">
+          <span class="action__list__title">
+            {{ valuation.estimatedValue?.toLocaleString("fr-FR") }}
+            €</span
+          >
+          <span class="action__list__subtitle">Détails de l'estimation :</span>
           <li class="action__list__item">
-            Valeur du terrain seul:
-            {{ Math.round(valuation.landValue).toLocaleString("fr-FR") }}
+            Valeur de base (hors décote/surcote):
+            {{
+              Math.round(valuation.marketValue ?? 0).toLocaleString("fr-FR") ??
+              "N/A"
+            }}
             €
           </li>
 
-          <li class="action__list__item">
-            Valeur du bien + terrain:
-            <strong>
-              {{
-                Math.round(
-                  (valuation.estimatedValue ?? 0) + (valuation.landValue ?? 0)
-                ).toLocaleString("fr-FR") ?? "N/A"
-              }}
-              €</strong
-            >
-          </li>
-        </template>
+          <template v-if="valuation.landValue && valuation.landValue > 0">
+            <li class="action__list__item">
+              Valeur du terrain seul:
+              {{ Math.round(valuation.landValue).toLocaleString("fr-FR") }}
+              €
+            </li>
 
-        <TrustPilot style="margin-top: auto" />
+            <li class="action__list__item">
+              Valeur du bien + terrain:
+              <strong>
+                {{
+                  Math.round(
+                    (valuation.estimatedValue ?? 0) + (valuation.landValue ?? 0)
+                  ).toLocaleString("fr-FR") ?? "N/A"
+                }}
+                €</strong
+              >
+            </li>
+          </template>
+          <TrustPilot style="margin-top: auto" />
+        </template>
+        <template v-else>
+          <span class="action__list__title">Estimation impossible</span>
+          <span class="action__list__subtitle"
+            >Les données renseignées ne permettent pas d'effectuer une
+            estimation.</span
+          >
+          <span class="paragraphs"
+            >Rééssayez éventuellement avec d'autres critères.</span
+          ></template
+        >
+
         <div class="action__list__buttons">
           <UISecondaryButton
             variant="accent-color"
@@ -221,6 +234,7 @@ watch(
           </UISecondaryButton>
           <ClientOnly>
             <UIPrimaryButton
+              v-if="valuation.estimatedValue"
               @click="generatePdf()"
               :disabled="!ready"
               variant="accent-color"
