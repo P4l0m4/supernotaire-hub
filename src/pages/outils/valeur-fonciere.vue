@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { colors } from "@/utils/colors";
+
 const questions = [
+  {
+    title: "Puis-je estimer la valeur de plusieurs lots en même temps ?",
+    answer:
+      "Non, chaque estimation de valeur foncière doit être effectuée individuellement pour chaque bien immobilier. Si vous avez plusieurs lots sur votre propriété, vous devrez remplir un formulaire distinct pour chacun d'eux.",
+  },
+  {
+    title: "Quels types de biens puis-je estimer avec ce service ?",
+    answer:
+      "Vous pouvez utiliser Supernotaire pour estimer la valeur foncière des appartements et maisons, avec ou sans terrain. En revanche, les immeubles, terrains nus, garages, granges, et autres types de biens ne sont pas pris en charge.",
+  },
   {
     title: "Combient coûte le service de calcul de valeur foncière ?",
     answer:
@@ -37,11 +49,7 @@ const questions = [
     answer:
       "L'estimation de la valeur foncière d'une maison peut généralement être complétée en moins de 30 secondes, à condition que vous ayez les informations nécessaires à portée de main.",
   },
-  {
-    title: "Quels types de biens puis-je évaluer avec ce service ?",
-    answer:
-      "Vous pouvez utiliser Supernotaire pour estimer la valeur foncière des appartements et maisons, avec ou sans terrain. En revanche, les immeubles, terrains nus et autres types de biens ne sont pas pris en charge.",
-  },
+
   {
     title:
       "Comment puis-je utiliser l'estimation de la valeur foncière obtenue ?",
@@ -94,6 +102,11 @@ useHead({
           >Remplissez le formulaire pour calculer la valeur foncière de votre
           appartement ou maison.
         </span>
+
+        <UITagComponent :color="colors['warning-color']" icon="info"
+          >Ce simulateur n'est pas fait pour estimer plusieurs lots en même
+          temps.</UITagComponent
+        >
       </div>
     </div>
     <CalculateurValeurFonciere />
@@ -150,6 +163,7 @@ useHead({
   &__headlines {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 
     &__title {

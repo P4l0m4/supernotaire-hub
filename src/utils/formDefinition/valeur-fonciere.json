@@ -15,7 +15,8 @@
           "min": 9,
           "required": true,
           "placeholder": "100",
-          "icon": "scan_fill"
+          "icon": "scan_fill",
+          "tooltip": "Pour un bien seul (hors garage, grange, etc)"
         },
         {
           "path": "dimensions.surface_habitable",

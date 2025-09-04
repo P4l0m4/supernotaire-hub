@@ -35,6 +35,7 @@ withDefaults(
   font-size: $small-text;
   padding: 0.15rem 0.25rem;
   border-radius: calc($radius/2.2);
+  width: fit-content;
   max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;

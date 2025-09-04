@@ -224,7 +224,7 @@ const errorMessage = computed(() => {
   min-width: 256px;
 
   &__label {
-    font-size: $small-text;
+    font-size: 1rem;
     color: $text-color;
     font-weight: $regular;
     display: inline-block;

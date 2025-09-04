@@ -256,7 +256,7 @@ watch(
   gap: 0.5rem;
 
   &__label {
-    font-size: $small-text;
+    font-size: 1rem;
     color: $text-color;
     font-weight: $regular;
     display: inline-block;
