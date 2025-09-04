@@ -156,6 +156,10 @@
           "icon": "arrow_circle_down_fill",
           "options": [
             {
+              "value": "WC séparés",
+              "label": "WC séparés"
+            },
+            {
               "value": "ESN",
               "label": "Espace Naturel Sensible"
             },

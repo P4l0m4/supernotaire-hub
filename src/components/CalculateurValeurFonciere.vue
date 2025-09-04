@@ -38,6 +38,7 @@ const valuation = ref<ValuationResult>({
     malus: 1,
     groundFloor: 1,
   },
+  inhabitantsNb: null,
   estimatedValue: null,
   landValue: null,
   avgLandPricePerSqm: null,

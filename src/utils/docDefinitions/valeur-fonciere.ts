@@ -55,13 +55,13 @@ export function buildDocDefinition(
                       "N/A",
                   ],
                   [
-                    "Prix moyen/m² habitable (Carrez)",
+                    "Prix surface habitable (Carrez)/m²",
                     `${fmtEur(
                       Math.round(valuation.avgPricePerSqmCarrez ?? 0)
                     )}` || "N/A",
                   ],
                   [
-                    "Prix moyen/m² bâti",
+                    "Prix bâti/m²",
                     `${fmtEur(
                       Math.round(valuation.avgPricePerSqmBatie ?? 0)
                     )}` || "N/A",
@@ -77,7 +77,7 @@ export function buildDocDefinition(
                             "N/A",
                         ],
                         [
-                          "Prix moyen/m² terrain",
+                          "Prix terrain/m²",
                           `${fmtEur(
                             Math.round(valuation.avgLandPricePerSqm ?? 0)
                           )}` || "N/A",
