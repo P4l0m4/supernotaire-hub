@@ -20,7 +20,8 @@ export interface ValuationOptions {
 
 export interface ValuationResult {
   records: DvfRecord[];
-  avgPricePerSqm: number | null; // €/m²
+  avgPricePerSqmCarrez: number | null; // €/m²
+  avgPricePerSqmBatie: number | null; // €/m²
   marketValue: number | null; // avgPricePerSqm * surface
   factors: {
     renovation: number;
@@ -30,6 +31,7 @@ export interface ValuationResult {
     malus: number;
     groundFloor: number;
   };
+  inhabitantsNb: number | null;
   estimatedValue: number | null; // arrondi
   landValue?: number | null; // valeur du terrain seul (si maison avec terrain)
   avgLandPricePerSqm?: number | null; // €/m² terrain (si maison avec terrain)
@@ -92,7 +94,7 @@ export async function fetchBuildingRecords(
       out.push(...(data.results as DvfRecord[]));
     y--;
   }
-  console.log(`Fetched ${out.length} DVF records`);
+
   return out;
 }
 
@@ -104,14 +106,28 @@ function avg(list: number[]): number | null {
 }
 
 export function computeAvgPricePerSqm(records: DvfRecord[]): number | null {
-  const perSqm = records
+  const rows = records
     .map((r) => {
       const price = Number(String(r.valeur_fonciere ?? "").replace(/\s+/g, ""));
       const sqm = Number(r.surface_reelle_bati);
-      return Number.isFinite(price) && sqm > 0 ? price / sqm : null;
+      return price > 0 && Number.isFinite(sqm) && sqm > 0
+        ? { price, sqm, unit: price / sqm }
+        : null;
     })
-    .filter((v): v is number => v != null);
-  return avg(perSqm);
+    .filter((x): x is { price: number; sqm: number; unit: number } => !!x);
+
+  if (!rows.length) return null;
+
+  // trim 10% bas/haut sur le €/m²
+  rows.sort((a, b) => a.unit - b.unit);
+  const cut = Math.floor(rows.length * 0.1);
+  const trimmed =
+    rows.length > 2 * cut ? rows.slice(cut, rows.length - cut) : rows;
+
+  // moyenne robuste = (∑prix) / (∑m²)
+  const totalPrice = trimmed.reduce((s, r) => s + r.price, 0);
+  const totalSqm = trimmed.reduce((s, r) => s + r.sqm, 0);
+  return totalSqm > 0 ? totalPrice / totalSqm : null;
 }
 
 const BONUS: Record<string, { Appartement?: number; Maison?: number }> = {
@@ -193,11 +209,90 @@ export function groundFloorFactor(
   return typeLocal === "Appartement" ? 0.92 : 1;
 }
 
-export const downtownFactor = (is_downtown: boolean) => (is_downtown ? 1.2 : 1);
+let inhabitantsNb: number | null = null;
+
+async function fetchInhabitantsNb(postcode: string, citycode: string) {
+  const res = await fetch(
+    `https://geo.api.gouv.fr/communes?codePostal=${postcode}&code=${citycode}`
+  );
+  const data = await res.json();
+  inhabitantsNb = data[0].population;
+  return data[0].population;
+}
+
+export async function downtownFactor(
+  is_downtown: boolean,
+  postcode: string,
+  citycode: string
+): Promise<number> {
+  const inhabitants = await fetchInhabitantsNb(postcode, citycode);
+
+  if (inhabitants < 10000) {
+    return 1;
+  }
+  return is_downtown ? 1.2 : 1;
+}
 
 export function renovationFactor(travaux: string): number {
   const n = Number(travaux ?? "0");
   return 1 - (Number.isFinite(n) ? n : 0) / 100;
+}
+
+function toNum(x: any) {
+  const n = Number(x);
+  return Number.isFinite(n) ? n : NaN;
+}
+function parsePrice(x: any) {
+  return Number(String(x ?? "").replace(/\s+/g, ""));
+}
+function median(a: number[]) {
+  const b = [...a].sort((x, y) => x - y);
+  const m = Math.floor(b.length / 2);
+  return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2;
+}
+
+// 1) €/m² bâti: prends des maisons avec peu de terrain pour minimiser l'effet terrain
+function estimateBuiltUnit(
+  records: DvfRecord[],
+  lowLandMax = 100
+): number | null {
+  const rows = records
+    .map((r) => ({
+      price: parsePrice(r.valeur_fonciere),
+      built: toNum(r.surface_reelle_bati),
+      land: Math.max(0, toNum(r.surface_terrain)),
+    }))
+    .filter((r) => r.price > 0 && r.built > 0);
+  const lowLand = rows.filter((r) => r.land > 0 && r.land <= lowLandMax);
+  const base = lowLand.length >= 8 ? lowLand : rows; // fallback si pas assez
+  if (!base.length) return null;
+  const unit = base.map((r) => r.price / r.built).sort((a, b) => a - b);
+  // trimming simple
+  const k = Math.floor(unit.length * 0.1);
+  const trimmed = unit.slice(k, unit.length - k);
+  return trimmed.length
+    ? trimmed.reduce((s, v) => s + v, 0) / trimmed.length
+    : null;
+}
+
+// 2) €/m² terrain: médiane des résiduels par m² de terrain
+function estimateLandUnit(
+  records: DvfRecord[],
+  builtUnit: number
+): number | null {
+  const vals = records
+    .map((r) => {
+      const price = parsePrice(r.valeur_fonciere);
+      const built = toNum(r.surface_reelle_bati);
+      const land = Math.max(0, toNum(r.surface_terrain));
+      if (!(price > 0 && built > 0 && land > 0)) return null;
+      const residual = price - builtUnit * built;
+      return residual > 0 ? residual / land : null; // €/m² terrain
+    })
+    .filter((v): v is number => v != null);
+  if (vals.length < 8) return null;
+  // médiane robuste
+  return Math.max(0, median(vals));
 }
 
 // ───────────────────────────────────────────────────────────────────────────────
@@ -207,19 +302,37 @@ export async function estimateFromForm(
   opts?: ValuationOptions
 ): Promise<ValuationResult> {
   const records = await fetchBuildingRecords(form, opts);
-  const avgPricePerSqm = computeAvgPricePerSqm(records);
 
-  const surface = Number(form.dimensions?.surface);
+  const avgPricePerSqmBatie = computeAvgPricePerSqm(records);
+
+  const surfaceBatie = Number(form.dimensions?.surface);
+  const surfaceCarrez = Number(form.dimensions?.surface_habitable);
+
+  const ratioBatiToCarrez =
+    Number.isFinite(surfaceBatie) &&
+    Number.isFinite(surfaceCarrez) &&
+    surfaceCarrez > 0
+      ? surfaceBatie / surfaceCarrez
+      : null;
+
+  const avgPricePerSqmCarrez =
+    avgPricePerSqmBatie != null && ratioBatiToCarrez != null
+      ? avgPricePerSqmBatie * ratioBatiToCarrez
+      : null;
 
   const marketValue =
-    avgPricePerSqm != null && Number.isFinite(surface)
-      ? avgPricePerSqm * surface
+    avgPricePerSqmCarrez != null && Number.isFinite(surfaceCarrez)
+      ? avgPricePerSqmCarrez * surfaceCarrez
       : null;
 
   const factors = {
     renovation: renovationFactor(form.etat.travaux),
     dpe: dpeFactor(form.etat.dpe),
-    downtown: downtownFactor(form.is_downtown),
+    downtown: await downtownFactor(
+      form.is_downtown,
+      form.adresse?.properties?.postcode!,
+      form.adresse?.properties?.citycode!
+    ),
     bonus: bonusFactor(form.configuration.bonus, form.configuration.type_local),
     malus: malusFactor(form.configuration.malus, form.configuration.type_local),
     groundFloor: groundFloorFactor(
@@ -241,10 +354,7 @@ export async function estimateFromForm(
             factors.groundFloor
         );
 
-  let landComparisonRecords: DvfRecord[] = [];
-  let avgPricePerSqmWithoutLand: number | null = null;
   let avgLandPricePerSqm: number | null = null;
-  let landSurface: number | null = null;
   let landValue: number | null = null;
 
   if (
@@ -252,36 +362,27 @@ export async function estimateFromForm(
     form.dimensions.terrain &&
     form.dimensions.terrain > 0
   ) {
-    landSurface = Number(form.dimensions.terrain);
-    // we first fetched records of houses with a terrain. Now we fetch records of houses without terrain to compare.
+    const landSurface = Number(form.dimensions.terrain);
 
-    const formWithoutLand: ValeurFonciere = {
-      ...form,
-      dimensions: { ...form.dimensions, terrain: 0 }, // deep clone de ce qu’on modifie
-    };
-    formWithoutLand.dimensions.terrain = 0; // ignore terrain for main query
-    landComparisonRecords = await fetchBuildingRecords(formWithoutLand, {
-      ...opts,
-      limit: 60,
-    });
-
-    avgPricePerSqmWithoutLand = computeAvgPricePerSqm(landComparisonRecords);
-
-    // Here, we calculate the difference of average price per sqm between the two sets of records.
-
-    if (avgPricePerSqm != null && avgPricePerSqmWithoutLand != null) {
-      const deltaBuiltEurPerSqm = avgPricePerSqm - avgPricePerSqmWithoutLand; // €/m² habitable
-      avgLandPricePerSqm = deltaBuiltEurPerSqm * (surface / landSurface); // €/m² terrain
-      const builtSurface = Number(form.dimensions.surface) || 0; // m² habitable du sujet
-      landValue = Math.max(0, Math.round(deltaBuiltEurPerSqm * builtSurface)); // € de “prime terrain”
+    const builtUnit =
+      estimateBuiltUnit(records) ?? computeAvgPricePerSqm(records);
+    if (builtUnit != null) {
+      const landUnit = estimateLandUnit(records, builtUnit);
+      if (landUnit != null) {
+        // abattement terrain -20 %
+        avgLandPricePerSqm = landUnit * 0.8;
+        landValue = Math.round(avgLandPricePerSqm * landSurface);
+      }
     }
   }
 
   return {
     records,
-    avgPricePerSqm,
+    avgPricePerSqmCarrez,
+    avgPricePerSqmBatie,
     marketValue,
     factors,
+    inhabitantsNb,
     estimatedValue,
     landValue,
     avgLandPricePerSqm,

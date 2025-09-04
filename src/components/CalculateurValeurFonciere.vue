@@ -4,16 +4,6 @@ import { colors } from "@/utils/colors";
 
 import achievement from "/achievement-45.svg?url";
 
-// import { defineAsyncComponent } from "vue";
-
-// const LocationForm = defineAsyncComponent({
-//   loader: () => import("@/components/FormElements/LocationForm.vue"),
-//   onError(err, _retry, fail) {
-//     console.error("LocationForm load failed", err);
-//     fail(err);
-//   },
-// });
-
 import { estimateFromForm, type ValuationResult } from "@/utils/calculateDVF";
 import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 
@@ -37,7 +27,8 @@ const showLastAction = ref(false);
 // ⬇️ état DVF/estimation
 const valuation = ref<ValuationResult>({
   records: [],
-  avgPricePerSqm: null,
+  avgPricePerSqmCarrez: null,
+  avgPricePerSqmBatie: null,
   marketValue: null,
   factors: {
     renovation: 1,
@@ -190,14 +181,6 @@ watch(
           Valeur de base (hors décote/surcote):
           {{
             Math.round(valuation.marketValue ?? 0).toLocaleString("fr-FR") ??
-            "N/A"
-          }}
-          €
-        </li>
-        <li class="action__list__item">
-          Prix moyen/m²:
-          {{
-            Math.round(valuation.avgPricePerSqm ?? 0).toLocaleString("fr-FR") ??
             "N/A"
           }}
           €

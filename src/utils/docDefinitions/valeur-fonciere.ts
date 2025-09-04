@@ -23,13 +23,18 @@ export function buildDocDefinition(
         margin: [0, 0, 0, 8],
       },
       {
-        text: `${formData.configuration.type_local} situé au`,
+        text: `${formData.configuration.type_local} situé(e) au`,
         italics: true,
         margin: [0, 0, 0, 4],
       },
       {
         text: `${formData.adresse.properties.label}`,
         style: "h2",
+        margin: [0, 0, 0, 4],
+      },
+      {
+        text: `Commune de ${valuation.inhabitantsNb} habitants`,
+        italics: true,
         margin: [0, 0, 0, 24],
       },
       {
@@ -50,9 +55,16 @@ export function buildDocDefinition(
                       "N/A",
                   ],
                   [
-                    "Prix moyen/m² dans le secteur",
-                    `${fmtEur(Math.round(valuation.avgPricePerSqm ?? 0))}` ||
-                      "N/A",
+                    "Prix moyen/m² habitable (Carrez)",
+                    `${fmtEur(
+                      Math.round(valuation.avgPricePerSqmCarrez ?? 0)
+                    )}` || "N/A",
+                  ],
+                  [
+                    "Prix moyen/m² bâti",
+                    `${fmtEur(
+                      Math.round(valuation.avgPricePerSqmBatie ?? 0)
+                    )}` || "N/A",
                   ],
 
                   // if type_local = maison && landValue, show :
@@ -65,7 +77,7 @@ export function buildDocDefinition(
                             "N/A",
                         ],
                         [
-                          "Prix terrain moyen/m² dans le secteur",
+                          "Prix moyen/m² terrain",
                           `${fmtEur(
                             Math.round(valuation.avgLandPricePerSqm ?? 0)
                           )}` || "N/A",
@@ -108,18 +120,18 @@ export function buildDocDefinition(
                 body: [
                   [
                     "Travaux éventuels",
-                    `${valuation.factors.renovation}%` || "N/A",
+                    `x ${valuation.factors.renovation}%` || "N/A",
                   ],
-                  ["DPE", `${valuation.factors.dpe}%` || "N/A"],
+                  ["DPE", `x ${valuation.factors.dpe}%` || "N/A"],
                   [
                     "Proximité centre-ville",
-                    `${valuation.factors.downtown}%` || "N/A",
+                    `x ${valuation.factors.downtown}%` || "N/A",
                   ],
-                  ["Bonus", `${valuation.factors.bonus}%` || "N/A"],
-                  ["Malus", `${valuation.factors.malus}%` || "N/A"],
+                  ["Bonus", `x ${valuation.factors.bonus}%` || "N/A"],
+                  ["Malus", `x ${valuation.factors.malus}%` || "N/A"],
                   [
                     "Rez-de-chaussée",
-                    `${valuation.factors.groundFloor}%` || "N/A",
+                    `x ${valuation.factors.groundFloor}%` || "N/A",
                   ],
                 ],
               },
@@ -148,7 +160,7 @@ export function buildDocDefinition(
                 widths: ["*", "*"],
                 body: [
                   [
-                    "Surface batie réelle",
+                    "Surface bâtie réelle",
                     `${formData.dimensions.surface} m²` || "N/A",
                   ],
                   [
@@ -161,7 +173,11 @@ export function buildDocDefinition(
                   ],
                   [
                     "Surface terrain",
-                    `${formData.dimensions.terrain} m²` || "N/A",
+                    `${
+                      formData.dimensions.terrain === undefined
+                        ? "N/A"
+                        : formData.dimensions.terrain
+                    } m²`,
                   ],
                 ],
               },
