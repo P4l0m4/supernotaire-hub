@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { colors } from "@/utils/colors";
+import { useIsMobile } from "@/utils/otherFunctions";
+
+const isMobile = useIsMobile();
 
 const questions = [
   {
@@ -103,10 +106,11 @@ useHead({
           appartement ou maison.
         </span>
 
-        <UITagComponent :color="colors['warning-color']" icon="info"
-          >Ce simulateur n'est pas fait pour estimer plusieurs lots en même
-          temps.</UITagComponent
-        >
+        <UITagComponent :color="colors['warning-color']" icon="info">{{
+          isMobile
+            ? "Un seul lot à la fois."
+            : "Ce simulateur n'est pas fait pour estimer plusieurs lots en même temps."
+        }}</UITagComponent>
       </div>
     </div>
     <CalculateurValeurFonciere />
