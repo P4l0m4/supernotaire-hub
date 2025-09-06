@@ -43,7 +43,6 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               to="/inscription"
               class="nuxt-link"
               @keydown.esc="isMenuOpen = false"
-              style="text-decoration: underline"
               exact
               >Inscription<span class="line"></span
             ></NuxtLink>
@@ -58,7 +57,9 @@ onClickOutside(target, () => (isMenuOpen.value = false));
             ></NuxtLink>
           </li>
           <li class="header__nav__links__link">
-            <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+            <NuxtLink to="/outils" @keydown.esc="isMenuOpen = false" exact
+              >Boîte à outils</NuxtLink
+            >
           </li>
         </ul>
       </nav>

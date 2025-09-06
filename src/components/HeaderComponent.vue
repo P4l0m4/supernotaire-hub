@@ -27,7 +27,7 @@
         <!-- <NuxtLink to="/inscription">
           <UISecondaryButton variant="accent-color">Connexion</UISecondaryButton>
         </NuxtLink> -->
-        <NuxtLink to="/inscription">
+        <NuxtLink to="/inscription" exact-active-class="x">
           <UIPrimaryButton variant="accent-color" icon="arrow_right">
             Inscription
           </UIPrimaryButton>
