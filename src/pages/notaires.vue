@@ -12,7 +12,7 @@ import { colors } from "@/utils/colors";
 const url = ref();
 
 useHead({
-  title: "Supernotaire | Finalisation rapide de mandats de vente immobilière",
+  title: "Supernotaire | Finalisation rapide des mandats de vente immobilière",
   meta: [
     {
       name: "description",
@@ -25,7 +25,8 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Supernotaire | Finalisation rapide de vente immobilière",
+      content:
+        "Supernotaire | Finalisation rapide des mandats de vente immobilière",
     },
     {
       property: "og:url",
@@ -76,7 +77,7 @@ const features = ref([
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Finalisation rapide de vente immobilière",
+  name: "Supernotaire | Finalisation rapide des mandats de vente immobilière",
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
   url: url.value,

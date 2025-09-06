@@ -16,16 +16,27 @@ const options = [
     text: "aurore.sajott@gmail.com",
   },
 ];
+
+useHead({
+  title: "Supernotaire | Contact",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Contactez-nous pour toute question ou pour participer gratuitement à la bêta de Supernotaire",
+    },
+  ],
+});
 </script>
 <template>
   <Container>
     <div class="contact">
-      <div class="contact__headlines">
-        <h1 class="titles">Nous contacter</h1>
-        <p class="subtitles">
+      <div class="headlines">
+        <h1 class="headlines__title">Nous contacter</h1>
+        <h2 class="headlines__subtitle paragraphs">
           Des questions sur la plateforme ? Envie de nous soutenir ou de
           participer à la bêta ?
-        </p>
+        </h2>
       </div>
       <div class="contact__options">
         <div
@@ -50,8 +61,8 @@ const options = [
         </div>
         <NuxtLink
           to="/inscription"
-          aria-label="Tester l’outil en avant-première"
           style="width: 100%"
+          aria-label="Tester en avant-première"
         >
           <UIPrimaryButton
             variant="accent-color"
@@ -78,13 +89,7 @@ const options = [
   @media (min-width: $big-tablet-screen) {
     justify-content: center;
     align-items: center;
-    gap: 4rem;
-    padding: 2rem 0;
     min-height: initial;
-  }
-
-  @media (min-width: $desktop-screen) {
-    padding: 4rem 0;
   }
 
   &__headlines {
@@ -110,7 +115,7 @@ const options = [
     align-items: center;
 
     @media (min-width: $big-tablet-screen) {
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     &__option {

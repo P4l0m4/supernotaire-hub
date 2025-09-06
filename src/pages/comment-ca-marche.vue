@@ -103,37 +103,6 @@ const perks = [
   </Container>
 </template>
 <style lang="scss" scoped>
-.headlines {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: fit-content;
-  gap: 1rem;
-  background-size: cover;
-  background-position: center;
-  color: $text-color;
-  padding: 2rem 0;
-
-  &__title {
-    font-size: 2.5rem;
-    font-weight: $bold;
-
-    @media (min-width: $tablet-screen) {
-      font-size: 3rem;
-    }
-
-    @media (min-width: $big-tablet-screen) {
-      font-size: 4rem;
-    }
-  }
-
-  &__subtitle {
-    text-align: center;
-    text-wrap: balance;
-    color: $text-color;
-  }
-}
-
 .perks {
   display: grid;
   grid-template-columns: 1fr;

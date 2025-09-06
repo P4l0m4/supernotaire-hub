@@ -33,9 +33,26 @@ const tools = [
       "Extraitre le texte d'un document PDF (scanné ou à base de texte) ou d'une image.",
   },
 ];
+
+useHead({
+  title: "Supernotaire | Outils gratuits pour vos démarches immobilières",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Outils gratuits pour la génération de pré-état daté, estimation de valeur foncière, signature électronique et plus encore.",
+    },
+  ],
+});
 </script>
 <template>
   <Container>
+    <div class="headlines">
+      <h1 class="headlines__title">Outils gratuits</h1>
+      <h2 class="headlines__subtitle paragraphs">
+        Pour faciliter vos démarches immobilières
+      </h2>
+    </div>
     <div class="tools">
       <NuxtLink
         class="tools__tool"
@@ -62,7 +79,6 @@ const tools = [
   @media (min-width: $big-tablet-screen) {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    padding: 4rem 0;
   }
 
   &__tool {

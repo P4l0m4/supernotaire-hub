@@ -66,9 +66,9 @@ useHead({
   <Container>
     <div class="faq">
       <div class="faq__headlines">
-        <h1 class="titles">Foire aux questions</h1>
+        <h1 class="titles">Notaires | FAQ</h1>
         <h2 class="paragraphs">
-          Des réponses aux questions des notaires sur Supernotaire.fr
+          Réponses aux questions des notaires sur Supernotaire.fr
         </h2>
       </div>
 

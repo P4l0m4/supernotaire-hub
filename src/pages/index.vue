@@ -67,7 +67,7 @@ useJsonld(() => ({
   "@type": "WebPage",
   name: "Supernotaire | Finalisation rapide de vente immobilière",
   description:
-    "La plateforme qui accélère la finalisation des ventes immobilières.",
+    "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
   url: url.value,
 }));
 
