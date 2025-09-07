@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { getTutorialPages } from "./src/utils/sitemap";
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
@@ -56,6 +57,13 @@ export default defineNuxtConfig({
   },
   dayjs: {
     locales: ["fr"],
+  },
+  sitemap: {
+    urls: async () => {
+      const tutorialPages = await getTutorialPages();
+
+      return [...tutorialPages];
+    },
   },
   site: {
     url: "https://supernotaire.fr",
