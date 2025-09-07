@@ -17,6 +17,7 @@ interface Props {
   max?: number;
   step?: number;
   tooltip?: string;
+  tooltipLink?: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -111,15 +112,28 @@ function toggleShowPassword() {
     />
 
     <UIIconComponent
+      v-if="tooltip?.length && !tooltipLink?.length"
       icon="question"
       class="input-field__icon"
       style="cursor: pointer"
       :color="colors['text-color-faded']"
       size="1.5rem"
-      v-if="tooltip"
       v-tooltip="tooltip"
       tabindex="0"
     />
+
+    <NuxtLink
+      v-else-if="tooltip?.length && tooltipLink?.length"
+      :to="tooltipLink"
+      target="_blank"
+      v-tooltip="tooltip"
+      :aria-label="tooltip"
+      ><UIIconComponent
+        icon="question"
+        class="input-field__icon"
+        :color="colors['text-color-faded']"
+        size="1.5rem"
+    /></NuxtLink>
 
     <span class="input-field__error" v-if="error">{{ error }}</span>
   </div>

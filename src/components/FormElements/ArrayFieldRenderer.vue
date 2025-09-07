@@ -288,6 +288,8 @@ const childrenErrors = computed(() => {
               :required="f.required"
               :icon="f.icon || ''"
               :error="firstItemMsg(idx, f.path)"
+              :tooltip="f.tooltip"
+              :tooltipLink="f.tooltipLink"
             />
 
             <FormElementsSelectField

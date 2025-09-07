@@ -32,6 +32,13 @@ const tools = [
     description:
       "Extraitre le texte d'un document PDF (scanné ou à base de texte) ou d'une image.",
   },
+  {
+    name: "Calculer des frais de notaire",
+    path: "https://www.anil.org/outils/outils-de-calcul/frais-dacquisition-dits-frais-de-notaire/",
+    description:
+      "Calculez les frais de notaire liés à l'achat d'un bien immobilier.",
+    target: "_blank",
+  },
 ];
 
 useHead({

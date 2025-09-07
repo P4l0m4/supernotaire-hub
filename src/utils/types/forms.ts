@@ -26,7 +26,8 @@ export interface BaseField {
   placeholder?: string;
   icon?: string;
   TS_TYPE?: string; // pour extraction AI
-  tooltip?: string; // pour info bulle
+  tooltip?: string;
+  tooltipLink?: string; // si tooltip renvoie vers une doc
   pattern?: string; // pour validation par regex
 }
 
