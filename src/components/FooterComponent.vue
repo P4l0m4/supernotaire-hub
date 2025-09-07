@@ -51,6 +51,9 @@
         <li class="footer__links-container__links__li">
           <NuxtLink to="/contact">Contact</NuxtLink>
         </li>
+        <li class="footer__links-container__links__li">
+          <NuxtLink to="/tutoriels">Tutoriels</NuxtLink>
+        </li>
       </ul>
       <div class="footer__links-container__special-box">
         <div class="footer__links-container__special-box__title-section">
