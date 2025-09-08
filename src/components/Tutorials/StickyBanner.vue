@@ -112,6 +112,10 @@ onBeforeUnmount(() => {
     height: fit-content;
   }
 
+  @media (min-width: $desktop-screen) {
+    padding: 1rem 4rem 1.5rem 4rem;
+  }
+
   &__title {
     font-size: 1rem;
     font-weight: $medium;
@@ -131,6 +135,7 @@ onBeforeUnmount(() => {
     border-top: 1rem solid $secondary-color;
     height: 1.5rem;
     background-color: rgba($primary-color, 0.25);
+    cursor: pointer;
 
     &__fill {
       height: 100%;
