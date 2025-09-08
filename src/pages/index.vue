@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+
+import { stringToSlug } from "@/utils/slugify";
+
 import notary from "@/assets/images/accountant-54.svg";
 import seller from "@/assets/images/real-estate-agent-76.svg";
 import hero from "@/assets/images/super-hero.svg";
 import dots from "@/assets/images/dots-big.svg";
 
 import type { Decoration } from "@/components/UI/profile.vue";
+
+const story = await useAsyncStoryblok("tutoriels", {
+  version: "published",
+});
+
+const carouselElements = ref([]);
 
 const url = ref();
 
@@ -73,6 +82,14 @@ useJsonld(() => ({
 
 onMounted(() => {
   url.value = window.location.href;
+
+  carouselElements.value = story.value.content.tutorials.map(
+    (tutorial: any) => ({
+      link: `/tutoriels/${stringToSlug(tutorial.title)}`,
+      image: tutorial.previewImage.filename,
+      label: tutorial.title,
+    })
+  );
 });
 </script>
 <template>
@@ -135,8 +152,9 @@ onMounted(() => {
           >
         </NuxtLink>
       </template>
-    </UIDidYouKnow></Container
-  >
+    </UIDidYouKnow>
+    <UICarouselComponent :carousel-elements="carouselElements" />
+  </Container>
 
   <HotjarTracking />
 </template>

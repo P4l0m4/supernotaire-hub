@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
   padding: 1rem 4.5rem 1.5rem 1rem;
   height: 5rem;
   z-index: 2;
-  position: sticky;
+  position: fixed;
   top: 0;
 
   @media (min-width: $big-tablet-screen) {

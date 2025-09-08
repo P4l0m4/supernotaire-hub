@@ -103,7 +103,6 @@ const scroll = (direction: "left" | "right") => {
 .carousel {
   display: flex;
   align-items: center;
-  padding: 0 0 0 1rem;
   overflow-x: hidden;
   width: 100%;
   position: relative;
@@ -144,11 +143,6 @@ const scroll = (direction: "left" | "right") => {
         transform: rotate(-90deg);
       }
     }
-  }
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 0 2rem;
-    padding-right: 0;
   }
 
   &__container {

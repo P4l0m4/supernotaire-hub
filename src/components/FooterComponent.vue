@@ -109,14 +109,20 @@
   max-width: 2000px;
   margin: 0 auto;
 
+  @media (min-width: $big-tablet-screen) {
+    padding: 2rem;
+  }
+
+  @media (min-width: $desktop-screen) {
+    padding: 2rem 4rem;
+  }
+
   &__links-container {
     display: flex;
     gap: 2rem;
     flex-direction: column;
 
     @media (min-width: $tablet-screen) {
-      padding: 2rem;
-
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;

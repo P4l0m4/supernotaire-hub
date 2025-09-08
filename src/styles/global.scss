@@ -20,6 +20,7 @@ html {
 }
 
 body {
+  overflow-x: hidden;
   background-color: $base-color;
   color: $text-color;
   font-family: "Figtree", sans-serif;
