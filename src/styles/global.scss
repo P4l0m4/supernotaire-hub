@@ -22,13 +22,11 @@ html {
 body {
   background-color: $base-color;
   color: $text-color;
-  overflow-x: hidden;
   font-family: "Figtree", sans-serif;
   font-synthesis: none; /* évite faux gras/italique */
   font-kerning: normal;
   font-variant-ligatures: common-ligatures;
   font-weight: regular;
-  overflow-x: hidden;
   max-width: 100vw;
 }
 

@@ -62,6 +62,7 @@ function formatDuration(duration: string) {
     font-size: 2.5rem;
     font-weight: $bold;
     text-wrap: balance;
+    text-shadow: 0 0 10px rgba($primary-color, 0.25);
 
     @media (min-width: $tablet-screen) {
       font-size: 3rem;
@@ -75,10 +76,6 @@ function formatDuration(duration: string) {
   &__description {
     text-wrap: balance;
     color: $text-color-alt;
-
-    @media (min-width: $desktop-screen) {
-      max-width: 60%;
-    }
   }
 
   &__details {

@@ -109,10 +109,6 @@ const scroll = (direction: "left" | "right") => {
   position: relative;
   background-color: $base-color;
 
-  @media (min-width: $big-tablet-screen) {
-    padding: 0 0 0 1rem;
-  }
-
   &__button {
     position: absolute;
     top: 0;

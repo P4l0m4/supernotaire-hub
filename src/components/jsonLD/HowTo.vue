@@ -95,6 +95,10 @@ useJsonld(() => ({
 
 const breadcrumbs = ref();
 
+const tutorialHeight = ref(0);
+const scrollPosition = ref(0);
+const scrollPercentage = ref(0);
+
 onMounted(() => {
   breadcrumbs.value = [
     {
@@ -110,7 +114,24 @@ onMounted(() => {
       url: window.location.href,
     },
   ];
+
+  tutorialHeight.value = document.body.scrollHeight - window.innerHeight;
+  window.addEventListener("scroll", () => {
+    scrollPosition.value = window.scrollY;
+    scrollPercentage.value = Math.min(
+      (scrollPosition.value / tutorialHeight.value) * 100,
+      100
+    );
+  });
 });
+
+function seekTo(seek: number) {
+  if (process.client && typeof document !== "undefined") {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: (max * seek) / 100, behavior: "smooth" });
+  }
+}
 </script>
 <template>
   <TutorialsBanner
@@ -119,7 +140,14 @@ onMounted(() => {
     :last-update="tutorialLastUpdate"
     :total-time="tutorialTotalTime"
     :cost="tutorialCost"
-  />
+  /><Transition
+    ><Teleport to="body"
+      ><TutorialsStickyBanner
+        v-if="scrollPercentage && scrollPercentage > 15"
+        :title="tutorialTitle"
+        :scroll-percentage="scrollPercentage"
+        @scroll="seekTo" /></Teleport
+  ></Transition>
   <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
   <TutorialsSummary
     v-if="props.tutorialOptions.length"

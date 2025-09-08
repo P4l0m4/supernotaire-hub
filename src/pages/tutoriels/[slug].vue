@@ -31,7 +31,7 @@ useHead({
       :tutorial-cost="tutorial.estimatedCost"
       :tutorial-prerequisites="tutorial.prerequisites"
       :tutorial-options="tutorial.options"
-      :tutorial-references="tutorial.ref"
+      :tutorial-references="tutorial.references"
       :tutorial-last-update="tutorial.lastUpdate"
       :key="stringToSlug(tutorial.title)"
     />
