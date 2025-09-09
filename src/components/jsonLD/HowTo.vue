@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, onBeforeUnmount } from "vue";
 import { stringToSlug } from "@/utils/slugify";
+import { useResizeObserver } from "@vueuse/core";
+
 import checklist from "/checklist-71-blue.svg?url";
+
 import { colors } from "@/utils/colors";
 
 interface TutorialStep {
@@ -99,6 +102,32 @@ const tutorialHeight = ref(0);
 const scrollPosition = ref(0);
 const scrollPercentage = ref(0);
 
+const el = ref<HTMLElement | null>(null);
+
+useResizeObserver(el, (entries) => {
+  for (const entry of entries) {
+    if (entry.contentRect) {
+      tutorialHeight.value = document.body.scrollHeight - window.innerHeight;
+    }
+  }
+});
+
+function handleScroll() {
+  scrollPosition.value = window.scrollY;
+  scrollPercentage.value = Math.min(
+    (scrollPosition.value / tutorialHeight.value) * 100,
+    100
+  );
+}
+
+function seekTo(seek: number) {
+  if (process.client && typeof document !== "undefined") {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: (max * seek) / 100, behavior: "smooth" });
+  }
+}
+
 onMounted(() => {
   breadcrumbs.value = [
     {
@@ -115,23 +144,12 @@ onMounted(() => {
     },
   ];
 
-  tutorialHeight.value = document.body.scrollHeight - window.innerHeight;
-  window.addEventListener("scroll", () => {
-    scrollPosition.value = window.scrollY;
-    scrollPercentage.value = Math.min(
-      (scrollPosition.value / tutorialHeight.value) * 100,
-      100
-    );
-  });
+  window.addEventListener("scroll", handleScroll);
 });
 
-function seekTo(seek: number) {
-  if (process.client && typeof document !== "undefined") {
-    const doc = document.documentElement;
-    const max = doc.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: (max * seek) / 100, behavior: "smooth" });
-  }
-}
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 <template>
   <TutorialsBanner
@@ -153,7 +171,7 @@ function seekTo(seek: number) {
     v-if="props.tutorialOptions.length"
     :options="props.tutorialOptions"
   />
-  <div class="how-to">
+  <div ref="el" class="how-to">
     <div class="how-to__attention">
       <div class="how-to__attention__illustration">
         <img
