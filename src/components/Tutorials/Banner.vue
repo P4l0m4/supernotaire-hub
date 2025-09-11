@@ -22,6 +22,7 @@ function formatDuration(duration: string) {
 </script>
 <template>
   <div class="banner">
+    <UIAnimatedGradient />
     <h1 class="banner__title">{{ title }}</h1>
     <p class="banner__description">
       {{ description }}
@@ -47,11 +48,16 @@ function formatDuration(duration: string) {
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
-  background-color: $secondary-color;
+  background-image: radial-gradient(
+    circle at center,
+    transparent,
+    $secondary-color
+  );
   color: $text-color-alt;
   padding: 2rem 1rem 4rem 1rem;
   border-radius: calc($radius / 2);
   position: relative;
+  overflow: hidden;
 
   @media (min-width: $big-tablet-screen) {
     padding: 2rem 2rem 4rem 2rem;

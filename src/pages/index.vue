@@ -138,6 +138,7 @@ onMounted(() => {
       />
     </div>
   </Container>
+
   <Container>
     <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
       <template #text>
@@ -153,6 +154,14 @@ onMounted(() => {
         </NuxtLink>
       </template>
     </UIDidYouKnow>
+  </Container>
+  <Container>
+    <div class="headlines">
+      <h2 class="headlines__title">Tutoriels faciles</h2>
+      <h3 class="headlines__subtitle paragraphs">
+        Pour vous guider pas à pas dans vos démarches immobilières.
+      </h3>
+    </div>
     <UICarouselComponent :carousel-elements="carouselElements" />
   </Container>
 

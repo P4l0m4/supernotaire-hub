@@ -150,6 +150,7 @@ const scroll = (direction: "left" | "right") => {
     gap: 1rem;
     width: fit-content;
     overflow-x: scroll;
+    scroll-snap-type: x mandatory;
 
     &::-webkit-scrollbar {
       display: none;
@@ -170,6 +171,7 @@ const scroll = (direction: "left" | "right") => {
       border-radius: $radius;
       position: relative;
       overflow: hidden;
+      scroll-snap-align: center;
       transition: filter 0.3s linear, box-shadow 0.3s ease;
       filter: grayscale(30%);
 
