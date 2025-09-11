@@ -11,7 +11,19 @@ interface TutorialStep {
   name: string;
   text: string;
   tip: string;
-  image: string;
+  image: {
+    id: number;
+    alt: string;
+    name: string;
+    focus: string;
+    title: string;
+    source: string;
+    filename: string;
+    copyright: string;
+    metadata: Record<string, any>;
+    is_external_url: boolean;
+  } | null;
+  legend: string;
   link: string;
 }
 
@@ -51,7 +63,7 @@ const jsonLDSteps = computed(() =>
         name: s.name,
         position: si + 1,
         url: s.link || undefined,
-        image: s.image || undefined,
+        image: s.image?.filename || undefined,
         ...(hasTip
           ? {
               itemListElement: [
@@ -225,12 +237,16 @@ onBeforeUnmount(() => {
               {{ step.name }}
             </h3>
             <div class="how-to__options__element__steps__step__content">
-              <img
+              <figure
                 v-if="step.image?.filename"
                 class="how-to__options__element__steps__step__content__image"
-                :src="step.image.filename"
-                :alt="`image ${step.name}`"
-              />
+              >
+                <img
+                  :src="step.image.filename"
+                  :alt="`image ${step.legend ? step.legend : step.name}`"
+                />
+                <figcaption v-if="step.legend">{{ step.legend }}</figcaption>
+              </figure>
 
               <p
                 class="how-to__options__element__steps__step__content__text paragraphs"
@@ -253,7 +269,7 @@ onBeforeUnmount(() => {
                 <UIIconComponent
                   icon="info"
                   size="2rem"
-                  :color="colors['warning-color']"
+                  :color="colors['purple-color']"
                 />
               </div>
 
@@ -395,7 +411,7 @@ onBeforeUnmount(() => {
     list-style: none;
 
     &__element {
-      scroll-margin-top: 4rem;
+      scroll-margin-top: 3rem;
       display: flex;
       flex-direction: column;
       gap: 4rem;
@@ -446,11 +462,33 @@ onBeforeUnmount(() => {
             }
 
             &__image {
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              background-color: rgba($accent-color, 0.1);
               width: 100%;
-              height: auto;
+              height: fit-content;
               max-height: 30rem;
               max-width: 30rem;
               border-radius: calc($radius * 0.5);
+              overflow: hidden;
+
+              & img {
+                width: 100%;
+                height: auto;
+              }
+
+              & figcaption {
+                display: inline-block;
+                font-size: $small-text;
+                color: $text-color;
+                padding: 0 0.5rem 0.5rem 0.5rem;
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
             }
           }
         }
@@ -492,9 +530,8 @@ onBeforeUnmount(() => {
 .disclaimer {
   display: flex;
   flex-direction: column;
-
   gap: 1rem;
-  background-color: rgba($warning-color, 0.1);
+  background-color: rgba($purple-color, 0.1);
   padding: 1rem;
   border-radius: calc($radius / 2);
 
@@ -513,7 +550,7 @@ onBeforeUnmount(() => {
     height: 4rem;
     padding: 0.5rem;
     border-radius: calc($radius / 2);
-    background-color: rgba($warning-color, 0.1);
+    background-color: rgba($purple-color, 0.1);
   }
 }
 </style>

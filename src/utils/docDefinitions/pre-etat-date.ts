@@ -17,11 +17,6 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const ACQ = d.financier_lot_sommes_a_la_charge_acquereur_post_vente;
   const num = (v: any) => (typeof v === "number" ? v : Number(v ?? 0)) || 0;
 
-  const toNum = (v: any) => {
-    const n = Number(String(v ?? "").replace(/\s/g, ""));
-    return Number.isFinite(n) ? n : null;
-  };
-
   const lotCard = (l: any) => {
     const designation = l.designation || "-";
     const numero = l.numero || "-";
@@ -360,60 +355,134 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
 
       {
         text: "Sommes dues par le copropriétaire cédant pour les lots objets de la future mutation",
+        style: "h1",
+      },
+      {
+        text: "A/ Au Syndicat, au titre des:",
         style: "h2",
+      },
+      {
+        text: "1. Provisions exigibles",
+        style: "h3",
       },
       {
         table: {
           widths: ["*", "auto"],
           body: [
             [
-              "Provisions budget prévisionnel exigibles",
+              "- Dans le budget prévisionnel (D. art. 5. 1° a)",
               fmtEur(SDC?.provisions_exigibles?.budget_previsionnel),
             ],
             [
-              "Provisions hors budget exigibles",
+              "- Hors budget prévisionnel (D. art. 5. 1° b)",
               fmtEur(SDC?.provisions_exigibles?.hors_budget),
-            ],
-            [
-              "Charges impayées antérieures",
-              fmtEur(SDC?.charges_impayees_anterieures),
-            ],
-            [
-              "Cotisations au fonds de travaux exigibles",
-              fmtEur(SDC?.cotisations_fonds_travaux_exigibles),
             ],
           ],
         },
         layout: "lightHorizontalLines",
-        margin: [0, 0, 0, 16],
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "2. Charges impayées sur les exercices antérieurs (D. art. 5. 1° c)",
+        style: "h3",
+      },
+      {
+        table: {
+          widths: ["*", "auto"],
+          body: [["", fmtEur(SDC?.charges_impayees_anterieures)]],
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "3. Sommes devenues exigibles du fait de la future vente (D. art. 5. 1° d)",
+        style: "h3",
+      },
+      {
+        table: {
+          widths: ["*", "auto"],
+          body: [["", fmtEur(SDC?.du_fait_de_la_future_vente)]],
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "4. Avances exigibles",
+        style: "h3",
+      },
+      {
+        table: {
+          widths: ["*", "auto"],
+          body: [
+            [
+              "- Avance constituant la réserve (D. art. 35, 1°)",
+              fmtEur(SDC?.avances_exigibles_reserve),
+            ],
+            [
+              "- Avances nommées provisions (provisions spéciales)  (L. art. 18 alinéa 6 D. art. 35. 4° 5°)",
+              fmtEur(SDC?.avances_exigibles_reserve),
+            ],
+            [
+              "- Avances représentant un emprunt (D. art. 45-1 alinéa 4) (emprunt du syndic auprès des copropriétaires ou certains d’entre eux)",
+              fmtEur(SDC?.avances_exigibles_emprunt),
+            ],
+          ],
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "5. Cotisations annuelles au fonds de travaux",
+        style: "h3",
+      },
+      {
+        table: {
+          widths: ["*", "auto"],
+          body: [["", fmtEur(SDC?.cotisations_fonds_travaux_exigibles)]],
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 8],
       },
       // Sous-détail “Autres sommes exigibles” si présent
       (() => {
         const a = SDC?.autres_sommes_exigibles;
         const rows = [
-          ["Prêt (quote-part vendeur)", fmtEur(a?.pret_quote_part_vendeur)],
-          ["Condamnations", fmtEur(a?.condamnations)],
-          ["Autres", fmtEur(a?.autres)],
           [
-            "À des tiers (emprunts gérés par le syndic)",
-            fmtEur(a?.a_des_tiers_emprunts_geres_par_syndic),
+            "- Prêt (quote-part vendeur devenue exigible)",
+            fmtEur(a?.pret_quote_part_vendeur),
+          ],
+          [
+            "- Autres causes telles que condamnations",
+            fmtEur(a?.condamnations),
           ],
         ].filter(([, v]) => v !== "—" && v !== undefined);
         return rows.length
           ? [
               {
-                text: "Autres sommes exigibles",
+                text: "6. Autres sommes exigibles du fait de la future vente",
                 style: "h3",
                 margin: [0, 8, 0, 6],
               },
               {
                 table: { widths: ["*", "auto"], body: rows },
                 layout: "lightHorizontalLines",
-                margin: [0, 0, 0, 24],
+                margin: [0, 0, 0, 8],
               },
             ]
           : { text: "" };
       })(),
+      {
+        text: "B/ À des tiers (emprunts gérés par le syndic)",
+        style: "h2",
+      },
+      {
+        table: {
+          widths: ["*", "auto"],
+          body: [["", fmtEur(SDC?.a_des_tiers_emprunts_geres_par_syndic)]],
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 16],
+      },
 
       // Charges avec année_exercice
       {

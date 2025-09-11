@@ -75,14 +75,17 @@ export interface FinancierLotSommesDuesCedant {
     budget_previsionnel: Euro;
     hors_budget: Euro;
   };
-  charges_impayees_anterieures?: Euro;
-  cotisations_fonds_travaux_exigibles?: Euro;
-  autres_sommes_exigibles?: {
-    pret_quote_part_vendeur?: Euro;
-    condamnations?: Euro;
-    autres?: Euro;
-    a_des_tiers_emprunts_geres_par_syndic?: Euro;
+  charges_impayees_anterieures: Euro;
+  du_fait_de_la_future_vente: Euro;
+  avances_exigibles_reserve: Euro;
+  avances_exigibles_provisions_speciales: Euro;
+  avances_exigibles_emprunt: Euro;
+  cotisations_fonds_travaux_exigibles: Euro;
+  autres_sommes_exigibles: {
+    pret_quote_part_vendeur: Euro;
+    condamnations: Euro;
   };
+  a_des_tiers_emprunts_geres_par_syndic: Euro;
 }
 
 export interface FinancierLotAutres {
