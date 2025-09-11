@@ -14,8 +14,6 @@ import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels
 import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
 import { TS_TYPE_ExtractionRIC } from "@/utils/extractionModels/releve-individuel-compte";
 import { TS_TYPE_ExtractionEtatDettesCreances } from "@/utils/extractionModels/etat-dettes-creances";
-import { TS_TYPE_ExtractionCAAA } from "@/utils/extractionModels/comptes-annuels-aprouves-annexes";
-import { TS_TYPE_ExtractionTableauTravauxFinancements } from "@/utils/extractionModels/tableau-travaux-financement";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
@@ -40,8 +38,6 @@ const documents = [
   "Attestation de propriété.",
   "Relevé individuel de compte.",
   "État des dettes et créances.",
-  "Comptes annuels approuvés et annexes.",
-  "Tableau des travaux et financements votés en AG.",
 ];
 
 const formData = reactive({} as PreEtatDate);
@@ -121,8 +117,6 @@ const TS_TYPES: Record<string, string> = {
   TS_TYPE_AttestationDePropriété,
   TS_TYPE_ExtractionRIC,
   TS_TYPE_ExtractionEtatDettesCreances,
-  TS_TYPE_ExtractionCAAA,
-  TS_TYPE_ExtractionTableauTravauxFinancements,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };

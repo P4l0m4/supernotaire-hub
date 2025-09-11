@@ -4,6 +4,7 @@ import { stringToSlug } from "@/utils/slugify";
 
 const story = await useAsyncStoryblok("tutoriels", {
   version: "published",
+  resolve_relations: "Tutoriels.tutorials",
 });
 
 const carouselElements = ref([]);

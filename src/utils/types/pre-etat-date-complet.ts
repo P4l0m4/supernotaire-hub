@@ -18,8 +18,6 @@ export interface Documents {
   attestation_de_propriete?: File;
   releve_individuel_compte?: File;
   etat_dettes_creances?: File;
-  comptes_annuels_approuves_annexes?: File;
-  tableau_travaux_financements?: File;
 }
 
 export interface Bien {

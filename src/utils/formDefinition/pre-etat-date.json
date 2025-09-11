@@ -64,30 +64,6 @@
           "accept": [".pdf", ".png", ".jpg", ".jpeg"],
           "multiple": false,
           "TS_TYPE": "TS_TYPE_ExtractionEtatDettesCreances"
-        },
-        {
-          "path": "document.comptes_annuels_approuves_annexes",
-          "id": "comptes-annuels-approuves-annexes",
-          "label": "Comptes annuels approuvés et annexes",
-          "name": "comptes_annuels_approuves_annexes",
-          "type": "file",
-          "required": false,
-          "icon": "plus_circle",
-          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
-          "multiple": false,
-          "TS_TYPE": "TS_TYPE_ExtractionCAAA"
-        },
-        {
-          "path": "document.tableau_travaux_financement",
-          "id": "tableau-travaux-financement",
-          "label": "Tableau des travaux et financements",
-          "name": "tableau_travaux_financement",
-          "type": "file",
-          "required": false,
-          "icon": "plus_circle",
-          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
-          "multiple": false,
-          "TS_TYPE": "TS_TYPE_ExtractionTableauTravauxFinancements"
         }
       ]
     },
@@ -443,7 +419,8 @@
           "step": 0.01,
           "required": false,
           "placeholder": "1000",
-          "tooltip": "Appels du budget prévisionnel arrivés à échéance à la date de la vente et dus par le vendeur s’ils ne sont pas payés."
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#au-titre-du-budget-previsionnel"
         },
 
         {
@@ -457,7 +434,8 @@
           "step": 0.01,
           "required": false,
           "placeholder": "1000",
-          "tooltip": "Appels hors budget arrivés à échéance à la date de la vente et dus par le vendeur s’ils ne sont pas payés."
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#hors-budget-previsionnel"
         },
 
         {
@@ -470,7 +448,9 @@
           "min": 0,
           "step": 0.01,
           "required": false,
-          "placeholder": "1000"
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#charges-impayees-anterieures"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.du_fait_de_la_future_vente",
@@ -482,7 +462,9 @@
           "min": 0,
           "step": 0.01,
           "required": false,
-          "placeholder": "1000"
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#verifiez-si-vous-etes-concerne-par-des-sommes-exigibles-du-fait-de-la-future-vente"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_reserve",
@@ -494,7 +476,9 @@
           "min": 0,
           "step": 0.01,
           "required": false,
-          "placeholder": "1000"
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-constituant-la-reserve"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_provisions_speciales",
@@ -506,7 +490,9 @@
           "min": 0,
           "step": 0.01,
           "required": false,
-          "placeholder": "1000"
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-au-titre-de-provisions-speciales"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_emprunt",
@@ -518,7 +504,9 @@
           "min": 0,
           "step": 0.01,
           "required": false,
-          "placeholder": "1000"
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-representant-un-emprunt"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.cotisations_fonds_travaux_exigibles",
