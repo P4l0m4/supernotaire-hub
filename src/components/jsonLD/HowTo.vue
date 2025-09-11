@@ -306,7 +306,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     padding: 1rem;
     gap: 2rem;
-    border-radius: calc($radius / 2);
+    border-radius: $radius;
     background-color: $primary-color;
     width: 100%;
     min-width: 280px;

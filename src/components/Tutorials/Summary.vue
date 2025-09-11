@@ -39,7 +39,7 @@ defineProps<{
 <style lang="scss" scoped>
 .summary {
   padding: 1rem;
-  border-radius: calc($radius * 0.5);
+  border-radius: $radius;
   border: 1px solid rgba($text-color, 0.1);
   display: flex;
   flex-direction: column;

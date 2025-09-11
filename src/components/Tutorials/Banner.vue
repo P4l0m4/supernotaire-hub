@@ -55,7 +55,8 @@ function formatDuration(duration: string) {
   );
   color: $text-color-alt;
   padding: 2rem 1rem 4rem 1rem;
-  border-radius: calc($radius / 2);
+  border-radius: $radius;
+  box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
   position: relative;
   overflow: hidden;
 
