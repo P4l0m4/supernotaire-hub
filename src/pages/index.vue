@@ -8,6 +8,8 @@ import seller from "@/assets/images/real-estate-agent-76.svg";
 import hero from "@/assets/images/super-hero.svg";
 import dots from "@/assets/images/dots-big.svg";
 
+import logo from "/favicon-96x96.png";
+
 import type { Decoration } from "@/components/UI/profile.vue";
 
 const story = await useAsyncStoryblok("tutoriels", {
@@ -78,6 +80,30 @@ useJsonld(() => ({
   description:
     "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
   url: url.value,
+}));
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Supernotaire",
+  operatingSystem: "Web",
+  applicationCategory: "Legal, BusinessApplication",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "EUR",
+  },
+  url: "https://www.supernotaire.fr",
+  logo: `https://www.supernotaire.fr/${logo}`,
+  image:
+    "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
+  description:
+    "Supernotaire est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
+  publisher: {
+    "@type": "Organization",
+    name: "Supernotaire",
+    url: "https://www.supernotaire.fr",
+  },
 }));
 
 onMounted(() => {

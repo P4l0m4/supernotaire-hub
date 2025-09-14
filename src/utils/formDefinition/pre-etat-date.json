@@ -3,7 +3,7 @@
   "sections": [
     {
       "id": "documents",
-      "label": "Les sources",
+      "label": "Les justificatifs",
       "fields": [
         {
           "path": "document.dernier_pv_ag",
@@ -52,18 +52,6 @@
           "accept": [".pdf", ".png", ".jpg", ".jpeg"],
           "multiple": false,
           "TS_TYPE": "TS_TYPE_ExtractionRIC"
-        },
-        {
-          "path": "document.etat_dettes_creances",
-          "id": "etat-dettes-creances",
-          "label": "État des dettes et créances",
-          "name": "etat_dettes_creances",
-          "type": "file",
-          "required": false,
-          "icon": "plus_circle",
-          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
-          "multiple": false,
-          "TS_TYPE": "TS_TYPE_ExtractionEtatDettesCreances"
         }
       ]
     },

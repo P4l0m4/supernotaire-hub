@@ -13,7 +13,6 @@ import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
 import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
 import { TS_TYPE_ExtractionRIC } from "@/utils/extractionModels/releve-individuel-compte";
-import { TS_TYPE_ExtractionEtatDettesCreances } from "@/utils/extractionModels/etat-dettes-creances";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
@@ -33,11 +32,13 @@ const annexes = [
 ];
 
 const documents = [
-  "Dernier procès-verbal d’assemblée générale approuvé.",
+  "Dernier procès-verbal d’assemblée générale.",
   "Fiche synthétique de la copropriété.",
   "Attestation de propriété.",
   "Relevé individuel de compte.",
-  "État des dettes et créances.",
+  "État des soldes des copropriétaires.",
+  "Grand Livre des comptes.",
+  "Compte de gestion pour travaux et opérations exceptionnelles.",
 ];
 
 const formData = reactive({} as PreEtatDate);
@@ -116,7 +117,6 @@ const TS_TYPES: Record<string, string> = {
   TS_TYPE_FicheSynthétiqueCopropriété,
   TS_TYPE_AttestationDePropriété,
   TS_TYPE_ExtractionRIC,
-  TS_TYPE_ExtractionEtatDettesCreances,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };

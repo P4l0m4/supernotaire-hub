@@ -17,7 +17,6 @@ export interface Documents {
   fiche_synthetique_copropriete?: File;
   attestation_de_propriete?: File;
   releve_individuel_compte?: File;
-  etat_dettes_creances?: File;
 }
 
 export interface Bien {

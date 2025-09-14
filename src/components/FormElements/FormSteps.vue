@@ -2,9 +2,16 @@
 import { colors } from "@/utils/colors";
 import { watch } from "vue";
 
+interface StepsState {
+  index: number;
+  label: string;
+  isCurrentStep: boolean;
+  isValid: boolean;
+  isVisited: boolean;
+}
+
 const props = defineProps<{
-  stepsLabels: string[];
-  currentStep: number;
+  stepsState: StepsState[];
 }>();
 
 const emit = defineEmits<{
@@ -13,7 +20,7 @@ const emit = defineEmits<{
 
 //on mobile and tablet, make shure the current step is visible by scrolling horizontally
 watch(
-  () => props.currentStep,
+  () => props.stepsState.find((s) => s.isCurrentStep),
   () => {
     const stepElement = document.querySelector(
       `.form-steps__item--active`
@@ -30,37 +37,56 @@ watch(
 </script>
 <template>
   <div class="form-steps">
-    <!-- first and last step should not have a left and right padding -->
     <div
-      v-for="(stepLabel, index) in stepsLabels"
-      :key="index"
+      v-for="step in stepsState"
+      :key="step.index"
       class="form-steps__item"
       :class="{
-        'form-steps__item--active': index === currentStep - 1,
-        'form-steps__item--completed': index < currentStep - 1,
+        'form-steps__item--active': step.isCurrentStep,
+        'form-steps__item--completed':
+          step.isValid && step.isVisited && !step.isCurrentStep,
+        'form-steps__item--error':
+          !step.isValid && step.isVisited && !step.isCurrentStep,
       }"
       :style="{
-        paddingLeft: index === 0 ? '0' : '',
-        paddingRight: index === stepsLabels.length - 1 ? '0' : '',
+        paddingLeft: step.index === 0 ? '0' : '',
+        paddingRight: step.index === stepsState.length - 1 ? '0' : '',
       }"
-      @click="emit('changeStep', index)"
-      @keydown.enter="emit('changeStep', index)"
-      @keydown.space="emit('changeStep', index)"
+      @click="emit('changeStep', step.index - 1)"
+      @keydown.enter="emit('changeStep', step.index - 1)"
+      @keydown.space="emit('changeStep', step.index - 1)"
     >
       <div class="form-steps__item__circle">
+        <!-- Étape active : toujours numéro -->
+        <span
+          v-if="step.isCurrentStep"
+          class="form-steps__item__circle__number"
+        >
+          {{ `0${step.index}` }}
+        </span>
+
         <UIIconComponent
-          v-if="index + 1 < currentStep"
+          v-else-if="step.isVisited && step.isValid"
           icon="check_fat_fill"
           size="1rem"
           :color="colors['accent-color']"
         />
-        <span v-else class="form-steps__item__circle__number"
-          >0{{ index + 1 }}</span
-        >
+
+        <UIIconComponent
+          v-else-if="step.isVisited && !step.isValid"
+          icon="x_bold"
+          size="1.25rem"
+          :color="colors['error-color']"
+        />
+
+        <span v-else class="form-steps__item__circle__number">
+          {{ `0${step.index}` }}
+        </span>
       </div>
+
       <Transition>
         <span class="form-steps__item__label"
-          >{{ stepLabel }}
+          >{{ step.label }}
         </span></Transition
       >
     </div>
@@ -131,6 +157,17 @@ watch(
 
       & > .form-steps__item__circle {
         background-color: $accent-color-faded;
+        color: $primary-color;
+      }
+    }
+
+    &--error {
+      color: rgba($error-color, 0.6);
+      background-color: $primary-color;
+      border: none;
+
+      & > .form-steps__item__circle {
+        background-color: $error-color-faded;
         color: $primary-color;
       }
     }

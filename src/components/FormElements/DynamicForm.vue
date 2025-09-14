@@ -58,28 +58,6 @@ const stepValidator = (step?: number | null) =>
         return Math.abs(r - Math.round(r)) < 1e-9;
       });
 
-// function hasBadLeaf(obj: any): boolean {
-//   const stack = [obj];
-//   while (stack.length) {
-//     const cur = stack.pop();
-//     for (const k in cur) {
-//       const v = cur[k];
-//       if (
-//         v &&
-//         typeof v === "object" &&
-//         !("$validator" in v) &&
-//         !Array.isArray(v)
-//       ) {
-//         stack.push(v);
-//         continue;
-//       }
-//       if (!(typeof v === "function" || typeof v?.$validator === "function"))
-//         return true;
-//     }
-//   }
-//   return false;
-// }
-
 function getDeep(obj: any, path: string[]) {
   return path.reduce((o, k) => (o ? o[k] : undefined), obj);
 }
@@ -195,45 +173,22 @@ function inSectionPath(errPath: string, sectionPaths: string[]) {
   return sectionPaths.some((sp) => p.startsWith(norm(sp)));
 }
 
-// async function validateCurrentSection() {
-//   await nextTick();
-//   await v$.value.$validate(); // déclenche aussi les validations imbriquées des enfants
-
-//   const section = props.formDefinition.sections[currentSection.value];
-//   if (!section) return true;
-
-//   const paths = section.fields.map((f) => f.path);
-
-//   const sectionErrors = v$.value.$errors.filter((e) =>
-//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
-//   );
-
-//   return sectionErrors.length === 0;
-// }
-
 const sections = computed(() => props.formDefinition?.sections ?? []);
 
 async function validateCurrentSection() {
   await nextTick();
-  await v$.value.$validate();
   const s = sections.value[currentSection.value];
   if (!s) return true;
-  const paths = s.fields.map((f) => f.path);
-  return !v$.value.$errors.some((e) =>
-    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+
+  const results = await Promise.all(
+    s.fields.map(async (f) => {
+      const node = nodeFor(f.path);
+      return node ? node.$validate() : true;
+    })
   );
+
+  return results.every(Boolean);
 }
-
-// const isCurrentStepInvalid = computed(() => {
-//   const section = props.formDefinition.sections[currentSection.value];
-//   const paths = section.fields.map((f) => f.path);
-
-//   const sectionErrors = v$.value.$errors.filter((e) =>
-//     inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
-//   );
-
-//   return sectionErrors.length > 0;
-// });
 
 const isCurrentStepInvalid = computed(() => {
   const s = sections.value[currentSection.value];
@@ -244,33 +199,27 @@ const isCurrentStepInvalid = computed(() => {
   );
 });
 
-// async function next() {
-//   try {
-//     if (await validateCurrentSection()) {
-//       currentSection.value++;
-
-//       if (formRef.value) {
-//         formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
-//         console.log("Scrolled to top of form");
-//       }
-
-//       if (currentSection.value >= props.formDefinition.sections.length) {
-//         emit("complete");
-//       }
-//     }
-//   } catch (e) {
-//     console.error("[DynamicForm/next]", e);
-//   }
-// }
+const hasAnyError = computed(() => v$.value.$errors.length > 0);
 
 async function next() {
   try {
+    // toujours valider la section courante
     if (!(await validateCurrentSection())) return;
+
     const nextIdx = currentSection.value + 1;
+
+    // si on est sur la dernière étape → valider tout le formulaire
     if (nextIdx >= sections.value.length) {
+      await nextTick();
+      await v$.value.$validate(); // valide toutes les sections
+      if (v$.value.$errors.length > 0) {
+        return; // blocage si une erreur quelque part
+      }
       emit("complete");
       return;
     }
+
+    // sinon on passe simplement à l’étape suivante
     currentSection.value = nextIdx;
     formRef.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) {
@@ -299,19 +248,36 @@ function prev() {
 
 async function changeStep(step: number) {
   if (step < 0 || step >= props.formDefinition.sections.length) return;
-
   if (step === currentSection.value) return;
 
   if (step < currentSection.value) {
     currentSection.value = step;
     return;
-  } else if (step > currentSection.value) {
-    if (await validateCurrentSection()) {
-      currentSection.value = step;
-    }
-    return;
+  }
+
+  const isValid = await validateCurrentSection();
+  if (isValid) {
+    currentSection.value = step;
   }
 }
+
+const stepsState = computed(() => {
+  return sections.value.map((section, idx) => {
+    const paths = section.fields.map((f) => f.path);
+
+    const hasError = v$.value.$errors.some((e) =>
+      inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+    );
+
+    return {
+      index: idx + 1,
+      label: section.label,
+      isCurrentStep: idx === currentSection.value,
+      isValid: !hasError,
+      isVisited: idx <= currentSection.value,
+    };
+  });
+});
 
 if (import.meta.client) {
   onBeforeMount(() => {
@@ -342,8 +308,7 @@ const getSuggestion = (k?: string) => {
     <span class="dynamic-form__title sr-only">{{ formDefinition?.title }}</span>
     <FormElementsFormSteps
       v-if="formDefinition?.sections.length > 1"
-      :steps-labels="formDefinition.sections.map((s) => s.label)"
-      :currentStep="currentSection + 1"
+      :steps-state="stepsState"
       @changeStep="changeStep"
     />
     <div
@@ -367,13 +332,28 @@ const getSuggestion = (k?: string) => {
     </div>
     <div class="dynamic-form__buttons">
       <UIPrimaryButton
-        :variant="isCurrentStepInvalid ? 'error-color' : 'accent-color'"
-        icon="arrow_right"
+        :variant="
+          isCurrentStepInvalid ||
+          (currentSection === sections.length - 1 && hasAnyError)
+            ? 'error-color'
+            : 'accent-color'
+        "
+        :icon="
+          isCurrentStepInvalid ||
+          (currentSection === sections.length - 1 && hasAnyError)
+            ? 'x_circle'
+            : 'arrow_right'
+        "
         @click="next"
         @keydown.enter="next"
         @keydown.space="next"
       >
-        Suivant
+        {{
+          isCurrentStepInvalid ||
+          (currentSection === sections.length - 1 && hasAnyError)
+            ? "Corrigez les erreurs"
+            : "Suivant"
+        }}
       </UIPrimaryButton>
       <UISecondaryButton
         v-if="currentSection > 0"
