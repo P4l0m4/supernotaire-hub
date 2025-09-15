@@ -23,7 +23,6 @@ const checkStatus = async (taskId: string) => {
       throw new Error(`Status check failed: ${response.status}`);
     }
     const result = await response.json();
-    console.log("Status response:", result);
     return result;
   } catch (error: any) {
     console.error("Status check error:", error);
@@ -61,7 +60,7 @@ export const processDocument = async (file: File) => {
     progress = 10;
 
     while (attempts < maxAttempts) {
-      console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
+      // console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
       progress++;
 
       const statusResponse = await checkStatus(taskId);
