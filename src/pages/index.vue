@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-
 import { stringToSlug } from "@/utils/slugify";
+import { useStoryblokApi } from "@storyblok/vue";
 
 import notary from "@/assets/images/accountant-54.svg";
 import seller from "@/assets/images/real-estate-agent-76.svg";
@@ -12,11 +12,8 @@ import logo from "/favicon-96x96.png";
 
 import type { Decoration } from "@/components/UI/profile.vue";
 
-const story = await useAsyncStoryblok("tutoriels", {
-  version: "published",
-});
-
-const carouselElements = ref([]);
+const tutorials = ref<any[]>([]);
+const carouselElements = ref<any[]>([]);
 
 const url = ref();
 
@@ -106,16 +103,20 @@ useJsonld(() => ({
   },
 }));
 
-onMounted(() => {
+onMounted(async () => {
   url.value = window.location.href;
 
-  carouselElements.value = story.value.content.tutorials.map(
-    (tutorial: any) => ({
-      link: `/tutoriels/${stringToSlug(tutorial.title)}`,
-      image: tutorial.previewImage.filename,
-      label: tutorial.title,
-    })
-  );
+  const storyblokApi = useStoryblokApi();
+  const { data } = await storyblokApi.get("cdn/stories", {
+    version: "published",
+  });
+  tutorials.value = data.stories[0].content.tutorials;
+
+  carouselElements.value = tutorials.value.map((tutorial: any) => ({
+    link: `/tutoriels/${stringToSlug(tutorial.title)}`,
+    image: tutorial.previewImage.filename,
+    label: tutorial.title,
+  }));
 });
 </script>
 <template>
