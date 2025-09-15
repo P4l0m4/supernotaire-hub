@@ -215,10 +215,11 @@ watch(
       </div>
     </ul>
   </div>
+
   <FormElementsDynamicForm
     v-if="!showFirstAction && !showLastAction"
     :formDefinition="formDefinition as FormDefinition"
-    :suggestions
+    :suggestions="suggestions"
     v-model="formData"
     @complete="showLastAction = true"
   />

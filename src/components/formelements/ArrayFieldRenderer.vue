@@ -120,6 +120,20 @@ const firstItemMsg = (i: number, sub: string): string | undefined => {
   );
 };
 
+// Safely read a suggestion value for a given item index and sub-field
+function suggestionFor(i: number, subField: any): string | number | undefined {
+  const key = (subField?.suggestionRef as string | undefined) ?? undefined;
+  if (!key) return undefined;
+  const arr = props.suggestion;
+  const row: any = Array.isArray(arr) ? arr[i] : undefined;
+  const val = row?.[key];
+  return typeof val === "string" || typeof val === "number" ? val : undefined;
+}
+
+function hasSuggestion(i: number, subField: any): boolean {
+  return suggestionFor(i, subField) !== undefined;
+}
+
 async function updateItem(idx: number, path: string, value: Primitive) {
   const next = clone(model.value);
   setByPath(next[idx], path, value);
@@ -174,6 +188,31 @@ const childrenErrors = computed(() => {
   }
   return indexOfChildrenWithErrors;
 });
+
+async function applyAllSuggestions() {
+  const rows: any[] = Array.isArray(props.suggestion) ? props.suggestion : [];
+  if (!rows.length) return;
+
+  const next = [...model.value];
+  // Ensure enough items exist
+  while (next.length < rows.length) next.push(makeEmptyItem());
+
+  // Map each suggestion row to the corresponding item fields
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i] || {};
+    for (const f of props.field.itemSchema?.fields ?? []) {
+      const key = (f as any)?.suggestionRef as string | undefined;
+      if (!key) continue;
+      const val = row?.[key];
+      if (val === undefined) continue;
+      setByPath(next[i], f.path, val);
+    }
+  }
+
+  model.value = next;
+  await nextTick();
+  itemRefs.value.at(-1)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 </script>
 
 <template>
@@ -196,15 +235,15 @@ const childrenErrors = computed(() => {
           :color="colors['error-color']"
         />
       </h4>
-
-      <UITagComponent
-        v-if="suggestion"
-        icon="lightbulb_fill"
-        :color="colors['purple-color']"
+      <UISmartSuggestion
+        v-if="suggestion && suggestion.length"
+        :suggestion="`${suggestion?.length} éléments trouvés`"
+        @click="applyAllSuggestions"
+        @keydown.enter="applyAllSuggestions"
+        @keydown.space="applyAllSuggestions"
         style="margin-left: auto"
-      >
-        {{ suggestion.length }} éléments trouvés</UITagComponent
-      >
+      />
+
       <UISecondaryButton
         variant="accent-color"
         icon="plus_circle"
@@ -316,17 +355,11 @@ const childrenErrors = computed(() => {
             </ClientOnly>
             <UISmartSuggestion
               v-if="
-                suggestion &&
-                (typeof suggestion[idx][f.suggestionRef] === 'string' ||
-                  typeof suggestion[idx][f.suggestionRef] === 'number') &&
-                suggestion[idx][f.suggestionRef] !== getByPath(item, f.path)
+                hasSuggestion(idx, f) &&
+                suggestionFor(idx, f) !== getByPath(item, f.path)
               "
-              :suggestion="suggestion[idx][f.suggestionRef].toString()"
-              @click="
-                () => {
-                  updateItem(idx, f.path, suggestion[idx][f.suggestionRef]);
-                }
-              "
+              :suggestion="String(suggestionFor(idx, f))"
+              @click="() => updateItem(idx, f.path, suggestionFor(idx, f) as any)"
             />
           </label>
         </template>

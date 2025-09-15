@@ -1,6 +1,7 @@
 import {
   helpers,
   required,
+  requiredIf,
   minLength,
   maxLength,
   minValue,
@@ -11,6 +12,8 @@ import {
 
 export const fr = {
   required: helpers.withMessage("Champ obligatoire", required),
+  requiredIf: (condition: () => boolean) =>
+    helpers.withMessage("Champ obligatoire", requiredIf(condition)),
   minLength: (n: number) =>
     helpers.withMessage(
       `Au moins ${n} caractère${n > 1 ? "s" : ""}`,

@@ -200,7 +200,14 @@
           "id": "copropriete-fonds-travaux-montant",
           "label": "Montant total fonds travaux",
           "name": "fonds_travaux_montant",
-          "required": true,
+          "showIf": {
+            "path": "copropriete.fonds_travaux_existance",
+            "equals": true
+          },
+          "requiredIf": {
+            "path": "copropriete.fonds_travaux_existance",
+            "equals": true
+          },
           "placeholder": "0 si pas de fonds travaux",
           "type": "number",
           "min": 0,

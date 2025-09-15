@@ -1,4 +1,5 @@
 import { mergeGeneric } from "@/utils/merge";
+import { selectTopKRelevantChunks } from "@/utils/rag";
 
 function buildPrompt(documentName: string, TS_TYPE: string, textBlob: string) {
   const instr = `Réponds UNIQUEMENT par un JSON parsable qui satisfait exactement ce type TS (aucune clé en plus).
@@ -73,20 +74,32 @@ export async function AIExtractInfoFromText(
 ): Promise<{}> {
   if (!import.meta.client) throw new Error("client_only");
 
+  // Try RAG selection first (auto-activated if GEMINI_KEY exists). If it fails, fallback to the
+  // previous chunk+merge strategy for robustness.
+  try {
+    const query = `${documentName} -> Remplir ce type: ${TS_TYPE}`;
+    const top = await selectTopKRelevantChunks(textBlob, query, 6, 600, 80);
+    if (top && top.length > 0) {
+      const context = top.map((t, i) => `[[CTX_${i} score=${t.score.toFixed(3)}]]\n${t.text}`).join("\n\n");
+      console.log(`RAG selected ${top.length} chunks for extraction.`);
+      return await extractWithGeminiClient(context, documentName, TS_TYPE);
+    }
+  } catch (e) {
+    console.warn("RAG path failed, will fallback:", e);
+  }
+
+  // Fallback: original chunking + merge
   const parts = chunkTextByTokens(textBlob, 600, 80);
   if (!parts.length) throw new Error("empty_text");
 
-  // parallélisation limitée
   const concurrency = Math.min(4, (navigator as any)?.hardwareConcurrency || 2);
-
-  console.log(`Chunking text into ${parts.length} parts for extraction.`);
+  console.log(`Chunking text into ${parts.length} parts for extraction (fallback).`);
 
   if (parts.length === 1) {
     return await extractWithGeminiClient(parts[0], documentName, TS_TYPE);
   }
 
   let acc: {} | null = null;
-
   for (let i = 0; i < parts.length; i += concurrency) {
     const batch = parts.slice(i, i + concurrency);
     const results = await Promise.all(
@@ -97,7 +110,6 @@ export async function AIExtractInfoFromText(
         })
       )
     );
-
     for (const piece of results) {
       if (!piece) continue;
       if (!acc) {
@@ -106,13 +118,12 @@ export async function AIExtractInfoFromText(
       }
       acc = mergeGeneric(acc, piece, {
         restrictToKeysOfA: true,
-        uniqueBy: uniqueKeyHash, // déduplication générique via hash JSON à clés triées
+        uniqueBy: uniqueKeyHash,
       });
     }
   }
-
   if (!acc) throw new Error("extraction_failed_all_chunks");
-  console.log(`Merged ${parts.length} parts into one extraction result.`);
+  console.log(`Merged ${parts.length} parts into one extraction result (fallback).`);
   return acc;
 }
 

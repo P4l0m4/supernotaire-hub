@@ -7,7 +7,7 @@ import type { FormField } from "@/utils/types/forms";
 
 const props = defineProps<{
   formField: FormField;
-  suggestion?: string | object | number;
+  suggestion?: any;
   validation?: Validation<any> | null;
 }>();
 
@@ -102,7 +102,7 @@ const errorMessage = computed(() => {
       class="form-field__label"
       >{{ formField.label }}
       <UIIconComponent
-        v-if="formField.required"
+        v-if="formField.required || formField.requiredIf"
         icon="asterisk"
         size="0.75rem"
         :color="colors['error-color']"
@@ -118,7 +118,13 @@ const errorMessage = computed(() => {
       :placeholder="formField.placeholder || ''"
       :name="formField.name"
       v-model="valueRef"
-      :required="formField.required"
+      :required="
+        formField.required
+          ? formField.required
+          : formField.requiredIf
+          ? false
+          : undefined
+      "
       :icon="formField.icon || ''"
       :error="errorMessage"
       :tooltip="formField.tooltip || ''"

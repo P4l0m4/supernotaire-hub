@@ -5,7 +5,10 @@ defineProps<{
 }>();
 </script>
 <template>
-  <div class="smart-suggestion">
+  <div
+    class="smart-suggestion"
+    v-tooltip="{ content: 'Cliquer pour appliquer la suggestion' }"
+  >
     <UIIconComponent
       icon="lightbulb_fill"
       size="0.85rem"

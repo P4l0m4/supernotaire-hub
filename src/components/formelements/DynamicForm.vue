@@ -5,10 +5,16 @@ import useVuelidate from "@vuelidate/core";
 import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
 
 import type { FormDefinition } from "@/utils/types/forms";
+import { evaluateShowIf } from "@/utils/showIf";
+
+interface Suggestion {
+  key: string;
+  value: any;
+}
 
 const props = defineProps<{
   formDefinition: FormDefinition;
-  suggestions?: Record<string, any>;
+  suggestions?: Suggestion[] | null;
 }>();
 const emit = defineEmits<{
   (e: "complete"): void;
@@ -87,6 +93,11 @@ function buildRules(def?: FormDefinition) {
   const rulesForScalar = (f: any) => {
     const r: any = {};
     if (f.required) r.required = fr.required;
+    if (f.requiredIf) {
+      r.requiredIf = fr.requiredIf(() =>
+        evaluateShowIf(f.requiredIf, model.value)
+      );
+    }
     if (f.type === "number") {
       r.numeric = fr.numeric;
       if (f.min != null) r.minValue = fr.minValue(f.min);
@@ -183,6 +194,15 @@ function inSectionPath(errPath: string, sectionPaths: string[]) {
 }
 
 const sections = computed(() => props.formDefinition?.sections ?? []);
+
+function isFieldVisible(field: any): boolean {
+  try {
+    return evaluateShowIf(field?.showIf, model.value);
+  } catch (e) {
+    console.warn("[DynamicForm] showIf evaluation failed for", field?.path, e);
+    return true;
+  }
+}
 
 async function validateCurrentSection() {
   await nextTick();
@@ -293,11 +313,20 @@ if (import.meta.client) {
 }
 
 const getSuggestion = (k?: string) => {
-  if (!k) return "";
-  const arr = Array.isArray(props.suggestions) ? props.suggestions : [];
-  const hit = arr.find((it) => it && it.key === k);
-  return hit?.value ?? "";
+  if (!k || !Array.isArray(props.suggestions)) return undefined as any;
+  for (const entry of props.suggestions) {
+    if (entry?.key === k) return entry.value; // direct match
+    const nested = (entry?.value as any)?.[k];
+    if (nested != null) return nested; // nested object match
+  }
+  return undefined as any;
 };
+
+const visibleFields = computed(() => {
+  const s = sections.value[currentSection.value];
+  if (!s) return [];
+  return s.fields.filter((f) => isFieldVisible(f));
+});
 </script>
 
 <template>
@@ -322,7 +351,7 @@ const getSuggestion = (k?: string) => {
     >
       <div class="dynamic-form__section__fields">
         <FormElementsFormField
-          v-for="field in section.fields"
+          v-for="field in visibleFields"
           :key="field.path"
           :formField="field"
           :suggestion="getSuggestion(field.suggestionRef)"

@@ -1,4 +1,5 @@
 import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
+import type { requiredIf } from "@vuelidate/validators";
 
 type FieldType =
   | "text"
@@ -23,18 +24,33 @@ export interface BaseField {
   name: string;
   type: Exclude<FieldType, "array">;
   required?: boolean;
+  requiredIf?: ShowIf;
   placeholder?: string;
   icon?: string;
-  TS_TYPE?: string; // pour extraction AI
+  TS_TYPE?: string; // clé extraction AI
   tooltip?: string;
   tooltipLink?: string; // si tooltip renvoie vers une doc
-  pattern?: string; // pour validation par regex
+  pattern?: string; // validation par regex
+  // Affichage conditionnel: le champ est affiché si la condition est vraie
+  showIf?: ShowIf;
 }
+
+// Règles affichage conditionnel
+export type ShowIf =
+  | {
+      path: string; // chemin absolu depuis la racine du modèle (ex: "copropriete.fonds_travaux_existance")
+      equals?: any; // valeur attendue (test égalité stricte)
+      in?: any[]; // une des valeurs
+      truthy?: boolean; // valeur considérée comme vraie (par défaut true)
+    }
+  | { not: ShowIf }
+  | { all: ShowIf[] }
+  | { any: ShowIf[] };
 
 export interface CheckBoxOption {
   label: string;
   value: boolean;
-  belongsTo?: string[]; // pour afficher les checkbox en fonction d'une autre valeur
+  belongsTo?: string[]; // afficher les checkbox en fonction d'une autre valeur
 }
 
 export interface CheckBoxField extends BaseField {
