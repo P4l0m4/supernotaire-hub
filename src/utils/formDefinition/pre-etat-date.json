@@ -713,8 +713,8 @@
           "step": 1,
           "required": false,
           "placeholder": "1000",
-          "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-          "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#reserves"
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-constituant-la-reserve"
         },
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.provisions_speciales",
@@ -726,8 +726,8 @@
           "step": 1,
           "required": false,
           "placeholder": "500",
-          "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-          "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#provisions-speciales"
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
         },
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.avances_emprunts",
@@ -738,8 +738,8 @@
           "min": 0,
           "step": 1,
           "required": false,
-          "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-          "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#emprunts"
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
         },
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.budget_previsionnel",
@@ -758,9 +758,7 @@
                 "mode": "date-picker",
                 "required": true,
                 "icon": "calendar_dots_fill",
-                "placeholder": "jj-mm-aaaa",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#dans-le-budget-previsionnel"
+                "placeholder": "jj-mm-aaaa"
               },
               {
                 "path": "montant",
@@ -771,8 +769,8 @@
                 "required": true,
                 "placeholder": "300",
                 "icon": "hand_coins_fill",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#dans-le-budget-previsionnel"
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#au-titre-du-budget-previsionnel"
               }
             ]
           }
@@ -795,9 +793,7 @@
                 "mode": "date-picker",
                 "placeholder": "jj-mm-aaaa",
                 "required": true,
-                "icon": "calendar_dots_fill",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#hors-budget-previsionnel"
+                "icon": "calendar_dots_fill"
               },
               {
                 "path": "montant",
@@ -808,8 +804,8 @@
                 "required": true,
                 "placeholder": "400",
                 "icon": "hand_coins_fill",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#hors-budget-previsionnel"
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#hors-budget-previsionnel"
               }
             ]
           }
@@ -831,9 +827,7 @@
                 "mode": "date-picker",
                 "required": true,
                 "placeholder": "jj-mm-aaaa",
-                "icon": "calendar_dots_fill",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#cotisations-fonds-travaux"
+                "icon": "calendar_dots_fill"
               },
               {
                 "path": "montant",
@@ -844,8 +838,8 @@
                 "required": true,
                 "placeholder": "400",
                 "icon": "hand_coins_fill",
-                "tooltip": "Information trouvable dans l'état daté, rubrique 'Sommes incombant au nouveau propriétaire/charge acquéreur'",
-                "tooltipLink": "/tutoriels/pre-etat-date-trouver-les-donnees-financieres-de-la-copropropriete#cotisations-fonds-travaux"
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-fonds-travaux-alur-quote-part"
               }
             ]
           }

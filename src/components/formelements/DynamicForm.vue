@@ -20,6 +20,15 @@ const currentSection = ref(0);
 
 const stopNextStep = ref(false);
 
+const showErrorState = ref(false);
+
+function triggerErrorState() {
+  showErrorState.value = true;
+  setTimeout(() => {
+    showErrorState.value = false;
+  }, 2000);
+}
+
 const model = defineModel<any>({ default: {} });
 
 function ensureArrayPaths(def?: FormDefinition) {
@@ -190,36 +199,29 @@ async function validateCurrentSection() {
   return results.every(Boolean);
 }
 
-const isCurrentStepInvalid = computed(() => {
-  const s = sections.value[currentSection.value];
-  if (!s) return false;
-  const paths = s.fields.map((f) => f.path);
-  return v$.value.$errors.some((e) =>
-    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
-  );
-});
-
-const hasAnyError = computed(() => v$.value.$errors.length > 0);
-
 async function next() {
   try {
     // toujours valider la section courante
-    if (!(await validateCurrentSection())) return;
+    if (!(await validateCurrentSection())) {
+      triggerErrorState();
+      return;
+    }
 
     const nextIdx = currentSection.value + 1;
 
-    // si on est sur la dernière étape → valider tout le formulaire
+    // valider tout le formulaire si on est sur la dernière étape
     if (nextIdx >= sections.value.length) {
       await nextTick();
       await v$.value.$validate(); // valide toutes les sections
       if (v$.value.$errors.length > 0) {
-        return; // blocage si une erreur quelque part
+        triggerErrorState();
+        return;
       }
       emit("complete");
       return;
     }
 
-    // sinon on passe simplement à l’étape suivante
+    // sinon étape suivante
     currentSection.value = nextIdx;
     formRef.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) {
@@ -332,28 +334,14 @@ const getSuggestion = (k?: string) => {
     </div>
     <div class="dynamic-form__buttons">
       <UIPrimaryButton
-        :variant="
-          isCurrentStepInvalid ||
-          (currentSection === sections.length - 1 && hasAnyError)
-            ? 'error-color'
-            : 'accent-color'
-        "
-        :icon="
-          isCurrentStepInvalid ||
-          (currentSection === sections.length - 1 && hasAnyError)
-            ? 'x_circle'
-            : 'arrow_right'
-        "
+        :variant="showErrorState ? 'error-color' : 'accent-color'"
+        :icon="showErrorState ? 'x_circle' : 'arrow_right'"
+        :class="{ shake: showErrorState }"
         @click="next"
         @keydown.enter="next"
         @keydown.space="next"
       >
-        {{
-          isCurrentStepInvalid ||
-          (currentSection === sections.length - 1 && hasAnyError)
-            ? "Corrigez les erreurs"
-            : "Suivant"
-        }}
+        {{ showErrorState ? "Corrigez les erreurs" : "Suivant" }}
       </UIPrimaryButton>
       <UISecondaryButton
         v-if="currentSection > 0"

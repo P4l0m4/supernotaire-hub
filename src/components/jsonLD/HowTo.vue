@@ -411,7 +411,7 @@ onBeforeUnmount(() => {
     list-style: none;
 
     &__element {
-      scroll-margin-top: 3rem;
+      scroll-margin-top: 5rem;
       display: flex;
       flex-direction: column;
       gap: 4rem;
