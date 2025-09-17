@@ -40,18 +40,6 @@
           "accept": [".pdf", ".png", ".jpg", ".jpeg"],
           "multiple": false,
           "TS_TYPE": "TS_TYPE_AttestationDePropriété"
-        },
-        {
-          "path": "document.releve_individuel_compte",
-          "id": "releve-individuel-compte",
-          "label": "Relevé individuel de compte",
-          "name": "releve_individuel_compte",
-          "type": "file",
-          "required": false,
-          "icon": "plus_circle",
-          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
-          "multiple": false,
-          "TS_TYPE": "TS_TYPE_ExtractionRIC"
         }
       ]
     },
@@ -112,6 +100,24 @@
           "required": false,
           "type": "text",
           "placeholder": "Porte 12"
+        },
+        {
+          "path": "bien.total_tantiemes_vendeur",
+          "id": "bien-total-tantiemes-vendeur",
+          "label": "Total de vos tantièmes",
+          "name": "total_tantiemes_vendeur",
+          "type": "number",
+          "placeholder": "300",
+          "required": true
+        },
+        {
+          "path": "bien.total_tantiemes_copropriete",
+          "id": "bien-total-tantiemes-copropriete",
+          "label": "Total des tantièmes de la copropriété",
+          "name": "total_tantiemes_copropriete",
+          "type": "number",
+          "placeholder": "0",
+          "required": true
         },
         {
           "path": "bien.lots",
@@ -241,12 +247,26 @@
           "required": true
         },
         {
+          "path": "copropriete.existance_emprunts",
+          "id": "copropriete-existance-emprunts",
+          "label": "La copro a-t-elle des emprunts en cours ?",
+          "name": "copropriete_existance_emprunts",
+          "type": "checkbox"
+        },
+        {
           "path": "copropriete.emprunts",
           "suggestionRef": "copropriete_emprunts",
           "id": "copropriete-emprunts",
           "label": "Emprunts éventuels",
           "name": "emprunts-eventuels",
-          "required": false,
+          "requiredIf": {
+            "path": "copropriete.existance_emprunts",
+            "equals": true
+          },
+          "showIf": {
+            "path": "copropriete.existance_emprunts",
+            "equals": true
+          },
           "type": "array",
           "itemLabel": "Emprunt {{index}}",
           "itemSchema": {
@@ -518,7 +538,7 @@
         },
         {
           "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.pret_quote_part_vendeur",
-          "suggestionRef": "cedant_autres_exigibles_pret_quote_part_vendeur",
+          "suggestionRef": "cedant_autres_sommes_exigibles_pret_quote_part_vendeur",
           "id": "cedant-autres-exigibles-pret-quote-part-vendeur",
           "label": "Autres sommes exigibles — Prêt (quote-part vendeur)",
           "name": "cedant_autres_exigibles_pret_quote_part_vendeur",
@@ -530,7 +550,7 @@
         },
         {
           "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.condamnations",
-          "suggestionRef": "cedant_autres_exigibles_condamnations",
+          "suggestionRef": "cedant_autres_sommes_exigibles_condamnations",
           "id": "cedant-autres-exigibles-condamnations",
           "label": "Autres sommes exigibles — Condamnations",
           "name": "cedant_autres_exigibles_condamnations",
@@ -556,10 +576,10 @@
     },
     {
       "id": "financier_lot_autres",
-      "label": "Autres sommes",
+      "label": "Sommes dont le syndic pourrait être débiteur",
       "fields": [
         {
-          "path": "financier_lot_autres.sommes_dont_syndicat_pourrait_etre_debiteur.provisions_posterieures_rendues_exigibles",
+          "path": "financier_lot_sommes_debiteur_syndic.sommes_dont_syndicat_pourrait_etre_debiteur.provisions_posterieures_rendues_exigibles",
           "suggestionRef": "provisions_posterieures_rendues_exigibles",
           "id": "provisions-posterieures-rendues-exigibles",
           "label": "Provisions postérieures rendues exigibles",
@@ -567,142 +587,68 @@
           "type": "number",
           "min": 0,
           "step": 0.01,
-          "required": false,
+          "required": true,
           "placeholder": "1000",
           "tooltip": "Provisions encaissées pour des périodes postérieures et rendues exigibles (art. 19-2 loi du 10/07/1965)."
         },
-
         {
-          "path": "financier_lot_autres.avances_provisions.generale",
-          "suggestionRef": "financier_lot_autres_avances_provisions_generale",
-          "id": "financier_lot_autres-avances_provisions-generale",
-          "label": "Avance générale",
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+          "suggestionRef": "financier_lot_sommes_debiteur_syndic_avances_provisions_generale",
+          "id": "financier_lot_sommes_debiteur_syndic-avances_provisions-generale",
+          "label": "Total avance générale pour la copro",
           "name": "financier_lot_autres_avances_provisions_generale",
           "type": "number",
           "placeholder": "1000",
           "min": 0,
           "step": 0.01,
-          "required": false,
+          "required": true,
           "tooltip": "Avance de trésorerie / fonds de roulement versée antérieurement par le vendeur. Montant crédité sur son compte, non consommé à la date de la vente."
         },
         {
-          "path": "financier_lot_autres.avances_provisions.travaux",
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
           "suggestionRef": "avances_provisions_travaux",
-          "id": "financier_lot_autres-avances_provisions-travaux",
-          "label": "Provision travaux",
-          "name": "financier_lot_autres_avances_provisions_travaux",
+          "id": "financier_lot_sommes_debiteur_syndic-avances_provisions-travaux",
+          "label": "Total provisions travaux pour la copro",
+          "name": "financier_lot_sommes_debiteur_syndic_avances_provisions_travaux",
           "type": "number",
           "placeholder": "1000",
           "min": 0,
           "step": 0.01,
-          "required": false
+          "required": true
         },
         {
-          "path": "financier_lot_autres.avances_provisions.modalites_remboursement",
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.modalites_remboursement",
           "suggestionRef": "modalites_remboursement_sommes_dues_par_syndic",
           "label": "Modalités de remboursement",
-          "name": "financier_lot_autres_modalites_remboursement",
+          "name": "financier_lot_sommes_debiteur_syndic_modalites_remboursement",
           "type": "select",
           "options": ["Transfert à l’acquéreur", "Remboursement au cédant"],
           "placeholder": "Sélectionner si applicable",
           "icon": "gear_six_fill",
-          "required": false
-        },
-        {
-          "path": "financier_lot_autres.charges.N_1.bp_appelee",
-          "suggestionRef": "charges_N_1_quote_part_bp_appelee",
-          "id": "financier_lot_autres-charges-N_1-bp_appelee",
-          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
-          "name": "financier_lot_autres_charges_N_1_quote_part_bp_appelee",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_1.bp_reelle",
-          "suggestionRef": "charges_N_1_quote_part_bp_reelle",
-          "id": "financier_lot_autres-charges-N_1-bp_reelle",
-          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
-          "name": "financier_lot_autres_charges_N_1_quote_part_bp_reelle",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_1.hb_appelee",
-          "suggestionRef": "charges_N_1_quote_part_hb_appelee",
-          "id": "financier_lot_autres-charges-N_1-hb_appelee",
-          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
-          "name": "financier_lot_autres_charges_N_1_quote_part_hb_appelee",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_1.hb_reelle",
-          "suggestionRef": "charges_N_1_quote_part_hb_reelle",
-          "id": "financier_lot_autres-charges-N_1-hb_reelle",
-          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
-          "name": "financier_lot_autres_charges_N_1_quote_part_hb_reelle",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_2.bp_appelee",
-          "suggestionRef": "charges_N_2_quote_part_bp_appelee",
-          "id": "financier_lot_autres-charges-N_2-bp_appelee",
-          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
-          "name": "financier_lot_autres_charges_N_2_quote_part_bp_appelee",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_2.bp_reelle",
-          "suggestionRef": "charges_N_2_quote_part_bp_reelle",
-          "id": "financier_lot_autres-charges-N_2-bp_reelle",
-          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
-          "name": "financier_lot_autres_charges_N_2_quote_part_bp_reelle",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_2.hb_appelee",
-          "suggestionRef": "charges_N_2_quote_part_hb_appelee",
-          "id": "financier_lot_autres-charges-N_2-hb_appelee",
-          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
-          "name": "financier_lot_autres_charges_N_2_quote_part_hb_appelee",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
-        },
-        {
-          "path": "financier_lot_autres.charges.N_2.hb_reelle",
-          "suggestionRef": "charges_N_2_quote_part_hb_reelle",
-          "id": "financier_lot_autres-charges-N_2-hb_reelle",
-          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
-          "name": "financier_lot_autres_charges_N_2_quote_part_hb_reelle",
-          "type": "number",
-          "min": 0,
-          "step": 0.01,
-          "required": true,
-          "placeholder": "1000"
+          "showIf": {
+            "any": [
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+                "greaterThan": 0
+              },
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
+                "greaterThan": 0
+              }
+            ]
+          },
+          "requiredIf": {
+            "or": [
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+                "greaterThan": 0
+              },
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
+                "greaterThan": 0
+              }
+            ]
+          }
         }
       ]
     },
@@ -713,12 +659,12 @@
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.reserve",
           "id": "acq-reconstitution-reserve",
-          "label": "Reconstitution – Réserve",
+          "label": "Avances constituant la Réserve",
           "name": "acq_reconstitution_reserve",
           "type": "number",
           "min": 0,
           "step": 1,
-          "required": false,
+          "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
           "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-constituant-la-reserve"
@@ -726,12 +672,12 @@
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.provisions_speciales",
           "id": "acq-reconstitution-provisions-speciales",
-          "label": "Reconstitution – Provisions spéciales",
+          "label": "Avances au titre des Provisions spéciales",
           "name": "acq_reconstitution_provisions_speciales",
           "type": "number",
           "min": 0,
           "step": 1,
-          "required": false,
+          "required": true,
           "placeholder": "500",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
           "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
@@ -739,12 +685,12 @@
         {
           "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.avances_emprunts",
           "id": "acq-reconstitution-avances-emprunts",
-          "label": "Reconstitution – Emprunts",
+          "label": "Avances au titre des Emprunts",
           "name": "acq_reconstitution_avances_emprunts",
           "type": "number",
           "min": 0,
           "step": 1,
-          "required": false,
+          "required": true,
           "tooltip": "Cliquer pour savoir où trouver cette information.",
           "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
         },
@@ -850,6 +796,124 @@
               }
             ]
           }
+        }
+      ]
+    },
+    {
+      "id": "financier_lot_autres",
+      "label": "Autres sommes",
+      "fields": [
+        {
+          "path": "financier_lot_autres.charges.N_1.bp_appelee",
+          "suggestionRef": "charges_N_1_quote_part_bp_appelee",
+          "id": "financier_lot_autres-charges-N_1-bp_appelee",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_1_quote_part_bp_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.bp_reelle",
+          "suggestionRef": "charges_N_1_quote_part_bp_reelle",
+          "id": "financier_lot_autres-charges-N_1-bp_reelle",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_1_quote_part_bp_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.hb_appelee",
+          "suggestionRef": "charges_N_1_quote_part_hb_appelee",
+          "id": "financier_lot_autres-charges-N_1-hb_appelee",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_1_quote_part_hb_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.hb_reelle",
+          "suggestionRef": "charges_N_1_quote_part_hb_reelle",
+          "id": "financier_lot_autres-charges-N_1-hb_reelle",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_1_quote_part_hb_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.bp_appelee",
+          "suggestionRef": "charges_N_2_quote_part_bp_appelee",
+          "id": "financier_lot_autres-charges-N_2-bp_appelee",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_2_quote_part_bp_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.bp_reelle",
+          "suggestionRef": "charges_N_2_quote_part_bp_reelle",
+          "id": "financier_lot_autres-charges-N_2-bp_reelle",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_2_quote_part_bp_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.hb_appelee",
+          "suggestionRef": "charges_N_2_quote_part_hb_appelee",
+          "id": "financier_lot_autres-charges-N_2-hb_appelee",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_2_quote_part_hb_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.hb_reelle",
+          "suggestionRef": "charges_N_2_quote_part_hb_reelle",
+          "id": "financier_lot_autres-charges-N_2-hb_reelle",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_2_quote_part_hb_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
         }
       ]
     }

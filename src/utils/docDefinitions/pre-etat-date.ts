@@ -1,9 +1,4 @@
-import {
-  fmtEur,
-  squashTofu,
-  fmtPct,
-  toNum,
-} from "@/utils/docDefinitions/formatters";
+import { fmtEur } from "@/utils/docDefinitions/formatters";
 
 import type {
   PreEtatDate,
@@ -13,6 +8,7 @@ import type {
 export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const FL = d.financier_lot;
   const SDC = d.financier_lot_sommes_dues_cedant;
+  const SDS = d.financier_lot_sommes_debiteur_syndic;
   const AUT = d.financier_lot_autres;
   const ACQ = d.financier_lot_sommes_a_la_charge_acquereur_post_vente;
   const num = (v: any) => (typeof v === "number" ? v : Number(v ?? 0)) || 0;
@@ -44,6 +40,11 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
 
   const lotsStack = (d.bien?.lots ?? []).map(lotCard);
 
+  const quotePartVendeur =
+    d.bien?.total_tantiemes_vendeur / d.bien?.total_tantiemes_copropriete;
+
+  console.log({ quotePartVendeur });
+
   const emprunts = (d.copropriete?.emprunts ?? []).map((e) => [
     e.objet ?? "-",
     fmtEur(e.capital_restant_du),
@@ -53,16 +54,16 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
     ? FL.echeances_a_venir.map((p) => [p.date, fmtEur(p.montant)])
     : [];
 
-  // A) Avances perçues (AUT.avances_provisions) + emprunts copropriété
-  const A1 = num(AUT?.avances_provisions?.generale);
-  const A2 = num(AUT?.avances_provisions?.travaux);
+  // A) Avances perçues (avances_provisions) + emprunts copropriété
+  const A1 = num(SDS?.avances_provisions?.generale);
+  const A2 = num(SDS?.avances_provisions?.travaux);
   const A3 = (
     Array.isArray(d.copropriete?.emprunts) ? d.copropriete.emprunts : []
   ).reduce((s: number, e: any) => s + num(e?.capital_restant_du), 0);
 
-  // B) Provisions postérieures rendues exigibles (AUT.sommes_dont_…)
+  // B) Provisions postérieures rendues exigibles (sommes_dont_…)
   const B = num(
-    AUT?.sommes_dont_syndicat_pourrait_etre_debiteur
+    SDS?.sommes_dont_syndicat_pourrait_etre_debiteur
       ?.provisions_posterieures_rendues_exigibles
   );
 
@@ -282,12 +283,12 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
               fmtEur(A2),
             ],
             [
-              "A3 – avances (D. art. 45-1, al. 4) – emprunt du syndicat auprès de copropriétaires",
+              "A3 – avances (D. art. 45-1, al. 4) – emprunt du syndicat auprès du copropriétaire",
               fmtEur(A3),
             ],
             [
               "Modalités de remboursement des avances",
-              AUT?.avances_provisions?.modalites_remboursement ?? "-",
+              SDS?.avances_provisions?.modalites_remboursement ?? "-",
             ],
             [
               {
@@ -420,7 +421,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
             [
               "- Avances nommées provisions (provisions spéciales)  (L. art. 18 alinéa 6 D. art. 35. 4° 5°)",
-              fmtEur(SDC?.avances_exigibles_reserve),
+              fmtEur(SDC?.avances_exigibles_provisions_speciales),
             ],
             [
               "- Avances représentant un emprunt (D. art. 45-1 alinéa 4) (emprunt du syndic auprès des copropriétaires ou certains d’entre eux)",

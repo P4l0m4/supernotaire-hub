@@ -45,7 +45,8 @@ export type ShowIf =
     }
   | { not: ShowIf }
   | { all: ShowIf[] }
-  | { any: ShowIf[] };
+  | { any: ShowIf[] }
+  | { or: ShowIf[] };
 
 export interface CheckBoxOption {
   label: string;

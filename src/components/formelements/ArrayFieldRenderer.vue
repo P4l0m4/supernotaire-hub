@@ -229,7 +229,7 @@ async function applyAllSuggestions() {
       <h4 class="array-field__label">
         {{ field.label }}
         <UIIconComponent
-          v-if="field.required"
+          v-if="field.required || field.requiredIf"
           icon="asterisk"
           size="0.75rem"
           :color="colors['error-color']"

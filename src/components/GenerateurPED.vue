@@ -12,7 +12,6 @@ import { processDocument } from "@/utils/textFromDocument";
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
 import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
-import { TS_TYPE_ExtractionRIC } from "@/utils/extractionModels/releve-individuel-compte";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
@@ -35,10 +34,10 @@ const documents = [
   "Dernier procès-verbal d’assemblée générale.",
   "Fiche synthétique de la copropriété.",
   "Attestation de propriété.",
-  "Relevé individuel de compte.",
   "État des soldes des copropriétaires.",
   "Grand Livre des comptes.",
-  "Compte de gestion pour travaux et opérations exceptionnelles.",
+  "Avant dernier et avant-avant dernier compte de gestion pour travaux et opérations exceptionnelles.",
+  "Dernier et avant dernier compte de gestion pour opérations courantes et budget prévisionnel.",
 ];
 
 const formData = reactive({} as PreEtatDate);
@@ -116,7 +115,6 @@ const TS_TYPES: Record<string, string> = {
   TS_TYPE_ExtractionPVAG,
   TS_TYPE_FicheSynthétiqueCopropriété,
   TS_TYPE_AttestationDePropriété,
-  TS_TYPE_ExtractionRIC,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };
@@ -156,7 +154,18 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
   const TS_TYPE = resolveTsTypeFor(key);
   if (!TS_TYPE) return;
 
-  const filledModel = await extractDataFromResults([], results, key, TS_TYPE);
+  // make an array of clues to help the AI focus on relevant info
+  // for now, only "vendeur_nom" is supported
+
+  const clues = key === "vendeur_nom" ? [key] : [];
+
+  const filledModel = await extractDataFromResults(
+    [],
+    results,
+    key,
+    TS_TYPE,
+    clues
+  );
   upsertSuggestions(toRows(filledModel || {}));
 }
 

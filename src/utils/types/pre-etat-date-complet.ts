@@ -7,16 +7,16 @@ export interface PreEtatDate {
   copropriete: Copropriete;
   syndic: Syndic;
   financier_lot: FinancierLot;
-  financier_lot_sommes_dues_cedant?: FinancierLotSommesDuesCedant;
-  financier_lot_autres?: FinancierLotAutres;
-  financier_lot_sommes_a_la_charge_acquereur_post_vente?: FinancierLotSommesALaChargeAcquereurPostVente;
+  financier_lot_sommes_dues_cedant: FinancierLotSommesDuesCedant;
+  financier_lot_sommes_debiteur_syndic: FinancierLotSommesDebiteurSyndic;
+  financier_lot_sommes_a_la_charge_acquereur_post_vente: FinancierLotSommesALaChargeAcquereurPostVente;
+  financier_lot_autres: FinancierLotAutres;
 }
 
 export interface Documents {
   dernier_pv_ag?: File;
   fiche_synthetique_copropriete?: File;
   attestation_de_propriete?: File;
-  releve_individuel_compte?: File;
 }
 
 export interface Bien {
@@ -27,13 +27,9 @@ export interface Bien {
     etage: string;
     complements: string;
   };
+  total_tantiemes_vendeur: number;
+  total_tantiemes_copropriete: number;
   lots: Lot[];
-}
-
-export interface Lot {
-  designation: string;
-  numero: string;
-  usage: string;
 }
 
 export interface Copropriete {
@@ -41,7 +37,8 @@ export interface Copropriete {
   fonds_travaux: { existance: boolean; montant: Euro };
   impayes: { total: Euro };
   dettes_syndic_fournisseurs: number;
-  emprunts: Emprunt[];
+  existance_emprunts: boolean;
+  emprunts?: Emprunt[];
 }
 
 export interface Emprunt {
@@ -57,6 +54,12 @@ export interface Syndic {
 export interface Provision {
   date: ISODate;
   montant: Euro;
+}
+
+export interface Lot {
+  designation: string;
+  numero: string;
+  usage: string;
 }
 
 export interface FinancierLot {
@@ -85,7 +88,7 @@ export interface FinancierLotSommesDuesCedant {
   a_des_tiers_emprunts_geres_par_syndic: Euro;
 }
 
-export interface FinancierLotAutres {
+export interface FinancierLotSommesDebiteurSyndic {
   sommes_dont_syndicat_pourrait_etre_debiteur?: {
     provisions_posterieures_rendues_exigibles?: Euro;
     // NB : les “Avances perçues” A1/A2/A3 réutilisent avances_provisions + emprunts
@@ -95,21 +98,6 @@ export interface FinancierLotAutres {
     generale: Euro;
     travaux: Euro;
     modalites_remboursement: string;
-  };
-
-  charges: {
-    N_1: {
-      bp_appelee: Euro;
-      bp_reelle: Euro;
-      hb_appelee: Euro;
-      hb_reelle: Euro;
-    };
-    N_2: {
-      bp_appelee: Euro;
-      bp_reelle: Euro;
-      hb_appelee: Euro;
-      hb_reelle: Euro;
-    };
   };
 }
 
@@ -124,4 +112,21 @@ export interface FinancierLotSommesALaChargeAcquereurPostVente {
     hors_budget: Provision[];
   };
   fonds_travaux_non_encore_exigibles: Provision[];
+}
+
+export interface FinancierLotAutres {
+  charges: {
+    N_1: {
+      bp_appelee: Euro;
+      bp_reelle: Euro;
+      hb_appelee: Euro;
+      hb_reelle: Euro;
+    };
+    N_2: {
+      bp_appelee: Euro;
+      bp_reelle: Euro;
+      hb_appelee: Euro;
+      hb_reelle: Euro;
+    };
+  };
 }
