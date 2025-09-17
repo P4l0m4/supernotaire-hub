@@ -419,7 +419,7 @@ onBeforeUnmount(() => {
     list-style: none;
 
     &__element {
-      scroll-margin-top: 5rem;
+      scroll-margin-top: 8rem;
       display: flex;
       flex-direction: column;
       gap: 4rem;
@@ -440,7 +440,7 @@ onBeforeUnmount(() => {
           display: flex;
           flex-direction: column;
           gap: 2rem;
-          scroll-margin-top: 6rem;
+          scroll-margin-top: 9rem;
 
           &__title {
             font-size: 1.5rem;
