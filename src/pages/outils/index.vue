@@ -2,7 +2,7 @@
 import calculator from "@/assets/animated-icons/Calculator.svg?raw";
 import fileDashed from "@/assets/animated-icons/FileDashed.svg?raw";
 import signature from "@/assets/animated-icons/Signature.svg?raw";
-import filePDF from "@/assets/animated-icons/FilePDF.svg?raw";
+import filePDF from "@/assets/animated-icons/FilePdf.svg?raw";
 import fileText from "@/assets/animated-icons/FileText.svg?raw";
 
 const tools = [
