@@ -1,0 +1,109 @@
+<svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="CursorClick" clip-path="url(#clip0_1452_3696)">
+<path id="Vector" d="M12.5 2.5V3.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 1px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M2.5 12.5H3.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 1px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_3" d="M16.5 4.5L17.5 2.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property2" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 2.23607px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property2;"></path>
+<path id="Vector_4" d="M4.5 16.5L2.5 17.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property3" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 2.23607px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property3;"></path>
+<path id="Vector_5" d="M20.7938 17.7946C20.6783 17.6794 20.5928 17.5378 20.5446 17.382C20.4965 17.2262 20.4872 17.0609 20.5175 16.9007C20.5478 16.7405 20.6168 16.5901 20.7186 16.4627C20.8203 16.3352 20.9517 16.2346 21.1013 16.1696L26.9025 13.9421C27.0848 13.8593 27.238 13.7237 27.3424 13.5529C27.4467 13.382 27.4974 13.1838 27.4878 12.9839C27.4783 12.7839 27.4089 12.5914 27.2887 12.4313C27.1686 12.2712 27.0031 12.1509 26.8138 12.0858L6.80502 5.55209C6.63128 5.49859 6.44623 5.49347 6.26979 5.53728C6.09335 5.58108 5.93219 5.67216 5.80364 5.80071C5.67509 5.92926 5.58401 6.09042 5.54021 6.26686C5.4964 6.4433 5.50152 6.62835 5.55502 6.80209L12.085 26.8146C12.15 27.0039 12.2704 27.1694 12.4305 27.2896C12.5906 27.4097 12.7831 27.4791 12.983 27.4886C13.183 27.4982 13.3812 27.4475 13.5521 27.3432C13.7229 27.2388 13.8585 27.0856 13.9413 26.9033L16.1688 21.1021C16.2338 20.9525 16.3344 20.8212 16.4618 20.7194C16.5893 20.6177 16.7397 20.5486 16.8999 20.5183C17.0601 20.488 17.2253 20.4973 17.3811 20.5455C17.5369 20.5936 17.6786 20.6791 17.7938 20.7946L24.2075 27.2083C24.395 27.3957 24.6493 27.501 24.9144 27.501C25.1795 27.501 25.4338 27.3957 25.6213 27.2083L27.2075 25.6258C27.3949 25.4383 27.5002 25.1841 27.5002 24.919C27.5002 24.6539 27.3949 24.3996 27.2075 24.2121L20.7938 17.7946Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property4" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 88.8838px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property4;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3696">
+<rect width="32" height="32" fill="white" transform="translate(0.5 0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 1px;
+            }
+        
+            50%{
+                stroke-dashoffset: -0.5px; 
+        stroke-dasharray: 0.5px, 0.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -1px; 
+        stroke-dasharray: 1px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 1px;
+            }
+        
+            50%{
+                stroke-dashoffset: -0.5px; 
+        stroke-dasharray: 0.5px, 0.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -1px; 
+        stroke-dasharray: 1px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property2{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 2.2360680103302px;
+            }
+        
+            50%{
+                stroke-dashoffset: -1.1180340051651px; 
+        stroke-dasharray: 1.1180340051651px, 1.1180340051651px;
+            }
+        
+            100%{
+                stroke-dashoffset: -2.2360680103302px; 
+        stroke-dasharray: 2.2360680103302px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property3{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 2.2360680103302px;
+            }
+        
+            50%{
+                stroke-dashoffset: -1.1180340051651px; 
+        stroke-dasharray: 1.1180340051651px, 1.1180340051651px;
+            }
+        
+            100%{
+                stroke-dashoffset: -2.2360680103302px; 
+        stroke-dasharray: 2.2360680103302px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property4{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 88.88375091552734px;
+            }
+        
+            50%{
+                stroke-dashoffset: -44.44187545776367px; 
+        stroke-dasharray: 44.44187545776367px, 44.44187545776367px;
+            }
+        
+            100%{
+                stroke-dashoffset: -88.88375091552734px; 
+        stroke-dasharray: 88.88375091552734px, 0px;
+            }
+        
+        }
+        </style></svg>

@@ -1,0 +1,49 @@
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ArrowClockwise" clip-path="url(#clip0_1452_3637)">
+<path id="Vector" d="M23.5 13H29.5V7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 12px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M24.0498 24.0005C22.4774 25.4843 20.5025 26.4718 18.372 26.8396C16.2415 27.2075 14.0499 26.9393 12.0709 26.0687C10.092 25.1981 8.41344 23.7636 7.24507 21.9445C6.0767 20.1254 5.4703 18.0023 5.50164 15.8406C5.53298 13.6788 6.20067 11.5742 7.42129 9.78968C8.6419 8.0052 10.3613 6.61999 12.3647 5.80711C14.368 4.99424 16.5665 4.78975 18.6855 5.21919C20.8044 5.64864 22.7498 6.69298 24.2786 8.22173L29.4998 13.0005" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 58.5951px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3637">
+<rect width="32" height="32" fill="white" transform="translate(0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 12px;
+            }
+        
+            50%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 6px;
+            }
+        
+            100%{
+                stroke-dashoffset: -12px; 
+        stroke-dasharray: 12px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 58.59510040283203px;
+            }
+        
+            50%{
+                stroke-dashoffset: -29.297550201416016px; 
+        stroke-dasharray: 29.297550201416016px, 29.297550201416016px;
+            }
+        
+            100%{
+                stroke-dashoffset: -58.59510040283203px; 
+        stroke-dasharray: 58.59510040283203px, 0px;
+            }
+        
+        }
+        </style></svg>

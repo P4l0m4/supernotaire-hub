@@ -1,0 +1,49 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Signature" clip-path="url(#clip0_1452_3735)">
+<path id="Vector" d="M3 22H29" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 26px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M3 28C3 28 17.44 4 9.73875 4C4.00875 4 3.9475 28.1388 16 13.0238C16 13.0238 17.0137 17.9537 19.4037 18C20.3687 18.0188 21.56 17.2113 23 15C23 15 23 18 29 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 71.566px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3735">
+<rect width="32" height="32" fill="white"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 26px;
+            }
+        
+            50%{
+                stroke-dashoffset: -13px; 
+        stroke-dasharray: 13px, 13px;
+            }
+        
+            100%{
+                stroke-dashoffset: -26px; 
+        stroke-dasharray: 26px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 71.5660400390625px;
+            }
+        
+            50%{
+                stroke-dashoffset: -35.78302001953125px; 
+        stroke-dasharray: 35.78302001953125px, 35.78302001953125px;
+            }
+        
+            100%{
+                stroke-dashoffset: -71.5660400390625px; 
+        stroke-dasharray: 71.5660400390625px, 0px;
+            }
+        
+        }
+        </style></svg>

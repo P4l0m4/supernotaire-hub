@@ -1,0 +1,169 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ArrowsOut" clip-path="url(#clip0_1452_3647)">
+<path id="Vector" d="M20 6.5H26V12.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 12px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M19 13.5L26 6.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 9.8995px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_3" d="M12 26.5H6V20.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property2" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 12px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property2;"></path>
+<path id="Vector_4" d="M13 19.5L6 26.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property3" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 9.8995px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property3;"></path>
+<path id="Vector_5" d="M26 20.5V26.5H20" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property4" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 12px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property4;"></path>
+<path id="Vector_6" d="M19 19.5L26 26.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property5" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 9.8995px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property5;"></path>
+<path id="Vector_7" d="M6 12.5V6.5H12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property6" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 12px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property6;"></path>
+<path id="Vector_8" d="M13 13.5L6 6.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property7" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 9.8995px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property7;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3647">
+<rect width="32" height="32" fill="white" transform="translate(0 0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 12px;
+            }
+        
+            50%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 6px;
+            }
+        
+            100%{
+                stroke-dashoffset: -12px; 
+        stroke-dasharray: 12px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 9.899495124816895px;
+            }
+        
+            50%{
+                stroke-dashoffset: -4.949747562408447px; 
+        stroke-dasharray: 4.949747562408447px, 4.949747562408447px;
+            }
+        
+            100%{
+                stroke-dashoffset: -9.899495124816895px; 
+        stroke-dasharray: 9.899495124816895px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property2{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 12px;
+            }
+        
+            50%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 6px;
+            }
+        
+            100%{
+                stroke-dashoffset: -12px; 
+        stroke-dasharray: 12px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property3{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 9.899495124816895px;
+            }
+        
+            50%{
+                stroke-dashoffset: -4.949747562408447px; 
+        stroke-dasharray: 4.949747562408447px, 4.949747562408447px;
+            }
+        
+            100%{
+                stroke-dashoffset: -9.899495124816895px; 
+        stroke-dasharray: 9.899495124816895px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property4{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 12px;
+            }
+        
+            50%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 6px;
+            }
+        
+            100%{
+                stroke-dashoffset: -12px; 
+        stroke-dasharray: 12px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property5{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 9.899495124816895px;
+            }
+        
+            50%{
+                stroke-dashoffset: -4.949747562408447px; 
+        stroke-dasharray: 4.949747562408447px, 4.949747562408447px;
+            }
+        
+            100%{
+                stroke-dashoffset: -9.899495124816895px; 
+        stroke-dasharray: 9.899495124816895px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property6{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 12px;
+            }
+        
+            50%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 6px;
+            }
+        
+            100%{
+                stroke-dashoffset: -12px; 
+        stroke-dasharray: 12px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property7{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 9.899495124816895px;
+            }
+        
+            50%{
+                stroke-dashoffset: -4.949747562408447px; 
+        stroke-dasharray: 4.949747562408447px, 4.949747562408447px;
+            }
+        
+            100%{
+                stroke-dashoffset: -9.899495124816895px; 
+        stroke-dasharray: 9.899495124816895px, 0px;
+            }
+        
+        }
+        </style></svg>

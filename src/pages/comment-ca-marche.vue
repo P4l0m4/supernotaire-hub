@@ -109,7 +109,7 @@ const perks = [
   gap: 2rem;
   height: fit-content;
 
-  @media (min-width: $tablet-screen) {
+  @media (min-width: $big-tablet-screen) {
     grid-template-columns: 1fr 1fr;
   }
 

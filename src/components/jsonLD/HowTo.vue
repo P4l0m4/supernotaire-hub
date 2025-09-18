@@ -192,7 +192,11 @@ onBeforeUnmount(() => {
     v-if="props.tutorialOptions.length"
     :options="props.tutorialOptions"
   />
-  <UIQuote :quote="tutorialClarification" author="Supernotaire" />
+  <UIQuote
+    v-if="tutorialClarification"
+    :quote="tutorialClarification"
+    author="Supernotaire"
+  />
 
   <div ref="el" class="how-to">
     <div class="how-to__attention">

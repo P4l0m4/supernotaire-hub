@@ -1,0 +1,29 @@
+<svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="House" clip-path="url(#clip0_1452_3693)">
+<path id="Vector" d="M13.75 27.5008V19.5008H19.75V27.5008H27.75V15.5008C27.7501 15.3694 27.7243 15.2393 27.6741 15.1179C27.6239 14.9965 27.5503 14.8862 27.4575 14.7933L17.4575 4.79329C17.3646 4.70031 17.2543 4.62655 17.1329 4.57623C17.0115 4.5259 16.8814 4.5 16.75 4.5C16.6186 4.5 16.4885 4.5259 16.3671 4.57623C16.2457 4.62655 16.1354 4.70031 16.0425 4.79329L6.0425 14.7933C5.94967 14.8862 5.87605 14.9965 5.82586 15.1179C5.77568 15.2393 5.7499 15.3694 5.75 15.5008V27.5008H13.75Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 93.4275px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3693">
+<rect width="32" height="32" fill="white" transform="translate(0.75 0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 93.42745208740234px;
+            }
+        
+            50%{
+                stroke-dashoffset: -46.71372604370117px; 
+        stroke-dasharray: 46.71372604370117px, 46.71372604370117px;
+            }
+        
+            100%{
+                stroke-dashoffset: -93.42745208740234px; 
+        stroke-dasharray: 93.42745208740234px, 0px;
+            }
+        
+        }
+        </style></svg>
