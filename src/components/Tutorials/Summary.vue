@@ -10,6 +10,7 @@ defineProps<{
 
 <template>
   <ol class="summary">
+    <span class="summary__title">Sommaire</span>
     <li
       class="summary__option"
       v-for="(option, i) in options"
@@ -45,6 +46,13 @@ defineProps<{
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+
+  &__title {
+    font-weight: $medium;
+    color: $text-color;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
 
   &__option {
     display: flex;

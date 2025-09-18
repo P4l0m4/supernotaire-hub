@@ -16,7 +16,7 @@
   max-width: 2000px;
 
   @media (min-width: $big-tablet-screen) {
-    padding: 4rem 2rem;
+    padding: 4.5rem 2rem;
     gap: 2rem;
   }
 

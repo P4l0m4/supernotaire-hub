@@ -60,7 +60,7 @@ onMounted(async () => {
 .trustpilot {
   background-color: rgba(#00b67a, 0.1);
   border-radius: calc($radius * 0.5);
-  padding: 1rem;
+  padding: 1.5rem 1rem 1rem 1rem;
   gap: 1rem;
   display: flex;
   flex-direction: column;

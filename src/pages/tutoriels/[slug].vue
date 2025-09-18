@@ -42,6 +42,7 @@ useHead(() => {
       :tutorial-total-time="tutorial.totalTime"
       :tutorial-cost="tutorial.estimatedCost"
       :tutorial-prerequisites="tutorial.prerequisites"
+      :tutorial-clarification="tutorial.clarification"
       :tutorial-options="tutorial.options"
       :tutorial-references="tutorial.references"
       :tutorial-last-update="tutorial.lastUpdate"

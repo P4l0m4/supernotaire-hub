@@ -44,6 +44,7 @@ interface Props {
   tutorialTotalTime: string;
   tutorialCost: string;
   tutorialPrerequisites: TutorialPrerequisite[];
+  tutorialClarification: string;
   tutorialOptions: TutorialOption[];
   tutorialReferences: string[];
   tutorialLastUpdate: string;
@@ -191,6 +192,8 @@ onBeforeUnmount(() => {
     v-if="props.tutorialOptions.length"
     :options="props.tutorialOptions"
   />
+  <UIQuote :quote="tutorialClarification" author="Supernotaire" />
+
   <div ref="el" class="how-to">
     <div class="how-to__attention">
       <div class="how-to__attention__illustration">
@@ -302,6 +305,8 @@ onBeforeUnmount(() => {
       </ul>
     </div>
   </div>
+
+  <TrustPilot />
 </template>
 <style lang="scss" scoped>
 .how-to {
