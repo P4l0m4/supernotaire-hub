@@ -1,0 +1,129 @@
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="FilePdf" clip-path="url(#clip0_1452_3751)">
+<path id="Vector" d="M27.25 19H23.25V26" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 11px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M26.25 23H23.25" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 3px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_3" d="M6.25 24H8.25C8.91304 24 9.54893 23.7366 10.0178 23.2678C10.4866 22.7989 10.75 22.163 10.75 21.5C10.75 20.837 10.4866 20.2011 10.0178 19.7322C9.54893 19.2634 8.91304 19 8.25 19H6.25V26" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property2" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 18.854px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property2;"></path>
+<path id="Vector_4" d="M14.25 19V26H16.25C17.1783 26 18.0685 25.6313 18.7249 24.9749C19.3813 24.3185 19.75 23.4283 19.75 22.5C19.75 21.5717 19.3813 20.6815 18.7249 20.0251C18.0685 19.3687 17.1783 19 16.25 19H14.25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property3" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 21.9957px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property3;"></path>
+<path id="Vector_5" d="M6.25 14V5C6.25 4.73478 6.35536 4.48043 6.54289 4.29289C6.73043 4.10536 6.98478 4 7.25 4H19.25L26.25 11V14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property4" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 35.4703px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property4;"></path>
+<path id="Vector_6" d="M19.25 4V11H26.25" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property5" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 14px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property5;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3751">
+<rect width="32" height="32" fill="white" transform="translate(0.25)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 11px;
+            }
+        
+            50%{
+                stroke-dashoffset: -5.5px; 
+        stroke-dasharray: 5.5px, 5.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -11px; 
+        stroke-dasharray: 11px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 3px;
+            }
+        
+            50%{
+                stroke-dashoffset: -1.5px; 
+        stroke-dasharray: 1.5px, 1.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -3px; 
+        stroke-dasharray: 3px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property2{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 18.854034423828125px;
+            }
+        
+            50%{
+                stroke-dashoffset: -9.427017211914062px; 
+        stroke-dasharray: 9.427017211914062px, 9.427017211914062px;
+            }
+        
+            100%{
+                stroke-dashoffset: -18.854034423828125px; 
+        stroke-dasharray: 18.854034423828125px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property3{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 21.99569320678711px;
+            }
+        
+            50%{
+                stroke-dashoffset: -10.997846603393555px; 
+        stroke-dasharray: 10.997846603393555px, 10.997846603393555px;
+            }
+        
+            100%{
+                stroke-dashoffset: -21.99569320678711px; 
+        stroke-dasharray: 21.99569320678711px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property4{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 35.470298767089844px;
+            }
+        
+            50%{
+                stroke-dashoffset: -17.735149383544922px; 
+        stroke-dasharray: 17.735149383544922px, 17.735149383544922px;
+            }
+        
+            100%{
+                stroke-dashoffset: -35.470298767089844px; 
+        stroke-dasharray: 35.470298767089844px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property5{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 14px;
+            }
+        
+            50%{
+                stroke-dashoffset: -7px; 
+        stroke-dasharray: 7px, 7px;
+            }
+        
+            100%{
+                stroke-dashoffset: -14px; 
+        stroke-dasharray: 14px, 0px;
+            }
+        
+        }
+        </style></svg>

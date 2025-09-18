@@ -1,0 +1,55 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Calculator" clip-path="url(#clip0_1452_3759)">
+<path id="Vector" d="M22 8.5H10V14.5H22V8.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 36px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M26 27.5V5.5C26 4.94772 25.5523 4.5 25 4.5L7 4.5C6.44772 4.5 6 4.94772 6 5.5V27.5C6 28.0523 6.44772 28.5 7 28.5H25C25.5523 28.5 26 28.0523 26 27.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 86.2841px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_3" d="M11 20.5C11.8284 20.5 12.5 19.8284 12.5 19C12.5 18.1716 11.8284 17.5 11 17.5C10.1716 17.5 9.5 18.1716 9.5 19C9.5 19.8284 10.1716 20.5 11 20.5Z" fill="black"></path>
+<path id="Vector_4" d="M16 20.5C16.8284 20.5 17.5 19.8284 17.5 19C17.5 18.1716 16.8284 17.5 16 17.5C15.1716 17.5 14.5 18.1716 14.5 19C14.5 19.8284 15.1716 20.5 16 20.5Z" fill="black"></path>
+<path id="Vector_5" d="M21 20.5C21.8284 20.5 22.5 19.8284 22.5 19C22.5 18.1716 21.8284 17.5 21 17.5C20.1716 17.5 19.5 18.1716 19.5 19C19.5 19.8284 20.1716 20.5 21 20.5Z" fill="black"></path>
+<path id="Vector_6" d="M11 25.5C11.8284 25.5 12.5 24.8284 12.5 24C12.5 23.1716 11.8284 22.5 11 22.5C10.1716 22.5 9.5 23.1716 9.5 24C9.5 24.8284 10.1716 25.5 11 25.5Z" fill="black"></path>
+<path id="Vector_7" d="M16 25.5C16.8284 25.5 17.5 24.8284 17.5 24C17.5 23.1716 16.8284 22.5 16 22.5C15.1716 22.5 14.5 23.1716 14.5 24C14.5 24.8284 15.1716 25.5 16 25.5Z" fill="black"></path>
+<path id="Vector_8" d="M21 25.5C21.8284 25.5 22.5 24.8284 22.5 24C22.5 23.1716 21.8284 22.5 21 22.5C20.1716 22.5 19.5 23.1716 19.5 24C19.5 24.8284 20.1716 25.5 21 25.5Z" fill="black"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3759">
+<rect width="32" height="32" fill="white" transform="translate(0 0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 36px;
+            }
+        
+            50%{
+                stroke-dashoffset: -18px; 
+        stroke-dasharray: 18px, 18px;
+            }
+        
+            100%{
+                stroke-dashoffset: -36px; 
+        stroke-dasharray: 36px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 86.28409576416016px;
+            }
+        
+            50%{
+                stroke-dashoffset: -43.14204788208008px; 
+        stroke-dasharray: 43.14204788208008px, 43.14204788208008px;
+            }
+        
+            100%{
+                stroke-dashoffset: -86.28409576416016px; 
+        stroke-dasharray: 86.28409576416016px, 0px;
+            }
+        
+        }
+        </style></svg>

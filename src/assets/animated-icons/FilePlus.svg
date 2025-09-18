@@ -1,0 +1,89 @@
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="FilePlus" clip-path="url(#clip0_1452_3631)">
+<path id="Vector_2" d="M25.75 28H7.75C7.48478 28 7.23043 27.8946 7.04289 27.7071C6.85536 27.5196 6.75 27.2652 6.75 27V5C6.75 4.73478 6.85536 4.48043 7.04289 4.29289C7.23043 4.10536 7.48478 4 7.75 4H19.75L26.75 11V27C26.75 27.2652 26.6446 27.5196 26.4571 27.7071C26.2696 27.8946 26.0152 28 25.75 28Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 82.6119px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_3" d="M19.75 4V11H26.75" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 14px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_4" d="M13.75 19H19.75" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property2" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 6px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property2;"></path>
+<path id="Vector_5" d="M16.75 16V22" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property3" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 6px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property3;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3631">
+<rect width="32" height="32" fill="white" transform="translate(0.75)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 82.61189270019531px;
+            }
+        
+            50%{
+                stroke-dashoffset: -41.305946350097656px; 
+        stroke-dasharray: 41.305946350097656px, 41.305946350097656px;
+            }
+        
+            100%{
+                stroke-dashoffset: -82.61189270019531px; 
+        stroke-dasharray: 82.61189270019531px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 14px;
+            }
+        
+            50%{
+                stroke-dashoffset: -7px; 
+        stroke-dasharray: 7px, 7px;
+            }
+        
+            100%{
+                stroke-dashoffset: -14px; 
+        stroke-dasharray: 14px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property2{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 6px;
+            }
+        
+            50%{
+                stroke-dashoffset: -3px; 
+        stroke-dasharray: 3px, 3px;
+            }
+        
+            100%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property3{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 6px;
+            }
+        
+            50%{
+                stroke-dashoffset: -3px; 
+        stroke-dasharray: 3px, 3px;
+            }
+        
+            100%{
+                stroke-dashoffset: -6px; 
+        stroke-dasharray: 6px, 0px;
+            }
+        
+        }
+        </style></svg>

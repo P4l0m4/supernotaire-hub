@@ -1,0 +1,149 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Coins" clip-path="url(#clip0_1452_3684)">
+<path id="Vector" d="M12 15.5C17.5228 15.5 22 13.4853 22 11C22 8.51472 17.5228 6.5 12 6.5C6.47715 6.5 2 8.51472 2 11C2 13.4853 6.47715 15.5 12 15.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 47.2136px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M2 11V16C2 18.485 6.4775 20.5 12 20.5C17.5225 20.5 22 18.485 22 16V11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 33.6066px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+<path id="Vector_3" d="M8 15.125V20.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property2" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 5px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property2;"></path>
+<path id="Vector_4" d="M22.0002 12.5898C26.5652 13.0073 30.0002 14.8223 30.0002 16.9998C30.0002 19.4848 25.5227 21.4998 20.0002 21.4998C17.5502 21.4998 15.3052 21.1036 13.5664 20.4448" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property3" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 28.1579px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property3;"></path>
+<path id="Vector_5" d="M10 20.41V22C10 24.485 14.4775 26.5 20 26.5C25.5225 26.5 30 24.485 30 22V17" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property4" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 30.1966px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property4;"></path>
+<path id="Vector_6" d="M24 21.125V26.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property5" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 5px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property5;"></path>
+<path id="Vector_7" d="M16 15.125V26.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property6" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 11px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property6;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1452_3684">
+<rect width="32" height="32" fill="white" transform="translate(0 0.5)"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 47.21363067626953px;
+            }
+        
+            50%{
+                stroke-dashoffset: -23.606815338134766px; 
+        stroke-dasharray: 23.606815338134766px, 23.606815338134766px;
+            }
+        
+            100%{
+                stroke-dashoffset: -47.21363067626953px; 
+        stroke-dasharray: 47.21363067626953px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 33.6065673828125px;
+            }
+        
+            50%{
+                stroke-dashoffset: -16.80328369140625px; 
+        stroke-dasharray: 16.80328369140625px, 16.80328369140625px;
+            }
+        
+            100%{
+                stroke-dashoffset: -33.6065673828125px; 
+        stroke-dasharray: 33.6065673828125px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property2{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 5px;
+            }
+        
+            50%{
+                stroke-dashoffset: -2.5px; 
+        stroke-dasharray: 2.5px, 2.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -5px; 
+        stroke-dasharray: 5px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property3{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 28.157909393310547px;
+            }
+        
+            50%{
+                stroke-dashoffset: -14.078954696655273px; 
+        stroke-dasharray: 14.078954696655273px, 14.078954696655273px;
+            }
+        
+            100%{
+                stroke-dashoffset: -28.157909393310547px; 
+        stroke-dasharray: 28.157909393310547px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property4{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 30.196571350097656px;
+            }
+        
+            50%{
+                stroke-dashoffset: -15.098285675048828px; 
+        stroke-dasharray: 15.098285675048828px, 15.098285675048828px;
+            }
+        
+            100%{
+                stroke-dashoffset: -30.196571350097656px; 
+        stroke-dasharray: 30.196571350097656px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property5{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 5px;
+            }
+        
+            50%{
+                stroke-dashoffset: -2.5px; 
+        stroke-dasharray: 2.5px, 2.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -5px; 
+        stroke-dasharray: 5px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property6{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 11px;
+            }
+        
+            50%{
+                stroke-dashoffset: -5.5px; 
+        stroke-dasharray: 5.5px, 5.5px;
+            }
+        
+            100%{
+                stroke-dashoffset: -11px; 
+        stroke-dasharray: 11px, 0px;
+            }
+        
+        }
+        </style></svg>
