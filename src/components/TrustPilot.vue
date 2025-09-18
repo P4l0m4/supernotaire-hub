@@ -66,6 +66,7 @@ onMounted(async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   &__title {
     font-size: 1.25rem;

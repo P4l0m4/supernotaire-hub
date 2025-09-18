@@ -6,7 +6,6 @@ interface Props {
   variant?:
     | "secondary-color"
     | "accent-color"
-    | "base-color"
     | "text-color"
     | "primary-color"
     | "success-color"
@@ -30,8 +29,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const iconColor = computed(() => {
   switch (props.variant) {
-    case "base-color":
-      return colors["secondary-color-faded"];
     case "primary-color":
       return colors["accent-color"];
     case "secondary-color":
@@ -47,7 +44,7 @@ const iconColor = computed(() => {
     case "error-color":
       return colors["primary-color"];
     default:
-      return colors["base-color-faded"];
+      return colors["accent-color"];
   }
 });
 </script>
@@ -84,13 +81,16 @@ const iconColor = computed(() => {
   align-items: center;
   border-radius: calc($radius/2);
   font-weight: $regular;
+  position: relative;
 
   @media (min-width: $big-tablet-screen) {
     transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, box-shadow 0.2s linear;
+      border-color 0.3s linear, box-shadow 0.3s linear,
+      background-position 1.5s linear;
 
     &:hover {
-      box-shadow: $shadow-black;
+      background-position: top left;
+      box-shadow: 20px 40px 40px -30px rgba($text-color, 0.2);
 
       & .icon {
         transform: translateX(0.5rem);
@@ -118,43 +118,73 @@ const iconColor = computed(() => {
 }
 
 .accent-color {
-  background-color: $accent-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $accent-color,
+      blue,
+      $accent-color
+    )
+    top right/200% 200%;
   color: $primary-color;
   border: 2px solid $accent-color;
 }
 
-.base-color {
-  background-color: $base-color;
-  color: $secondary-color;
-  border: 2px solid $base-color;
-}
-
 .text-color {
-  background-color: $text-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $text-color,
+      $secondary-color,
+      $text-color
+    )
+    top right/200% 200%;
   color: $primary-color;
   border: 2px solid $text-color;
 }
 
 .primary-color {
-  background-color: $primary-color;
-  color: $accent-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $primary-color,
+      rgba($text-color, 0.1),
+      $primary-color
+    )
+    top right/200% 200%;
+  color: $text-color;
   border: 2px solid $primary-color;
 }
 
 .success-color {
-  background-color: $success-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $success-color,
+      rgb(0, 181, 0),
+      $success-color
+    )
+    top right/200% 200%;
   color: $primary-color;
   border: 2px solid $success-color;
 }
 
 .purple-color {
-  background-color: $purple-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $purple-color,
+      rgb(94, 0, 182),
+      $purple-color
+    )
+    top right/200% 200%;
   color: $primary-color;
   border: 2px solid $purple-color;
 }
 
 .error-color {
-  background-color: $error-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $error-color,
+      rgb(255, 30, 0),
+      $error-color
+    )
+    top right/200% 200%;
   color: $primary-color;
   border: 2px solid $error-color;
 }

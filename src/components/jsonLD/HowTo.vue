@@ -212,9 +212,12 @@ onBeforeUnmount(() => {
         <ul class="how-to__attention__content__list">
           <li
             class="how-to__attention__content__list__element"
-            v-for="prerequisite in tutorialPrerequisites"
+            v-for="(prerequisite, i) in tutorialPrerequisites"
             :key="prerequisite.name"
           >
+            <span class="how-to__attention__content__list__element__number">{{
+              i + 1
+            }}</span>
             {{ prerequisite.name }}
             <NuxtLink
               v-if="prerequisite.internalLink"
@@ -321,16 +324,13 @@ onBeforeUnmount(() => {
   &__attention {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem 0;
     gap: 2rem;
-    border-radius: $radius;
-    background-color: $primary-color;
     width: 100%;
     min-width: 280px;
     height: fit-content;
 
     @media (min-width: $big-tablet-screen) {
-      padding: 1.5rem;
       gap: 3rem;
       flex-direction: row;
       align-items: center;
@@ -394,27 +394,24 @@ onBeforeUnmount(() => {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        max-width: 30rem;
+        max-width: 40rem;
         height: fit-content;
 
         @media (min-width: $laptop-screen) {
-          max-width: 40rem;
+          max-width: 60rem;
           width: 100%;
         }
 
         &__element {
           display: flex;
+          align-items: center;
           gap: 0.5rem;
           font-size: 1.05rem;
-          text-wrap: balance;
 
-          &::before {
-            content: "";
-            display: inline-block;
-            height: 1rem;
-            width: 1rem;
-            min-width: 1rem;
-            border: 1px solid $text-color;
+          &__number {
+            font-weight: $bold;
+            color: $accent-color-faded;
+            font-size: 2rem;
           }
         }
       }

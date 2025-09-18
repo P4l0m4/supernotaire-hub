@@ -28,13 +28,10 @@ defineProps<{
   flex-direction: column;
   padding: 1rem;
   gap: 2rem;
-  border-radius: $radius;
   width: 100%;
   min-width: 280px;
   min-height: 21.87rem;
   position: relative;
-  background-color: rgba($accent-color, 0.1);
-  box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
   overflow: hidden;
 
   @media (min-width: $big-tablet-screen) {

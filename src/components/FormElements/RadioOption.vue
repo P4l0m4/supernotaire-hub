@@ -64,7 +64,7 @@ function simulateClick() {
   &__input {
     width: 24px;
     height: 24px;
-    accent-color: $accent-color-faded;
+    accent-color: $accent-color;
   }
 
   &__text {
@@ -73,7 +73,7 @@ function simulateClick() {
     gap: 0.7rem;
 
     &__fake-label {
-      font-weight: $bold;
+      font-weight: $medium;
       font-size: 1.25rem;
     }
 

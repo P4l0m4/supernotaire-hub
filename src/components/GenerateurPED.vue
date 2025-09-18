@@ -201,16 +201,17 @@ watch(
       />
     </div>
 
-    <ul class="action__list">
+    <ol class="action__list">
       <span class="action__list__title">Avant de commencer...</span>
       <span class="action__list__subtitle"
         >Munissez-vous des documents (digitalisés) suivants:
       </span>
       <li
-        v-for="document in documents"
+        v-for="(document, i) in documents"
         :key="document"
         class="action__list__item"
       >
+        <span class="action__list__item__number">{{ i + 1 }}</span>
         {{ document }}
       </li>
       <div class="action__list__buttons">
@@ -222,7 +223,7 @@ watch(
           >Commencer</UIPrimaryButton
         >
       </div>
-    </ul>
+    </ol>
   </div>
 
   <FormElementsDynamicForm

@@ -5,7 +5,6 @@ interface Props {
   variant?:
     | "secondary-color"
     | "accent-color"
-    | "base-color"
     | "text-color"
     | "primary-color"
     | "error-color";
@@ -17,7 +16,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  variant: "primary-color",
+  variant: "accent-color",
   direction: "row",
   fontSize: "1rem",
   iconSize: "1.25rem",
@@ -64,7 +63,7 @@ withDefaults(defineProps<Props>(), {
       border-color 0.3s linear, box-shadow 0.2s linear, gap 0.2s linear;
 
     &:hover {
-      box-shadow: $shadow-black;
+      box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
       gap: 1rem;
 
       & .icon {
@@ -96,12 +95,6 @@ withDefaults(defineProps<Props>(), {
   background-color: transparent;
   color: $accent-color;
   border: 2px solid $accent-color;
-}
-
-.base-color {
-  background-color: transparent;
-  color: $base-color;
-  border: 2px solid $base-color;
 }
 
 .text-color {

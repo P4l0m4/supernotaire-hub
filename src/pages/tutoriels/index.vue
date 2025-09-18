@@ -19,6 +19,18 @@ onMounted(async () => {
     label: tutorial.title,
   }));
 });
+
+useHead({
+  title:
+    "Tutoriels faciles à suivre pour avancer rapidement dans vos démarches immobilières",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Supernotaire vous guide pas à pas dans vos démarches immobilières. Suivez nos tutoriels simples et efficaces pour créer facilement votre dossier de vente.",
+    },
+  ],
+});
 </script>
 
 <template>
@@ -26,7 +38,7 @@ onMounted(async () => {
     <div class="headlines">
       <h1 class="headlines__title">Tutoriels faciles</h1>
       <h2 class="headlines__subtitle paragraphs">
-        On vous guide pas à pas dans vos démarches immobilières
+        Supernotaire vous guide pas à pas dans vos démarches immobilières.
       </h2>
     </div>
     <UICarouselComponent :carousel-elements="carouselElements" />
