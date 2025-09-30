@@ -1,3 +1,28 @@
+<script setup lang="ts">
+useHead({
+  script: [
+    {
+      key: "speculation-rules",
+      type: "speculationrules",
+      innerHTML: JSON.stringify({
+        prefetch: [
+          {
+            where: { href_matches: "/(notaires|vendeurs|inscription)$" },
+            eagerness: "moderate",
+          },
+        ],
+        // prerender: [
+        //   {
+        //     where: { href_matches: "/inscription$" },
+        //     eagerness: "eager",
+        //   },
+        // ],
+      }),
+    },
+  ],
+});
+</script>
+
 <template>
   <header class="header">
     <nav class="header__nav">
@@ -42,6 +67,8 @@
 }
 
 .logo {
+  width: 11.125rem;
+  height: 1.56rem;
 }
 
 .header {
@@ -58,6 +85,12 @@
   left: 0;
   right: 0;
   margin: 0 auto;
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  @starting-style {
+    transform: translateY(-1rem);
+  }
 
   @media (min-width: $laptop-screen) {
     display: flex;

@@ -77,13 +77,15 @@ const scroll = (direction: "left" | "right") => {
       @mouseleave="showArrows = false"
     >
       <NuxtLink
+        v-for="slide in props.carouselElements"
         :to="slide.link"
         class="carousel__container__slide fading"
         :style="{ backgroundImage: `url(${slide.image})` }"
-        v-for="slide in props.carouselElements"
-        ><span class="carousel__container__slide__arrow">
-          <UIIconComponent icon="arrow_up_right"
-        /></span>
+        :aria-label="slide.label"
+      >
+        <span class="carousel__container__slide__arrow">
+          <UIIconComponent icon="arrow_up_right" />
+        </span>
         <span class="carousel__container__slide__label">{{ slide.label }}</span>
       </NuxtLink>
     </div>

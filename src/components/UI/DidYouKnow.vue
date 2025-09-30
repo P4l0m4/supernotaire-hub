@@ -75,7 +75,7 @@ defineProps<{
     &__text {
       text-wrap: balance;
       max-width: 35rem;
-      color: $text-color-faded;
+      color: $text-color;
       z-index: 1;
     }
 

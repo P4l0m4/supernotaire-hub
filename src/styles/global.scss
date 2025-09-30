@@ -156,6 +156,7 @@ input[type="checkbox"] {
     }
   }
 }
+
 .shake {
   animation: shake 0.25s;
   color: $error-color;
@@ -178,6 +179,7 @@ input[type="checkbox"] {
     transform: rotate(180deg);
   }
 }
+
 .spin {
   animation: 2s spin infinite linear;
 }
@@ -275,7 +277,6 @@ input[type="checkbox"] {
       flex-direction: column;
       gap: 0.5rem;
       max-width: 400px;
-      color: $text-color-faded;
 
       @media (min-width: $tablet-screen) {
         max-width: 350px;
@@ -289,10 +290,12 @@ input[type="checkbox"] {
     max-width: 600px;
     height: fit-content;
 
-    & img {
+    & img,
+    & svg {
       width: 100%;
       height: auto;
       max-width: 600px;
+      aspect-ratio: 232 / 185;
     }
 
     &__dots {
@@ -411,10 +414,6 @@ details > summary::-webkit-details-marker /* Safari */ {
   animation: fading 0.4s ease;
 }
 
-.margin-left-auto {
-  margin-left: auto;
-}
-
 .features {
   display: flex;
   gap: 2rem;
@@ -469,9 +468,15 @@ details > summary::-webkit-details-marker /* Safari */ {
   background-position: center;
   color: $text-color;
   padding: 2rem 0;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  @starting-style {
+    opacity: 0;
+  }
 
   &__title {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     font-weight: $bold;
 
     @media (min-width: $tablet-screen) {
@@ -501,7 +506,6 @@ details > summary::-webkit-details-marker /* Safari */ {
     opacity: 1;
   }
 }
-
 @keyframes slide-from-left {
   from {
     transform: translate(-20px);
@@ -544,7 +548,6 @@ details > summary::-webkit-details-marker /* Safari */ {
     transform: rotate(0deg);
   }
 }
-
 @keyframes shake {
   0% {
     transform: translateX(0);

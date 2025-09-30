@@ -112,7 +112,13 @@ const iconColor = computed(() => {
 }
 
 .secondary-color {
-  background-color: $secondary-color;
+  background: radial-gradient(
+      farthest-corner at top,
+      $secondary-color,
+      $text-color,
+      $secondary-color
+    )
+    top right/200% 200%;
   color: $base-color;
   border: 2px solid $secondary-color;
 }

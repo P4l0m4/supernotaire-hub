@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
     "nuxt-jsonld",
+
     [
       "@storyblok/nuxt",
       {
@@ -23,6 +24,7 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
   build: { transpile: ["pdfmake", "@vuepic/vue-datepicker"] },
 
   vite: {

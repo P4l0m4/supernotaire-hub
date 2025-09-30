@@ -24,6 +24,9 @@ defineProps<{
         class="profile__illustration__image"
         :src="image"
         :alt="`image de ${title}`"
+        sizes="(min-width: 1200px) 400px, (min-width: 600px) 50vw, 90vw"
+        width="640"
+        height="480"
       />
     </div>
     <h2 class="profile__title">{{ title }}</h2>
@@ -127,7 +130,7 @@ defineProps<{
   }
 
   &__title {
-    font-size: 2.5rem;
+    font-size: 1.85rem;
     font-weight: $bold;
     color: $text-color;
   }

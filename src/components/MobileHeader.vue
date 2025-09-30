@@ -74,6 +74,13 @@ onClickOutside(target, () => (isMenuOpen.value = false));
   background-color: $base-color;
   box-shadow: $shadow-black;
 
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  @starting-style {
+    transform: translateY(-1rem);
+  }
+
   @media (min-width: $laptop-screen) {
     display: none;
   }
@@ -131,6 +138,13 @@ onClickOutside(target, () => (isMenuOpen.value = false));
   .line {
     width: 100%;
     background-color: $accent-color;
+  }
+}
+
+.logo {
+  img {
+    width: 11.125rem;
+    height: 1.56rem;
   }
 }
 </style>

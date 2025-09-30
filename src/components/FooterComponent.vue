@@ -9,7 +9,7 @@
           <img
             class="footer__links-container__special-box__title-section__logo"
             src="@/assets/images/logo-light.svg"
-            alt="logo martinimmo"
+            alt="logo supernotaire"
           />
         </NuxtLink>
         <p class="paragraphs" style="text-wrap: balance">
@@ -17,7 +17,7 @@
         </p>
       </div>
       <ul class="footer__links-container__links">
-        <h5 class="footer__links-container__links__title">Notaires</h5>
+        <li class="footer__links-container__links__title">Notaires</li>
 
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-notaires">F.A.Q.</NuxtLink>
@@ -29,7 +29,7 @@
         </li>
       </ul>
       <ul class="footer__links-container__links">
-        <h5 class="footer__links-container__links__title">Vendeurs</h5>
+        <li class="footer__links-container__links__title">Vendeurs</li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
@@ -41,7 +41,7 @@
       </ul>
 
       <ul class="footer__links-container__links">
-        <h5 class="footer__links-container__links__title">Autres</h5>
+        <li class="footer__links-container__links__title">Autres</li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/comment-ca-marche">Comment ça marche ?</NuxtLink>
         </li>
@@ -145,8 +145,8 @@
         align-items: center;
 
         &__logo {
-          width: 186px;
-          // height: 35px;
+          width: 11.125rem;
+          height: 1.56rem;
         }
 
         &__title {
@@ -171,7 +171,8 @@
 
       &__title {
         color: $text-color-alt;
-        font-size: 1.05rem;
+        font-size: 1.35rem;
+        font-weight: $medium;
       }
 
       &__li {
