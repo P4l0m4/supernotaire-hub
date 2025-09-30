@@ -17,7 +17,21 @@
         </p>
       </div>
       <ul class="footer__links-container__links">
-        <li class="footer__links-container__links__title">Notaires</li>
+        <li class="footer__links-container__links__title">
+          Notaires<svg
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
+            class="svg-underline"
+          >
+            <path
+              d="
+      M 0,5
+      Q 50,3.5
+        100,5
+    "
+            ></path>
+          </svg>
+        </li>
 
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-notaires">F.A.Q.</NuxtLink>
@@ -29,7 +43,21 @@
         </li>
       </ul>
       <ul class="footer__links-container__links">
-        <li class="footer__links-container__links__title">Vendeurs</li>
+        <li class="footer__links-container__links__title">
+          Vendeurs<svg
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
+            class="svg-underline"
+          >
+            <path
+              d="
+      M 0,5
+      Q 50,3.5
+        100,5
+    "
+            ></path>
+          </svg>
+        </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
@@ -41,7 +69,21 @@
       </ul>
 
       <ul class="footer__links-container__links">
-        <li class="footer__links-container__links__title">Autres</li>
+        <li class="footer__links-container__links__title">
+          Autres<svg
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
+            class="svg-underline"
+          >
+            <path
+              d="
+      M 0,5
+      Q 50,3.5
+        100,5
+    "
+            ></path>
+          </svg>
+        </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/comment-ca-marche">Comment ça marche ?</NuxtLink>
         </li>
@@ -99,6 +141,22 @@
   </footer>
 </template>
 <style lang="scss" scoped>
+.svg-underline {
+  display: block;
+  position: absolute;
+  left: 2px;
+  bottom: -4px;
+  height: 6px;
+  width: calc(100% - 4px);
+  fill: none;
+  stroke: var(--underline-color, $accent-color);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  overflow: visible;
+  stroke-dasharray: 120; // longueur
+  stroke-dashoffset: 0;
+}
+
 .footer {
   background-color: $secondary-color;
   padding: 1rem;
@@ -173,6 +231,8 @@
         color: $text-color-alt;
         font-size: 1.35rem;
         font-weight: $medium;
+        width: fit-content;
+        position: relative;
       }
 
       &__li {

@@ -32,20 +32,84 @@ useHead({
             ><img
               class="logo"
               src="@/assets/images/logo-dark.svg"
-              alt="logo supernotaire"
-          /></NuxtLink>
+              alt="logo supernotaire" />
+            <svg
+              viewBox="0 0 100 6"
+              preserveAspectRatio="none"
+              class="svg-underline"
+            >
+              <path
+                d="
+      M 0,5
+      Q 50,0
+        100,5
+    "
+              ></path></svg
+          ></NuxtLink>
         </li>
         <li class="header__nav__ul__li" style="margin-left: auto">
-          <NuxtLink to="/notaires" exact>Notaires</NuxtLink>
+          <NuxtLink to="/notaires" exact
+            >Notaires<svg
+              viewBox="0 0 100 6"
+              preserveAspectRatio="none"
+              class="svg-underline"
+            >
+              <path
+                d="
+      M 0,5
+      Q 50,3.5
+        100,5
+    "
+              ></path></svg
+          ></NuxtLink>
         </li>
         <li class="header__nav__ul__li">
-          <NuxtLink to="/vendeurs" exact>Vendeurs de biens</NuxtLink>
+          <NuxtLink to="/vendeurs" exact
+            >Vendeurs de biens<svg
+              viewBox="0 0 100 6"
+              preserveAspectRatio="none"
+              class="svg-underline"
+            >
+              <path
+                d="
+      M 0,5
+      Q 50,0
+        100,5
+    "
+              ></path></svg
+          ></NuxtLink>
         </li>
         <li class="header__nav__ul__li">
-          <NuxtLink to="/outils" exact>Outils</NuxtLink>
+          <NuxtLink to="/outils" exact
+            >Outils<svg
+              viewBox="0 0 100 6"
+              preserveAspectRatio="none"
+              class="svg-underline"
+            >
+              <path
+                d="
+      M 0,5
+      Q 50,3.5
+        100,5
+    "
+              ></path></svg
+          ></NuxtLink>
         </li>
         <li class="header__nav__ul__li">
-          <NuxtLink to="/comment-ca-marche" exact>Comment ça marche ?</NuxtLink>
+          <NuxtLink to="/comment-ca-marche" exact
+            >Comment ça marche ?<svg
+              viewBox="0 0 100 6"
+              preserveAspectRatio="none"
+              class="svg-underline"
+            >
+              <path
+                d="
+      M 0,5
+      Q 50,0
+        100,5
+    "
+              ></path></svg
+          ></NuxtLink>
         </li>
       </ul>
       <div class="header__nav__buttons">
@@ -62,8 +126,31 @@ useHead({
   </header>
 </template>
 <style lang="scss" scoped>
+.svg-underline {
+  display: block;
+  position: absolute;
+  left: 2px;
+  bottom: -4px;
+  height: 6px;
+  width: calc(100% - 10px);
+  fill: none;
+  stroke: var(--underline-color, $accent-color);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  overflow: visible;
+  stroke-dasharray: 120; // longueur
+  stroke-dashoffset: 120;
+  visibility: hidden;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
 .router-link-exact-active {
-  border-bottom: 2px solid $accent-color;
+  position: relative;
+
+  .svg-underline {
+    visibility: visible;
+    stroke-dashoffset: 0;
+  }
 }
 
 .logo {

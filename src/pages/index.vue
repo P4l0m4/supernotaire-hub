@@ -124,7 +124,21 @@ onMounted(async () => {
       <div class="centered-hero__text">
         <h1 class="centered-hero__text__title">
           Accélérez vos ventes immobilières
+          <svg
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
+            class="svg-underline"
+          >
+            <path
+              d="
+      M 0,5
+      Q 50,0
+        100,5
+    "
+            ></path>
+          </svg>
         </h1>
+
         <p class="centered-hero__text__subtitle">
           Supernotaire fait avancer la paperasse des vendeurs pressés et des
           notaires débordés.
@@ -341,12 +355,29 @@ onMounted(async () => {
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
+.svg-underline {
+  display: block;
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  height: 6px;
+  width: calc(56% - 2px);
+  fill: none;
+  stroke: var(--underline-color, #ffbf00);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  overflow: visible;
+  stroke-dasharray: 120; // longueur
+  stroke-dashoffset: 120;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
 .centered-hero {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 8rem);
   gap: 2rem;
   color: $text-color;
   width: 100%;
@@ -356,7 +387,7 @@ onMounted(async () => {
     content: "";
     position: absolute;
     width: 100vw;
-    height: calc(100dvh - 110px);
+    height: calc(100vh - 6rem);
     background-image: url("@/assets/images/buildings.svg");
     opacity: 0.8;
     background-position: center;
@@ -374,7 +405,7 @@ onMounted(async () => {
     content: "";
     position: absolute;
     width: 100vw;
-    height: 100dvh;
+    height: 100vh;
     margin: auto;
     background: linear-gradient(
           90deg,
@@ -401,13 +432,13 @@ onMounted(async () => {
   }
 
   @media (min-width: $laptop-screen) {
-    min-height: calc(100vh - 87px);
+    min-height: calc(100vh - 4.5rem);
     padding: 4rem 0;
     flex-direction: row;
     align-items: center;
 
     &::before {
-      height: calc(100dvh - 60px);
+      height: calc(100vh - 4.5rem);
     }
   }
 
@@ -425,11 +456,19 @@ onMounted(async () => {
       max-width: none;
     }
 
+    @media (min-width: $laptop-screen) {
+      &:hover .svg-underline {
+        stroke-dashoffset: 0;
+      }
+    }
+
     &__title {
       font-size: 1.85rem;
       font-weight: $bold;
       text-wrap: balance;
       opacity: 1;
+      position: relative;
+      text-shadow: 0 0 10px rgba($text-color, 0.2);
       transition: opacity 1s ease-in-out;
 
       @starting-style {

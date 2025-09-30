@@ -84,13 +84,14 @@ const iconColor = computed(() => {
   position: relative;
 
   @media (min-width: $big-tablet-screen) {
+    box-shadow: 0 0 0 0 rgba($text-color, 0);
     transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, box-shadow 0.3s linear,
+      border-color 0.3s linear, filter 0.3s linear,
       background-position 1.5s linear;
 
     &:hover {
       background-position: top left;
-      box-shadow: 20px 40px 40px -30px rgba($text-color, 0.2);
+      filter: drop-shadow(10px 10px 10px rgba($text-color, 0.1));
 
       & .icon {
         transform: translateX(0.5rem);
