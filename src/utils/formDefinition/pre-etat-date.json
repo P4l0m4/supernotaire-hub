@@ -3,10 +3,33 @@
   "sections": [
     {
       "id": "documents",
-      "label": "Les justificatifs",
+      "label": "Justificatifs",
       "fields": [
         {
-          "path": "document.dernier_pv_ag",
+          "path": "documents.vendeur_nom",
+          "id": "vendeur-nom",
+          "label": "Nom du copropriétaire vendeur",
+          "name": "vendeur_nom",
+          "type": "text",
+          "required": true
+        },
+        {
+          "path": "documents.etat_des_soldes_coproprietaires",
+          "id": "etat-soldes-coproprietaires",
+          "label": "Etat des soldes copropriétaires",
+          "name": "etat_des_soldes_coproprietaires",
+          "type": "file",
+          "showIf": {
+            "path": "documents.vendeur_nom"
+          },
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_EtatDesSoldesCopropriétaires"
+        },
+        {
+          "path": "documents.dernier_pv_ag",
           "id": "dernier-pv-ag",
           "label": "Dernier PV d'AG",
           "name": "dernier_pv_ag",
@@ -18,7 +41,7 @@
           "TS_TYPE": "TS_TYPE_ExtractionPVAG"
         },
         {
-          "path": "document.fiche_synthetique_copropriete",
+          "path": "documents.fiche_synthetique_copropriete",
           "id": "fiche-synthetique-copropriete",
           "label": "Fiche synthétique de la copropriété",
           "name": "fiche_synthetique_copropriete",
@@ -30,7 +53,7 @@
           "TS_TYPE": "TS_TYPE_FicheSynthétiqueCopropriété"
         },
         {
-          "path": "document.acte_de_propriete",
+          "path": "documents.acte_de_propriete",
           "id": "acte-de-propriete",
           "label": "Attestation de propriété",
           "name": "acte_de_propriete",
@@ -45,7 +68,7 @@
     },
     {
       "id": "bien",
-      "label": "Le bien à vendre",
+      "label": "Bien à vendre",
       "fields": [
         {
           "path": "bien.adresse",
@@ -176,7 +199,7 @@
     },
     {
       "id": "copropriete",
-      "label": "La copro",
+      "label": "Copropriété",
       "fields": [
         {
           "path": "copropriete.arrete_au",
@@ -294,7 +317,7 @@
     },
     {
       "id": "syndic",
-      "label": "Le syndic",
+      "label": "Syndic",
       "fields": [
         {
           "path": "syndic.nom",
@@ -324,7 +347,7 @@
       "fields": [
         {
           "path": "financier_lot.arrete_au",
-          "suggestionRef": "financier_lot_arrete_au",
+          "suggestionRef": "date_arret_soldes_coproprietaires",
           "id": "financier_lot-arrete-au",
           "label": "Date de l'arrêt des comptes",
           "name": "financier_lot_arrete_au",
@@ -355,12 +378,12 @@
           "path": "financier_lot.solde_crediteur_exercice_anterieur",
           "suggestionRef": "solde_crediteur_exercice_anterieur",
           "id": "solde-crediteur-exercice-anterieur",
-          "label": "Solde créditeur exercice antérieur non imputé",
+          "label": "Solde créditeur exercice antérieur",
           "name": "solde_crediteur_exercice_anterieur",
           "type": "number",
           "min": 0,
           "step": 0.01,
-          "required": false,
+          "required": true,
           "placeholder": "100",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
           "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-crediteur-exercice-anterieur-non-impute"
@@ -576,7 +599,7 @@
     },
     {
       "id": "financier_lot_autres",
-      "label": "Sommes dont le syndic pourrait être débiteur",
+      "label": "Sommes dues par le Syndic",
       "fields": [
         {
           "path": "financier_lot_sommes_debiteur_syndic.sommes_dont_syndicat_pourrait_etre_debiteur.provisions_posterieures_rendues_exigibles",

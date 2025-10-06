@@ -12,6 +12,7 @@ import { processDocument } from "@/utils/textFromDocument";
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
 import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
+import { TS_TYPE_EtatDesSoldesCopropriétaires } from "@/utils/extractionModels/etat-soldes-copro";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
@@ -115,13 +116,14 @@ const TS_TYPES: Record<string, string> = {
   TS_TYPE_ExtractionPVAG,
   TS_TYPE_FicheSynthétiqueCopropriété,
   TS_TYPE_AttestationDePropriété,
+  TS_TYPE_EtatDesSoldesCopropriétaires,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };
 const FIELD_BY_DOC_KEY: Record<string, AnyField> = {};
 for (const sec of (formDefinition as any).sections ?? []) {
   for (const f of (sec.fields ?? []) as AnyField[]) {
-    if (typeof f.path === "string" && f.path.startsWith("document.")) {
+    if (typeof f.path === "string" && f.path.startsWith("documents.")) {
       const k = f.path.split(".")[1]; // ex: "dernier_pv_ag"
       FIELD_BY_DOC_KEY[k] = f;
     }
@@ -152,12 +154,16 @@ function upsertSuggestions(rows: Row[]) {
 async function handleDocumentInfoExtraction(key: string, file: File) {
   const { results } = await processDocument(file);
   const TS_TYPE = resolveTsTypeFor(key);
+  console.log("TS_TYPE:", TS_TYPE);
   if (!TS_TYPE) return;
 
-  // make an array of clues to help the AI focus on relevant info
-  // for now, only "vendeur_nom" is supported
+  // clues to help the AI focus on relevant info inside a document
 
-  const clues = key === "vendeur_nom" ? [key] : [];
+  const clues = [
+    formData.documents?.vendeur_nom
+      ? `Nom du vendeur: ${formData.documents.vendeur_nom}`
+      : "",
+  ];
 
   const filledModel = await extractDataFromResults(
     [],
@@ -166,6 +172,7 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
     TS_TYPE,
     clues
   );
+
   upsertSuggestions(toRows(filledModel || {}));
 }
 
@@ -173,7 +180,7 @@ const seen = new Map<string, string>();
 const fileSig = (f: File) => `${f.name}|${f.size}|${f.lastModified}`;
 
 watch(
-  () => (formData as any).document,
+  () => (formData as any).documents,
   (docs) => {
     if (!docs) return;
     for (const [key, val] of Object.entries(docs as Record<string, unknown>)) {

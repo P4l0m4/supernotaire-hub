@@ -14,6 +14,8 @@ export interface PreEtatDate {
 }
 
 export interface Documents {
+  vendeur_nom: string;
+  etat_des_soldes_coproprietaires?: File;
   dernier_pv_ag?: File;
   fiche_synthetique_copropriete?: File;
   attestation_de_propriete?: File;
@@ -65,7 +67,7 @@ export interface Lot {
 export interface FinancierLot {
   arrete_au: ISODate;
   solde_compte: Euro;
-  solde_crediteur_exercice_anterieur?: Euro;
+  solde_crediteur_exercice_anterieur: Euro;
   appels_echus_non_payes: Euro;
   echeances_a_venir?: { date: ISODate; montant: Euro }[];
 }
