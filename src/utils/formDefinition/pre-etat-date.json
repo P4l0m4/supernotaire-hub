@@ -10,6 +10,7 @@
           "id": "vendeur-nom",
           "label": "Nom du copropriétaire vendeur",
           "name": "vendeur_nom",
+          "placeholder": "Jeanne Dupont",
           "type": "text",
           "required": true
         },
