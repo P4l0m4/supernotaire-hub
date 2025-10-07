@@ -33,7 +33,7 @@ defineProps<props>();
 .feature {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
   padding: 1rem;
   border-radius: $radius;
   height: fit-content;
@@ -44,29 +44,31 @@ defineProps<props>();
 
   @media (min-width: $big-tablet-screen) {
     padding: 2rem;
-    flex-direction: row;
-    justify-content: space-between;
-    min-height: 500px;
     align-items: center;
   }
 
-  @media (min-width: $big-tablet-screen) {
+  @media (min-width: $laptop-screen) {
     padding: 2rem 4rem;
+    gap: 2rem;
     flex-direction: row;
     justify-content: space-between;
-    min-height: 500px;
     align-items: center;
   }
 
   &__text {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1.5rem;
     width: 100%;
-    max-width: 525px;
+    max-width: 40rem;
 
     @media (min-width: $big-tablet-screen) {
-      gap: 3rem;
+      gap: 2rem;
+    }
+
+    @media (min-width: $laptop-screen) {
+      align-items: flex-start;
     }
 
     &__title {
@@ -76,11 +78,11 @@ defineProps<props>();
       padding: 0.75rem;
       text-align: center;
       width: 100%;
-      max-width: 350px;
       text-transform: uppercase;
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
+        max-width: 23rem;
       }
     }
 
@@ -89,9 +91,14 @@ defineProps<props>();
       font-weight: $semi-bold;
       color: $text-color;
       text-wrap: balance;
+      text-align: center;
 
       @media (min-width: $big-tablet-screen) {
         font-size: 2rem;
+      }
+
+      @media (min-width: $laptop-screen) {
+        text-align: left;
       }
     }
 
@@ -101,9 +108,15 @@ defineProps<props>();
       line-height: 1.35;
       font-weight: $regular;
       color: $text-color-faded;
+      text-align: center;
+      text-wrap: balance;
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.35rem;
+      }
+
+      @media (min-width: $laptop-screen) {
+        text-align: left;
       }
     }
   }
@@ -111,16 +124,20 @@ defineProps<props>();
   &__image {
     width: 100%;
     height: 100%;
-    padding: 1rem;
+    max-width: 20rem;
 
     @media (min-width: $big-tablet-screen) {
-      max-width: 500px;
+      max-width: 25rem;
+    }
+
+    @media (min-width: $laptop-screen) {
+      max-width: 35rem;
     }
   }
 }
 
 .reverse {
-  @media (min-width: $big-tablet-screen) {
+  @media (min-width: $laptop-screen) {
     flex-direction: row-reverse;
   }
 }

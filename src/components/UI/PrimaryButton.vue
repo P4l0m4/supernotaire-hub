@@ -71,7 +71,7 @@ const iconColor = computed(() => {
 <style scoped lang="scss">
 .button {
   width: 100%;
-  max-width: 400px;
+  max-width: 30rem;
   padding: 1rem 1.5rem;
   cursor: pointer;
   white-space: nowrap;

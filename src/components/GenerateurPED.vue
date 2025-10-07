@@ -32,13 +32,13 @@ const annexes = [
 ];
 
 const documents = [
-  "Dernier procès-verbal d’assemblée générale.",
-  "Fiche synthétique de la copropriété.",
-  "Attestation de propriété.",
-  "État des soldes des copropriétaires.",
-  "Grand Livre des comptes.",
-  "Avant dernier et avant-avant dernier compte de gestion pour travaux et opérations exceptionnelles.",
-  "Dernier et avant dernier compte de gestion pour opérations courantes et budget prévisionnel.",
+  "Dernier procès-verbal d’assemblée générale",
+  "Fiche synthétique de la copropriété",
+  "Attestation de propriété",
+  "État des soldes des copropriétaires",
+  "Grand Livre des comptes",
+  "Avant dernier et avant-avant dernier compte de gestion pour travaux et opérations exceptionnelles",
+  "Dernier et avant dernier compte de gestion pour opérations courantes et budget prévisionnel",
 ];
 
 const formData = reactive({} as PreEtatDate);
@@ -226,7 +226,6 @@ watch(
           icon="arrow_right"
           variant="accent-color"
           @click="showFirstAction = false"
-          style="margin-top: 1rem"
           >Commencer</UIPrimaryButton
         >
       </div>

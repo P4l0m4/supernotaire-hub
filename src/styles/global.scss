@@ -225,12 +225,13 @@ input[type="checkbox"] {
 .hero {
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: calc(100vh - 87px);
-  gap: 2rem;
   color: $text-color;
   width: 100%;
 
   @media (min-width: $laptop-screen) {
+    gap: 2rem;
     padding: 4rem 0;
     flex-direction: row;
     align-items: center;
@@ -240,12 +241,19 @@ input[type="checkbox"] {
   &__text {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 2rem;
     width: 100%;
-    max-width: 600px;
+    max-width: 37.5rem;
 
     @media (min-width: $big-tablet-screen) {
-      gap: 4rem;
+      gap: 3rem;
+    }
+
+    @media (min-width: $laptop-screen) {
+      text-align: left;
+      align-items: flex-start;
     }
 
     &__title {
@@ -267,7 +275,7 @@ input[type="checkbox"] {
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
-        margin-top: -3rem;
+        margin-top: -2rem;
       }
     }
 
@@ -275,11 +283,13 @@ input[type="checkbox"] {
       color: $text-color;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 0.5rem;
-      max-width: 400px;
+      width: 100%;
 
-      @media (min-width: $tablet-screen) {
-        max-width: 350px;
+      @media (min-width: $laptop-screen) {
+        text-align: left;
+        align-items: flex-start;
       }
     }
   }
@@ -287,15 +297,23 @@ input[type="checkbox"] {
   &__image {
     position: relative;
     width: 100%;
-    max-width: 600px;
+    max-width: 30rem;
     height: fit-content;
+
+    @media (min-width: $laptop-screen) {
+      max-width: 40rem;
+    }
 
     & img,
     & svg {
       width: 100%;
       height: auto;
-      max-width: 600px;
+      max-width: 30rem;
       aspect-ratio: 232 / 185;
+
+      @media (min-width: $laptop-screen) {
+        max-width: 40rem;
+      }
     }
 
     &__dots {
@@ -412,21 +430,6 @@ details > summary::-webkit-details-marker /* Safari */ {
 
 .fading {
   animation: fading 0.4s ease;
-}
-
-.features {
-  display: flex;
-  gap: 2rem;
-  height: fit-content;
-  flex-direction: column;
-
-  @media (min-width: $big-tablet-screen) {
-    gap: 4rem;
-  }
-
-  @media (min-width: $desktop-screen) {
-    gap: 8rem;
-  }
 }
 
 .faq {

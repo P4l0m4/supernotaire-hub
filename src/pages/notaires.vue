@@ -121,18 +121,7 @@ onMounted(() => {
       text="Constituez les dossiers sans avoir courrir après les parties prenantes.
         et automatisez les tâches répétitives à faible valeur ajoutée."
     />
-    <div id="features" class="features">
-      <UIFeatureComponent
-        v-for="feature in features"
-        :key="feature.title"
-        :title="feature.title"
-        :subtitle="feature.subtitle"
-        :description="feature.description"
-        :image="feature.image"
-        :color="feature.color"
-        :reverse="feature.reverse"
-      />
-    </div>
+    <UIFeaturesComponent :features="features" />
     <Tarifs />
   </Container>
   <HotjarTracking />
