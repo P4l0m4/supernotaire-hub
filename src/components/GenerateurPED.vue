@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { reactive, watch, watchEffect } from "vue";
 
 import achievement from "/achievement-45.svg?url";
 import checklist from "/checklist-71-blue.svg?url";
@@ -13,11 +13,13 @@ import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
 import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attestation-de-propriete";
 import { TS_TYPE_EtatDesSoldesCopropriétaires } from "@/utils/extractionModels/etat-soldes-copro";
+import { TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs } from "@/utils/extractionModels/liste-coproprietaires-debiteurs-crediteurs";
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
 import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/utils/types/forms";
+import type { ISODate } from "@/utils/types/pre-etat-date-complet";
 
 const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
@@ -47,7 +49,6 @@ const showFirstAction = ref(true);
 const showLastAction = ref(false);
 
 // prevent undefined during render/validation
-
 formData.bien = formData.bien ?? {
   adresse: "",
   identification: { batiment: "", escalier: "", niveau: "", complements: "" },
@@ -117,6 +118,7 @@ const TS_TYPES: Record<string, string> = {
   TS_TYPE_FicheSynthétiqueCopropriété,
   TS_TYPE_AttestationDePropriété,
   TS_TYPE_EtatDesSoldesCopropriétaires,
+  TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs,
 };
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };
@@ -154,16 +156,15 @@ function upsertSuggestions(rows: Row[]) {
 async function handleDocumentInfoExtraction(key: string, file: File) {
   const { results } = await processDocument(file);
   const TS_TYPE = resolveTsTypeFor(key);
-  console.log("TS_TYPE:", TS_TYPE);
   if (!TS_TYPE) return;
 
   // clues to help the AI focus on relevant info inside a document
 
-  const clues = [
-    formData.documents?.vendeur_nom
-      ? `Nom du vendeur: ${formData.documents.vendeur_nom}`
-      : "",
-  ];
+  const nomVendeur = formData.documents?.vendeur_nom || "";
+
+  const clues = [`Le nom du vendeur est : ${nomVendeur}.`].filter(
+    (c) => c.trim().length > 0
+  );
 
   const filledModel = await extractDataFromResults(
     [],
@@ -197,6 +198,43 @@ watch(
   },
   { deep: true }
 );
+
+function getSuggestion<T = any>(k: string): T | undefined {
+  const row = suggestions.value.find((r) => r.key === k);
+  return row?.value as T | undefined;
+}
+
+function recomputeEcheances() {
+  const bpVote = getSuggestion<number>("montant_dernier_bp_vote");
+  const dates = getSuggestion<ISODate[]>("dates_echeances_a_venir");
+
+  const tantiemesVendeur = formData.bien?.total_tantiemes_vendeur;
+  const totalTantiemes = formData.bien?.total_tantiemes_copropriete;
+
+  if (!bpVote) return;
+  if (!Array.isArray(dates) || dates.length === 0) return;
+  if (!tantiemesVendeur || !totalTantiemes) return;
+
+  const annuelLot = bpVote * (tantiemesVendeur / totalTantiemes);
+  const parEcheance = annuelLot / 4; // trimestriel
+
+  const echeances = dates.map((d) => ({
+    date: d, // "jj-mm-aaaa"
+    montant: Number(parEcheance.toFixed(2)),
+  }));
+
+  upsertSuggestions([{ key: "echeances_a_venir", value: echeances }]);
+
+  formData.financier_lot = formData.financier_lot || ({} as any);
+  formData.financier_lot.echeances_a_venir = echeances;
+}
+
+// recalcul automatique dès que suggestions OU formData (tantièmes...) change
+watchEffect(() => {
+  void suggestions.value.length;
+
+  recomputeEcheances();
+});
 </script>
 <template>
   <div class="action" v-if="showFirstAction">

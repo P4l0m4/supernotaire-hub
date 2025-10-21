@@ -109,7 +109,7 @@ const plans = ref([
             :key="feature.text"
             class="tarifs__plans__plan__features__feature"
           >
-            <IconComponent
+            <UIIconComponent
               :icon="
                 feature.included ? 'check_circle' : 'currency_circle_dollar'
               "

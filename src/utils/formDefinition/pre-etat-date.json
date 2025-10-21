@@ -64,6 +64,21 @@
           "accept": [".pdf", ".png", ".jpg", ".jpeg"],
           "multiple": false,
           "TS_TYPE": "TS_TYPE_AttestationDePropriété"
+        },
+        {
+          "path": "documents.liste_coproprietaires_debiteurs_crediteurs",
+          "id": "liste-coproprietaires-debiteurs-crediteurs",
+          "label": "Liste des copropriétaires débiteurs / créditeurs",
+          "name": "liste_coproprietaires_debiteurs_crediteurs",
+          "type": "file",
+          "showIf": {
+            "path": "documents.vendeur_nom"
+          },
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs"
         }
       ]
     },
@@ -406,7 +421,7 @@
         },
         {
           "path": "financier_lot.echeances_a_venir",
-          "suggestionRef": "financier_lot_echeances_a_venir",
+          "suggestionRef": "echeances_a_venir",
           "id": "financier_lot-echeances-a-venir",
           "label": "Échéances à venir",
           "name": "financier_lot_echeances_a_venir",
@@ -436,7 +451,7 @@
                 "required": true,
                 "icon": "hand_coins_fill",
                 "tooltip": "Cliquer pour savoir où trouver cette information.",
-                "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#echeances-a-venir"
+                "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#budget-previsionnel-vote-date-et-proportion-des-appels"
               }
             ]
           }
@@ -687,7 +702,7 @@
           "name": "acq_reconstitution_reserve",
           "type": "number",
           "min": 0,
-          "step": 1,
+          "step": 0.01,
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
@@ -700,7 +715,7 @@
           "name": "acq_reconstitution_provisions_speciales",
           "type": "number",
           "min": 0,
-          "step": 1,
+          "step": 0.01,
           "required": true,
           "placeholder": "500",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
@@ -713,7 +728,8 @@
           "name": "acq_reconstitution_avances_emprunts",
           "type": "number",
           "min": 0,
-          "step": 1,
+          "step": 0.01,
+          "placeholder": "500",
           "required": true,
           "tooltip": "Cliquer pour savoir où trouver cette information.",
           "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"

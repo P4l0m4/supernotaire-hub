@@ -1,4 +1,4 @@
-type ISODate = `${number}-${number}-${number}`;
+export type ISODate = `${number}-${number}-${number}`;
 type Euro = number;
 
 export interface PreEtatDate {
@@ -19,6 +19,7 @@ export interface Documents {
   dernier_pv_ag?: File;
   fiche_synthetique_copropriete?: File;
   attestation_de_propriete?: File;
+  liste_coproprietaires_debiteurs_crediteurs?: File;
 }
 
 export interface Bien {
