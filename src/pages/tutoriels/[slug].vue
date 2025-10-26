@@ -14,21 +14,17 @@ onMounted(async () => {
   tutorials.value = data.stories[0].content.tutorials;
   // filter to get only tutorials sharing at least one subject with the current tutorial
   const currentSubjects = tutorial.value.subjects;
+  // remove current tutorial from the list
   carouselElements.value = tutorials.value
     .filter((t: any) =>
       t.subjects?.some((s: string) => currentSubjects.includes(s))
     )
+    .filter((t: any) => stringToSlug(t.title) !== tutorialSlug)
     .map((t: any) => ({
       link: `/tutoriels/${stringToSlug(t.title)}`,
       image: t.previewImage.filename,
       label: t.title,
     }));
-
-  // carouselElements.value = tutorials.value.map((tutorial: any) => ({
-  //   link: `/tutoriels/${stringToSlug(tutorial.title)}`,
-  //   image: tutorial.previewImage.filename,
-  //   label: tutorial.title,
-  // }));
 });
 
 const route = useRoute();
