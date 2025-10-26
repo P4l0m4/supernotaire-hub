@@ -20,6 +20,19 @@ onMounted(async () => {
   }));
 });
 
+// const subjectsList = computed<string[]>(() => {
+//   if (tutorials.value.length === 0) return [];
+
+//   const flatMap = tutorials.value.flatMap((t: any) => t.subjects);
+
+//   const strings = flatMap
+//     .filter((s: any) => typeof s === "string")
+//     .map((s: string) => s.trim())
+//     .filter(Boolean);
+
+//   return Array.from(new Set(strings));
+// });
+
 useHead({
   title:
     "Tutoriels faciles à suivre pour avancer rapidement dans vos démarches immobilières",

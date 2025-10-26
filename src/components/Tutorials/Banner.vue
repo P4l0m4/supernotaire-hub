@@ -48,6 +48,7 @@ function formatDuration(duration: string) {
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
+  width: 100%;
   background-image: radial-gradient(
     circle at center,
     transparent,

@@ -48,6 +48,7 @@ interface Props {
   tutorialOptions: TutorialOption[];
   tutorialReferences: string[];
   tutorialLastUpdate: string;
+  tutorialSubjects: string[];
 }
 
 const props = defineProps<Props>();

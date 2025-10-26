@@ -61,6 +61,15 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               >Boîte à outils</NuxtLink
             >
           </li>
+          <li class="header__nav__links__link">
+            <NuxtLink
+              to="/tutoriels"
+              class="nuxt-link"
+              @keydown.esc="isMenuOpen = false"
+              exact
+              >Tutoriels<span class="line"></span
+            ></NuxtLink>
+          </li>
         </ul>
       </nav>
     </Transition>
