@@ -34,7 +34,7 @@ export interface TutorialOption {
 
 interface TutorialPrerequisite {
   name: string;
-  internalLink: string;
+  link: string;
 }
 
 interface Props {
@@ -221,10 +221,11 @@ onBeforeUnmount(() => {
             }}</span>
             {{ prerequisite.name }}
             <NuxtLink
-              v-if="prerequisite.internalLink"
+              v-if="prerequisite.link"
               class="how-to__attention__content__list__element__link"
-              :to="prerequisite.internalLink"
-              aria-label="aide"
+              :to="prerequisite.link"
+              target="_blank"
+              aria-label="aide pour trouver l'élément"
               ><UIIconComponent
                 icon="help_circle"
                 size="1.25rem"

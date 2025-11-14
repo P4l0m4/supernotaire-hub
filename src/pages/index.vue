@@ -8,7 +8,7 @@ import seller from "@/assets/images/real-estate-agent-76.svg";
 
 import logo from "/favicon-96x96.png";
 
-import type { Decoration } from "@/components/UI/profile.vue";
+import type { Decoration } from "~/components/UI/Profile.vue";
 
 const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);

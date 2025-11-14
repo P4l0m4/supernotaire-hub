@@ -47,6 +47,10 @@ button {
   font-size: 1rem;
 }
 
+input {
+  border-radius: var(--radius);
+}
+
 input,
 textarea {
   caret-color: $text-color-alt;
@@ -62,7 +66,7 @@ textarea {
     color: $text-color-faded;
   }
 }
-/* Change the white to any color */
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -104,7 +108,7 @@ input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   -webkit-appearance: none; /* Remove default icon in WebKit browsers */
   -moz-appearance: none; /* Remove default icon in Firefox */
-  appearance: none !important; /* Generic way to remove default icon */
+  appearance: none !important; /* remove default icon */
   opacity: 0;
   width: 30px;
   height: 36px;

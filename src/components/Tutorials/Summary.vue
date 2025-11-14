@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { stringToSlug } from "@/utils/slugify";
+import { colors } from "@/utils/colors";
 
 import type { TutorialOption } from "@/components/jsonLD/HowTo.vue";
 
@@ -72,6 +73,9 @@ defineProps<{
       gap: 0.5rem;
 
       &__step {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
         list-style-type: circle;
         transition: list-style-type 0.3s linear;
 

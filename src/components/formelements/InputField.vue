@@ -174,7 +174,7 @@ function toggleShowPassword() {
   }
 
   &:focus-within {
-    border: 1px solid $accent-color-faded;
+    border: 1px solid $accent-color;
     box-shadow: 0 0px 6px 0px $accent-color-faded;
   }
 
