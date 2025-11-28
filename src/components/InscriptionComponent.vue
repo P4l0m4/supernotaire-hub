@@ -179,9 +179,14 @@ async function validContactState() {
 
   .wrapper {
     display: flex;
+    flex-direction: column;
     gap: 0.75rem;
     width: 100%;
     align-items: center;
+
+    @media (min-width: $tablet-screen) {
+      flex-direction: row;
+    }
   }
 }
 </style>

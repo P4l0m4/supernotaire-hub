@@ -38,7 +38,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
     <Transition>
       <nav class="header__nav" v-if="isMenuOpen">
         <ul class="header__nav__links">
-          <li class="header__nav__links__link">
+          <li class="header__nav__links__link" style="margin-top: 2.5rem">
             <NuxtLink
               to="/inscription"
               class="nuxt-link"
@@ -46,6 +46,16 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               exact
               >Accès anticipé<span class="line"></span
             ></NuxtLink>
+          </li>
+          <li class="header__nav__links__link">
+            <NuxtLink to="/beta" @keydown.esc="isMenuOpen = false" exact
+              >Notaires</NuxtLink
+            >
+          </li>
+          <li class="header__nav__links__link">
+            <NuxtLink to="/vendeurs" @keydown.esc="isMenuOpen = false" exact
+              >Vendeurs</NuxtLink
+            >
           </li>
           <li class="header__nav__links__link">
             <NuxtLink to="/outils" @keydown.esc="isMenuOpen = false" exact
@@ -73,7 +83,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
   padding: 1.5rem;
   background-color: $base-color;
   box-shadow: $shadow-black;
-
+  z-index: 1;
   transform: translateY(0);
   transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
