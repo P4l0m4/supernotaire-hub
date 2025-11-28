@@ -60,9 +60,12 @@ const emit = defineEmits(["closeConfirmation"]);
       padding: 1.5rem;
     }
 
+    .subtitles {
+      color: $text-color;
+    }
+
     & :deep(a) {
       color: $secondary-color !important;
-      text-decoration: underline !important;
     }
   }
 }

@@ -21,7 +21,7 @@ const questions = [
     title:
       "L’outil s’intègre-t-il avec les services tiers réservés aux notaires comme TéléActes?",
     answer:
-      "Ce n'est pas encore le cas, mais les fonctionnalités de Supernotaire vous feront quand même gagner un temps précieux.",
+      "Ce n'est pas encore le cas, mais les fonctionnalités de Supernotaire vous feront quand même gagner un temps précieux. Nous prévoyons d'ajouter des intégrations avec des services tiers dans une prochaine mise à jour.",
   },
   {
     title:
@@ -32,7 +32,7 @@ const questions = [
   {
     title: "L’outil réduit-il le nombre d’allers-retours avec les clients ?",
     answer:
-      "Oui, Supernotaire permet d'éliminer au maximum les allers-retours avec les clients et les agences immobilières.",
+      "Oui, Supernotaire permet d'éliminer au maximum les allers-retours avec les clients et les agences immobilières. Les particuliers peuvent notamment constinuer eux-mêmes leur dossier en ligne tout en étant guidés, ce qui réduit considérablement le nombre d'échanges nécessaires.",
   },
   {
     title: "Peut-on importer/exporter facilement les données et documents ?",
@@ -87,7 +87,7 @@ const questions = [
   {
     title: "Quels types de mandats puis-je gérer ?",
     answer:
-      "Vous pouvez gérer les mandats de vente immobilière, qu'il s'agisse de maisons ou d'appartements. En revanche, Supernotaire n'est pas conçu pour les ventes de terrains ou autres types de biens immobiliers.",
+      "Vous pouvez gérer les mandats de vente immobilière, qu'il s'agisse de maisons ou d'appartements. En revanche, Supernotaire n'est pas conçu pour les ventes de terrains ou autres types de biens immobiliers pour le moment.",
   },
 
   {
@@ -98,7 +98,7 @@ const questions = [
   {
     title: "Combien coûte Supernotaire ?",
     answer:
-      "Supernotaire est gratuit pour les notaires et pour les vendeurs de biens. Une option payante de mise en avant sur l'anuaire est disponible, tout comme des sièges supplémentaires permettant à des collaborateurs d'intervenir sur les mandats.",
+      "Les notaires peuvents commencer à utiliser gratuitement les fonctionnalités de base la plateforme. Des fonctionnalités avancées sont également disponibles pour les utilisateurs Premium (mise en avant sur l'anuaire, collaboration avec les clercs, dossiers illimités, etc).",
   },
 ];
 
@@ -134,9 +134,9 @@ useHead({
   <Container>
     <div class="faq">
       <div class="faq__headlines">
-        <h1 class="titles">Notaires | FAQ</h1>
+        <h1 class="titles">Notaires | Questions fréquentes</h1>
         <h2 class="paragraphs">
-          Réponses aux questions des notaires sur Supernotaire.fr
+          Réponses aux questions des notaires sur Supernotaire
         </h2>
       </div>
 

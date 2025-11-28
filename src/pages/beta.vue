@@ -1,47 +1,82 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { stringToSlug } from "@/utils/slugify";
-import { useStoryblokApi } from "@storyblok/vue";
-
-import notary from "@/assets/images/accountant-54.svg";
-import seller from "@/assets/images/real-estate-agent-76.svg";
-
 import logo from "/favicon-96x96.png";
 
-import type { Decoration } from "~/components/UI/Profile.vue";
-
-const tutorials = ref<any[]>([]);
-const carouselElements = ref<any[]>([]);
+import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
+import clock from "@/assets/animated-icons/clock-animated.svg?raw";
+import lock from "@/assets/animated-icons/lock-animated.svg?raw";
 
 const url = ref();
 
-const profiles = ref([
+const featureCards = [
   {
-    image: notary,
-    title: "Notaires débordés",
-    subtitle: "Gagnez du temps facturable et élargissez votre clientèle.",
-    link: "/notaires#features",
-    linkText: "Montrez-moi comment",
-    decoration: "left" as Decoration,
+    icon: lightning,
+    title: "Automatisations intelligentes",
+    description:
+      "Pré-remplissage des documents, analyse des fichiers, parcours ultra-optimisés et relances automatiques.",
   },
   {
-    image: seller,
-    title: "Vendeurs pressés",
-    subtitle:
-      "Facilitez vos démarches et accédez plus rapidement à un notaire.",
-    link: "/vendeurs#features",
-    linkText: "Montrez-moi comment",
-    decoration: "right" as Decoration,
+    icon: clock,
+    title: "Tableau de bord intuitif",
+    description:
+      "Suivez la progression de vos dossiers en temps réel, collaborez facilement avec vos clercs et soyez notifié lorsque votre intervention est nécessaire.",
   },
-]);
+  {
+    icon: lock,
+    title: "Sécurité renforcée",
+    description:
+      "Vos documents et vos données sont protégés par des mesures de sécurité avancées, en conformité avec les plus hauts standards de sécurité informatique.",
+  },
+];
+
+const questions = [
+  {
+    title: "Quand Supernotaire sera-t-il officiellement lancé ?",
+    answer:
+      "Le lancement officiel de Supernotaire est prévu pour le troisième trimestre 2026. En rejoignant l'accès anticipé, vous pourrez commencer à utiliser certaines fonctionnalités en avant-première.",
+  },
+  {
+    title:
+      "Quel sera le prix de Supernotaire après la période d'accès anticipé ?",
+    answer:
+      "L'accès complet à Supernotaire coûtera 280€ par mois et par notaire, ce qui inclut également deux sièges collaborateurs. En devenant Notaire Fondateur pendant l'accès anticipé, vous bénéficierez d'une réduction permanente de 70% sur ce tarif.",
+  },
+  {
+    title: "Supernotaire est-il gratuit pendant l'accès anticipé ?",
+    answer:
+      "Oui, Supernotaire sera proposé gratuitement et exclusivement aux utilisateurs inscrits à l'accès anticipé. En devenant Notaire Fondateur, vous bénéficierez d'un tarif préférentiel même après le lancement officiel.",
+  },
+  {
+    title: "Supernotaire est-il gratuit pour les particuliers ?",
+    answer:
+      "Oui, Supernotaire restera toujours gratuit pour les vendeurs et acheteurs de biens immobiliers.",
+  },
+];
+
+const jsonLDFAQ = questions.map((question) => {
+  return {
+    "@type": "Question" as const,
+    name: question.title,
+    acceptedAnswer: {
+      "@type": "Answer" as const,
+      text: question.answer,
+    },
+  };
+});
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage" as const,
+  mainEntity: jsonLDFAQ,
+}));
 
 useHead({
-  title: "Supernotaire | Finalisation rapide de vente immobilière",
+  title: "Supernotaire | Accès anticipé et pré-vente limitée",
   meta: [
     {
       name: "description",
       content:
-        "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+        "Rejoignez l'accès anticipé de Supernotaire et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
     },
     {
       property: "og:type",
@@ -103,18 +138,6 @@ useJsonld(() => ({
 
 onMounted(async () => {
   url.value = window.location.href;
-
-  const storyblokApi = useStoryblokApi();
-  const { data } = await storyblokApi.get("cdn/stories", {
-    version: "published",
-  });
-  tutorials.value = data.stories[0].content.tutorials;
-
-  carouselElements.value = tutorials.value.map((tutorial: any) => ({
-    link: `/tutoriels/${stringToSlug(tutorial.title)}`,
-    image: tutorial.previewImage.filename,
-    label: tutorial.title,
-  }));
 });
 </script>
 <template>
@@ -122,7 +145,8 @@ onMounted(async () => {
     <div class="centered-hero">
       <div class="centered-hero__text">
         <h1 class="centered-hero__text__title">
-          Accélérez vos ventes immobilières
+          Les jeunes notaires n’ont pas besoin de travailler plus. Ils ont
+          besoin de meilleurs outils.
           <svg
             viewBox="0 0 100 6"
             preserveAspectRatio="none"
@@ -139,17 +163,17 @@ onMounted(async () => {
         </h1>
 
         <p class="centered-hero__text__subtitle">
-          Supernotaire fait avancer la paperasse des vendeurs pressés et des
-          notaires débordés.
+          Supernotaire vous libère du temps sur les tâches qui n’ont pas besoin
+          de vous.
         </p>
         <div class="centered-hero__text__link">
           <NuxtLink
-            to="#profiles"
-            aria-label="Découvrir notre offre"
+            to="/inscription"
+            aria-label="Réserver votre accès anticipé à Supernotaire"
             style="width: 100%"
           >
-            <UIPrimaryButton variant="accent-color" icon="arrow_right">
-              Créer gratuitement mon dossier
+            <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
+              Rejoindre l'accès anticipé
             </UIPrimaryButton></NuxtLink
           >
         </div>
@@ -158,49 +182,77 @@ onMounted(async () => {
     <UILogosCarousel />
   </Container>
   <Container>
-    <div id="profiles" class="profiles">
-      <UIProfile
-        v-for="profile in profiles"
-        :key="profile.title"
-        :image="profile.image"
-        :title="profile.title"
-        :subtitle="profile.subtitle"
-        :link="profile.link"
-        :linkText="profile.linkText"
-        :decoration="profile.decoration"
-      />
-    </div>
-  </Container>
-  <Container><UIRoadmap /></Container>
-  <Container>
-    <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
-      <template #text>
-        Nous avons conçu des outils intuitifs et en accès libre pour vous aider
-        à avancer dans vos démarches immobilières: création de pré-état daté,
-        estimation de valeur foncière, etc. Aucune inscription n'est requise.
-      </template>
-      <template #cta>
-        <NuxtLink to="/outils" aria-label="Découvrir nos outils">
-          <UIPrimaryButton variant="accent-color"
-            >Découvrir nos outils</UIPrimaryButton
-          >
-        </NuxtLink>
-      </template>
-    </UIDidYouKnow>
-  </Container>
-  <Container>
-    <div class="headlines">
-      <h2 class="headlines__title">Tutoriels faciles</h2>
-      <h3 class="headlines__subtitle paragraphs">
-        Pour vous guider pas à pas dans vos démarches immobilières.
+    <Benefits
+      title="Débordé, mais..."
+      subtitle="...pas assez rentable pour recruter ?"
+      text="Les études récemment créées croulent sous les dossiers, emails et relances clients.
+Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée."
+    />
+    <div class="feature-cards">
+      <h3 class="feature-cards__title">
+        Et si vous retrouviez le temps d’accompagner vos clients comme vous le
+        souhaitez ?
       </h3>
-    </div>
-    <UICarouselComponent :carousel-elements="carouselElements" />
-  </Container>
-
+      <UIFeatureCard
+        v-for="featureCard in featureCards"
+        :key="featureCard.title"
+        :icon="featureCard.icon"
+        :title="featureCard.title"
+        :description="featureCard.description"
+      />
+      <NuxtLink to="/inscription" class="feature-cards__link">
+        <UIPrimaryButton
+          variant="accent-color"
+          icon="arrow_right"
+          style="max-width: none"
+        >
+          Rejoindre l'accès anticipé
+        </UIPrimaryButton>
+      </NuxtLink>
+    </div></Container
+  >
+  <Container><FounderPromo /></Container>
+  <Container
+    ><h3 class="feature-cards__title">Questions fréquentes</h3>
+    <FAQComponent :questions
+  /></Container>
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
+.feature-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  height: fit-content;
+
+  @media (min-width: $big-tablet-screen) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  &__title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: $semi-bold;
+    text-wrap: balance;
+    margin-bottom: 1rem;
+
+    @media (min-width: $big-tablet-screen) {
+      font-size: 2.5rem;
+      grid-column: span 3;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__link {
+    height: 100%;
+
+    @media (min-width: $big-tablet-screen) {
+      grid-column: 2/3;
+    }
+  }
+}
+
 .scene * {
   transform-box: fill-box; /* origine = bbox de l’élément */
   transform-origin: center;
@@ -223,7 +275,7 @@ onMounted(async () => {
   animation-delay: 0.3s;
 }
 
-// Accessibilité
+//accessibilité
 @media (prefers-reduced-motion: reduce) {
   .float-slow,
   .float-fast {
@@ -237,15 +289,16 @@ onMounted(async () => {
   right: 2px;
   bottom: 0;
   height: 6px;
-  width: calc(56% - 2px);
+  width: calc(22% - 2px);
   fill: none;
   stroke: var(--underline-color, #ffbf00);
   stroke-width: 3px;
   stroke-linecap: round;
   overflow: visible;
-  stroke-dasharray: 120; // longueur
-  stroke-dashoffset: 120;
+  stroke-dasharray: 150; // longueur
+  stroke-dashoffset: 150;
   transition: stroke-dashoffset 0.6s ease;
+  transform: translateX(-65%);
 }
 
 .centered-hero {
@@ -370,7 +423,7 @@ onMounted(async () => {
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
-        max-width: 40rem;
+        max-width: 44rem;
       }
     }
 
@@ -391,25 +444,6 @@ onMounted(async () => {
         max-width: 350px;
       }
     }
-  }
-}
-
-.profiles {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: fit-content;
-  min-height: 400px;
-  gap: 2rem;
-
-  @media (min-width: $big-tablet-screen) {
-    flex-direction: row;
-    justify-content: space-between;
-    height: fit-content;
-  }
-
-  @media (min-width: $desktop-screen) {
-    gap: 4rem;
   }
 }
 </style>

@@ -15,61 +15,35 @@ const reloadIconAnimation = () => {
 </script>
 <template>
   <div
-    class="perk"
+    class="feature-card"
     @focusin="reloadIconAnimation"
     @mouseenter="reloadIconAnimation"
   >
-    <div class="perk__content">
+    <div class="feature-card__content">
       <span
-        class="perk__content__icon"
+        class="feature-card__content__icon"
         aria-label="Illustration animée"
         role="img"
         :key="iconRenderKey"
         v-html="icon"
       ></span>
-      <h2 class="perk__content__title">{{ title }}</h2>
+      <h2 class="feature-card__content__title">{{ title }}</h2>
       <p class="paragraphs">{{ description }}</p>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-.perk {
+.feature-card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
-  color: $text-color;
+  color: $accent-color;
+  background-color: rgba($primary-color, 1);
+  border: 1px solid transparent;
   width: 100%;
   border-radius: calc($radius / 2);
-  border: 1px solid rgba($text-color, 0.1);
+  box-shadow: 20px 40px 40px -30px rgba($text-color, 0.03);
   transition: transform 0.2s linear, color 0.2s ease, box-shadow 0.2s ease;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 1.5rem;
-  }
-
-  &:hover {
-    transform: translateY(-3px);
-    color: $success-color;
-    background-color: rgba($success-color, 0.1);
-    border: 1px solid transparent;
-    box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
-
-    .perk__content {
-      border: 1px solid transparent;
-      background-color: rgba($success-color, 0.1);
-      box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
-    }
-
-    .perk__content__icon {
-      background-color: rgba($success-color, 0.1);
-      border: 1px solid transparent;
-    }
-
-    .paragraphs {
-      color: $text-color;
-    }
-  }
 
   ::v-deep svg {
     height: 2rem;
@@ -92,7 +66,7 @@ const reloadIconAnimation = () => {
     gap: 1rem;
     height: 100%;
     border-radius: calc($radius / 2);
-    border: 1px solid rgba($text-color, 0.1);
+    // border: 1px solid rgba($text-color, 0.1);
     transition: transform 0.2s linear, color 0.2s ease, box-shadow 0.2s ease;
 
     @media (min-width: $big-tablet-screen) {
@@ -106,7 +80,7 @@ const reloadIconAnimation = () => {
 
     .paragraphs {
       margin-top: -0.7rem;
-      color: $text-color-faded;
+      color: $text-color;
     }
 
     &__icon {
@@ -118,7 +92,8 @@ const reloadIconAnimation = () => {
       align-items: center;
       justify-content: center;
       border-radius: calc($radius / 2);
-      border: 1px solid rgba($text-color, 0.1);
+      background-color: rgba($accent-color, 0.1);
+      border: 1px solid transparent;
       transition: background-color 0.2s ease, border 0.2s ease;
     }
   }

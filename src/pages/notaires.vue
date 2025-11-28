@@ -122,7 +122,8 @@ onMounted(() => {
         et automatisez les tâches répétitives à faible valeur ajoutée."
     />
     <UIFeaturesComponent :features="features" />
-    <Tarifs />
+    <!-- <Tarifs /> -->
   </Container>
+  <Container><FounderPromo /></Container>
   <HotjarTracking />
 </template>

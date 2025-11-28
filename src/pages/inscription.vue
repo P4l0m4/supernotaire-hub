@@ -13,9 +13,16 @@ useHead({
 </script>
 <template>
   <Container
-    ><div class="inscription"><h1 class="titles">Créez votre compte</h1></div>
+    ><div class="inscription">
+      <div class="inscription__headlines">
+        <h1 class="titles">Rejoignez l'accès anticipé</h1>
+        <h2 class="subtitles">
+          Profitez en avant-première des fonctionnalités de Supernotaire 🚀
+        </h2>
+      </div>
 
-    <InscriptionComponent />
+      <InscriptionComponent />
+    </div>
   </Container>
 </template>
 <style lang="scss" scoped>
@@ -25,7 +32,6 @@ useHead({
   align-items: center;
   justify-content: center;
   gap: 2rem;
-
   height: fit-content;
 
   @media (min-width: $big-tablet-screen) {

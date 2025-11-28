@@ -48,7 +48,7 @@ useHead({
           ></NuxtLink>
         </li>
         <li class="header__nav__ul__li" style="margin-left: auto">
-          <NuxtLink to="/notaires" exact
+          <NuxtLink to="/beta" exact
             >Notaires<svg
               viewBox="0 0 100 6"
               preserveAspectRatio="none"
@@ -79,6 +79,7 @@ useHead({
               ></path></svg
           ></NuxtLink>
         </li>
+
         <li class="header__nav__ul__li">
           <NuxtLink to="/outils" exact
             >Outils<svg
@@ -95,30 +96,11 @@ useHead({
               ></path></svg
           ></NuxtLink>
         </li>
-        <li class="header__nav__ul__li">
-          <NuxtLink to="/comment-ca-marche" exact
-            >Comment ça marche ?<svg
-              viewBox="0 0 100 6"
-              preserveAspectRatio="none"
-              class="svg-underline"
-            >
-              <path
-                d="
-      M 0,5
-      Q 50,0
-        100,5
-    "
-              ></path></svg
-          ></NuxtLink>
-        </li>
       </ul>
       <div class="header__nav__buttons">
-        <!-- <NuxtLink to="/inscription">
-          <UISecondaryButton variant="accent-color">Connexion</UISecondaryButton>
-        </NuxtLink> -->
         <NuxtLink to="/inscription" exact-active-class="x">
-          <UIPrimaryButton variant="accent-color" icon="arrow_right">
-            Inscription
+          <UIPrimaryButton variant="accent-color">
+            Accéder à la bêta
           </UIPrimaryButton>
         </NuxtLink>
       </div>

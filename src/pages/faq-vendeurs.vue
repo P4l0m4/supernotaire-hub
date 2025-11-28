@@ -66,10 +66,12 @@ useHead({
   <Container>
     <div class="faq">
       <div class="faq__headlines">
-        <h1 class="titles">Vendeurs & acheteurs de biens | FAQ</h1>
+        <h1 class="titles">
+          Vendeurs & acheteurs de biens | Questions fréquentes
+        </h1>
         <h2 class="paragraphs">
           Réponses aux questions des vendeurs et acheteurs de biens immobiliers
-          sur Supernotaire.fr
+          sur Supernotaire
         </h2>
       </div>
 

@@ -32,14 +32,11 @@
             ></path>
           </svg>
         </li>
-
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/faq-notaires">F.A.Q.</NuxtLink>
+          <NuxtLink to="/notaires">Notre offre</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/inscription" style="text-decoration: underline"
-            >Espace notaires</NuxtLink
-          >
+          <NuxtLink to="/faq-notaires">F.A.Q.</NuxtLink>
         </li>
       </ul>
       <ul class="footer__links-container__links">
@@ -59,12 +56,10 @@
           </svg>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
+          <NuxtLink to="/vendeurs">Notre offre</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/inscription" style="text-decoration: underline"
-            >Espace vendeurs</NuxtLink
-          >
+          <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
       </ul>
 
@@ -85,7 +80,7 @@
           </svg>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/comment-ca-marche">Comment ça marche ?</NuxtLink>
+          <NuxtLink to="/beta#roadmap">Roadmap</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/outils">Boîte à outils</NuxtLink>
@@ -109,9 +104,9 @@
           Créez votre dossier de vente immobilière sans effort et confiez-le
           rapidement à un notaire.
         </p>
-        <NuxtLink to="/inscription"
+        <NuxtLink to="/beta"
           ><UIPrimaryButton variant="accent-color" icon="arrow_right"
-            >Créer mon compte</UIPrimaryButton
+            >Accès anticipé</UIPrimaryButton
           ></NuxtLink
         >
       </div>

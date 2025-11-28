@@ -43,6 +43,7 @@ function confirmSubmission() {
   emailAdress.value = "";
 
   setTimeout(() => {
+    isPopupOpen.value = true;
     wasSent.value = false;
   }, 3000);
 }
@@ -52,9 +53,13 @@ const rules = {
     required,
     email,
   },
+  option: { required },
 };
 
-const vContact$ = useVuelidate(rules, { email: emailAdress });
+const vContact$ = useVuelidate(rules, {
+  email: emailAdress,
+  option: selectedOption,
+});
 const form = ref(null);
 
 const emailErrors = computed(() => {
@@ -63,6 +68,14 @@ const emailErrors = computed(() => {
   vContact$.value.email.required.$invalid &&
     errors.push("Ajoutez une adresse mail");
   vContact$.value.email.email.$invalid && errors.push("Adresse mail invalide");
+  return errors;
+});
+
+const optionsErrors = computed(() => {
+  const errors: string[] = [];
+  if (!vContact$.value.option.$dirty) return errors;
+  vContact$.value.option.required.$invalid &&
+    errors.push("Sélectionnez une option");
   return errors;
 });
 
@@ -88,79 +101,59 @@ async function validContactState() {
 </script>
 <template>
   <div class="inscription-component">
-    <FormElementsRadioOption
-      v-for="opt in radioOptions"
-      :key="opt.id"
-      :id="opt.id"
-      :name="opt.name"
-      :value="opt.value"
-      :label="opt.label"
-      :description="opt.description"
-      v-model="selectedOption"
-    />
-    <UIPrimaryButton
-      variant="accent-color"
-      icon="arrow_right"
-      style="margin-top: 0.5rem"
-      @click="isPopupOpen = true"
-      @keydown.enter="isPopupOpen = true"
-      @keydown.space="isPopupOpen = true"
-      tabindex="0"
-      >Continuer</UIPrimaryButton
-    >
+    <form class="form-beta" ref="form" @submit.prevent="submit">
+      <FormElementsRadioOption
+        v-for="opt in radioOptions"
+        :key="opt.id"
+        :id="opt.id"
+        :name="opt.name"
+        :value="opt.value"
+        :label="opt.label"
+        :description="opt.description"
+        v-model="selectedOption"
+        :error="optionsErrors[0]"
+      />
+      <div class="wrapper">
+        <FormElementsInputField
+          v-if="!wasSent"
+          id="beta-email"
+          name="beta-email"
+          v-model="emailAdress"
+          type="email"
+          autocomplete="on"
+          :autofocus="true"
+          label="Votre adresse mail"
+          placeholder="Votre adresse mail"
+          icon="mail"
+          :error="emailErrors[0]"
+          style="width: 100%"
+        />
+        <UIPrimaryButton
+          :variant="wasSent ? 'success-color' : 'accent-color'"
+          :icon="isSubmitting ? 'circle_notch_bold' : 'hands_clapping_fill'"
+          @click="validContactState"
+          @keydown.enter="validContactState"
+          @keydown.space="validContactState"
+          >Rejoindre l'aventure</UIPrimaryButton
+        >
+      </div>
+    </form>
     <ConfirmationPopUp
       v-if="isPopupOpen"
       @close-confirmation="isPopupOpen = false"
     >
-      <template #title>Merci de votre intérêt pour Supernotaire !</template>
-      La plateforme est encore en développement, mais vous pouvez rejoindre la
-      bêta et nous suivre sur les réseaux sociaux ⚡
+      <template #title>Vous faites partie de l'aventure 🎉</template>
+      Envie de soutenir Supernotaire dès maintenant ? Bénéficiez de notre offre
+      exclusive limitée aux 100 premiers adoptants.
       <template #button>
-        <div class="buttons">
-          <form
-            class="form-beta"
-            ref="form"
-            @submit.prevent="submit"
-            @click="$event.stopPropagation()"
-          >
-            <FormElementsInputField
-              v-if="!wasSent"
-              id="beta-email"
-              name="beta-email"
-              v-model="emailAdress"
-              type="email"
-              autocomplete="on"
-              :autofocus="true"
-              label="Votre adresse mail"
-              placeholder="Votre adresse mail"
-              icon="mail"
-              :error="emailErrors[0]"
-              style="width: 100%"
-            />
-
-            <UIPrimaryButton
-              v-if="!wasSent"
-              variant="accent-color"
-              :icon="isSubmitting ? 'circle_notch_bold' : 'hands_clapping_fill'"
-              style="width: fit-content"
-              @click="validContactState"
-              @keydown.enter="validContactState"
-              @keydown.space="validContactState"
-              >Rejoindre</UIPrimaryButton
-            >
-            <span v-if="wasSent" class="form-beta__success-message"
-              >Demande bien reçue 👌</span
-            >
-          </form>
-          <NuxtLink
-            to="https://www.linkedin.com/in/aurore-sajot/"
-            target="_blank"
-            style="width: 100%"
-            ><UISecondaryButton variant="secondary-color" icon="linkedin_logo"
-              >Suivre le projet</UISecondaryButton
-            ></NuxtLink
-          >
-        </div>
+        <NuxtLink
+          to="https://buy.stripe.com/5kQ28k2iZ4IKd2CfDaeQM00"
+          target="_blank"
+          style="width: 100%"
+          ><UIPrimaryButton variant="accent-color" icon="hand_heart_fill"
+            >Devenir Notaire Fondateur</UIPrimaryButton
+          ></NuxtLink
+        >
       </template>
     </ConfirmationPopUp>
   </div>
@@ -178,32 +171,17 @@ async function validContactState() {
   align-items: end;
 }
 
-.buttons {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  flex-direction: column;
-}
-
 .form-beta {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
 
-  @media (min-width: $big-tablet-screen) {
-    flex-direction: row;
-  }
-
-  &__success-message {
+  .wrapper {
     display: flex;
-    height: 55px;
-    align-items: center;
-    justify-content: center;
-    color: $success-color;
-    font-size: 1rem;
-    font-weight: $medium;
+    gap: 0.75rem;
     width: 100%;
+    align-items: center;
   }
 }
 </style>

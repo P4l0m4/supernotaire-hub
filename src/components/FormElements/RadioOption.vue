@@ -70,7 +70,7 @@ function simulateClick() {
   &__text {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.25rem;
 
     &__fake-label {
       font-weight: $medium;

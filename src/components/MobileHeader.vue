@@ -44,16 +44,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               class="nuxt-link"
               @keydown.esc="isMenuOpen = false"
               exact
-              >Inscription<span class="line"></span
-            ></NuxtLink>
-          </li>
-          <li class="header__nav__links__link">
-            <NuxtLink
-              to="/comment-ca-marche"
-              class="nuxt-link"
-              @keydown.esc="isMenuOpen = false"
-              exact
-              >Comment ça marche ?<span class="line"></span
+              >Accès anticipé<span class="line"></span
             ></NuxtLink>
           </li>
           <li class="header__nav__links__link">
