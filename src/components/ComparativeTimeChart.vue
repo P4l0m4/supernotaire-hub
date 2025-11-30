@@ -120,7 +120,7 @@ const option = computed(() => ({
       barWidth: isVertical.value ? "60%" : undefined,
     },
     {
-      name: "Temps économisé",
+      name: `Temps gagné (${pctGain.value}%)`,
       type: "bar",
       stack: "temps",
       data: gainsData.value,
@@ -142,27 +142,25 @@ const option = computed(() => ({
 <template>
   <ClientOnly>
     <div class="comparative-time-chart">
-      <div class="comparative-time-chart__header">
-        <h3 v-if="title" class="comparative-time-chart__header__title">
-          {{ title }}
-        </h3>
-        <div class="comparative-time-chart__header__summary">
-          <strong>Total :</strong>
-          <span
-            >{{ Math.round(totalBefore) }} h →
-            {{ Math.round(totalAfter) }} h</span
-          >
-          <span>Gain : {{ Math.round(totalGain) }} h (−{{ pctGain }}%)</span>
-        </div>
-      </div>
-
       <VChart
         ref="chartRef"
         :option="option"
         :autoresize="true"
         :style="{ width: '100%', height: height }"
       />
-
+      <div class="comparative-time-chart__header">
+        <h3 v-if="title" class="comparative-time-chart__header__title">
+          {{ title }}
+        </h3>
+        <!-- <div class="comparative-time-chart__header__summary">
+          <strong>Total :</strong>
+          <span
+            >{{ Math.round(totalBefore) }} h →
+            {{ Math.round(totalAfter) }} h</span
+          >
+          <span>Gain : {{ Math.round(totalGain) }} h (−{{ pctGain }}%)</span>
+        </div> -->
+      </div>
       <!-- Tableau texte accessibilité et SEO -->
       <div
         class="table-wrapper sr-only"
@@ -207,6 +205,9 @@ const option = computed(() => ({
 <style lang="scss" scoped>
 .comparative-time-chart {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   &__header {
     display: flex;
