@@ -16,11 +16,10 @@ const props = withDefaults(
     title?: string;
     height?: string;
   }>(),
-  { height: "27rem" }
+  { height: "34rem" }
 );
 
-const isDesktop = useIsDesktop(); // true = desktop, false = mobile
-const isVertical = computed(() => !isDesktop.value); // vertical en mobile
+const isDesktop = useIsDesktop();
 
 const chartRef = ref();
 
@@ -46,6 +45,10 @@ const pctGain = computed(() =>
 );
 
 const option = computed(() => ({
+  textStyle: {
+    fontFamily: "Figtree, sans-serif",
+    color: colors["text-color"],
+  },
   tooltip: {
     trigger: "axis",
     axisPointer: { type: "shadow" },
@@ -53,12 +56,13 @@ const option = computed(() => ({
   },
   legend: {
     top: 0,
+    itemGap: 32,
   },
-  grid: isVertical.value
+  grid: isDesktop.value
     ? { left: 8, right: 8, top: 64, bottom: 24, containLabel: true }
     : { left: 0, right: 0, top: 64, bottom: 0, containLabel: true },
 
-  xAxis: isVertical.value
+  xAxis: !isDesktop.value
     ? {
         type: "category",
         data: categoriesCompact.value,
@@ -73,7 +77,7 @@ const option = computed(() => ({
         axisLabel: { formatter: "{value} h" },
       },
 
-  yAxis: isVertical.value
+  yAxis: !isDesktop.value
     ? {
         type: "value",
         name: "heures",
@@ -89,15 +93,15 @@ const option = computed(() => ({
           },
           rich: {
             title: {
-              fontWeight: "600",
+              fontWeight: "500",
               fontSize: 18,
-              lineHeight: 22,
+              lineHeight: 24,
               color: colors["text-color"],
             },
             subtitle: {
               fontWeight: "400",
               fontSize: 14,
-              lineHeight: 18,
+              lineHeight: 20,
               color: colors["text-color-faded"],
             },
           },
@@ -106,22 +110,24 @@ const option = computed(() => ({
 
   series: [
     {
-      name: "Avec Supernotaire",
+      name: "Temps passé avec Supernotaire",
       type: "bar",
+      barCategoryGap: "20%",
       stack: "temps",
       data: afterData.value,
       itemStyle: { color: colors["accent-color"] || "#3185FF" },
       label: {
         show: true,
-        position: isVertical.value ? "insideTop" : "insideRight",
+        position: !isDesktop.value ? "insideTop" : "insideRight",
         formatter: ({ value }: any) => `${value} h`,
       },
       emphasis: { focus: "series" },
-      barWidth: isVertical.value ? "60%" : undefined,
+      barWidth: "80%",
     },
     {
       name: `Temps gagné (${pctGain.value}%)`,
       type: "bar",
+      barCategoryGap: "20%",
       stack: "temps",
       data: gainsData.value,
       itemStyle: {
@@ -130,10 +136,10 @@ const option = computed(() => ({
       },
       label: {
         show: true,
-        position: isVertical.value ? "top" : "right",
+        position: !isDesktop.value ? "top" : "right",
         formatter: ({ value }: any) => `-${value} h`,
       },
-      barWidth: isVertical.value ? "60%" : undefined,
+      barWidth: "80%",
     },
   ],
 }));
@@ -152,14 +158,14 @@ const option = computed(() => ({
         <h3 v-if="title" class="comparative-time-chart__header__title">
           {{ title }}
         </h3>
-        <!-- <div class="comparative-time-chart__header__summary">
+        <div class="comparative-time-chart__header__summary">
           <strong>Total :</strong>
           <span
             >{{ Math.round(totalBefore) }} h →
             {{ Math.round(totalAfter) }} h</span
           >
           <span>Gain : {{ Math.round(totalGain) }} h (−{{ pctGain }}%)</span>
-        </div> -->
+        </div>
       </div>
       <!-- Tableau texte accessibilité et SEO -->
       <div
@@ -207,13 +213,12 @@ const option = computed(() => ({
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 
   &__header {
     display: flex;
     align-items: baseline;
     gap: 1rem;
-    margin-bottom: 0.5rem;
 
     &__summary {
       display: flex;

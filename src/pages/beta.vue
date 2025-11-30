@@ -31,34 +31,54 @@ const featureCards = [
 
 const steps = [
   {
-    name: "Ouverture / cadrage",
+    name: "Ouverture du dossier",
     beforeHours: 1.5,
-    afterHours: 0.8,
-    description: "Création dossier et collecte initiale",
+    afterHours: 0.4,
+    description: "Création du dossier, saisie des informations client et bien",
   },
   {
-    name: "Collecte & vérification des pièces",
-    beforeHours: 6.5,
-    afterHours: 2.0,
-    description: "Portail clients + checklists",
+    name: "Collecte & vérifications",
+    beforeHours: 6.0,
+    afterHours: 1.9,
+    description:
+      "Collecte des pièces, vérifications juridiques et administratives",
   },
   {
-    name: "Échanges clients / agences / banques",
-    beforeHours: 7.0,
-    afterHours: 2.0,
-    description: "Messagerie intégrée, tâches",
+    name: "Rédaction des documents",
+    beforeHours: 3.5,
+    afterHours: 1.5,
+    description: "Avant-contrats, compromis, procurations, promesses, etc.",
   },
   {
-    name: "Pré-rédaction & actes",
-    beforeHours: 5.0,
-    afterHours: 3.0,
-    description: "Gabarits & champs dynamiques",
+    name: "Communication & relances",
+    beforeHours: 2.5,
+    afterHours: 1.0,
+    description:
+      "Échanges avec clients & agences, relances, planification, etc.",
   },
   {
-    name: "Signature & post-acte",
+    name: "Simulation & calculs notariés",
     beforeHours: 2.0,
-    afterHours: 1.2,
-    description: "Rendez-vous + visio + suivi",
+    afterHours: 0.5,
+    description: "Calculs, frais, plus-values, droits d’enregistrement, etc.",
+  },
+  {
+    name: "Préparation de l’acte",
+    beforeHours: 2.5,
+    afterHours: 1.1,
+    description: "Mise en forme, relecture, saisie.",
+  },
+  {
+    name: "RDV & signatures",
+    beforeHours: 3.0,
+    afterHours: 2,
+    description: "Organisation du rendez-vous, signature et explications.",
+  },
+  {
+    name: "Formalités postérieures",
+    beforeHours: 1.4,
+    afterHours: 0.7,
+    description: "Publication, enregistrement & clôture du dossier.",
   },
 ];
 
@@ -212,8 +232,8 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <UILogosCarousel />
   </Container>
+
   <Container>
     <Benefits
       title="Débordé, mais..."
@@ -244,15 +264,51 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
       </NuxtLink>
     </div>
   </Container>
+
   <Container>
+    <Benefits
+      title="✨ Efficace ✨"
+      subtitle="Optimisez la gestion de vos dossiers, sans compromis sur l’accompagnement."
+      text="Supernotaire automatise les tâches répétitives à faible valeur ajoutée, pour vous laisser le temps de vous concentrer sur l’essentiel: vos clients."
+    />
+
+    <img class="interface-image" src="@/assets/images/interface-mandats.webp" />
+
+    <Benefits
+      title="✨ Pratique ✨"
+      subtitle="Ne renseignez plus jamais la même
+      information deux fois."
+      text="Crééz vos propres modèles de documents, Supernotaire se charge de les remplir à partir des informations du dossier."
+    />
+    <img
+      class="interface-image"
+      src="@/assets/images/interface-documents.webp"
+    />
+    <h3 class="interface-title"></h3>
+    <Benefits
+      title="✨ Intuitif ✨"
+      subtitle="Collectez les pièces rapidement, sans stress pour vos clients."
+      text="Laissez nous guider vos clients dans la collecte des éléments du dossier, même les plus complexes. Ils gagnent du temps, et vous aussi."
+    />
+    <img
+      class="interface-image"
+      src="@/assets/images/interface-formulaires.webp"
+    />
+  </Container>
+
+  <Container>
+    <h3 class="interface-title">Reprenez le contrôle de votre temps.</h3>
     <ComparativeTimeChart :steps="steps" />
   </Container>
+
   <Container><FounderPromo /></Container>
 
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
-    <FAQComponent :questions
-  /></Container>
+    <FAQComponent :questions />
+  </Container>
+
+  <Container><UILogosCarousel /></Container>
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
@@ -288,6 +344,29 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
       grid-column: 2/3;
     }
   }
+}
+
+.interface-title {
+  width: 100%;
+  max-width: 80rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: $semi-bold;
+  text-wrap: balance;
+  margin-bottom: 1rem;
+
+  @media (min-width: $big-tablet-screen) {
+    font-size: 2.5rem;
+    grid-column: span 3;
+    margin-bottom: 2rem;
+  }
+}
+
+.interface-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: $radius;
 }
 
 .scene * {
@@ -361,10 +440,6 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     z-index: -1;
     pointer-events: none;
     transition: opacity 0.5s ease-in-out;
-
-    @starting-style {
-      opacity: 0;
-    }
   }
 
   &::after {
@@ -436,10 +511,6 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
       position: relative;
       text-shadow: 0 0 10px rgba($text-color, 0.2);
       transition: opacity 1s ease-in-out;
-
-      @starting-style {
-        opacity: 0;
-      }
 
       @media (min-width: $big-tablet-screen) {
         font-size: 3rem;
