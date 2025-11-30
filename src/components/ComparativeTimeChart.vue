@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { colors } from "@/utils/colors";
+import { useIsDesktop } from "@/utils/otherFunctions";
 
 type Step = {
   name: string;
@@ -15,16 +16,20 @@ const props = withDefaults(
     title?: string;
     height?: string;
   }>(),
-  {
-    height: "26rem",
-  }
+  { height: "27rem" }
 );
+
+const isDesktop = useIsDesktop(); // true = desktop, false = mobile
+const isVertical = computed(() => !isDesktop.value); // vertical en mobile
 
 const chartRef = ref();
 
-const categories = computed(() =>
+const categoriesRich = computed(() =>
   props.steps.map((s) => `${s.name}\n${s.description ?? ""}`)
 );
+
+const categoriesCompact = computed(() => props.steps.map((s) => s.name));
+
 const beforeData = computed(() => props.steps.map((s) => s.beforeHours));
 const afterData = computed(() => props.steps.map((s) => s.afterHours));
 const gainsData = computed(() =>
@@ -46,61 +51,89 @@ const option = computed(() => ({
     axisPointer: { type: "shadow" },
     valueFormatter: (v: number) => `${v} h`,
   },
-  legend: { top: 0 },
-  grid: { left: 0, right: 0, top: 64, bottom: 0, containLabel: true },
-  xAxis: {
-    type: "value",
-    name: "heures",
-    axisLabel: { formatter: "{value} h" },
+  legend: {
+    top: 0,
   },
-  yAxis: {
-    type: "category",
-    data: categories.value,
-    axisLabel: {
-      formatter: (value: string) => {
-        const [title, subtitle] = value.split("\n");
-        return `{title|${title}}\n{subtitle|${subtitle || ""}}`;
-      },
-      rich: {
-        title: {
-          fontWeight: "600",
-          fontSize: 18,
-          lineHeight: 22,
-          color: colors["text-color"],
+  grid: isVertical.value
+    ? { left: 8, right: 8, top: 64, bottom: 24, containLabel: true }
+    : { left: 0, right: 0, top: 64, bottom: 0, containLabel: true },
+
+  xAxis: isVertical.value
+    ? {
+        type: "category",
+        data: categoriesCompact.value,
+        axisLabel: {
+          interval: 0,
+          rotate: categoriesCompact.value.length > 4 ? 90 : 0,
         },
-        subtitle: {
-          fontWeight: "400",
-          fontSize: 14,
-          lineHeight: 18,
-          color: colors["text-color-faded"],
+      }
+    : {
+        type: "value",
+        name: "heures",
+        axisLabel: { formatter: "{value} h" },
+      },
+
+  yAxis: isVertical.value
+    ? {
+        type: "value",
+        name: "heures",
+        axisLabel: { formatter: "{value} h" },
+      }
+    : {
+        type: "category",
+        data: categoriesRich.value,
+        axisLabel: {
+          formatter: (value: string) => {
+            const [title, subtitle] = value.split("\n");
+            return `{title|${title}}\n{subtitle|${subtitle || ""}}`;
+          },
+          rich: {
+            title: {
+              fontWeight: "600",
+              fontSize: 18,
+              lineHeight: 22,
+              color: colors["text-color"],
+            },
+            subtitle: {
+              fontWeight: "400",
+              fontSize: 14,
+              lineHeight: 18,
+              color: colors["text-color-faded"],
+            },
+          },
         },
       },
-    },
-  },
+
   series: [
     {
       name: "Avec Supernotaire",
       type: "bar",
       stack: "temps",
       data: afterData.value,
+      itemStyle: { color: colors["accent-color"] || "#3185FF" },
       label: {
         show: true,
-        position: "insideRight",
+        position: isVertical.value ? "insideTop" : "insideRight",
         formatter: ({ value }: any) => `${value} h`,
       },
       emphasis: { focus: "series" },
+      barWidth: isVertical.value ? "60%" : undefined,
     },
     {
       name: "Temps économisé",
       type: "bar",
       stack: "temps",
       data: gainsData.value,
+      itemStyle: {
+        opacity: 0.4,
+        color: colors["success-color"] || "#48D664",
+      },
       label: {
         show: true,
-        position: "right",
+        position: isVertical.value ? "top" : "right",
         formatter: ({ value }: any) => `-${value} h`,
       },
-      itemStyle: { opacity: 0.6 },
+      barWidth: isVertical.value ? "60%" : undefined,
     },
   ],
 }));
