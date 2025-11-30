@@ -3,7 +3,10 @@ import { colors } from "@/utils/colors";
 
 const features = ref([
   {
-    text: "-70% à vie sur l’abonnement Premium",
+    text: "1 an de Supernotaire Premium dès sa sortie",
+  },
+  {
+    text: "-30% à vie sur Supernotaire Premium",
   },
   {
     text: "Accès anticipé aux nouvelles fonctionnalités",
@@ -41,7 +44,7 @@ const features = ref([
       </li>
     </ul>
     <NuxtLink
-      to="https://buy.stripe.com/5kQ28k2iZ4IKd2CfDaeQM00"
+      to="https://buy.stripe.com/00wbIUf5La342nY76EeQM01"
       target="_blank"
       class="founder-promo__link"
     >

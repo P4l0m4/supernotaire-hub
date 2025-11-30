@@ -147,7 +147,7 @@ async function validContactState() {
       exclusive limitée aux 100 premiers adoptants.
       <template #button>
         <NuxtLink
-          to="https://buy.stripe.com/5kQ28k2iZ4IKd2CfDaeQM00"
+          to="https://buy.stripe.com/00wbIUf5La342nY76EeQM01"
           target="_blank"
           style="width: 100%"
           ><UIPrimaryButton variant="accent-color" icon="hand_heart_fill"

@@ -29,6 +29,39 @@ const featureCards = [
   },
 ];
 
+const steps = [
+  {
+    name: "Ouverture / cadrage",
+    beforeHours: 1.5,
+    afterHours: 0.8,
+    description: "Création dossier et collecte initiale",
+  },
+  {
+    name: "Collecte & vérification des pièces",
+    beforeHours: 6.5,
+    afterHours: 2.0,
+    description: "Portail clients + checklists",
+  },
+  {
+    name: "Échanges clients / agences / banques",
+    beforeHours: 7.0,
+    afterHours: 2.0,
+    description: "Messagerie intégrée, tâches",
+  },
+  {
+    name: "Pré-rédaction & actes",
+    beforeHours: 5.0,
+    afterHours: 3.0,
+    description: "Gabarits & champs dynamiques",
+  },
+  {
+    name: "Signature & post-acte",
+    beforeHours: 2.0,
+    afterHours: 1.2,
+    description: "Rendez-vous + visio + suivi",
+  },
+];
+
 const questions = [
   {
     title: "Quand Supernotaire sera-t-il officiellement lancé ?",
@@ -209,9 +242,13 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
           Rejoindre l'accès anticipé
         </UIPrimaryButton>
       </NuxtLink>
-    </div></Container
-  >
+    </div>
+  </Container>
+  <Container>
+    <ComparativeTimeChart :steps="steps" />
+  </Container>
   <Container><FounderPromo /></Container>
+
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
     <FAQComponent :questions

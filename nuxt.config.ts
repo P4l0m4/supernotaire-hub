@@ -25,7 +25,9 @@ export default defineNuxtConfig({
     ],
   ],
 
-  build: { transpile: ["pdfmake", "@vuepic/vue-datepicker"] },
+  build: {
+    transpile: ["pdfmake", "@vuepic/vue-datepicker", "vue-echarts", "echarts"],
+  },
 
   vite: {
     css: {
