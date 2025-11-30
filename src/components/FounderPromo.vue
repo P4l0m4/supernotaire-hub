@@ -44,7 +44,7 @@ const features = ref([
       </li>
     </ul>
     <NuxtLink
-      to="https://buy.stripe.com/00wbIUf5La342nY76EeQM01"
+      to="https://buy.stripe.com/4gMfZa5vb5MO7IigHeeQM02"
       target="_blank"
       class="founder-promo__link"
     >
