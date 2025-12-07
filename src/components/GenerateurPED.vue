@@ -23,7 +23,7 @@ import type { ISODate } from "@/utils/types/pre-etat-date-complet";
 
 const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",
-  "État daté des impayés du copropriétaire vendeur et des dettes envers le syndicat.",
+  "État daté des impayés du copropriétaire vendeur et des dettes envers le Syndic.",
   "Montant du fonds travaux (ALUR) et arrêté correspondant.",
   "Carnet d’entretien de l’immeuble.",
   "Diagnostic technique global (DTG) s’il existe.",
