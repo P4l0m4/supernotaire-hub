@@ -1,7 +1,9 @@
 import type { Adresse } from "@/utils/types/adresse";
 
 export interface ValeurFonciere {
-  adresse: Adresse;
+  localisation: {
+    adresse: Adresse | null;
+  };
   is_downtown: boolean;
   dimensions: Dimensions;
   configuration: Configuration;

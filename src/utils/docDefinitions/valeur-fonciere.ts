@@ -28,7 +28,7 @@ export function buildDocDefinition(
         margin: [0, 0, 0, 4],
       },
       {
-        text: `${formData.adresse.properties.label}`,
+        text: `${formData.localisation?.adresse?.properties.label}`,
         style: "h2",
         margin: [0, 0, 0, 4],
       },

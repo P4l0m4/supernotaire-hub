@@ -2,6 +2,22 @@
   "title": "Valeur foncière",
   "sections": [
     {
+      "id": "localisation",
+      "label": "Emplacement du bien",
+      "fields": [
+        {
+          "path": "localisation.adresse",
+          "id": "localisation-adresse",
+          "suggestionRef": "localisation_adresse_du_bien",
+          "label": "Adresse du bien",
+          "name": "adresse",
+          "type": "location",
+          "placeholder": "10 rue de la Paix, Paris",
+          "required": true
+        }
+      ]
+    },
+    {
       "id": "dimensions",
       "label": "Dimensions du bien",
       "fields": [

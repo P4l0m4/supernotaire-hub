@@ -120,6 +120,7 @@ function buildRules(def?: FormDefinition) {
       r.isDate = fr.isDate;
     }
     if (f.type === "email") r.email = fr.email;
+    if (f.type === "location") r.location = fr.isAddress;
     if (f.pattern) {
       const rg = regexFrom(f.pattern);
       if (rg) r.pattern = rg;

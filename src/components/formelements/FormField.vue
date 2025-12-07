@@ -185,7 +185,7 @@ const errorMessage = computed(() => {
 
     <FormElementsDropDown
       v-if="formField.type === 'checkbox-group'"
-      :label="formField.placeholder"
+      :label="formField.placeholder || formField.label"
       :icon="formField.icon"
     >
       <FormElementsCheckboxField
@@ -198,6 +198,7 @@ const errorMessage = computed(() => {
         @update:modelValue="(val) => setChecked(option.value, val)"
       />
     </FormElementsDropDown>
+
     <FormElementsCheckboxField
       v-if="formField.type === 'checkbox'"
       :label="formField.label"
@@ -205,6 +206,23 @@ const errorMessage = computed(() => {
       :name="formField.name"
       v-model="valueRef"
     />
+    <ClientOnly>
+      <FormElementsLocationSearch
+        v-if="formField.type === 'location'"
+        :id="formField.id"
+        :label="formField.label"
+        v-model="valueRef"
+        :placeholder="formField.placeholder || ''"
+        :required="
+          formField.required
+            ? formField.required
+            : formField.requiredIf
+            ? false
+            : undefined
+        "
+        :error="errorMessage"
+    /></ClientOnly>
+
     <UISmartSuggestion
       v-if="
         suggestion !== undefined &&

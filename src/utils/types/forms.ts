@@ -1,5 +1,4 @@
 import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
-import type { requiredIf } from "@vuelidate/validators";
 
 type FieldType =
   | "text"
@@ -14,7 +13,8 @@ type FieldType =
   | "email"
   | "file"
   | "segmented-control"
-  | "range";
+  | "range"
+  | "location";
 
 export interface BaseField {
   path: string;
@@ -22,7 +22,18 @@ export interface BaseField {
   suggestionRef?: string;
   label: string;
   name: string;
-  type: Exclude<FieldType, "array">;
+  // types "simples" autorisés uniquement
+  type: Exclude<
+    FieldType,
+    | "array"
+    | "number"
+    | "range"
+    | "checkbox-group"
+    | "select"
+    | "segmented-control"
+    | "file"
+    | "date"
+  >;
   required?: boolean;
   requiredIf?: ShowIf;
   placeholder?: string;
@@ -31,15 +42,14 @@ export interface BaseField {
   tooltip?: string;
   tooltipLink?: string; // si tooltip renvoie vers une doc
   pattern?: string; // validation par regex
-  // Affichage conditionnel: le champ est affiché si la condition est vraie
-  showIf?: ShowIf;
+  showIf?: ShowIf; // champ affiché si la condition est vraie
 }
 
 // Règles affichage conditionnel
 export type ShowIf =
   | {
-      path: string; // chemin absolu depuis la racine du modèle (ex: "copropriete.fonds_travaux_existance")
-      equals?: any; // valeur attendue (test égalité stricte)
+      path: string; // chemin absolu depuis la racine du modèle
+      equals?: any; // valeur attendue (égalité stricte)
       in?: any[]; // une des valeurs
       truthy?: boolean; // valeur considérée comme vraie (par défaut true)
     }
@@ -48,14 +58,15 @@ export type ShowIf =
   | { any: ShowIf[] }
   | { or: ShowIf[] };
 
-export interface CheckBoxOption {
+// Options textuelles pour des groupes de choix
+export interface ChoiceOption {
   label: string;
-  value: boolean;
-  belongsTo?: string[]; // afficher les checkbox en fonction d'une autre valeur
+  value: string;
+  belongsTo?: string[]; // afficher les options selon une autre valeur
 }
 
-export interface CheckBoxField extends BaseField {
-  options: CheckBoxOption[];
+export interface CheckBoxField extends Omit<BaseField, "type"> {
+  type: "checkbox";
 }
 
 export interface ArrayField extends Omit<BaseField, "type"> {
@@ -66,51 +77,51 @@ export interface ArrayField extends Omit<BaseField, "type"> {
   maxItems?: number;
 }
 
-export interface NumberField extends BaseField {
+export interface NumberField extends Omit<BaseField, "type"> {
   type: "number";
   step?: number;
   min?: number;
   max?: number;
 }
 
-export interface FileField extends BaseField {
+export interface FileField extends Omit<BaseField, "type"> {
   type: "file";
   accept?: string[]; // types de fichiers acceptés, ex: ['image/png', 'application/pdf']
   multiple?: boolean; // permet la sélection de plusieurs fichiers
 }
 
-export interface RangeField extends BaseField {
+export interface RangeField extends Omit<BaseField, "type"> {
   type: "range";
   options: RangeOption[];
 }
 
-export interface CheckBoxGroupField extends BaseField {
+export interface CheckBoxGroupField extends Omit<BaseField, "type"> {
   type: "checkbox-group";
-  options: CheckBoxOption[];
+  options: ChoiceOption[];
 }
 
-export interface SelectField extends BaseField {
+export interface SelectField extends Omit<BaseField, "type"> {
   type: "select";
   options: string[];
 }
 
-export interface SegmentedControlField extends BaseField {
+export interface SegmentedControlField extends Omit<BaseField, "type"> {
   type: "segmented-control";
   options: string[];
 }
 
-export interface DateField extends BaseField {
+export interface DateField extends Omit<BaseField, "type"> {
   type: "date";
   mode: "year-picker" | "month-picker" | "date-picker";
 }
 
 export type FormField =
-  | BaseField
+  | BaseField // text, radio, textarea, email, location
+  | CheckBoxField
   | ArrayField
   | NumberField
   | RangeField
   | CheckBoxGroupField
-  | CheckBoxField
   | SelectField
   | SegmentedControlField
   | FileField

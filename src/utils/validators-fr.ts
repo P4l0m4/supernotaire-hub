@@ -10,6 +10,32 @@ import {
   email,
 } from "@vuelidate/validators";
 
+// for validating address ------------------
+const isFiniteNumber = (n: unknown): n is number =>
+  typeof n === "number" && Number.isFinite(n);
+
+const hasLngLat = (v: any) => {
+  const coords = v?.geometry?.coordinates;
+  if (!Array.isArray(coords) || coords.length < 2) return false;
+  const [lng, lat] = coords;
+  return (
+    isFiniteNumber(lng) &&
+    isFiniteNumber(lat) &&
+    lng >= -180 &&
+    lng <= 180 &&
+    lat >= -90 &&
+    lat <= 90
+  );
+};
+
+const hasLabel = (v: any) =>
+  !!v &&
+  typeof v === "object" &&
+  v.properties &&
+  typeof v.properties.label === "string" &&
+  v.properties.label.trim().length > 0;
+//---------------------------------------
+
 export const fr = {
   required: helpers.withMessage("Champ obligatoire", required),
   requiredIf: (condition: () => boolean) =>
@@ -65,6 +91,17 @@ export const fr = {
     const month = Number(m[1]);
     return month >= 1 && month <= 12;
   }),
+  isAddress: (withCoords = false) =>
+    helpers.withMessage(
+      withCoords
+        ? "Adresse invalide ou coordonnées manquantes"
+        : "Adresse invalide",
+      (v: unknown) => {
+        if (v == null || v === "") return true;
+        if (!hasLabel(v)) return false;
+        return withCoords ? hasLngLat(v) : true;
+      }
+    ),
 
   oneOf: (opts: readonly string[]) =>
     helpers.withMessage(

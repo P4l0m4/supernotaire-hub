@@ -69,7 +69,7 @@ export async function fetchBuildingRecords(
   form: ValeurFonciere,
   { year, limit = 60, firstYear = 2014 }: ValuationOptions = {}
 ): Promise<DvfRecord[]> {
-  const postcode = form.adresse?.properties?.postcode;
+  const postcode = form.localisation.adresse?.properties?.postcode;
   if (!postcode) return [];
 
   const currentYear = new Date().getFullYear();
@@ -330,8 +330,8 @@ export async function estimateFromForm(
     dpe: dpeFactor(form.etat.dpe),
     downtown: await downtownFactor(
       form.is_downtown,
-      form.adresse?.properties?.postcode!,
-      form.adresse?.properties?.citycode!
+      form.localisation.adresse?.properties?.postcode!,
+      form.localisation.adresse?.properties?.citycode!
     ),
     bonus: bonusFactor(form.configuration.bonus, form.configuration.type_local),
     malus: malusFactor(form.configuration.malus, form.configuration.type_local),

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { colors } from "@/utils/colors";
 
 import achievement from "/achievement-45.svg?url";
 
@@ -10,8 +9,13 @@ import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 import formDefinition from "@/utils/formDefinition/valeur-fonciere.json";
 
 import type { ValeurFonciere } from "@/utils/types/valeur-fonciere";
+import type { FormDefinition } from "~/utils/types/forms";
 
 const formData = reactive({} as ValeurFonciere);
+
+formData.localisation = formData.localisation ?? {
+  adresse: null,
+};
 
 formData.configuration = formData.configuration ?? {
   rdc: false,
@@ -21,7 +25,6 @@ formData.etat = formData.etat ?? {
   travaux: "0",
 };
 
-const showFirstAction = ref(true);
 const showLastAction = ref(false);
 
 // ⬇️ état DVF/estimation
@@ -69,7 +72,7 @@ function onFormCompletion() {
 }
 
 async function findCityCenter() {
-  const city = formData.adresse?.properties?.city;
+  const city = formData.localisation?.adresse?.properties?.city;
   if (!city) return null;
 
   const res = await fetch(
@@ -86,7 +89,7 @@ async function findCityCenter() {
 }
 
 async function checkDowntown() {
-  if (!formData.adresse?.geometry?.coordinates) {
+  if (!formData.localisation?.adresse?.geometry?.coordinates) {
     formData.is_downtown = false;
     return;
   }
@@ -98,20 +101,20 @@ async function checkDowntown() {
 
   const R = 6371e3;
   const toRad = (d: number) => (d * Math.PI) / 180;
-  const dLat = toRad(center.lat - formData.adresse.geometry.coordinates[1]);
-  const dLng = toRad(center.lng - formData.adresse.geometry.coordinates[0]);
+  const dLat = toRad(
+    center.lat - formData.localisation.adresse.geometry.coordinates[1]
+  );
+  const dLng = toRad(
+    center.lng - formData.localisation.adresse.geometry.coordinates[0]
+  );
   const a =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(formData.adresse.geometry.coordinates[1])) *
+    Math.cos(toRad(formData.localisation.adresse.geometry.coordinates[1])) *
       Math.cos(toRad(center.lat)) *
       Math.sin(dLng / 2) ** 2;
   const distance = 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); // en mètres
 
   formData.is_downtown = distance <= 1500; // centre-ville si ≤ 1,5 km
-}
-
-function updateAddress(address: any) {
-  formData.adresse = address;
 }
 
 const { $pdfMake } = useNuxtApp();
@@ -127,33 +130,22 @@ async function generatePdf() {
 }
 
 watch(
-  () => formData.adresse,
+  () => formData.localisation?.adresse,
   async (val) => {
     if (val) await checkDowntown();
-    showFirstAction.value = false;
+
+    const ok = !!val?.properties?.label;
+    if (ok) {
+      await checkDowntown();
+    }
   }
 );
 </script>
 <template>
-  <div class="action" v-if="showFirstAction">
-    <div class="location">
-      <label for="location-form-input" class="location-label"
-        >Adresse du bien à estimer<UIIconComponent
-          icon="asterisk"
-          size="0.75rem"
-          :color="colors['error-color']"
-      /></label>
-
-      <ClientOnly>
-        <FormElementsLocationForm @address="updateAddress" />
-      </ClientOnly>
-    </div>
-  </div>
-
   <Transition>
     <FormElementsDynamicForm
-      v-if="!showFirstAction && !showLastAction"
-      :formDefinition="formDefinition"
+      v-if="!showLastAction"
+      :formDefinition="formDefinition as FormDefinition"
       v-model="formData"
       :suggestions="[]"
       @complete="onFormCompletion"
