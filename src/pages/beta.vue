@@ -151,7 +151,7 @@ useHead({
     {
       property: "og:description",
       content:
-        "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+        "Rejoignez l'accès anticipé de Supernotaire et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
     },
   ],
 });

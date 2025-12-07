@@ -100,6 +100,12 @@ const questions = [
     answer:
       "Les notaires peuvents commencer à utiliser gratuitement les fonctionnalités de base la plateforme. Des fonctionnalités avancées sont également disponibles pour les utilisateurs Premium (mise en avant sur l'anuaire, collaboration avec les clercs, dossiers illimités, etc).",
   },
+  {
+    title:
+      "Supernotaire permet-t'il une digitalisation complète des dossiers de formalités immobilières ?",
+    answer:
+      "Oui, absolument tous les documents et informations nécessaires à la constitution des dossiers sont centralisés en ligne, et accessibles à tout moment via un coffre-fort numérique sécurisé.",
+  },
 ];
 
 const jsonLDFAQ = questions.map((question) => {

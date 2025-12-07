@@ -6,7 +6,7 @@ useHead({
     {
       name: "description",
       content:
-        "Facilitez vos démarches. Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+        "Facilitez vos formalités immobilières. Créez facilement votre dossier en ligne et confiez-le rapidement à un notaire, où que vous soyez.",
     },
   ],
 });

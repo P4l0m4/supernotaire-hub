@@ -12,7 +12,8 @@ import { colors } from "@/utils/colors";
 const url = ref();
 
 useHead({
-  title: "Supernotaire | Finalisation rapide des mandats de vente immobilière",
+  title:
+    "Supernotaire | Digitalisation des dossiers de formalités immobilières",
   meta: [
     {
       name: "description",
@@ -26,7 +27,7 @@ useHead({
     {
       property: "og:title",
       content:
-        "Supernotaire | Finalisation rapide des mandats de vente immobilière",
+        "Supernotaire | Digitalisation des dossiers de formalités immobilières",
     },
     {
       property: "og:url",
@@ -40,7 +41,7 @@ useHead({
     {
       property: "og:description",
       content:
-        "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+        "Digitalisez la gestion de vos mandats de vente immobilière, soyez visible à l’échelle nationale et gagnez du temps facturable.",
     },
   ],
 });
@@ -77,9 +78,9 @@ const features = ref([
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Finalisation rapide des mandats de vente immobilière",
+  name: "Supernotaire | Digitalisation des dossiers de formalités immobilières",
   description:
-    "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+    "Digitalisez la gestion de vos mandats de vente immobilière, soyez visible à l’échelle nationale et gagnez du temps facturable.",
   url: url.value,
 }));
 

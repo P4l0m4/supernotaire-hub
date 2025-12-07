@@ -52,12 +52,12 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "Supernotaire | Questions fréquentes des notaires",
+  title: "Supernotaire | Questions fréquentes des vendeurs de biens",
   meta: [
     {
       name: "description",
       content:
-        "Retrouvez les réponses aux questions les plus fréquentes des notaires sur Supernotaire.",
+        "Retrouvez les réponses aux questions les plus fréquentes des vendeurs de biens et acheteurs de biens sur Supernotaire.",
     },
   ],
 });
