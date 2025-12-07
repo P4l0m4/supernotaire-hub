@@ -83,7 +83,7 @@ const jsonLDSupplies = computed(() =>
   (props.tutorialPrerequisites || []).map((p) => ({
     "@type": "HowToSupply" as const,
     name: p.name,
-    url: p.internalLink || undefined,
+    url: p.link || undefined,
   }))
 );
 
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
   />
 
   <div ref="el" class="how-to">
-    <div class="how-to__attention">
+    <div v-if="tutorialPrerequisites.length" class="how-to__attention">
       <div class="how-to__attention__illustration">
         <img
           class="how-to__attention__illustration__image"
