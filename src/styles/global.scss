@@ -486,6 +486,8 @@ details > summary::-webkit-details-marker /* Safari */ {
   &__title {
     font-size: 2.25rem;
     font-weight: $bold;
+    text-align: center;
+    text-wrap: balance;
 
     @media (min-width: $tablet-screen) {
       font-size: 3rem;

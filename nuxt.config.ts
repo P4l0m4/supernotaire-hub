@@ -54,9 +54,12 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
     public: {
       STORYBLOK_KEY: process.env.STORYBLOK_KEY,
       GEMINI_KEY: process.env.NUXT_PUBLIC_GEMINI_KEY,
+      SUPABASE_URL: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
     },
   },
   dayjs: {
