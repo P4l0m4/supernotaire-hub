@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: "text-color",
   direction: "row",
   fontSize: "1rem",
-  iconSize: "1.25rem",
+  iconSize: "1rem",
 });
 </script>
 <template>
@@ -52,23 +52,27 @@ const props = withDefaults(defineProps<Props>(), {
   cursor: pointer;
   white-space: nowrap;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   align-items: center;
   font-weight: $medium;
   font-size: 0.875rem;
   margin-top: auto;
-  transition: transform 0.2s linear, color 0.2s linear;
+  transition: color 0.2s linear;
 
   @media (min-width: $big-tablet-screen) {
-    &:hover {
-      & .icon {
-        transform: translateX(0.5rem);
-      }
+    &:hover > .button__text {
+      text-decoration-color: currentColor;
+      -webkit-text-decoration-color: currentColor;
+      -moz-text-decoration-color: currentColor;
     }
   }
-}
 
-.icon {
-  transition: transform 0.4s ease;
+  &__text {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    -webkit-text-decoration-color: transparent;
+    -moz-text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s linear;
+  }
 }
 </style>
