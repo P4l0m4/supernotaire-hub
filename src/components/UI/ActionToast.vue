@@ -4,6 +4,7 @@ interface Props {
   color: string;
   direction?: "row" | "column";
   actionLabel?: string;
+  onAction?: () => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
       v-if="actionLabel && actionLabel.length"
       class="action-label"
       :class="direction"
+      @click.stop="props.onAction()"
       >{{ actionLabel }}</span
     >
   </button>
