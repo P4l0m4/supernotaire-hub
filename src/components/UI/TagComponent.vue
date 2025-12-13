@@ -5,9 +5,11 @@ withDefaults(
   defineProps<{
     color?: string;
     icon?: string;
+    size?: "small" | "big";
   }>(),
   {
     color: colors["accent-color"],
+    size: "small",
   }
 );
 </script>
@@ -18,11 +20,13 @@ withDefaults(
       backgroundColor: `${color}10`,
       color: color,
       border: `1px solid ${color}10`,
+      padding: size === 'small' ? '0.15rem 0.25rem' : '1rem 1.25rem',
+      fontSize: size === 'small' ? '0.75rem' : '1rem',
     }"
     ><UIIconComponent
       v-if="icon"
       :icon
-      size="0.75rem"
+      :size="size === 'small' ? '0.75rem' : '1rem'"
       :color="color"
       style="margin-right: 0.25rem"
     />
@@ -32,11 +36,10 @@ withDefaults(
 <style scoped lang="scss">
 .tag {
   display: inline-block;
-  font-size: $small-text;
-  padding: 0.15rem 0.25rem;
   border-radius: calc($radius/2.2);
   width: fit-content;
   max-width: 100%;
+  height: fit-content;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

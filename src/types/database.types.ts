@@ -57,6 +57,8 @@ export type Database = {
           placeId: string;
           matchedName: string;
           matchedAddr: string;
+          nationalPhoneNumber: string | null;
+          websiteUri: string | null;
           distanceM: number;
           confidence: number;
           matchedAt: string;
@@ -66,6 +68,8 @@ export type Database = {
           placeId: string;
           matchedName: string;
           matchedAddr: string;
+          nationalPhoneNumber?: string | null;
+          websiteUri?: string | null;
           distanceM: number;
           confidence: number;
           matchedAt?: string;
@@ -75,6 +79,8 @@ export type Database = {
           placeId?: string;
           matchedName?: string;
           matchedAddr?: string;
+          nationalPhoneNumber?: string | null;
+          websiteUri?: string | null;
           distanceM?: number;
           confidence?: number;
           matchedAt?: string;
@@ -183,17 +189,9 @@ export type Database = {
         Relationships: [];
       };
     };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      [_ in never]: never;
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
+    Views: { [_ in never]: never };
+    Functions: { [_ in never]: never };
+    Enums: { [_ in never]: never };
+    CompositeTypes: { [_ in never]: never };
   };
 };
