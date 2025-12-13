@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import {
   getNotariesByCommune,
   getNotariesByDepartement,
@@ -24,6 +24,13 @@ const geoLocationErrorMessage = ref<string | null>(null);
 const notaries = ref<NotaryProfile[]>([]);
 const locationLabel = ref<string | null>(null);
 const geoGouvCommunes = ref<GeoCommune[]>([]);
+// cache la dernière recherche pour restauration au retour arrière
+const searchState = useState("annuaireSearch", () => ({
+  query: "",
+  locationLabel: null as string | null,
+  notaries: [] as NotaryProfile[],
+  geoGouvCommunes: [] as GeoCommune[],
+}));
 
 type Suggestion = { codePostal: string; label: string; insee: string };
 const searchSuggestions = computed<Suggestion[]>(() => {
@@ -171,6 +178,13 @@ async function fetchNotaries(raw: string, forcedLabel?: string) {
 
     if (id !== reqId) return;
     notaries.value = data;
+    // persist pour navigation arrière
+    searchState.value = {
+      query: query.value,
+      locationLabel: locationLabel.value,
+      notaries: data,
+      geoGouvCommunes: geoGouvCommunes.value,
+    };
   } catch (err: any) {
     if (id !== reqId) return;
     console.error(err);
@@ -188,6 +202,12 @@ function clearSearch() {
   geoGouvCommunes.value = [];
   errorMessage.value = null;
   locationLabel.value = null;
+  searchState.value = {
+    query: "",
+    locationLabel: null,
+    notaries: [],
+    geoGouvCommunes: [],
+  };
 }
 
 async function fetchNearbyNotaries() {
@@ -281,6 +301,16 @@ async function getNearbyLocation() {
 watch(query, (v) => {
   if (!v.trim()) {
     clearSearch();
+  }
+});
+
+onMounted(() => {
+  // hydrate depuis le cache si présent
+  if (searchState.value.query || searchState.value.notaries.length) {
+    query.value = searchState.value.query;
+    locationLabel.value = searchState.value.locationLabel;
+    geoGouvCommunes.value = searchState.value.geoGouvCommunes;
+    notaries.value = searchState.value.notaries;
   }
 });
 </script>

@@ -4,6 +4,7 @@ import { useRoute, useRouter } from "#app";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { colors } from "@/utils/colors";
 import { getNotariesByPostalCode, type NotaryProfile } from "@/utils/notaries";
+import type IconComponentVue from "~/components/UI/IconComponent.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -55,7 +56,7 @@ async function getOneBySiret(
   const SELECT_FIELDS = `
     siret, denomination, adresse, codePostal, commune, departement,
     PlaceMatch (
-      placeId, matchedName, matchedAddr, confidence,
+      placeId, matchedName, matchedAddr, nationalPhoneNumber, websiteUri, confidence,
       PlaceRating ( rating, userRatingsTotal )
     )
   `;
@@ -91,11 +92,13 @@ async function getOneBySiret(
     codePostal: data.codePostal,
     commune: data.commune,
     departement: data.departement,
-    matchedName: place?.matchedName ?? null,
-    matchedAddr: place?.matchedAddr ?? null,
-    confidence: place?.confidence ?? null,
-    rating: pr?.rating ?? null,
-    userRatingsTotal: pr?.userRatingsTotal ?? null,
+    matchedName: place?.matchedName ?? "",
+    matchedAddr: place?.matchedAddr ?? "",
+    nationalPhoneNumber: place?.nationalPhoneNumber ?? "",
+    website: place?.websiteUri ?? "",
+    confidence: place?.confidence ?? "",
+    rating: pr?.rating ?? "",
+    userRatingsTotal: pr?.userRatingsTotal ?? "",
   };
   return out;
 }
@@ -159,12 +162,12 @@ async function fetchNotary() {
       return;
     }
 
-    // mode "name" seul: fallback minimal — on tente un LIKE côté serveur pour la dénomination
+    // mode "name" seul: fallback minimal - LIKE côté serveur pour la dénomination
     // (cas non couvert par les helpers existants)
     const SELECT_FIELDS = `
       siret, denomination, adresse, codePostal, commune, departement,
       PlaceMatch (
-        placeId, matchedName, matchedAddr, confidence,
+        placeId, matchedName, matchedAddr, nationalPhoneNumber, websiteUri, confidence,
         PlaceRating ( rating, userRatingsTotal )
       )
     `;
@@ -202,11 +205,13 @@ async function fetchNotary() {
         codePostal: row.codePostal,
         commune: row.commune,
         departement: row.departement,
-        matchedName: place?.matchedName ?? null,
-        matchedAddr: place?.matchedAddr ?? null,
-        confidence: place?.confidence ?? null,
-        rating: pr?.rating ?? null,
-        userRatingsTotal: pr?.userRatingsTotal ?? null,
+        matchedName: place?.matchedName ?? "",
+        matchedAddr: place?.matchedAddr ?? "",
+        nationalPhoneNumber: place?.nationalPhoneNumber ?? "",
+        website: place?.websiteUri ?? "",
+        confidence: place?.confidence ?? "",
+        rating: pr?.rating ?? "",
+        userRatingsTotal: pr?.userRatingsTotal ?? "",
       };
     });
 
@@ -256,16 +261,12 @@ const mapsUrl = computed(() => {
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 });
 const telHref = computed(() => {
-  const tel =
-    (profile.value?.telephone as any as string | undefined)?.replace?.(
-      /\s+/g,
-      ""
-    ) || "";
-  return tel ? `tel:${tel}` : null;
+  const tel = profile.value?.nationalPhoneNumber?.replace(/\s+/g, "") || "";
+  return tel ? `tel:${tel}` : "";
 });
 const websiteHref = computed(() => {
-  let url = (profile.value as any)?.website?.trim?.() || "";
-  if (!url) return null;
+  let url = profile.value?.website?.trim?.() || "";
+  if (!url) return "";
   if (!/^https?:\/\//i.test(url)) url = "https://" + url;
   return url;
 });
@@ -276,7 +277,7 @@ useHead(() => {
   const addr = addrText.value;
   const rating =
     profile.value?.rating && profile.value?.userRatingsTotal
-      ? ` — Note ${profile.value.rating} (${profile.value.userRatingsTotal} avis)`
+      ? ` - Note ${profile.value.rating} (${profile.value.userRatingsTotal} avis)`
       : "";
   const title = `${name}${rating} | Annuaire des notaires de ${profile.value?.departement}`;
   const description = addr ? `${name} - ${addr}.` : name;
@@ -311,9 +312,9 @@ onMounted(() => {
 <template>
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
-    <div class="fiche">
-      <div class="fiche__head">
-        <h1 class="fiche__title">{{ titleText }}</h1>
+    <div class="notary-profile">
+      <div class="notary-profile__header">
+        <h1 class="notary-profile__header__title">{{ titleText }}</h1>
         <UIStarsRating
           :rating="profile?.rating || 0"
           :totalRatings="profile?.userRatingsTotal || 0"
@@ -325,29 +326,90 @@ onMounted(() => {
         />
       </div>
 
-      <div class="fiche__grid">
-        <section class="fiche__main">
-          <div class="fiche__card">
-            <h2 class="fiche__section-title">
-              Coordonnées de l'étude notariale
-            </h2>
-
-            <div class="fiche__actions">
-              <a
-                v-if="mapsUrl"
+      <div class="notary-profile__grid">
+        <div class="notary-profile__grid__main">
+          <div class="grid-card">
+            <h2 class="grid-card__title">Coordonnées de l'étude notariale</h2>
+            <div class="grid-card__actions">
+              <NuxtLink
+                v-if="websiteHref?.length"
                 class="ui-link"
-                :href="mapsUrl"
+                :to="websiteHref"
+                target="_blank"
+                rel="noopener"
+                v-tooltip="'Visiter le site web du notaire'"
+              >
+                <UIIconComponent
+                  icon="globe"
+                  :color="colors['secondary-color']"
+                />
+
+                {{ profile?.website }}
+              </NuxtLink>
+              <span v-else class="ui-link ui-link--disabled"
+                ><UIIconComponent
+                  icon="globe"
+                  :color="colors['secondary-color']"
+                /><UISkeletonLoader
+                  v-if="websiteHref === null"
+                  height="1.25rem"
+                />
+                <template v-if="websiteHref === ''">
+                  Pas de site web disponible</template
+                >
+              </span>
+            </div>
+            <div class="grid-card__actions">
+              <NuxtLink
+                v-if="telHref?.length"
+                class="ui-link"
+                :to="telHref"
+                target="_blank"
+                rel="noopener"
+                v-tooltip="'Appeler le notaire'"
+              >
+                <UIIconComponent
+                  icon="phone"
+                  :color="colors['secondary-color']"
+                />
+
+                {{ profile?.nationalPhoneNumber }}
+              </NuxtLink>
+              <span v-else class="ui-link ui-link--disabled">
+                <UIIconComponent
+                  icon="phone"
+                  :color="colors['secondary-color']"
+                />
+
+                <UISkeletonLoader v-if="telHref === null" height="1.25rem" />
+                <template v-if="telHref === ''">
+                  Aucun numéro disponible
+                </template>
+              </span>
+            </div>
+            <div class="grid-card__actions">
+              <NuxtLink
+                v-if="mapsUrl?.length"
+                class="ui-link"
+                :to="mapsUrl"
                 target="_blank"
                 rel="noopener"
                 v-tooltip="'Voir sur Google Maps'"
-              >
-                <UITertiaryButton icon="map_trifold" variant="secondary-color">
-                  {{ addrText }}
-                </UITertiaryButton>
-              </a>
-              <UISkeletonLoader v-else height="1.25rem" />
+                ><UIIconComponent
+                  icon="map_trifold"
+                  :color="colors['secondary-color']"
+                />
+
+                {{ addrText }}
+              </NuxtLink>
+              <span v-else class="ui-link ui-link--disabled">
+                <UISkeletonLoader v-if="mapsUrl === null" height="1.25rem" />
+                <template v-if="mapsUrl === ''">
+                  Pas d'adresse disponible
+                </template>
+              </span>
             </div>
-            <div class="fiche__actions">
+            <div class="grid-card__actions">
               <UITagComponent
                 v-if="profile?.confidence != null"
                 icon="check_circle"
@@ -360,13 +422,14 @@ onMounted(() => {
                 Confiance de correspondance :
                 {{ Math.round((profile.confidence || 0) * 100) }}%
               </UITagComponent>
+              <UISkeletonLoader v-else height="1.25rem" />
             </div>
           </div>
-        </section>
+        </div>
 
-        <aside class="fiche__side">
-          <div class="fiche__card">
-            <h2 class="fiche__section-title">Informations complémentaires</h2>
+        <aside class="notary-profile__grid__side">
+          <div class="grid-card">
+            <h2 class="grid-card__title">Informations complémentaires</h2>
             <ul class="kv">
               <li>
                 <span class="kv__k">Dénomination</span>
@@ -420,21 +483,21 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.fiche {
+.notary-profile {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
 
-  &__head {
+  &__header {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-  }
 
-  &__title {
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
-    margin: 0;
+    &__title {
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      margin: 0;
+    }
   }
 
   &__grid {
@@ -449,18 +512,24 @@ onMounted(() => {
     }
   }
 
-  &__card {
+  .grid-card {
     background: $primary-color;
     border-radius: calc($radius / 2);
     padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
 
-  &__section-title {
-    font-size: 1.25rem;
-    font-weight: $regular;
+    &__title {
+      font-size: 1.25rem;
+      font-weight: $regular;
+    }
+
+    &__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
   }
 
   .kv {
@@ -475,11 +544,6 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-
-      @media (min-width: $big-tablet-screen) {
-        flex-direction: row;
-        align-items: center;
-      }
     }
 
     &__k {
@@ -492,12 +556,14 @@ onMounted(() => {
 
   .ui-link {
     text-decoration: none;
-  }
-
-  .fiche__actions {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 0.5rem;
+
+    &--disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
 }
 </style>

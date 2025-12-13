@@ -57,6 +57,8 @@ export type Database = {
           placeId: string;
           matchedName: string;
           matchedAddr: string;
+          nationalPhoneNumber: string | null;
+          websiteUri: string | null;
           distanceM: number;
           confidence: number;
           matchedAt: string;
@@ -66,6 +68,8 @@ export type Database = {
           placeId: string;
           matchedName: string;
           matchedAddr: string;
+          nationalPhoneNumber?: string | null;
+          websiteUri?: string | null;
           distanceM: number;
           confidence: number;
           matchedAt?: string;
@@ -75,6 +79,8 @@ export type Database = {
           placeId?: string;
           matchedName?: string;
           matchedAddr?: string;
+          nationalPhoneNumber?: string | null;
+          websiteUri?: string | null;
           distanceM?: number;
           confidence?: number;
           matchedAt?: string;
