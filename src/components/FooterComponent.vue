@@ -59,6 +59,12 @@
           <NuxtLink to="/vendeurs">Notre offre</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
+          <NuxtLink to="/tutoriels">Tutoriels</NuxtLink>
+        </li>
+        <li class="footer__links-container__links__li">
+          <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+        </li>
+        <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
       </ul>
@@ -80,16 +86,13 @@
           </svg>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/beta#roadmap">Roadmap</NuxtLink>
+          <NuxtLink :to="{ path: '/', hash: '#roadmap' }">Roadmap</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+          <NuxtLink to="/annuaire">Annuaire</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/contact">Contact</NuxtLink>
-        </li>
-        <li class="footer__links-container__links__li">
-          <NuxtLink to="/tutoriels">Tutoriels</NuxtLink>
         </li>
       </ul>
       <div class="footer__links-container__special-box">

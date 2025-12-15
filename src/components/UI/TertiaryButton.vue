@@ -8,7 +8,10 @@ interface Props {
     | "text-color"
     | "text-color-faded"
     | "primary-color"
-    | "error-color";
+    | "error-color"
+    | "success-color"
+    | "warning-color"
+    | "purple-color";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   icon?: string;
   iconSize?: string;
