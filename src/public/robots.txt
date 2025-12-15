@@ -18,3 +18,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://supernotaire.fr/sitemap.xml
+RSS: https://supernotaire.fr/rss.xml
