@@ -74,6 +74,18 @@ const jsonLDFAQ = questions.map((question) => {
   };
 });
 
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Supernotaire | Générateur de Pré-état daté gratuit",
+  description:
+    "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
+  url: `${baseUrl}/outils/pre-etat-date`,
+}));
+
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "FAQPage" as const,

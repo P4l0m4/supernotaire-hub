@@ -9,7 +9,8 @@ import dots from "@/assets/images/dots-big.svg";
 
 import { colors } from "@/utils/colors";
 
-const url = ref();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
 
 useHead({
   title: "Supernotaire | Facilitez vos démarches de vente immobilière",
@@ -29,7 +30,7 @@ useHead({
     },
     {
       property: "og:url",
-      content: "https://supernotaire.fr/",
+      content: `${baseUrl}/vendeurs`,
     },
     {
       property: "og:image",
@@ -78,12 +79,8 @@ useJsonld(() => ({
   name: "Supernotaire | Facilitez vos démarches de vente immobilière",
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
-  url: url.value,
+  url: `${baseUrl}/vendeurs`,
 }));
-
-onMounted(() => {
-  url.value = window.location.href;
-});
 </script>
 <template>
   <Container>

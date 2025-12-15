@@ -5,6 +5,7 @@ import { stringToSlug } from "@/utils/slugify";
 
 const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);
+const siteUrl = "https://supernotaire.fr";
 
 onMounted(async () => {
   const storyblokApi = useStoryblokApi();
@@ -32,6 +33,40 @@ const tutorialSlug = route.params.slug;
 const tutorial = computed(() =>
   tutorials.value.find((f: any) => stringToSlug(f.title) === tutorialSlug)
 );
+
+useJsonld(() => {
+  const t = tutorial.value;
+  if (!t) return undefined;
+  const url = `${siteUrl}/tutoriels/${tutorialSlug}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: t.title,
+    description: t.description,
+    image: t.previewImage?.filename,
+    author: {
+      "@type": "Organization",
+      name: "Supernotaire",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Supernotaire",
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/favicon-512x512.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    ...(t.lastUpdate && { datePublished: t.lastUpdate }),
+    ...(t.lastUpdate && { dateModified: t.lastUpdate }),
+    ...(t.subjects && { articleSection: t.subjects }),
+    url,
+  };
+});
 
 useHead(() => {
   if (!tutorial.value) return {};

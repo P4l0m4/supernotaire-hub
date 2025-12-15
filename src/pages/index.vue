@@ -13,7 +13,8 @@ import type { Decoration } from "~/components/UI/Profile.vue";
 const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);
 
-const url = ref();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
 
 const profiles = ref([
   {
@@ -53,7 +54,7 @@ useHead({
     },
     {
       property: "og:url",
-      content: "https://supernotaire.fr/",
+      content: `${baseUrl}/`,
     },
     {
       property: "og:image",
@@ -74,7 +75,7 @@ useJsonld(() => ({
   name: "Supernotaire | Finalisation rapide de vente immobilière",
   description:
     "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
-  url: url.value,
+  url: `${baseUrl}/`,
 }));
 
 useJsonld(() => ({
@@ -88,7 +89,7 @@ useJsonld(() => ({
     price: "0",
     priceCurrency: "EUR",
   },
-  url: "https://www.supernotaire.fr",
+  url: `${baseUrl}/`,
   logo: `https://www.supernotaire.fr/${logo}`,
   image:
     "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
@@ -97,13 +98,11 @@ useJsonld(() => ({
   publisher: {
     "@type": "Organization",
     name: "Supernotaire",
-    url: "https://www.supernotaire.fr",
+    url: `${baseUrl}/`,
   },
 }));
 
 onMounted(async () => {
-  url.value = window.location.href;
-
   const storyblokApi = useStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
     version: "published",

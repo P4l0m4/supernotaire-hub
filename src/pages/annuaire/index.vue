@@ -17,6 +17,20 @@ type GeoCommune = {
   codesPostaux: string[];
 };
 
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+const breadcrumbs = [
+  {
+    name: "Accueil",
+    url: "/",
+  },
+  {
+    name: "Annuaire",
+    url: `${baseUrl}/annuaire`,
+  },
+];
+
 const query = ref("");
 const pending = ref(false);
 const errorMessage = ref<string | null>(null);
@@ -298,6 +312,15 @@ async function getNearbyLocation() {
   });
 }
 
+useJsonld({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Annuaire des meilleurs notaires",
+  description:
+    "Trouvez les meilleurs notaires près de chez vous. Consultez le classement des études notariales par département et commune.",
+  url: `${useRuntimeConfig().public.baseURL}/annuaire`,
+});
+
 watch(query, (v) => {
   if (!v.trim()) {
     clearSearch();
@@ -317,6 +340,7 @@ onMounted(() => {
 
 <template>
   <Container>
+    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div class="annuaire">
       <div class="headlines">
         <h1 class="headlines__title">
@@ -475,12 +499,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 1rem;
   gap: 2rem;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 4rem 2rem;
-  }
 
   &__controls {
     display: flex;

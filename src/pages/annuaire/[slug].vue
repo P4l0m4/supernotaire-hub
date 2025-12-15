@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect, onMounted } from "vue";
-import { useRoute, useRouter } from "#app";
+import { useRoute } from "#app";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { colors } from "@/utils/colors";
 import { getNotariesByPostalCode, type NotaryProfile } from "@/utils/notaries";
-import type IconComponentVue from "~/components/UI/IconComponent.vue";
 
 const route = useRoute();
-const router = useRouter();
 const { $supabase } = useNuxtApp();
 const supabaseClient = $supabase as SupabaseClient | null;
-
-const breadcrumbs = ref();
 
 const pending = ref(true);
 const errorMessage = ref<string | null>(null);
@@ -241,7 +237,6 @@ const titleText = computed(() =>
     ? profile.value?.matchedName
     : profile.value?.denomination || "Profil du notaire"
 );
-
 const addrText = computed(() => {
   const n = profile.value;
   if (!n) return "";
@@ -253,7 +248,6 @@ const addrText = computed(() => {
   ].filter(Boolean);
   return parts.join(", ");
 });
-
 const mapsUrl = computed(() => {
   const n = profile.value;
   if (!n) return null;
@@ -271,7 +265,23 @@ const websiteHref = computed(() => {
   return url;
 });
 
-// SEO
+useJsonld(() => {
+  const p = profile.value;
+  if (!p) return null;
+  const runtimeConfig = useRuntimeConfig();
+  const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+  const url = `${baseUrl}/annuaire/${rawSlug.value}`;
+  const name = titleText.value;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description: `Profil et classement de ${name} - Notaire à ${p.commune}, ${p.departement}.`,
+    url,
+  };
+});
+
 useHead(() => {
   const name = titleText.value;
   const addr = addrText.value;
@@ -291,22 +301,23 @@ useHead(() => {
   };
 });
 
-onMounted(() => {
-  breadcrumbs.value = [
-    {
-      name: "Accueil",
-      url: "/",
-    },
-    {
-      name: "Annuaire",
-      url: "/annuaire",
-    },
-    {
-      name: titleText.value,
-      url: window.location.href,
-    },
-  ];
-});
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+const breadcrumbs = [
+  {
+    name: "Accueil",
+    url: "/",
+  },
+  {
+    name: "Annuaire",
+    url: "/annuaire",
+  },
+  {
+    name: titleText.value,
+    url: `${baseUrl}/annuaire/${rawSlug.value}`,
+  },
+];
 </script>
 
 <template>

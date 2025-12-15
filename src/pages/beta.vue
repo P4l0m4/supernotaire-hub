@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import logo from "/favicon-96x96.png";
 
 import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
 import clock from "@/assets/animated-icons/clock-animated.svg?raw";
 import lock from "@/assets/animated-icons/lock-animated.svg?raw";
 
-const url = ref();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
 
 const featureCards = [
   {
@@ -162,7 +162,7 @@ useJsonld(() => ({
   name: "Supernotaire | Finalisation rapide de vente immobilière",
   description:
     "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
-  url: url.value,
+  url: `${baseUrl}/beta`,
 }));
 
 useJsonld(() => ({
@@ -185,13 +185,9 @@ useJsonld(() => ({
   publisher: {
     "@type": "Organization",
     name: "Supernotaire",
-    url: "https://www.supernotaire.fr",
+    url: `${baseUrl}`,
   },
 }));
-
-onMounted(async () => {
-  url.value = window.location.href;
-});
 </script>
 <template>
   <Container>

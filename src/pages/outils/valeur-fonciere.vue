@@ -66,6 +66,18 @@ const questions = [
   },
 ];
 
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Supernotaire | Calculateur de valeur foncière",
+  description:
+    "Calculez la valeur foncière de votre bien immobilier (appartement ou maison) en quelques secondes grâce à notre calculateur en ligne gratuit.",
+  url: `${baseUrl}/outils/valeur-fonciere`,
+}));
+
 const jsonLDFAQ = questions.map((question) => {
   return {
     "@type": "Question" as const,

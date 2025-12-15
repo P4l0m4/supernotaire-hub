@@ -110,7 +110,23 @@ useJsonld(() => ({
   dateModified: props.tutorialLastUpdate || undefined,
 }));
 
-const breadcrumbs = ref();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+const breadcrumbs = ref([
+  {
+    name: "Accueil",
+    url: "/",
+  },
+  {
+    name: "Tutoriels",
+    url: "/tutoriels",
+  },
+  {
+    name: props.tutorialTitle,
+    url: `${baseUrl}/tutoriels/${stringToSlug(props.tutorialTitle)}`,
+  },
+]);
 
 const tutorialHeight = ref(0);
 const scrollPosition = ref(0);
@@ -143,21 +159,6 @@ function seekTo(seek: number) {
 }
 
 onMounted(() => {
-  breadcrumbs.value = [
-    {
-      name: "Accueil",
-      url: "/",
-    },
-    {
-      name: "Tutoriels",
-      url: "/tutoriels",
-    },
-    {
-      name: props.tutorialTitle,
-      url: window.location.href,
-    },
-  ];
-
   if (window.location.hash) {
     const id = window.location.hash.slice(1);
     const el = document.getElementById(id);
@@ -309,7 +310,9 @@ onBeforeUnmount(() => {
           :key="reference"
           class="how-to__references__list__element"
         >
-          <a :href="reference.link" target="_blank">{{ reference.link }}</a>
+          <NuxtLink :to="reference.link" target="_blank">{{
+            reference.link
+          }}</NuxtLink>
         </li>
       </ul>
     </div>

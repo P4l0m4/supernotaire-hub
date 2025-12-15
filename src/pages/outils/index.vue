@@ -5,6 +5,18 @@ import signature from "@/assets/animated-icons/Signature.svg?raw";
 import filePDF from "@/assets/animated-icons/FilePdf.svg?raw";
 import fileText from "@/assets/animated-icons/FileText.svg?raw";
 
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Supernotaire | Outils gratuits pour vos démarches immobilières",
+  description:
+    "Outils gratuits pour la génération de pré-état daté, estimation de valeur foncière, signature électronique et plus encore.",
+  url: `${baseUrl}/outils`,
+}));
+
 const tools = [
   {
     name: "Créer un Pré-état daté",

@@ -9,7 +9,8 @@ import dots from "@/assets/images/dots-big.svg";
 
 import { colors } from "@/utils/colors";
 
-const url = ref();
+const runtimeConfig = useRuntimeConfig();
+const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
 
 useHead({
   title:
@@ -31,7 +32,7 @@ useHead({
     },
     {
       property: "og:url",
-      content: "https://supernotaire.fr/",
+      content: `${baseUrl}/notaires`,
     },
     {
       property: "og:image",
@@ -81,12 +82,8 @@ useJsonld(() => ({
   name: "Supernotaire | Digitalisation des dossiers de formalités immobilières",
   description:
     "Digitalisez la gestion de vos mandats de vente immobilière, soyez visible à l’échelle nationale et gagnez du temps facturable.",
-  url: url.value,
+  url: `${baseUrl}/notaires`,
 }));
-
-onMounted(() => {
-  url.value = window.location.href;
-});
 </script>
 <template>
   <Container>
