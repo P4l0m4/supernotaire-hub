@@ -8,9 +8,12 @@ interface Props {
   placeholder?: string;
   delay?: number;
   error?: string;
+  autocomplete?: "on" | "off";
 }
+const props = withDefaults(defineProps<Props>(), {
+  autocomplete: "off",
+});
 
-const props = defineProps<Props>();
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
   (e: "search", value: string): void;
@@ -47,6 +50,7 @@ watch(
       v-model="local"
       :placeholder="placeholder"
       class="search-bar__input"
+      :autocomplete="autocomplete"
       :class="{ 'search-bar__input--has-error': error }"
     />
     <span class="search-bar__error" v-if="error">{{ error }}</span>

@@ -32,7 +32,6 @@ defineEmits<{
 }>();
 
 const model = defineModel<string | number | boolean>();
-const inputRef = ref<HTMLInputElement | null>(null);
 
 const showPassword = ref(false);
 

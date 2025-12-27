@@ -8,10 +8,8 @@ onClickOutside(target, () => {
   isSelectOpen.value = false;
 });
 
-// v-model
 const modelValue = defineModel<string | null>({ default: null });
 
-// rétro-compatibilité
 const emit = defineEmits<{
   (e: "update:modelValue", v: string | null): void;
   (e: "optionSelected", v: string | null): void;
@@ -27,7 +25,6 @@ const props = defineProps({
 const isSelectOpen = ref(false);
 const optionSelected = ref<string>("");
 
-// sync affichage ←→ modèle
 onMounted(() => {
   optionSelected.value = modelValue.value ?? "";
 });
@@ -49,8 +46,8 @@ function toggleSelect() {
 function selectOption(option: string) {
   const next = optionSelected.value === option ? "" : option;
   optionSelected.value = next;
-  emit("update:modelValue", next || null); // pilote le parent
-  emit("optionSelected", next || null); // compat ArrayFieldRenderer existant
+  emit("update:modelValue", next || null);
+  emit("optionSelected", next || null); // compat ArrayFieldRenderer
   isSelectOpen.value = false;
 }
 </script>

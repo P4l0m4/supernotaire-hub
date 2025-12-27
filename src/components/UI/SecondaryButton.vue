@@ -7,7 +7,10 @@ interface Props {
     | "accent-color"
     | "text-color"
     | "primary-color"
-    | "error-color";
+    | "error-color"
+    | "warning-color"
+    | "success-color"
+    | "purple-color";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   icon?: string;
   iconSize?: string;
@@ -86,32 +89,50 @@ withDefaults(defineProps<Props>(), {
 }
 
 .secondary-color {
-  background-color: transparent;
+  background-color: rgba($secondary-color, 0.1);
   color: $secondary-color;
   border: 2px solid $secondary-color;
 }
 
 .accent-color {
-  background-color: transparent;
+  background-color: rgba($accent-color, 0.1);
   color: $accent-color;
   border: 2px solid $accent-color;
 }
 
 .text-color {
-  background-color: transparent;
+  background-color: rgba($text-color, 0.1);
   color: $text-color;
   border: 2px solid $text-color;
 }
 
 .primary-color {
-  background-color: transparent;
+  background-color: rgba($primary-color, 0.1);
   color: $primary-color;
   border: 2px solid $primary-color;
 }
 
 .error-color {
-  background-color: transparent;
+  background-color: rgba($error-color, 0.1);
   color: $error-color;
   border: 2px solid $error-color;
+}
+
+.warning-color {
+  background-color: rgba($warning-color, 0.1);
+  color: $warning-color;
+  border: 2px solid $warning-color;
+}
+
+.success-color {
+  background-color: rgba($success-color, 0.1);
+  color: $success-color;
+  border: 2px solid $success-color;
+}
+
+.purple-color {
+  background-color: rgba($purple-color, 0.1);
+  color: $purple-color;
+  border: 2px solid $purple-color;
 }
 </style>
