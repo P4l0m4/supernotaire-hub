@@ -457,6 +457,21 @@ details > summary::-webkit-details-marker /* Safari */ {
     width: 100%;
   }
 
+  &__title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: $semi-bold;
+    text-wrap: balance;
+    margin-bottom: 1rem;
+
+    @media (min-width: $big-tablet-screen) {
+      font-size: 2.5rem;
+      grid-column: span 3;
+      margin-bottom: 2rem;
+    }
+  }
+
   &__headlines {
     display: flex;
     flex-direction: column;

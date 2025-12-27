@@ -264,6 +264,24 @@ const websiteHref = computed(() => {
   if (!/^https?:\/\//i.test(url)) url = "https://" + url;
   return url;
 });
+const fromDepartement = computed(() => {
+  const v = route.query.from;
+  if (Array.isArray(v)) return v.includes("departement");
+  return v === "departement";
+});
+const departementSlug = computed(() => {
+  const v = route.query.departement;
+  if (Array.isArray(v)) return v[0] || "";
+  return typeof v === "string" ? v : "";
+});
+const returnHref = computed(() =>
+  departementSlug.value
+    ? `/annuaire/departement/${departementSlug.value}`
+    : fromDepartement.value
+    ? "/annuaire/departement"
+    : "/annuaire"
+);
+const returnLabel = computed(() => `Retour au classement`);
 
 useJsonld(() => {
   const p = profile.value;
@@ -490,6 +508,17 @@ const breadcrumbs = [
         </aside>
       </div>
     </div>
+  </Container>
+  <Container>
+    <NuxtLink :to="returnHref" aria-label="Retour">
+      <UITertiaryButton
+        variant="secondary-color"
+        icon="arrow_left"
+        direction="row-reverse"
+      >
+        {{ returnLabel }}
+      </UITertiaryButton>
+    </NuxtLink>
   </Container>
 </template>
 
