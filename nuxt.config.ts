@@ -1,4 +1,4 @@
-import { getTutorialPages } from "./src/utils/sitemap";
+import { getNotariesPages, getTutorialPages } from "./src/utils/sitemap";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
@@ -69,7 +69,7 @@ export default defineNuxtConfig({
     urls: async () => {
       const tutorialPages = await getTutorialPages();
 
-      return [...tutorialPages];
+      return [...tutorialPages, ...getNotariesPages()];
     },
   },
   site: {

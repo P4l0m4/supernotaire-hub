@@ -1,4 +1,5 @@
 import { stringToSlug } from "./slugify";
+import { notariesPages } from "./notariesPages";
 
 import StoryblokClient from "storyblok-js-client";
 
@@ -18,5 +19,13 @@ export async function getTutorialPages() {
     loc: `/tutoriels/${stringToSlug(t.title)}`,
     changefreq: "daily",
     priority: 0.9,
+  }));
+}
+
+export function getNotariesPages() {
+  return notariesPages.map((page) => ({
+    loc: `/annuaire/departement${page.slug}`,
+    changefreq: "weekly",
+    priority: 0.7,
   }));
 }
