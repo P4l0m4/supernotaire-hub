@@ -217,6 +217,10 @@ async function validateCurrentSection() {
     })
   );
 
+  if (!results.every(Boolean) && v$.value.$errors.length > 0) {
+    console.log("[DynamicForm] validation errors", v$.value.$errors);
+  }
+
   return results.every(Boolean);
 }
 

@@ -1,0 +1,420 @@
+{
+  "title": "Identité et État civil",
+  "sections": [
+    {
+      "id": "identite",
+      "label": "Identité",
+      "fields": [
+        {
+          "path": "identite.date_naissance",
+          "id": "identite-date-naissance",
+          "label": "Date de naissance",
+          "name": "date_naissance",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/1990",
+          "required": true
+        },
+        {
+          "path": "identite.nom",
+          "id": "identite-nom",
+          "label": "Nom",
+          "name": "nom",
+          "type": "text",
+          "placeholder": "Dupont",
+          "required": true
+        },
+        {
+          "path": "identite.prenoms",
+          "id": "identite-prenoms",
+          "label": "Prénom(s)",
+          "name": "prenoms",
+          "type": "text",
+          "placeholder": "Marie Claire",
+          "required": true
+        },
+        {
+          "path": "identite.adresse_actuelle",
+          "id": "identite-adresse-actuelle",
+          "label": "Adresse actuelle",
+          "name": "adresse_actuelle",
+          "type": "location",
+          "placeholder": "10 rue de la Paix, 75002 Paris",
+          "required": true
+        },
+        {
+          "path": "identite.lieu_naissance.type",
+          "id": "identite-lieu-naissance-type",
+          "label": "Pays de naissance",
+          "name": "lieu_naissance_type",
+          "type": "select",
+          "options": ["France", "Pays étranger"],
+          "placeholder": "Sélectionner une option",
+          "required": true
+        },
+        {
+          "path": "identite.lieu_naissance.departement",
+          "id": "identite-lieu-naissance-departement",
+          "label": "Département de naissance",
+          "name": "lieu_naissance_departement",
+          "type": "text",
+          "placeholder": "75000",
+          "requiredIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "France"
+          },
+          "showIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "France"
+          }
+        },
+        {
+          "path": "identite.lieu_naissance.ville",
+          "id": "identite-lieu-naissance-ville",
+          "label": "Ville de naissance",
+          "name": "lieu_naissance_ville",
+          "type": "text",
+          "placeholder": "Dakar",
+          "requiredIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "Pays étranger"
+          },
+          "showIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "Pays étranger"
+          }
+        },
+        {
+          "path": "identite.lieu_naissance.pays",
+          "id": "identite-lieu-naissance-pays",
+          "label": "Pays de naissance",
+          "name": "lieu_naissance_pays",
+          "type": "text",
+          "placeholder": "Sénégal",
+          "requiredIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "Pays étranger"
+          },
+          "showIf": {
+            "path": "identite.lieu_naissance.type",
+            "equals": "Pays étranger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "etat-civil",
+      "label": "État civil",
+      "fields": [
+        {
+          "path": "etat_civil.changement_etat_civil",
+          "id": "etat-civil-changement",
+          "label": "J'ai changé d'état civil",
+          "name": "changement_etat_civil",
+          "type": "checkbox",
+          "required": false
+        },
+        {
+          "path": "etat_civil.type_changement",
+          "id": "etat-civil-type-changement",
+          "label": "Type de changement",
+          "name": "type_changement",
+          "type": "select",
+          "options": [
+            "Changement de nom par décret",
+            "Mariage",
+            "Pacs",
+            "Divorce / dissolution PACS",
+            "Veuvage",
+            "Rectification de genre"
+          ],
+          "placeholder": "Sélectionner une option",
+          "requiredIf": {
+            "path": "etat_civil.changement_etat_civil",
+            "equals": true
+          },
+          "showIf": {
+            "path": "etat_civil.changement_etat_civil",
+            "equals": true
+          }
+        },
+        {
+          "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
+          "id": "etat-civil-changement-nom-signe",
+          "label": "J'ai déjà signé des documents avec mon ancien état civil",
+          "name": "changement_nom_signe",
+          "type": "checkbox",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Changement de nom par décret"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Changement de nom par décret"
+          }
+        },
+        {
+          "path": "etat_civil.changement_nom.ancien_nom",
+          "id": "etat-civil-changement-nom-ancien",
+          "label": "Ancien nom",
+          "name": "ancien_nom",
+          "type": "text",
+          "placeholder": "Durand",
+          "requiredIf": {
+            "all": [
+              {
+                "path": "etat_civil.type_changement",
+                "equals": "Changement de nom par décret"
+              },
+              {
+                "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
+                "equals": false
+              }
+            ]
+          },
+          "showIf": {
+            "all": [
+              {
+                "path": "etat_civil.type_changement",
+                "equals": "Changement de nom par décret"
+              },
+              {
+                "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
+                "equals": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "etat_civil.changement_nom.date_decret_jugement",
+          "id": "etat-civil-changement-nom-date",
+          "label": "Date du décret ou jugement",
+          "name": "date_decret_jugement",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/2020",
+          "requiredIf": {
+            "all": [
+              {
+                "path": "etat_civil.type_changement",
+                "equals": "Changement de nom par décret"
+              },
+              {
+                "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
+                "equals": false
+              }
+            ]
+          },
+          "showIf": {
+            "all": [
+              {
+                "path": "etat_civil.type_changement",
+                "equals": "Changement de nom par décret"
+              },
+              {
+                "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
+                "equals": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "etat_civil.mariage.lieu",
+          "id": "etat-civil-mariage-lieu",
+          "label": "Lieu du mariage",
+          "name": "mariage_lieu",
+          "type": "text",
+          "placeholder": "Paris",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          }
+        },
+        {
+          "path": "etat_civil.mariage.date",
+          "id": "etat-civil-mariage-date",
+          "label": "Date du mariage",
+          "name": "mariage_date",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/2010",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          }
+        },
+        {
+          "path": "etat_civil.mariage.nom_conjoint",
+          "id": "etat-civil-mariage-nom-conjoint",
+          "label": "Nom du conjoint",
+          "name": "mariage_nom_conjoint",
+          "type": "text",
+          "placeholder": "Dupont",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          }
+        },
+        {
+          "path": "etat_civil.mariage.prenom_conjoint",
+          "id": "etat-civil-mariage-prenom-conjoint",
+          "label": "Prénom du conjoint",
+          "name": "mariage_prenom_conjoint",
+          "type": "text",
+          "placeholder": "Alex",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          }
+        },
+        {
+          "path": "etat_civil.mariage.choix_usage",
+          "id": "etat-civil-mariage-choix-usage",
+          "label": "Choix d'usage",
+          "name": "mariage_choix_usage",
+          "type": "select",
+          "options": ["Double nom", "Nom de naissance", "Nom d'usage"],
+          "placeholder": "Sélectionner une option",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Mariage"
+          }
+        },
+        {
+          "path": "etat_civil.divorce.date_jugement_ou_dissolution",
+          "id": "etat-civil-divorce-date",
+          "label": "Date du jugement ou dissolution",
+          "name": "divorce_date",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/2018",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Divorce / dissolution PACS"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Divorce / dissolution PACS"
+          }
+        },
+        {
+          "path": "etat_civil.divorce.nom_ex_conjoint",
+          "id": "etat-civil-divorce-nom-ex",
+          "label": "Nom de l'ex-conjoint / partenaire",
+          "name": "divorce_nom_ex",
+          "type": "text",
+          "placeholder": "Martin",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Divorce / dissolution PACS"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Divorce / dissolution PACS"
+          }
+        },
+        {
+          "path": "etat_civil.veuvage.date_deces_conjoint",
+          "id": "etat-civil-veuvage-date",
+          "label": "Date du décès du conjoint",
+          "name": "veuvage_date_deces",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/2015",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Veuvage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Veuvage"
+          }
+        },
+        {
+          "path": "etat_civil.veuvage.lieu_deces_conjoint",
+          "id": "etat-civil-veuvage-lieu",
+          "label": "Lieu du décès du conjoint",
+          "name": "veuvage_lieu_deces",
+          "type": "text",
+          "placeholder": "Lyon",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Veuvage"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Veuvage"
+          }
+        },
+        {
+          "path": "etat_civil.rectification_genre.date_decision",
+          "id": "etat-civil-rectification-date",
+          "label": "Date de la décision",
+          "name": "rectification_date_decision",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "01/01/2021",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          }
+        },
+        {
+          "path": "etat_civil.rectification_genre.tribunal_decision",
+          "id": "etat-civil-rectification-tribunal",
+          "label": "Tribunal de la décision",
+          "name": "rectification_tribunal",
+          "type": "text",
+          "placeholder": "Tribunal judiciaire de Paris",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          }
+        },
+        {
+          "path": "etat_civil.rectification_genre.a_signe_ancien_etat_civil",
+          "id": "etat-civil-rectification-signe",
+          "label": "J'ai déjà signé des documents avec mon ancien état civil",
+          "name": "rectification_signe",
+          "type": "checkbox",
+          "requiredIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          },
+          "showIf": {
+            "path": "etat_civil.type_changement",
+            "equals": "Rectification de genre"
+          }
+        }
+      ]
+    }
+  ]
+}
