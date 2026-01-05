@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { colors } from "@/utils/colors";
 
 import type { Validation } from "@vuelidate/core";
-import type { FormField } from "@/utils/types/forms";
+import type { FormField } from "@/types/forms";
 
 const props = defineProps<{
   formField: FormField;
@@ -97,7 +97,11 @@ const errorMessage = computed(() => {
     :style="{ gridColumn: formField.type === 'array' ? '1 / -1' : '' }"
   >
     <label
-      v-if="!formField.itemLabel && formField.type !== 'checkbox'"
+      v-if="
+        !formField.itemLabel &&
+        formField.type !== 'checkbox' &&
+        formField.type !== 'checkbox-group'
+      "
       :for="formField.id"
       class="form-field__label"
       >{{ formField.label }}
@@ -187,6 +191,8 @@ const errorMessage = computed(() => {
       v-if="formField.type === 'checkbox-group'"
       :label="formField.placeholder || formField.label"
       :icon="formField.icon"
+      :error="errorMessage"
+      :required="Boolean(formField.required || formField.requiredIf)"
     >
       <FormElementsCheckboxField
         v-for="(option, index) in formField.options"

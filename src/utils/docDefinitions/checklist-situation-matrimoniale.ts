@@ -1,4 +1,4 @@
-import type { ChecklistSituationMatrimoniale } from "@/utils/types/checklist-situation-matrimoniale";
+import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
 
 const val = (v: unknown) => {
   if (v === true) return "Oui";
@@ -61,9 +61,7 @@ export function buildDocDefinition(
 
   if (situation.statut === "Divorcé(e) (non remarié(e))") {
     addDoc("Jugement de divorce définitif avec certificat de non-appel");
-    addDoc(
-      "Extrait ou copie intégrale de l'acte de mariage mis à jour"
-    );
+    addDoc("Extrait ou copie intégrale de l'acte de mariage mis à jour");
   }
 
   if (situation.statut === "Dissolution PACS") {

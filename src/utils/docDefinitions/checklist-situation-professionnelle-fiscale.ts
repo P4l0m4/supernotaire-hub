@@ -1,4 +1,4 @@
-import type { ChecklistSituationProfessionnelleFiscale } from "@/utils/types/checklist-situation-professionnelle-fiscale";
+import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
 
 const val = (v: unknown) => {
   if (v === true) return "Oui";

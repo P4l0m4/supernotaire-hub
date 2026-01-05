@@ -2,7 +2,7 @@ import type {
   FinancierLotSommesDuesCedant,
   FinancierLotSommesALaChargeAcquereurPostVente,
   FinancierLotSommesDebiteurSyndic,
-} from "@/utils/types/pre-etat-date-complet.ts";
+} from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionTableauTravauxFinancements {
   cedant_provisions_hb_exigibles: FinancierLotSommesDuesCedant["provisions_exigibles"]["hors_budget"]; // format: number

@@ -1,4 +1,4 @@
-import type { Bien } from "@/utils/types/pre-etat-date-complet.ts";
+import type { Bien } from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionPVAG {
   adresse_du_bien: Bien["adresse"]; //format: 123 rue de Paris, 75001 Paris

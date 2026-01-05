@@ -1,4 +1,4 @@
-import type { ChecklistIdentiteEtatCivil } from "@/utils/types/checklist-identite-etat-civil";
+import type { ChecklistIdentiteEtatCivil } from "@/types/checklist-identite-etat-civil";
 
 const val = (v: unknown) => {
   if (v === true) return "Oui";
@@ -57,7 +57,11 @@ export function buildDocDefinition(
       "Avez-vous déjà signé des documents avec votre ancien état civil ?",
       cn.a_signe_ancien_etat_civil
     );
-    addInfo("Ancien nom", cn.ancien_nom, cn.a_signe_ancien_etat_civil === false);
+    addInfo(
+      "Ancien nom",
+      cn.ancien_nom,
+      cn.a_signe_ancien_etat_civil === false
+    );
     addInfo(
       "Date du décret ou jugement",
       cn.date_decret_jugement,
@@ -76,7 +80,10 @@ export function buildDocDefinition(
 
   if (etatCivil.type_changement === "Divorce / dissolution PACS") {
     const divorce = etatCivil.divorce ?? {};
-    addInfo("Date du jugement ou dissolution", divorce.date_jugement_ou_dissolution);
+    addInfo(
+      "Date du jugement ou dissolution",
+      divorce.date_jugement_ou_dissolution
+    );
     addInfo("Nom de l'ex-conjoint / partenaire", divorce.nom_ex_conjoint);
   }
 

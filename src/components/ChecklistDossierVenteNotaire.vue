@@ -6,21 +6,27 @@ import achievement from "/achievement-45.svg?url";
 import { buildDocDefinition as buildIdentiteDocDefinition } from "@/utils/docDefinitions/checklist-identite-etat-civil";
 import { buildDocDefinition as buildSituationDocDefinition } from "@/utils/docDefinitions/checklist-situation-matrimoniale";
 import { buildDocDefinition as buildProFiscaleDocDefinition } from "@/utils/docDefinitions/checklist-situation-professionnelle-fiscale";
+import { buildDocDefinition as buildUrbanismeDocDefinition } from "@/utils/docDefinitions/checklist-urbanisme-travaux-exterieurs";
 import identiteFormDefinition from "@/utils/formDefinition/checklist-identite-etat-civil.json";
 import situationFormDefinition from "@/utils/formDefinition/checklist-situation-matrimoniale.json";
 import proFiscaleFormDefinition from "@/utils/formDefinition/checklist-situation-professionnelle-fiscale.json";
+import urbanismeFormDefinition from "@/utils/formDefinition/checklist-urbanisme-travaux-exterieurs.json";
 import { loadLogo } from "@/utils/otherFunctions";
 
-import type { ChecklistIdentiteEtatCivil } from "@/utils/types/checklist-identite-etat-civil";
-import type { ChecklistSituationMatrimoniale } from "@/utils/types/checklist-situation-matrimoniale";
-import type { ChecklistSituationProfessionnelleFiscale } from "@/utils/types/checklist-situation-professionnelle-fiscale";
-import type { FormDefinition } from "@/utils/types/forms";
+import type { ChecklistIdentiteEtatCivil } from "@/types/checklist-identite-etat-civil";
+import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
+import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
+import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
+import type { FormDefinition } from "@/types/forms";
 
-type ChecklistSection = "identite" | "situation" | "pro-fiscale";
+type ChecklistSection = "identite" | "situation" | "pro-fiscale" | "urbanisme";
 
 const identiteFormData = reactive({} as ChecklistIdentiteEtatCivil);
 const situationFormData = reactive({} as ChecklistSituationMatrimoniale);
-const proFiscaleFormData = reactive({} as ChecklistSituationProfessionnelleFiscale);
+const proFiscaleFormData = reactive(
+  {} as ChecklistSituationProfessionnelleFiscale
+);
+const urbanismeFormData = reactive({} as ChecklistUrbanismeTravauxExterieurs);
 const activeSection = ref<ChecklistSection | null>(null);
 const showLastAction = ref(false);
 const lastCompletedSection = ref<ChecklistSection | null>(null);
@@ -41,12 +47,15 @@ function onFormCompletion(section: ChecklistSection) {
 async function generatePdf() {
   // @ts-ignore
   if (!process.client || !$pdfMake?.createPdf) return;
+
   const logo = await loadLogo();
   const doc =
     lastCompletedSection.value === "situation"
       ? buildSituationDocDefinition(situationFormData, logo)
       : lastCompletedSection.value === "pro-fiscale"
       ? buildProFiscaleDocDefinition(proFiscaleFormData, logo)
+      : lastCompletedSection.value === "urbanisme"
+      ? buildUrbanismeDocDefinition(urbanismeFormData, logo)
       : buildIdentiteDocDefinition(identiteFormData, logo);
   if (!doc) return;
   // @ts-ignore
@@ -55,7 +64,10 @@ async function generatePdf() {
       ? pdfFileName("situation-matrimoniale")
       : lastCompletedSection.value === "pro-fiscale"
       ? pdfFileName("situation-professionnelle-fiscale")
+      : lastCompletedSection.value === "urbanisme"
+      ? pdfFileName("urbanisme-travaux-exterieurs")
       : pdfFileName("identite-etat-civil");
+  // @ts-ignore
   $pdfMake.createPdf(doc).download(name);
 }
 </script>
@@ -107,6 +119,21 @@ async function generatePdf() {
         Commencer
       </UIPrimaryButton>
     </div>
+    <div class="checklist-card">
+      <h2 class="checklist-card__title">Urbanisme & Travaux extérieurs</h2>
+      <p class="checklist-card__subtitle">
+        Cliquez sur "Commencer" pour générer une checklist personnalisée pour
+        cette rubrique.
+      </p>
+      <UIPrimaryButton
+        variant="accent-color"
+        icon="arrow_right"
+        @click="activeSection = 'urbanisme'"
+        style="margin-top: auto"
+      >
+        Commencer
+      </UIPrimaryButton>
+    </div>
   </div>
   <FormElementsDynamicForm
     v-else-if="!showLastAction && activeSection === 'identite'"
@@ -129,6 +156,13 @@ async function generatePdf() {
     :suggestions="[]"
     @complete="onFormCompletion('pro-fiscale')"
   />
+  <FormElementsDynamicForm
+    v-else-if="!showLastAction && activeSection === 'urbanisme'"
+    :formDefinition="urbanismeFormDefinition as FormDefinition"
+    v-model="urbanismeFormData"
+    :suggestions="[]"
+    @complete="onFormCompletion('urbanisme')"
+  />
   <div v-else class="action">
     <div class="action__illustration">
       <img
@@ -139,9 +173,7 @@ async function generatePdf() {
     </div>
     <ul class="action__list">
       <span class="action__list__title">Checklist prête</span>
-      <span class="action__list__subtitle">
-        Téléchargez votre checklist.
-      </span>
+      <span class="action__list__subtitle"> Téléchargez votre checklist. </span>
       <div class="action__list__buttons">
         <UISecondaryButton
           variant="accent-color"
@@ -157,9 +189,24 @@ async function generatePdf() {
           variant="accent-color"
           icon="arrow_left"
           :reverse="true"
-          @click="() => { showLastAction = false; activeSection = null; }"
-          @keydown.enter="() => { showLastAction = false; activeSection = null; }"
-          @keydown.space="() => { showLastAction = false; activeSection = null; }"
+          @click="
+            () => {
+              showLastAction = false;
+              activeSection = null;
+            }
+          "
+          @keydown.enter="
+            () => {
+              showLastAction = false;
+              activeSection = null;
+            }
+          "
+          @keydown.space="
+            () => {
+              showLastAction = false;
+              activeSection = null;
+            }
+          "
         >
           Retour aux rubriques
         </UISecondaryButton>
@@ -170,7 +217,8 @@ async function generatePdf() {
             variant="accent-color"
             icon="download"
             >Télécharger la checklist</UIPrimaryButton
-          ></ClientOnly>
+          ></ClientOnly
+        >
       </div>
     </ul>
   </div>
@@ -213,5 +261,3 @@ async function generatePdf() {
   }
 }
 </style>
-
-

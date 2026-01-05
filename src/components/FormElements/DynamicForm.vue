@@ -4,7 +4,7 @@ import { fr } from "@/utils/validators-fr";
 import useVuelidate from "@vuelidate/core";
 import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
 
-import type { FormDefinition } from "@/utils/types/forms";
+import type { FormDefinition } from "@/types/forms";
 import { evaluateShowIf } from "@/utils/showIf";
 
 interface Suggestion {

@@ -2,6 +2,21 @@
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
 
+const breadcrumbs = ref([
+  {
+    name: "Accueil",
+    url: "/",
+  },
+  {
+    name: "Outils",
+    url: "/outils",
+  },
+  {
+    name: "Checklists par rubrique",
+    url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+  },
+]);
+
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -25,6 +40,7 @@ useHead({
 
 <template>
   <Container>
+    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div id="checklist-dossier-vente-notaire" class="checklist-tool">
       <div class="checklist-tool__headlines">
         <h1 class="checklist-tool__headlines__title titles">

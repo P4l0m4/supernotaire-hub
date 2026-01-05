@@ -1,7 +1,7 @@
 import type {
   FinancierLotSommesDuesCedant,
   Copropriete,
-} from "@/utils/types/pre-etat-date-complet.ts";
+} from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionEtatDettesCreances {
   sommes_exigibles_dues_par_cedant_a_des_tiers_emprunts_geres_par_syndic?: FinancierLotSommesDuesCedant["a_des_tiers_emprunts_geres_par_syndic"]; // format: number

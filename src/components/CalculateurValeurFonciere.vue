@@ -8,8 +8,8 @@ import { buildDocDefinition } from "@/utils/docDefinitions/valeur-fonciere";
 
 import formDefinition from "@/utils/formDefinition/valeur-fonciere.json";
 
-import type { ValeurFonciere } from "@/utils/types/valeur-fonciere";
-import type { FormDefinition } from "~/utils/types/forms";
+import type { ValeurFonciere } from "@/types/valeur-fonciere";
+import type { FormDefinition } from "~/types/forms";
 
 const formData = reactive({} as ValeurFonciere);
 

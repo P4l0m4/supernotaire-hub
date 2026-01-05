@@ -1,4 +1,4 @@
-import type { FinancierLotAutres } from "@/utils/types/pre-etat-date-complet.ts";
+import type { FinancierLotAutres } from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionCAAA {
   charges_N_1_quote_part_bp_appelee: FinancierLotAutres["charges"]["N_1"]["bp_appelee"]; // format: number, bp signifie budget prévisionnel

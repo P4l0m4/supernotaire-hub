@@ -1,4 +1,4 @@
-import type { ShowIf } from "@/utils/types/forms";
+import type { ShowIf } from "@/types/forms";
 
 function getByPath(obj: any, path: string): any {
   if (!obj || !path) return undefined;
