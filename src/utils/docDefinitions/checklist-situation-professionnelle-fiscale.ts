@@ -73,7 +73,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Situation professionnelle & Fiscale",
+        text: "Situation professionnelle & Fiscale",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

@@ -122,19 +122,13 @@ export function buildDocDefinition(
     cadastre.planDisponible === true ? "Oui" : "Non"
   );
 
-  addDoc(
-    "Extrait ou plan cadastral du bien",
-    cadastre.planDisponible === true
-  );
+  addDoc("Extrait ou plan cadastral du bien", cadastre.planDisponible === true);
 
   const servitudes = data.servitudes ?? {};
   const servitudeTypes: string[] = Array.isArray(servitudes.types)
     ? servitudes.types
     : [];
-  addInfo(
-    "Le bien est grevé de servitudes connues",
-    servitudes.existent
-  );
+  addInfo("Le bien est grevé de servitudes connues", servitudes.existent);
   addInfo(
     "Type(s) de servitudes",
     servitudeTypes,
@@ -181,7 +175,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Urbanisme & Travaux extérieurs",
+        text: "Urbanisme & Travaux extérieurs",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

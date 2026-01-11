@@ -7,6 +7,8 @@ const val = (v: unknown) => {
     const anyVal = v as Record<string, unknown>;
     if (typeof anyVal.label === "string") return anyVal.label;
     if (typeof anyVal.value === "string") return anyVal.value;
+    const props = (anyVal as Record<string, any>).properties;
+    if (props && typeof props.label === "string") return props.label;
     return "-";
   }
   return v == null || v === "" ? "-" : String(v);
@@ -38,13 +40,16 @@ export function buildDocDefinition(
   addInfo("Date de naissance", identite.date_naissance);
   addInfo("Nom", identite.nom);
   addInfo("Prénom(s)", identite.prenoms);
-  addInfo("Adresse actuelle", identite.adresse_actuelle);
+  addInfo("Adresse actuelle", identite.adresse_actuelle?.properties?.label);
   addInfo("Lieu de naissance", lieu.type);
   addInfo("Département de naissance", lieu.departement, lieu.type === "France");
   addInfo("Ville de naissance", lieu.ville, lieu.type === "Pays étranger");
   addInfo("Pays de naissance", lieu.pays, lieu.type === "Pays étranger");
 
-  addInfo("Changement d'état civil", etatCivil.changement_etat_civil);
+  addInfo(
+    "Changement d'état civil",
+    etatCivil.changement_etat_civil ? "Oui" : "Non"
+  );
   addInfo(
     "Type de changement",
     etatCivil.type_changement,
@@ -54,7 +59,7 @@ export function buildDocDefinition(
   if (etatCivil.type_changement === "Changement de nom par décret") {
     const cn = etatCivil.changement_nom ?? {};
     addInfo(
-      "Avez-vous déjà signé des documents avec votre ancien état civil ?",
+      "A déjà signé des documents avec un ancien état civil",
       cn.a_signe_ancien_etat_civil
     );
     addInfo(
@@ -98,7 +103,7 @@ export function buildDocDefinition(
     addInfo("Date de la décision", rectif.date_decision);
     addInfo("Tribunal de la décision", rectif.tribunal_decision);
     addInfo(
-      "Avez-vous déjà signé des documents avec votre ancien état civil ?",
+      "A déjà signé des documents avec un ancien état civil",
       rectif.a_signe_ancien_etat_civil
     );
   }
@@ -162,7 +167,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Identité & État civil",
+        text: "Identité & État civil",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

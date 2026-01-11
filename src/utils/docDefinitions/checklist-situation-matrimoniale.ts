@@ -99,7 +99,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Situation matrimoniale",
+        text: "Situation matrimoniale",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

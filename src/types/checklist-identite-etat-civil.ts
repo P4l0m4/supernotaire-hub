@@ -1,3 +1,5 @@
+import type { Adresse } from "@/types/adresse";
+
 export type TypeChangementEtatCivil =
   | "Changement de nom par décret"
   | "Mariage"
@@ -15,7 +17,7 @@ export interface ChecklistIdentiteEtatCivil {
     date_naissance?: string;
     nom?: string;
     prenoms?: string;
-    adresse_actuelle?: string;
+    adresse_actuelle?: Adresse;
     lieu_naissance?: {
       type?: LieuNaissanceType;
       ville?: string;

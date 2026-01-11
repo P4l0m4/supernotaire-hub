@@ -426,22 +426,25 @@ const handleExportFree = () => {
       />
     </div>
     <ul class="action__list">
-      <span class="action__list__title">Checklist prête</span>
-      <span class="action__list__subtitle"> Téléchargez votre checklist. </span>
+      <span class="action__list__title">C'est tout bon !</span>
+      <span class="action__list__subtitle"
+        >Complétez les rubriques restantes ou téléchargez votre checklist à
+        partir des rubriques déjà complétées.</span
+      >
       <div class="action__list__buttons">
         <UISecondaryButton
           variant="accent-color"
           icon="arrow_left"
+          direction="row-reverse"
           @click="showLastAction = false"
           @keydown.enter="showLastAction = false"
           @keydown.space="showLastAction = false"
         >
           Revenir au formulaire
         </UISecondaryButton>
-        <UITertiaryButton
+        <UIPrimaryButton
           variant="accent-color"
-          icon="arrow_left"
-          direction="row-reverse"
+          icon="arrow_right"
           @click="
             () => {
               showLastAction = false;
@@ -461,17 +464,8 @@ const handleExportFree = () => {
             }
           "
         >
-          Retour aux rubriques
-        </UITertiaryButton>
-        <ClientOnly>
-          <UIPrimaryButton
-            @click="generatePdf()"
-            :disabled="!ready"
-            variant="accent-color"
-            icon="download"
-            >Télécharger la checklist</UIPrimaryButton
-          ></ClientOnly
-        >
+          Voir les rubriques
+        </UIPrimaryButton>
       </div>
     </ul>
   </div>

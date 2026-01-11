@@ -79,6 +79,7 @@
       font-weight: $regular;
       margin-bottom: 1rem;
       grid-column: 1 / -1;
+      text-wrap: balance;
     }
 
     &__item {
@@ -108,6 +109,9 @@
         flex-direction: row;
         margin-top: inherit;
         height: 100%;
+        width: 100%;
+        align-items: center;
+        grid-column: 1 / -1;
       }
     }
   }
