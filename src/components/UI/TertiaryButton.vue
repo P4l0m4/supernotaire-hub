@@ -16,6 +16,7 @@ interface Props {
   icon?: string;
   iconSize?: string;
   fontSize?: string;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   direction: "row",
   fontSize: "1rem",
   iconSize: "1rem",
+  disabled: false,
 });
 </script>
 <template>
@@ -30,6 +32,9 @@ const props = withDefaults(defineProps<Props>(), {
     role="button"
     tabindex="0"
     class="button noselect"
+    :class="{
+      disabled,
+    }"
     :style="{
       flexDirection: direction,
       fontSize,

@@ -119,7 +119,7 @@ useJsonld(() => ({
       text="Constituez les dossiers sans avoir courrir après les parties prenantes.
         et automatisez les tâches répétitives à faible valeur ajoutée."
     />
-    <UIFeaturesComponent :features="features" />
+    <UIFeaturesList :features="features" />
     <!-- <Tarifs /> -->
   </Container>
   <Container><FounderPromo /></Container>

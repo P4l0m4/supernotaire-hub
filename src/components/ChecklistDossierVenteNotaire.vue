@@ -12,6 +12,7 @@ import situationFormDefinition from "@/utils/formDefinition/checklist-situation-
 import proFiscaleFormDefinition from "@/utils/formDefinition/checklist-situation-professionnelle-fiscale.json";
 import urbanismeFormDefinition from "@/utils/formDefinition/checklist-urbanisme-travaux-exterieurs.json";
 import { loadLogo } from "@/utils/otherFunctions";
+import { colors } from "@/utils/colors";
 
 import type { ChecklistIdentiteEtatCivil } from "@/types/checklist-identite-etat-civil";
 import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
@@ -156,6 +157,46 @@ const statusIcon = (p: number) => {
   return "circle";
 };
 
+const sectionsData: Record<ChecklistSection, any> = {
+  identite: identiteFormData,
+  situation: situationFormData,
+  "pro-fiscale": proFiscaleFormData,
+  urbanisme: urbanismeFormData,
+};
+
+const sectionBuilders: Record<
+  ChecklistSection,
+  (data: any, logo: string) => any
+> = {
+  identite: buildIdentiteDocDefinition,
+  situation: buildSituationDocDefinition,
+  "pro-fiscale": buildProFiscaleDocDefinition,
+  urbanisme: buildUrbanismeDocDefinition,
+};
+
+const completedSectionIds = computed(() =>
+  (Object.entries(sectionsData) as Array<[ChecklistSection, any]>)
+    .filter(([, data]) => hasValue(data))
+    .map(([id]) => id)
+);
+
+const hasCompletedSections = computed(
+  () => completedSectionIds.value.length > 0
+);
+
+const freeSections: ChecklistSection[] = [
+  "identite",
+  "situation",
+  "pro-fiscale",
+];
+const paidSections: ChecklistSection[] = ["urbanisme"];
+const completedFreeIds = computed(() =>
+  completedSectionIds.value.filter((id) => freeSections.includes(id))
+);
+const showExportNotice = ref(false);
+const exportNoticeMessage = ref("");
+const exportNoticeSecondary = ref("");
+
 async function generatePdf() {
   // @ts-ignore
   if (!process.client || !$pdfMake?.createPdf) return;
@@ -182,33 +223,151 @@ async function generatePdf() {
   // @ts-ignore
   $pdfMake.createPdf(doc).download(name);
 }
+
+async function generateCombinedPdf(sections: ChecklistSection[]) {
+  // @ts-ignore
+  if (!process.client || !$pdfMake?.createPdf) return;
+
+  const logo = await loadLogo();
+  const docs = sections
+    .map((id) => {
+      const builder = sectionBuilders[id];
+      const data = sectionsData[id];
+      return builder ? builder(data, logo) : null;
+    })
+    .filter((def): def is Record<string, any> => Boolean(def));
+
+  if (!docs.length) return;
+
+  const [first, ...rest] = docs;
+  const mergedContent = Array.isArray(first.content) ? [...first.content] : [];
+
+  rest.forEach((doc) => {
+    if (!Array.isArray(doc.content)) return;
+    mergedContent.push({ text: " ", pageBreak: "before" });
+    mergedContent.push(...doc.content);
+  });
+
+  const mergedDoc = {
+    ...first,
+    content: mergedContent,
+  };
+
+  // @ts-ignore
+  $pdfMake.createPdf(mergedDoc).download(pdfFileName("checklist-complete"));
+}
+
+const openExportNotice = (message: string, secondary = "") => {
+  exportNoticeMessage.value = message;
+  exportNoticeSecondary.value = secondary;
+  showExportNotice.value = true;
+};
+
+const closeExportNotice = () => {
+  showExportNotice.value = false;
+};
+
+const handleExportPaid = () => {
+  if (!hasCompletedSections.value) {
+    openExportNotice(
+      "Complétez au moins une rubrique pour exporter.",
+      "Nous ne pouvons pas générer votre checklist sans au moins une rubrique remplie."
+    );
+    return;
+  }
+  openExportNotice(
+    "Débloquez toutes les rubriques pour exporter votre checklist complète.",
+    "L'export complet inclut les rubriques payantes. Finalisez le paiement pour télécharger."
+  );
+};
+
+const handleExportFree = () => {
+  if (!completedFreeIds.value.length) {
+    openExportNotice(
+      "Complétez une rubrique gratuite.",
+      "Remplissez Identité, Situation ou Situation pro & fiscale pour exporter votre checklist gratuite."
+    );
+    return;
+  }
+  generateCombinedPdf(completedFreeIds.value);
+};
 </script>
 
 <template>
-  <div v-if="!activeSection" class="checklist-sections">
-    <div
-      class="checklist-card"
-      v-for="checklistCard in checklistCards"
-      :key="checklistCard.id"
-      @click="activeSection = checklistCard.id"
-    >
-      <h2 class="checklist-card__title">{{ checklistCard.title }}</h2>
-      <p class="checklist-card__subtitle">
-        {{ checklistCard.subtitle }}
-      </p>
+  <div v-if="!activeSection" class="checklist-layout">
+    <div class="checklist-sections">
       <div
-        class="checklist-card__status"
-        :class="statusClass(sectionProgress(checklistCard.id))"
+        class="checklist-card"
+        v-for="checklistCard in checklistCards"
+        :key="checklistCard.id"
+        @click="activeSection = checklistCard.id"
       >
-        <UIIconComponent
-          class="checklist-card__status__icon"
-          :icon="statusIcon(sectionProgress(checklistCard.id))"
-        />
-        <span class="checklist-card__status__text">
-          {{ sectionProgress(checklistCard.id) }}%
-        </span>
+        <div class="checklist-card__title-row">
+          <h2 class="checklist-card__title">{{ checklistCard.title }}</h2>
+
+          <UITagComponent
+            v-if="paidSections.includes(checklistCard.id)"
+            :color="colors['accent-color']"
+            icon="lock"
+            size="small"
+            >Payant</UITagComponent
+          >
+          <UITagComponent
+            v-else
+            :color="colors['success-color']"
+            icon="unlock"
+            size="small"
+            >Gratuit</UITagComponent
+          >
+        </div>
+        <p class="checklist-card__subtitle">
+          {{ checklistCard.subtitle }}
+        </p>
+        <div
+          class="checklist-card__status"
+          :class="statusClass(sectionProgress(checklistCard.id))"
+        >
+          <UIIconComponent
+            class="checklist-card__status__icon"
+            :icon="statusIcon(sectionProgress(checklistCard.id))"
+          />
+          <span class="checklist-card__status__text">
+            {{ sectionProgress(checklistCard.id) }}%
+          </span>
+        </div>
       </div>
     </div>
+    <aside class="checklist-export">
+      <div class="checklist-export__block">
+        <h3 class="checklist-export__title">Export complet</h3>
+        <p class="checklist-export__hint">
+          Inclut l'intégralité des rubriques complétées.
+        </p>
+        <UISecondaryButton
+          :variant="hasCompletedSections ? 'accent-color' : 'text-color'"
+          icon="download"
+          :disabled="!hasCompletedSections"
+          @click="handleExportPaid"
+        >
+          Exporter la checklist intégrale
+        </UISecondaryButton>
+      </div>
+
+      <div class="checklist-export__block checklist-export__block--secondary">
+        <h3 class="checklist-export__title">Export partiel</h3>
+        <p class="checklist-export__hint">
+          Inclut seulement les rubriques gratuites complétées.
+        </p>
+        <UITertiaryButton
+          :variant="completedFreeIds.length ? 'accent-color' : 'text-color'"
+          icon="download"
+          @click="handleExportFree"
+          :disabled="!completedFreeIds.length"
+        >
+          Exporter la checklist partielle
+        </UITertiaryButton>
+      </div>
+    </aside>
   </div>
   <template v-else-if="!showLastAction">
     <FormElementsDynamicForm
@@ -244,7 +403,7 @@ async function generatePdf() {
     />
 
     <UITertiaryButton
-      variant="accent-color"
+      :variant="completedFreeIds.length ? 'accent-color' : 'text-color'"
       icon="arrow_left"
       direction="row-reverse"
       @click="
@@ -316,22 +475,102 @@ async function generatePdf() {
       </div>
     </ul>
   </div>
+
+  <UIFullPageModal
+    v-if="showExportNotice"
+    title="Téléchargement impossible"
+    :subtitle="exportNoticeMessage"
+    @close="closeExportNotice"
+  >
+    <div class="modal-buttons">
+      <UISecondaryButton variant="accent-color">
+        Débloquer la checklist complète
+      </UISecondaryButton>
+      <UITertiaryButton variant="accent-color" @click="handleExportFree"
+        >Exporter la checklist partielle</UITertiaryButton
+      >
+    </div>
+  </UIFullPageModal>
 </template>
 
 <style lang="scss" scoped>
 @import "@/styles/action.scss";
 
+.checklist-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (min-width: $desktop-screen) {
+    flex-direction: row;
+    height: fit-content;
+  }
+}
+
 .checklist-sections {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  flex: 1;
 
   @media (min-width: $big-tablet-screen) {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.checklist-export {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, $text-color 10%, transparent);
+
+  @media (min-width: $big-tablet-screen) {
+    flex-direction: row;
+  }
 
   @media (min-width: $desktop-screen) {
-    grid-template-columns: repeat(3, 1fr);
+    flex-direction: column;
+    max-width: 340px;
+    padding-left: 1.5rem;
+    border-left: 1px solid color-mix(in srgb, $text-color 10%, transparent);
+    border-top: none;
+    padding-top: 0;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 0.5rem;
+    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    min-height: 160px;
+    border-radius: calc($radius / 2);
+    border: 1px solid $primary-color;
+    background: $primary-color;
+    box-shadow: $shadow-black;
+
+    &--secondary {
+      background: none;
+      box-shadow: none;
+      border: 1px solid color-mix(in srgb, $text-color 8%, transparent);
+    }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: $semi-bold;
+    width: 100%;
+  }
+
+  &__hint {
+    color: $text-color-faded;
+    font-size: 0.95rem;
+    width: 100%;
+    margin-bottom: auto;
   }
 }
 
@@ -342,7 +581,7 @@ async function generatePdf() {
   padding: 1.5rem;
   border-radius: calc($radius / 2);
   border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
-  min-height: 220px;
+  min-height: 200px;
   transition: box-shadow 0.2s linear, background-color 0.2s linear,
     border 0.2s linear;
 
@@ -353,9 +592,17 @@ async function generatePdf() {
     cursor: pointer;
   }
 
+  &__title-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
   &__title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: $semi-bold;
+    text-wrap: balance;
+    max-width: calc(100% - 5rem);
   }
 
   &__subtitle {
@@ -397,5 +644,13 @@ async function generatePdf() {
       color: $text-color;
     }
   }
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
 }
 </style>
