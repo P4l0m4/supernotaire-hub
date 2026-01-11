@@ -46,7 +46,7 @@ export function buildDocDefinition(
   const travaux = data.travaux ?? {};
   addInfo(
     "Travaux avec impact extérieur / urbanistique",
-    travaux.impactExterieur
+    travaux.impactExterieur === true ? "Oui" : "Non"
   );
 
   const details = Array.isArray(travaux.details) ? travaux.details : [];
@@ -117,11 +117,14 @@ export function buildDocDefinition(
   addInfo("Section cadastrale", cadastre.section);
   addInfo("Numéro de parcelle", cadastre.parcelle);
   addInfo("Superficie cadastrale (m²)", cadastre.superficie);
-  addInfo("Plan cadastral disponible", cadastre.planDisponible);
+  addInfo(
+    "Plan cadastral disponible",
+    cadastre.planDisponible === true ? "Oui" : "Non"
+  );
 
   addDoc(
     "Extrait ou plan cadastral du bien",
-    cadastre.planDisponible === "Oui"
+    cadastre.planDisponible === true
   );
 
   const servitudes = data.servitudes ?? {};

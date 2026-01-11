@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, watch, onMounted, computed } from "vue";
 
 import achievement from "/achievement-45.svg?url";
 
@@ -21,6 +21,37 @@ import type { FormDefinition } from "@/types/forms";
 
 type ChecklistSection = "identite" | "situation" | "pro-fiscale" | "urbanisme";
 
+const checklistCards: Array<{
+  id: ChecklistSection;
+  title: string;
+  subtitle: string;
+}> = [
+  {
+    id: "identite",
+    title: "Identité & État civil",
+    subtitle:
+      "Infos d'identité, état civil, coordonnées et pièces justificatives de base.",
+  },
+  {
+    id: "situation",
+    title: "Situation matrimoniale",
+    subtitle:
+      "égime matrimonial, contrat de mariage ou PACS, séparations, enfants et attestations associées.",
+  },
+  {
+    id: "pro-fiscale",
+    title: "Situation professionnelle & Fiscale",
+    subtitle:
+      "Activité pro, revenus, imposition, patrimoine financier et justificatifs fiscaux attendus.",
+  },
+  {
+    id: "urbanisme",
+    title: "Urbanisme & Travaux extérieurs",
+    subtitle:
+      "Autorisations d'urbanisme, travaux réalisés et informations cadastrales.",
+  },
+];
+
 const identiteFormData = reactive({} as ChecklistIdentiteEtatCivil);
 const situationFormData = reactive({} as ChecklistSituationMatrimoniale);
 const proFiscaleFormData = reactive(
@@ -32,7 +63,49 @@ const showLastAction = ref(false);
 const lastCompletedSection = ref<ChecklistSection | null>(null);
 
 const { $pdfMake } = useNuxtApp();
-const ready = useState<boolean>("pdfmake-ready");
+const STORAGE_KEYS = {
+  identite: "sn-checklist-identite",
+  situation: "sn-checklist-situation",
+  pro: "sn-checklist-pro-fiscale",
+  urbanisme: "sn-checklist-urbanisme",
+};
+
+function hydrateFromStorage<T extends object>(key: string, target: T) {
+  if (!process.client) return;
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) Object.assign(target, JSON.parse(raw));
+  } catch (e) {
+    console.warn("[Checklist] Failed to hydrate", key, e);
+  }
+}
+
+function persistToStorage<T extends object>(key: string, target: T) {
+  if (!process.client) return;
+  watch(
+    () => target,
+    (val) => {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {
+        console.warn("[Checklist] Failed to persist", key, e);
+      }
+    },
+    { deep: true }
+  );
+}
+
+onMounted(() => {
+  hydrateFromStorage(STORAGE_KEYS.identite, identiteFormData);
+  hydrateFromStorage(STORAGE_KEYS.situation, situationFormData);
+  hydrateFromStorage(STORAGE_KEYS.pro, proFiscaleFormData);
+  hydrateFromStorage(STORAGE_KEYS.urbanisme, urbanismeFormData);
+
+  persistToStorage(STORAGE_KEYS.identite, identiteFormData);
+  persistToStorage(STORAGE_KEYS.situation, situationFormData);
+  persistToStorage(STORAGE_KEYS.pro, proFiscaleFormData);
+  persistToStorage(STORAGE_KEYS.urbanisme, urbanismeFormData);
+});
 
 function pdfFileName(prefix: string) {
   const date = new Date().toISOString().slice(0, 10);
@@ -43,6 +116,45 @@ function onFormCompletion(section: ChecklistSection) {
   lastCompletedSection.value = section;
   showLastAction.value = true;
 }
+
+const hasValue = (val: unknown): boolean => {
+  if (val == null) return false;
+  if (typeof val === "boolean") return val === true;
+  if (typeof val === "number") return true;
+  if (typeof val === "string") return val.trim().length > 0;
+  if (Array.isArray(val)) return val.length > 0;
+  if (typeof val === "object")
+    return Object.values(val).some((v) => hasValue(v));
+  return false;
+};
+
+const progressFor = (section: ChecklistSection, data: any) => {
+  if (lastCompletedSection.value === section) return 100;
+  if (activeSection.value === section || hasValue(data)) return 50;
+  return 0;
+};
+
+const sectionsProgress = computed(() => ({
+  identite: progressFor("identite", identiteFormData),
+  situation: progressFor("situation", situationFormData),
+  "pro-fiscale": progressFor("pro-fiscale", proFiscaleFormData),
+  urbanisme: progressFor("urbanisme", urbanismeFormData),
+}));
+
+const sectionProgress = (section: ChecklistSection) =>
+  sectionsProgress.value[section];
+
+const statusClass = (p: number) => {
+  if (p === 100) return "checklist-card__status--done";
+  if (p > 0) return "checklist-card__status--progress";
+  return "checklist-card__status--todo";
+};
+
+const statusIcon = (p: number) => {
+  if (p === 100) return "check_circle";
+  if (p > 0) return "clock";
+  return "circle";
+};
 
 async function generatePdf() {
   // @ts-ignore
@@ -74,95 +186,78 @@ async function generatePdf() {
 
 <template>
   <div v-if="!activeSection" class="checklist-sections">
-    <div class="checklist-card">
-      <h2 class="checklist-card__title">Identité & État civil</h2>
+    <div
+      class="checklist-card"
+      v-for="checklistCard in checklistCards"
+      :key="checklistCard.id"
+      @click="activeSection = checklistCard.id"
+    >
+      <h2 class="checklist-card__title">{{ checklistCard.title }}</h2>
       <p class="checklist-card__subtitle">
-        Cliquez sur "Commencer" pour générer une checklist personnalisée pour
-        cette rubrique.
+        {{ checklistCard.subtitle }}
       </p>
-      <UIPrimaryButton
-        variant="accent-color"
-        icon="arrow_right"
-        @click="activeSection = 'identite'"
-        style="margin-top: auto"
+      <div
+        class="checklist-card__status"
+        :class="statusClass(sectionProgress(checklistCard.id))"
       >
-        Commencer
-      </UIPrimaryButton>
-    </div>
-    <div class="checklist-card">
-      <h2 class="checklist-card__title">Situation matrimoniale</h2>
-      <p class="checklist-card__subtitle">
-        Cliquez sur "Commencer" pour générer une checklist personnalisée pour
-        cette rubrique.
-      </p>
-      <UIPrimaryButton
-        variant="accent-color"
-        icon="arrow_right"
-        @click="activeSection = 'situation'"
-        style="margin-top: auto"
-      >
-        Commencer
-      </UIPrimaryButton>
-    </div>
-    <div class="checklist-card">
-      <h2 class="checklist-card__title">Situation professionnelle & Fiscale</h2>
-      <p class="checklist-card__subtitle">
-        Cliquez sur "Commencer" pour générer une checklist personnalisée pour
-        cette rubrique.
-      </p>
-      <UIPrimaryButton
-        variant="accent-color"
-        icon="arrow_right"
-        @click="activeSection = 'pro-fiscale'"
-        style="margin-top: auto"
-      >
-        Commencer
-      </UIPrimaryButton>
-    </div>
-    <div class="checklist-card">
-      <h2 class="checklist-card__title">Urbanisme & Travaux extérieurs</h2>
-      <p class="checklist-card__subtitle">
-        Cliquez sur "Commencer" pour générer une checklist personnalisée pour
-        cette rubrique.
-      </p>
-      <UIPrimaryButton
-        variant="accent-color"
-        icon="arrow_right"
-        @click="activeSection = 'urbanisme'"
-        style="margin-top: auto"
-      >
-        Commencer
-      </UIPrimaryButton>
+        <UIIconComponent
+          class="checklist-card__status__icon"
+          :icon="statusIcon(sectionProgress(checklistCard.id))"
+        />
+        <span class="checklist-card__status__text">
+          {{ sectionProgress(checklistCard.id) }}%
+        </span>
+      </div>
     </div>
   </div>
-  <FormElementsDynamicForm
-    v-else-if="!showLastAction && activeSection === 'identite'"
-    :formDefinition="identiteFormDefinition as FormDefinition"
-    v-model="identiteFormData"
-    :suggestions="[]"
-    @complete="onFormCompletion('identite')"
-  />
-  <FormElementsDynamicForm
-    v-else-if="!showLastAction && activeSection === 'situation'"
-    :formDefinition="situationFormDefinition as FormDefinition"
-    v-model="situationFormData"
-    :suggestions="[]"
-    @complete="onFormCompletion('situation')"
-  />
-  <FormElementsDynamicForm
-    v-else-if="!showLastAction && activeSection === 'pro-fiscale'"
-    :formDefinition="proFiscaleFormDefinition as FormDefinition"
-    v-model="proFiscaleFormData"
-    :suggestions="[]"
-    @complete="onFormCompletion('pro-fiscale')"
-  />
-  <FormElementsDynamicForm
-    v-else-if="!showLastAction && activeSection === 'urbanisme'"
-    :formDefinition="urbanismeFormDefinition as FormDefinition"
-    v-model="urbanismeFormData"
-    :suggestions="[]"
-    @complete="onFormCompletion('urbanisme')"
-  />
+  <template v-else-if="!showLastAction">
+    <FormElementsDynamicForm
+      v-if="activeSection === 'identite'"
+      :formDefinition="identiteFormDefinition as FormDefinition"
+      v-model="identiteFormData"
+      :suggestions="[]"
+      @complete="onFormCompletion('identite')"
+    />
+
+    <FormElementsDynamicForm
+      v-if="activeSection === 'situation'"
+      :formDefinition="situationFormDefinition as FormDefinition"
+      v-model="situationFormData"
+      :suggestions="[]"
+      @complete="onFormCompletion('situation')"
+    />
+
+    <FormElementsDynamicForm
+      v-if="activeSection === 'pro-fiscale'"
+      :formDefinition="proFiscaleFormDefinition as FormDefinition"
+      v-model="proFiscaleFormData"
+      :suggestions="[]"
+      @complete="onFormCompletion('pro-fiscale')"
+    />
+
+    <FormElementsDynamicForm
+      v-if="activeSection === 'urbanisme'"
+      :formDefinition="urbanismeFormDefinition as FormDefinition"
+      v-model="urbanismeFormData"
+      :suggestions="[]"
+      @complete="onFormCompletion('urbanisme')"
+    />
+
+    <UITertiaryButton
+      variant="accent-color"
+      icon="arrow_left"
+      direction="row-reverse"
+      @click="
+        () => {
+          activeSection = null;
+          showLastAction = false;
+        }
+      "
+      style="margin-top: 1rem"
+    >
+      Retour aux rubriques
+    </UITertiaryButton>
+  </template>
   <div v-else class="action">
     <div class="action__illustration">
       <img
@@ -178,17 +273,16 @@ async function generatePdf() {
         <UISecondaryButton
           variant="accent-color"
           icon="arrow_left"
-          :reverse="true"
           @click="showLastAction = false"
           @keydown.enter="showLastAction = false"
           @keydown.space="showLastAction = false"
         >
           Revenir au formulaire
         </UISecondaryButton>
-        <UISecondaryButton
+        <UITertiaryButton
           variant="accent-color"
           icon="arrow_left"
-          :reverse="true"
+          direction="row-reverse"
           @click="
             () => {
               showLastAction = false;
@@ -209,7 +303,7 @@ async function generatePdf() {
           "
         >
           Retour aux rubriques
-        </UISecondaryButton>
+        </UITertiaryButton>
         <ClientOnly>
           <UIPrimaryButton
             @click="generatePdf()"
@@ -246,10 +340,18 @@ async function generatePdf() {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.5rem;
-  border-radius: $radius;
-  background-color: $primary-color;
-  box-shadow: $shadow-black;
+  border-radius: calc($radius / 2);
+  border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
   min-height: 220px;
+  transition: box-shadow 0.2s linear, background-color 0.2s linear,
+    border 0.2s linear;
+
+  &:hover {
+    background-color: $primary-color;
+    box-shadow: $shadow-black;
+    border: 1px solid $primary-color;
+    cursor: pointer;
+  }
 
   &__title {
     font-size: 1.5rem;
@@ -258,6 +360,42 @@ async function generatePdf() {
 
   &__subtitle {
     color: $text-color-faded;
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-weight: $semi-bold;
+    font-size: 0.95rem;
+    margin-top: auto;
+
+    &__text {
+      line-height: 1;
+    }
+
+    &__icon {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    &--done {
+      background: rgba($success-color, 0.15);
+      color: $success-color;
+    }
+
+    &--progress {
+      background: rgba($accent-color, 0.15);
+      color: $accent-color;
+    }
+
+    &--todo {
+      background: rgba($text-color, 0.08);
+      color: $text-color;
+    }
   }
 }
 </style>

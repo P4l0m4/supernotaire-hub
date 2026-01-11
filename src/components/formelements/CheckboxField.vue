@@ -54,10 +54,16 @@ const model = defineModel<boolean>({
     }
 
     &:checked + .checkbox__custom::after {
-      content: "";
+      content: "✓";
       position: absolute;
-      inset: 3px;
-      background: $base-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inset: 0;
+      font-size: 1.2rem;
+      font-weight: $bold;
+      color: $primary-color;
+      background: $accent-color;
       border-radius: 2px;
     }
   }

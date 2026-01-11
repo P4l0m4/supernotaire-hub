@@ -68,7 +68,7 @@ export interface ChecklistUrbanismeTravauxExterieurs {
     typeAutorisation?: TypeAutorisation;
   };
   travaux: {
-    impactExterieur?: OuiNon;
+    impactExterieur?: boolean;
     details?: TravauxItem[];
   };
   procedure: {
@@ -93,7 +93,7 @@ export interface ChecklistUrbanismeTravauxExterieurs {
     section?: string;
     parcelle?: string;
     superficie?: number | null;
-    planDisponible?: OuiNon;
+    planDisponible?: boolean; // true = possède un extrait ou plan
     plan?: File;
   };
 }
