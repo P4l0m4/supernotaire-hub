@@ -40,12 +40,16 @@ export function buildDocDefinition(
     );
 
     if (data.sous_protection) {
-      addDoc("Jugement de mise sous protection (tutelle/curatelle/habilitation)");
+      addDoc(
+        "Jugement de mise sous protection (tutelle/curatelle/habilitation)"
+      );
       if (data.representant_protection === "Conjoint") {
         addDoc("Accord du conjoint (époux/épouse)");
         addDoc("Autorisation du juge ou subdélégation");
       }
-      if (data.representant_protection === "Tiers (curateur/tuteur/mandataire)") {
+      if (
+        data.representant_protection === "Tiers (curateur/tuteur/mandataire)"
+      ) {
         addDoc("Rôle et identité du curateur/tuteur/mandataire");
         addDoc("Mandat autorisant la vente");
         addDoc("Autorisation du juge des tutelles");
@@ -77,10 +81,7 @@ export function buildDocDefinition(
       "Société unipersonnelle (SASU/EURL/associé unique)",
       data.societe_unipersonnelle
     );
-    addInfo(
-      "Signature par représentant",
-      data.signature_par_representant
-    );
+    addInfo("Signature par représentant", data.signature_par_representant);
     addInfo(
       "Type de représentant",
       data.representant_societe,
@@ -99,13 +100,14 @@ export function buildDocDefinition(
     addDoc(
       "Procès-verbal autorisant la vente du bien au nom de la société (assemblée/associés)"
     );
-    addDoc(
-      "Procès-verbal de nomination des dirigeants (en cours de validité)"
-    );
+    addDoc("Procès-verbal de nomination des dirigeants (en cours de validité)");
     if (data.societe_unipersonnelle) {
       addDoc("Procès-verbal de décision de l'associé unique");
     }
-    if (data.type_personne_morale === "SCI" || data.type_personne_morale === "SARL") {
+    if (
+      data.type_personne_morale === "SCI" ||
+      data.type_personne_morale === "SARL"
+    ) {
       addDoc("Procès-verbal d'agrément des associés (si requis)");
     }
     if (
@@ -143,7 +145,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Capacité & Représentation",
+        text: "Capacité & Représentation",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

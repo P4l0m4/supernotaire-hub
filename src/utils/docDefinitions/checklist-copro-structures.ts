@@ -47,7 +47,9 @@ export function buildDocDefinition(
   );
   addInfo(
     "Types de compteurs",
-    (data.types_compteurs || []).map((t) => val((t as any).label ?? t)).join(", "),
+    (data.types_compteurs || [])
+      .map((t) => val((t as any).label ?? t))
+      .join(", "),
     data.compteurs_individualises === true
   );
   addInfo(
@@ -78,10 +80,7 @@ export function buildDocDefinition(
     "Reglement de copropriété et état descriptif de division",
     data.bien_en_copropriete === true
   );
-  addDoc(
-    "Carnet d'entretien de l'immeuble",
-    data.bien_en_copropriete === true
-  );
+  addDoc("Carnet d'entretien de l'immeuble", data.bien_en_copropriete === true);
   addDoc(
     "Relevé des charges annuelles (budget prévisionnel et dépenses)",
     data.bien_en_copropriete === true
@@ -112,10 +111,7 @@ export function buildDocDefinition(
     "Statuts et règlement intérieur de l'ASL / AFUL",
     data.est_en_asl === true
   );
-  addDoc(
-    "Appels de charges / contributions ASL",
-    data.est_en_asl === true
-  );
+  addDoc("Appels de charges / contributions ASL", data.est_en_asl === true);
   addDoc(
     "Coordonnées de l'administrateur / président de l'ASL",
     data.est_en_asl === true
@@ -134,7 +130,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Copropriété & Structures collectives",
+        text: "Copropriété & Structures collectives",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

@@ -99,7 +99,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Occupation actuelle",
+        text: "Occupation actuelle du bien",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

@@ -32,7 +32,10 @@ export function buildDocDefinition(
     data.type_chauffage_autre,
     data.type_chauffage === "Autre"
   );
-  addInfo("Date du dernier entretien du chauffage", data.date_entretien_chauffage);
+  addInfo(
+    "Date du dernier entretien du chauffage",
+    data.date_entretien_chauffage
+  );
   addInfo("Date du dernier ramonage", data.date_ramonage);
 
   addInfo("Mode d'assainissement", data.mode_assainissement);
@@ -85,7 +88,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Charges & Taxes",
+        text: "Charges & Taxes",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

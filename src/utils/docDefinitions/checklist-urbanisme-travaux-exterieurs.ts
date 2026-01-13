@@ -73,7 +73,7 @@ export function buildDocDefinition(
         : t.plansDisponibles
         ? "Plans approuvés non disponibles"
         : "Plans approuvés disponibles";
-    addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === "Oui");
+    addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === false);
     addInfo(
       `${label} - Travaux achevés`,
       travauxEtat,

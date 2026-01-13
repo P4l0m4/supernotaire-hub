@@ -96,7 +96,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Origine de propriété",
+        text: "Origine de propriété",
         style: "h1",
         margin: [0, 0, 0, 8],
       },

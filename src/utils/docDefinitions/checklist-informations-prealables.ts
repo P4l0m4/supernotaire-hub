@@ -60,7 +60,7 @@ export function buildDocDefinition(
     },
     content: [
       {
-        text: "Checklist dossier de vente - Informations préalables",
+        text: "Informations préalables",
         style: "h1",
         margin: [0, 0, 0, 8],
       },
