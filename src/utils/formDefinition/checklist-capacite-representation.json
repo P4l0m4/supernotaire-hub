@@ -1,9 +1,9 @@
 {
-  "title": "Capacité & Représentation",
+  "title": "Capacite & Representation",
   "sections": [
     {
       "id": "capacite-representation",
-      "label": "Capacité & Représentation",
+      "label": "Capacite & Representation",
       "fields": [
         {
           "path": "statut_partie",
@@ -11,120 +11,96 @@
           "label": "Le vendeur est une :",
           "name": "statut_partie",
           "type": "select",
-          "options": ["Personne physique", "Personne morale", "Association", "Indivision"],
-          "placeholder": "Sélectionnez un statut",
+          "options": ["Personne physique", "Personne morale", "Indivision"],
+          "placeholder": "Selectionnez un statut",
           "required": true
         },
         {
-          "path": "sous_protection",
-          "id": "capacite-sous-protection",
-          "label": "La personne est-elle sous protection (tutelle, curatelle, habilitation, sauvegarde) ?",
-          "name": "sous_protection",
+          "path": "bien_vendu_en_nom_propre",
+          "id": "capacite-bien-nom-propre",
+          "label": "Le bien est-il vendu en nom propre ?",
+          "name": "bien_vendu_en_nom_propre",
           "type": "checkbox",
           "showIf": { "path": "statut_partie", "equals": "Personne physique" }
         },
         {
-          "path": "jugement_protection",
-          "id": "capacite-jugement-protection",
-          "label": "Un jugement de protection existe",
-          "name": "jugement_protection",
+          "path": "sous_protection_personne_physique",
+          "id": "capacite-sous-protection-physique",
+          "label": "La personne est-elle sous protection juridique (tutelle, curatelle, habilitation, mandat de protection future) ?",
+          "name": "sous_protection_personne_physique",
           "type": "checkbox",
-          "showIf": { "path": "sous_protection", "equals": true }
+          "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": true }
+            ]
+          }
         },
         {
-          "path": "type_protection",
-          "id": "capacite-type-protection",
+          "path": "type_protection_personne_physique",
+          "id": "capacite-type-protection-physique",
           "label": "Type de protection",
-          "name": "type_protection",
+          "name": "type_protection_personne_physique",
+          "type": "select",
+          "options": ["Curatelle", "Tutelle", "Mandat de protection future ou autre"],
+          "placeholder": "Selectionnez le type",
+          "showIf": { "path": "sous_protection_personne_physique", "equals": true }
+        },
+        {
+          "path": "type_representation_personne_physique",
+          "id": "capacite-type-representation-physique",
+          "label": "Type de representation",
+          "name": "type_representation_personne_physique",
           "type": "select",
           "options": [
-            "Curatelle",
-            "Tutelle",
-            "Habilitation familiale",
-            "Mandat de protection future",
-            "Sauvegarde de justice"
+            "Mandat simple (procuration sous seing prive)",
+            "Representation d\u2019un majeur protege",
+            "Mandataire special (procuration ponctuelle ou generale)",
+            "Habilitation familiale"
           ],
-          "placeholder": "Sélectionnez le type",
-          "showIf": { "path": "sous_protection", "equals": true }
+          "placeholder": "Selectionnez le type de representation",
+          "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": false }
+            ]
+          }
         },
         {
-          "path": "representant_protection",
-          "id": "capacite-representant-protection",
-          "label": "Représentation de la personne protégée",
-          "name": "representant_protection",
+          "path": "type_protection_representation",
+          "id": "capacite-type-protection-representation",
+          "label": "Type de protection pour la representation",
+          "name": "type_protection_representation",
           "type": "select",
-          "options": [
-            "Conjoint",
-            "Tiers (curateur/tuteur/mandataire)",
-            "Mandataire judiciaire",
-            "Représentation familiale"
-          ],
-          "placeholder": "Sélectionnez le représentant",
-          "showIf": { "path": "sous_protection", "equals": true }
+          "options": ["Tutelle", "Curatelle", "Mandataire special", "Habilitation familiale"],
+          "placeholder": "Selectionnez le type de protection",
+          "showIf": {
+            "path": "type_representation_personne_physique",
+            "equals": "Representation d\u2019un majeur protege"
+          }
         },
         {
-          "path": "procuration_pour_vente",
-          "id": "capacite-procuration-vente",
-          "label": "Procuration signée pour la vente",
-          "name": "procuration_pour_vente",
-          "type": "checkbox",
-          "showIf": { "path": "sous_protection", "equals": true }
-        },
-        {
-          "path": "signature_par_procuration",
-          "id": "capacite-signature-procuration",
-          "label": "Signature par procuration",
-          "name": "signature_par_procuration",
-          "type": "checkbox",
-          "showIf": { "path": "statut_partie", "equals": "Personne physique" }
-        },
-        {
-          "path": "type_procuration",
-          "id": "capacite-type-procuration",
-          "label": "Type de procuration",
-          "name": "type_procuration",
+          "path": "type_entite_personne_morale",
+          "id": "capacite-type-entite-pm",
+          "label": "Type d'entite",
+          "name": "type_entite_personne_morale",
           "type": "select",
-          "options": ["Notariée", "Sous seing privé"],
-          "placeholder": "Sélectionnez le type",
-          "showIf": { "path": "signature_par_procuration", "equals": true }
-        },
-        {
-          "path": "type_personne_morale",
-          "id": "capacite-type-personne-morale",
-          "label": "Type d'entité",
-          "name": "type_personne_morale",
-          "type": "select",
-          "options": [
-            "Société : SARL, SAS, SCI, etc.",
-            "Association",
-            "Mandataire de l'entité"
-          ],
-          "placeholder": "Sélectionnez le type",
+          "options": ["Societe", "Association"],
+          "placeholder": "Selectionnez le type",
           "showIf": { "path": "statut_partie", "equals": "Personne morale" }
         },
         {
-          "path": "association_representee_par_mandataire",
-          "id": "capacite-association-mandataire",
-          "label": "L'association est-elle représentée par un mandataire ?",
-          "name": "association_representee_par_mandataire",
+          "path": "entite_representee_par_mandataire",
+          "id": "capacite-entite-mandataire",
+          "label": "L'entite est-elle representee par un mandataire ?",
+          "name": "entite_representee_par_mandataire",
           "type": "checkbox",
-          "showIf": { "path": "statut_partie", "equals": "Association" }
-        },
-        {
-          "path": "association_mandataire_justificatif",
-          "id": "capacite-association-justificatif",
-          "label": "Une pièce d'identité du mandataire est disponible",
-          "name": "association_mandataire_justificatif",
-          "type": "checkbox",
-          "showIf": {
-            "path": "association_representee_par_mandataire",
-            "equals": true
-          }
+          "showIf": { "path": "statut_partie", "equals": "Personne morale" }
         },
         {
           "path": "indivision_representant_unique",
           "id": "capacite-indivision-representant",
-          "label": "Un mandataire / représentant unique de l'indivision est-il désigné ?",
+          "label": "Un mandataire / representant unique de l'indivision est-il designe ?",
           "name": "indivision_representant_unique",
           "type": "checkbox",
           "showIf": { "path": "statut_partie", "equals": "Indivision" }
