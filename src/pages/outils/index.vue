@@ -27,10 +27,10 @@ const tools = [
     icon: fileDashed,
   },
   {
-    name: "Checklist dossier de vente",
+    name: "Constituer votre dossier de vente",
     path: "/outils/checklist-dossier-vente-notaire",
     description:
-      "Générez une checklist des informations et documents à fournir au notaire.",
+      "Générez une liste personnalisée des informations et documents à fournir à votre notaire.",
     icon: filePlus,
   },
   {

@@ -423,7 +423,7 @@ const visibleFields = computed(() => {
     &__fields {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1rem;
 
       @media (min-width: $big-tablet-screen) {

@@ -1,0 +1,65 @@
+{
+  "title": "Informations préalables",
+  "sections": [
+    {
+      "id": "informations-prealables",
+      "label": "Informations préalables sur le bien",
+      "fields": [
+        {
+          "path": "type_bien",
+          "id": "prealables-type-bien",
+          "label": "Type de bien",
+          "placeholder": "Sélectionnez le type de bien",
+          "name": "type_bien",
+          "type": "select",
+          "options": ["Appartement", "Maison"],
+          "required": true
+        },
+        {
+          "path": "maison.vendue_avec_terrain",
+          "id": "prealables-maison-vendue-avec-terrain",
+          "label": "La maison est vendue avec un terrain",
+          "name": "maison_vendue_avec_terrain",
+          "type": "checkbox",
+          "showIf": {
+            "path": "type_bien",
+            "equals": "Maison"
+          }
+        },
+        {
+          "path": "maison.edifiee_domaine_public",
+          "id": "prealables-maison-domaine-public",
+          "label": "La maison est édifiée sur le domaine public avec droit d'occupation",
+          "name": "maison_edifiee_domaine_public",
+          "type": "checkbox",
+          "showIf": {
+            "path": "type_bien",
+            "equals": "Maison"
+          }
+        },
+        {
+          "path": "maison.nature_terrain",
+          "id": "prealables-maison-nature-terrain",
+          "label": "Nature du terrain",
+          "name": "maison_nature_terrain",
+          "type": "select",
+          "options": [
+            "Terrain privatif",
+            "Terrain en indivision",
+            "Terrain en copropriété",
+            "Terrain non constructible ou agricole"
+          ],
+          "placeholder": "Sélectionnez la nature du terrain",
+          "requiredIf": {
+            "path": "maison.vendue_avec_terrain",
+            "equals": true
+          },
+          "showIf": {
+            "path": "maison.vendue_avec_terrain",
+            "equals": true
+          }
+        }
+      ]
+    }
+  ]
+}

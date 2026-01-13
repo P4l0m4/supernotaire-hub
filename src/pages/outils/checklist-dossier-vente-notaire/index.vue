@@ -44,15 +44,18 @@ useHead({
     <div id="checklist-dossier-vente-notaire" class="checklist-tool">
       <div class="checklist-tool__headlines">
         <h1 class="checklist-tool__headlines__title titles">
-          Checklist dossier de vente immobilière
+          Constituez votre dossier de vente immobilière
         </h1>
         <span class="checklist-tool__headlines__subtitle subtitles">
           Générez une liste personnalisée des informations et documents à
-          fournir à votre notaire pour la vente de votre bien immobilier.
+          fournir à votre notaire pour la vente de votre bien.
         </span>
       </div>
+      <div class="checklist-tool__content">
+        <DossierListeRubriques />
+        <DossierExportMenu />
+      </div>
     </div>
-    <ChecklistDossierVenteNotaire />
   </Container>
 </template>
 
@@ -63,25 +66,24 @@ useHead({
   gap: 2rem;
 
   @media (min-width: $big-tablet-screen) {
-    margin-top: 2rem;
-    gap: 4rem;
-    height: 100%;
-    align-items: center;
+    gap: 3rem;
   }
 
   &__headlines {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+  }
 
-    &__title {
-      text-align: center;
-      text-wrap: balance;
-    }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-    &__subtitle {
-      text-align: center;
-      text-wrap: balance;
+    @media (min-width: $big-tablet-screen) {
+      flex-direction: row;
+      max-height: calc(100vh - 17rem);
+      overflow-y: hidden;
     }
   }
 }

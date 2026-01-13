@@ -10,6 +10,8 @@ interface Props {
   icon?: string;
   error?: string;
   required?: boolean;
+  tooltip?: string;
+  tooltipLink?: string;
 }
 
 const props = defineProps<Props>();
@@ -48,7 +50,32 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
         icon="asterisk"
         size="0.75rem"
         :color="colors['error-color']"
-        style="margin-left: 0.2rem" /><UIIconComponent
+        style="margin-left: 0.2rem" />
+      <UIIconComponent
+        v-if="tooltip?.length && !tooltipLink?.length"
+        icon="question"
+        class="dropdown__tooltip"
+        :color="colors['text-color-faded']"
+        size="1.15rem"
+        v-tooltip="tooltip"
+        tabindex="0"
+      />
+      <NuxtLink
+        v-else-if="tooltip?.length && tooltipLink?.length"
+        :to="tooltipLink"
+        target="_blank"
+        rel="noreferrer"
+        v-tooltip="tooltip"
+        :aria-label="tooltip"
+        class="dropdown__tooltip"
+      >
+        <UIIconComponent
+          icon="question"
+          :color="colors['text-color-faded']"
+          size="1.15rem"
+        />
+      </NuxtLink>
+      <UIIconComponent
         style="margin-left: auto"
         :icon="isDropdownOpen ? 'caret_down_bold' : 'caret_right_bold'"
         :color="colors['text-color-faded']"
@@ -88,6 +115,11 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  &__tooltip {
+    display: inline-flex;
+    align-items: center;
   }
 
   &__error {

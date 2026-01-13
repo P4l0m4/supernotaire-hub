@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { colors } from "@/utils/colors";
+
 interface Props {
   id: string;
   name: string;
   label: string;
+  tooltip?: string;
+  tooltipLink?: string;
 }
 
 defineProps<Props>();
@@ -33,7 +37,33 @@ const model = defineModel<boolean>({
       @keydown.enter.prevent="toggle"
       @keydown.space.prevent="toggle"
     />
-    <span class="checkbox__label">{{ label }}</span>
+    <span class="checkbox__label">
+      {{ label }}
+      <UIIconComponent
+        v-if="tooltip?.length && !tooltipLink?.length"
+        icon="question"
+        class="checkbox__icon"
+        :color="colors['text-color-faded']"
+        size="1.2rem"
+        v-tooltip="tooltip"
+        tabindex="0"
+      />
+      <NuxtLink
+        v-else-if="tooltip?.length && tooltipLink?.length"
+        :to="tooltipLink"
+        target="_blank"
+        rel="noreferrer"
+        v-tooltip="tooltip"
+        :aria-label="tooltip"
+        class="checkbox__icon"
+      >
+        <UIIconComponent
+          icon="question"
+          :color="colors['text-color-faded']"
+          size="1.2rem"
+        />
+      </NuxtLink>
+    </span>
   </label>
 </template>
 
@@ -81,6 +111,14 @@ const model = defineModel<boolean>({
 
   &__label {
     font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
   }
 }
 </style>

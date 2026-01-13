@@ -193,6 +193,8 @@ const errorMessage = computed(() => {
       :icon="formField.icon"
       :error="errorMessage"
       :required="Boolean(formField.required || formField.requiredIf)"
+      :tooltip="formField.tooltip || ''"
+      :tooltipLink="formField.tooltipLink || ''"
     >
       <FormElementsCheckboxField
         v-for="(option, index) in formField.options"
@@ -210,6 +212,8 @@ const errorMessage = computed(() => {
       :label="formField.label"
       :id="formField.id"
       :name="formField.name"
+      :tooltip="formField.tooltip || ''"
+      :tooltipLink="formField.tooltipLink || ''"
       v-model="valueRef"
     />
     <ClientOnly>
