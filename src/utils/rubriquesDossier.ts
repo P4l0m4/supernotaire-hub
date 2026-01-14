@@ -4,6 +4,12 @@ import { buildDocDefinition as buildIdentiteDoc } from "@/utils/docDefinitions/c
 import { buildDocDefinition as buildSituationDoc } from "@/utils/docDefinitions/checklist-situation-matrimoniale";
 import { buildDocDefinition as buildChargesTaxesDoc } from "@/utils/docDefinitions/checklist-charges-taxes";
 import { buildDocDefinition as buildProFiscaleDoc } from "@/utils/docDefinitions/checklist-situation-professionnelle-fiscale";
+import { buildDocDefinition as buildCoproDoc } from "@/utils/docDefinitions/checklist-copro-structures";
+import { buildDocDefinition as buildOccupationDoc } from "@/utils/docDefinitions/checklist-occupation-actuelle";
+import { buildDocDefinition as buildOrigineDoc } from "@/utils/docDefinitions/checklist-origine-propriete";
+import { buildDocDefinition as buildCapaciteDoc } from "@/utils/docDefinitions/checklist-capacite-representation";
+import { buildDocDefinition as buildUrbanismeDoc } from "@/utils/docDefinitions/checklist-urbanisme-travaux-exterieurs";
+import { buildDocDefinition as buildDiagnosticsTIDoc } from "@/utils/docDefinitions/checklist-diagnostics-travaux-interieurs";
 import type { ChecklistInformationsPrealables } from "@/types/checklist-informations-prealables";
 import type { ChecklistIdentiteEtatCivil } from "@/types/checklist-identite-etat-civil";
 import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
@@ -75,9 +81,64 @@ export function buildPartialDocDefinitionFromData(
   dataByRubrique: Partial<Record<FreeRubriqueId, unknown>>,
   logoBase64: string
 ) {
+  return buildCombinedDocDefinition(freeRubriques, dataByRubrique, logoBase64);
+}
+
+export async function buildPartialDocDefinition() {
+  const logoBase64 = await loadLogo();
+
+  const dataByRubrique: Partial<Record<FreeRubriqueId, unknown>> = {};
+  freeRubriques.forEach((config) => {
+    dataByRubrique[config.id] = readStoredRubrique(config.storageKey);
+  });
+
+  return buildPartialDocDefinitionFromData(dataByRubrique, logoBase64);
+}
+
+type AnyRubriqueConfig = RubriqueConfig<any> & { id: string };
+
+const allRubriques: AnyRubriqueConfig[] = [
+  ...freeRubriques,
+  {
+    id: "copro",
+    storageKey: "sn-checklist-copro",
+    buildDoc: buildCoproDoc,
+  },
+  {
+    id: "occupation",
+    storageKey: "sn-checklist-occupation",
+    buildDoc: buildOccupationDoc,
+  },
+  {
+    id: "origine",
+    storageKey: "sn-checklist-origine",
+    buildDoc: buildOrigineDoc,
+  },
+  {
+    id: "capacite",
+    storageKey: "sn-checklist-capacite",
+    buildDoc: buildCapaciteDoc,
+  },
+  {
+    id: "urbanisme",
+    storageKey: "sn-checklist-urbanisme",
+    buildDoc: buildUrbanismeDoc,
+  },
+  {
+    id: "diagnostics-travaux-interieurs",
+    storageKey: "sn-checklist-diagnostics-travaux-interieurs",
+    buildDoc: buildDiagnosticsTIDoc,
+  },
+];
+
+function buildCombinedDocDefinition(
+  configs: AnyRubriqueConfig[],
+  dataByRubrique: Partial<Record<string, unknown>>,
+  logoBase64: string
+) {
   const docDefinitions: any[] = [];
 
-  freeRubriques.forEach((config) => {
+  configs.forEach((config) => {
     const data = dataByRubrique[config.id];
     if (!hasValue(data)) return;
     const definition = config.buildDoc(data as never, logoBase64);
@@ -117,13 +178,11 @@ export function buildPartialDocDefinitionFromData(
   };
 }
 
-export async function buildPartialDocDefinition() {
+export async function buildFullDocDefinition() {
   const logoBase64 = await loadLogo();
-
-  const dataByRubrique: Partial<Record<FreeRubriqueId, unknown>> = {};
-  freeRubriques.forEach((config) => {
+  const dataByRubrique: Partial<Record<string, unknown>> = {};
+  allRubriques.forEach((config) => {
     dataByRubrique[config.id] = readStoredRubrique(config.storageKey);
   });
-
-  return buildPartialDocDefinitionFromData(dataByRubrique, logoBase64);
+  return buildCombinedDocDefinition(allRubriques, dataByRubrique, logoBase64);
 }

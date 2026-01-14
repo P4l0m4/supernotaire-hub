@@ -1,6 +1,7 @@
 ﻿<script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
+import { useExportAccess } from "@/composables/useExportAccess";
 
 type RubriqueId =
   | "prealables"
@@ -133,6 +134,9 @@ const progressByRubrique = ref<Record<RubriqueId, number>>({
   ...initialProgress,
 });
 
+const { access: exportUnlocked, checked: accessChecked, refresh: refreshAccess } =
+  useExportAccess();
+
 onMounted(() => {
   const result: Record<RubriqueId, number> = { ...initialProgress };
   for (const id of Object.keys(storageKeys) as RubriqueId[]) {
@@ -149,6 +153,10 @@ onMounted(() => {
     }
   }
   progressByRubrique.value = result;
+
+  if (!accessChecked.value) {
+    refreshAccess();
+  }
 });
 </script>
 
@@ -164,10 +172,14 @@ onMounted(() => {
         <h2 class="liste-rubriques__card__title">{{ card.title }}</h2>
         <UITagComponent
           v-if="card.premium"
-          :color="colors['accent-color']"
-          icon="lock"
+          :color="
+            exportUnlocked
+              ? colors['success-color']
+              : colors['accent-color']
+          "
+          :icon="exportUnlocked ? 'unlock' : 'lock'"
           size="small"
-          >Premium</UITagComponent
+          >{{ exportUnlocked ? "Débloqué" : "Premium" }}</UITagComponent
         >
         <UITagComponent
           v-else
@@ -215,6 +227,7 @@ onMounted(() => {
   grid-template-columns: 1fr;
   gap: 1.5rem;
   flex: 1;
+  min-width: 70%;
 
   @media (min-width: $big-tablet-screen) {
     grid-template-columns: repeat(2, 1fr);

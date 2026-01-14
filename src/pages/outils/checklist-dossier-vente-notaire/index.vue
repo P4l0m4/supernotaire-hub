@@ -80,7 +80,7 @@ useHead({
     flex-direction: column;
     gap: 1.5rem;
 
-    @media (min-width: $big-tablet-screen) {
+    @media (min-width: $desktop-screen) {
       flex-direction: row;
       max-height: calc(100vh - 17rem);
       overflow-y: hidden;

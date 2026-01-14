@@ -108,6 +108,7 @@ For every task, the agent must:
 - Use runtimeConfig correctly.
 - Avoid unsafe rendering patterns (`v-html` without sanitization).
 - Follow Nuxt and Nitro security best practices.
+- API keys and other **sensitive credentials must never be hardcoded in source files**. They must always be defined in the .env file and injected through runtimeConfig only.
 
 ### User experience
 
