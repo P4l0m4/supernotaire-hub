@@ -1,4 +1,4 @@
-﻿export type OuiNon = "Oui" | "Non";
+export type OuiNon = "Oui" | "Non";
 
 export type TypeAutorisation =
   | "Permis de construire"
@@ -7,7 +7,7 @@ export type TypeAutorisation =
 export type TypeTravaux =
   | "Changement de destination"
   | "Occupation ou aménagement du sol"
-  | "Modification de l’aspect extérieur"
+  | "Modification de l'aspect extérieur"
   | "Création de surface ou de volume";
 
 export type ProcedureType =
@@ -49,10 +49,18 @@ export type MotifAbsenceArrete =
   | "Autorisation requise mais non obtenue"
   | "Autorisation non requise par le droit de l'urbanisme";
 
+export type TypeArreteAutorisation =
+  | "Permis de construire"
+  | "Déclaration préalable"
+  | "Permis d’aménager";
+
 export interface TravauxItem {
   arreteExiste?: boolean; // true = aucun arrêté, false = arrêté existant
+  arreteType?: TypeArreteAutorisation;
   typeTravaux?: TypeTravaux[];
   travauxAcheves?: boolean; // true = non-achevés, false = terminés
+  dateAchevement?: string;
+  travauxNonConformes?: boolean;
   dateDepotDaact?: string;
   preuveDaact?: File;
   daactDeposee?: boolean;
@@ -97,4 +105,3 @@ export interface ChecklistUrbanismeTravauxExterieurs {
     plan?: File;
   };
 }
-

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
 
@@ -12,7 +12,8 @@ type RubriqueId =
   | "origine"
   | "capacite"
   | "pro-fiscale"
-  | "urbanisme";
+  | "urbanisme"
+  | "diagnostics-travaux-interieurs";
 
 type RubriqueCard = {
   id: RubriqueId;
@@ -45,6 +46,11 @@ const cards: RubriqueCard[] = [
       "Chauffage, assainissement, situation fiscale (taxes foncière/habitation).",
   },
   {
+    id: "pro-fiscale",
+    title: "Situation professionnelle & Fiscale",
+    subtitle: "Activité pro, revenus, imposition, patrimoine financier.",
+  },
+  {
     id: "copro",
     title: "Copropriété & Structures collectives",
     subtitle: "Syndic/ASL, compteurs individuels, documents de copropriété.",
@@ -69,15 +75,16 @@ const cards: RubriqueCard[] = [
     premium: true,
   },
   {
-    id: "pro-fiscale",
-    title: "Situation professionnelle & Fiscale",
-    subtitle: "Activité pro, revenus, imposition, patrimoine financier.",
-  },
-  {
     id: "urbanisme",
     title: "Urbanisme & Travaux extérieurs",
     subtitle:
       "Autorisations d'urbanisme, travaux réalisés, informations cadastrales.",
+    premium: true,
+  },
+  {
+    id: "diagnostics-travaux-interieurs",
+    title: "Diagnostics & Travaux intérieurs",
+    subtitle: "Diagnostics obligatoires et travaux intérieurs réalisés.",
     premium: true,
   },
 ];
@@ -93,6 +100,8 @@ const storageKeys: Record<RubriqueId, string> = {
   capacite: "sn-checklist-capacite",
   "pro-fiscale": "sn-checklist-pro-fiscale",
   urbanisme: "sn-checklist-urbanisme",
+  "diagnostics-travaux-interieurs":
+    "sn-checklist-diagnostics-travaux-interieurs",
 };
 
 const hasValue = (val: unknown): boolean => {
@@ -117,6 +126,7 @@ const initialProgress: Record<RubriqueId, number> = {
   capacite: 0,
   "pro-fiscale": 0,
   urbanisme: 0,
+  "diagnostics-travaux-interieurs": 0,
 };
 
 const progressByRubrique = ref<Record<RubriqueId, number>>({

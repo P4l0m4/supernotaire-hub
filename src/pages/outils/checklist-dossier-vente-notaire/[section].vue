@@ -9,6 +9,7 @@ import RubriqueOrigine from "@/components/Dossier/RubriqueOrigine.vue";
 import RubriqueCapacite from "@/components/Dossier/RubriqueCapacite.vue";
 import RubriqueProFiscale from "@/components/Dossier/RubriqueProFiscale.vue";
 import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
+import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
@@ -25,6 +26,7 @@ const validSections = [
   "capacite",
   "pro-fiscale",
   "urbanisme",
+  "diagnostics-travaux-interieurs",
 ] as const;
 
 type SectionParam = (typeof validSections)[number];
@@ -51,6 +53,7 @@ const sectionLabels: Record<SectionParam, string> = {
   capacite: "Capacité & Représentation",
   "pro-fiscale": "Situation professionnelle & Fiscale",
   urbanisme: "Urbanisme & Travaux extérieurs",
+  "diagnostics-travaux-interieurs": "Diagnostics & Travaux intérieurs",
 };
 
 const componentMap: Record<SectionParam, any> = {
@@ -64,6 +67,7 @@ const componentMap: Record<SectionParam, any> = {
   capacite: RubriqueCapacite,
   "pro-fiscale": RubriqueProFiscale,
   urbanisme: RubriqueUrbanisme,
+  "diagnostics-travaux-interieurs": RubriqueDiagnosticsTravauxInterieurs,
 };
 
 const currentComponent = computed(() =>
@@ -111,3 +115,4 @@ useHead({
     <component v-if="sectionParam && currentComponent" :is="currentComponent" />
   </Container>
 </template>
+

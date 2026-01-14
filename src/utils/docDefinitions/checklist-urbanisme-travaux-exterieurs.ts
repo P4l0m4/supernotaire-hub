@@ -1,4 +1,4 @@
-﻿import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
+import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
 
 const val = (v: unknown) => {
   if (v === true) return "Oui";
@@ -59,6 +59,11 @@ export function buildDocDefinition(
         ? "Non (aucun arrêté)"
         : "-";
     addInfo(`${label} - Arrêté d'urbanisme`, arreteState);
+    addInfo(
+      `${label} - Type d'autorisation`,
+      t.arreteType,
+      t.arreteExiste === false
+    );
     addInfo(`${label} - Type de travaux`, t.typeTravaux);
     const travauxEtat =
       t.travauxAcheves == null
@@ -67,6 +72,16 @@ export function buildDocDefinition(
         ? "Travaux non-achevés"
         : "Travaux terminés";
     addInfo(`${label} - État`, travauxEtat);
+    addInfo(
+      `${label} - Date d'achèvement prévue`,
+      t.dateAchevement,
+      t.travauxAcheves === true
+    );
+    addInfo(
+      `${label} - Travaux non conformes`,
+      t.travauxNonConformes,
+      t.travauxNonConformes !== undefined
+    );
     const plansEtat =
       t.plansDisponibles == null
         ? "-"
@@ -74,15 +89,13 @@ export function buildDocDefinition(
         ? "Plans approuvés non disponibles"
         : "Plans approuvés disponibles";
     addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === false);
-    addInfo(
-      `${label} - Travaux achevés`,
-      travauxEtat,
-      t.arreteExiste === false
-    );
+    addInfo(`${label} - Travaux achevés`, travauxEtat, t.arreteExiste === false);
     addInfo(
       `${label} - Date de dépôt DAACT`,
       t.dateDepotDaact,
-      t.arreteExiste === false && t.travauxAcheves === false
+      t.arreteExiste === false &&
+        t.travauxNonConformes === false &&
+        t.travauxAcheves !== true
     );
     addInfo(
       `${label} - Plans approuvés disponibles`,
@@ -99,13 +112,18 @@ export function buildDocDefinition(
       "Arrêté de permis de construire ou arrêté de non-opposition à déclaration préalable",
       t.arreteExiste === false
     );
+    addDoc(t.arreteType ?? "", t.arreteExiste === false && Boolean(t.arreteType));
     addDoc(
       "Accusé de réception ou preuve de dépôt de la DAACT",
-      t.arreteExiste === false && t.travauxAcheves === false
+      t.arreteExiste === false &&
+        t.travauxNonConformes === false &&
+        t.travauxAcheves !== true
     );
     addDoc(
-      "DAACT (Déclaration attestant l’achèvement et la conformité des travaux)",
-      t.arreteExiste === false && t.travauxAcheves === false
+      "DAACT (Déclaration attestant l'achèvement et la conformité des travaux)",
+      t.arreteExiste === false &&
+        t.travauxNonConformes === false &&
+        t.travauxAcheves !== true
     );
     addDoc(
       "Plans approuvés",
@@ -196,7 +214,7 @@ export function buildDocDefinition(
       { text: "Documents à fournir", style: "h2" },
       docs.length
         ? {
-            ul: docs,
+            ul: docs.map((doc) => `• ${doc}`),
             margin: [0, 0, 0, 24],
           }
         : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },

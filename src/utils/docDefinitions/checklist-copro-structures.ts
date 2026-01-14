@@ -150,7 +150,7 @@ export function buildDocDefinition(
       },
       { text: "Documents à fournir", style: "h2" },
       docs.length
-        ? { ul: docs, margin: [0, 0, 0, 24] }
+        ? { ul: docs.map((doc) => `■ ${doc}`), margin: [0, 0, 0, 24] }
         : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },
       { text: "Métadonnées", style: "h3" },
       {
