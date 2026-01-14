@@ -19,6 +19,7 @@ const closeModal = () => {
 };
 
 const downloadPartialExport = async () => {
+  // @ts-ignore
   if (!process.client || !$pdfMake?.createPdf) return;
   partialLoading.value = true;
   partialError.value = null;
@@ -30,8 +31,9 @@ const downloadPartialExport = async () => {
         "Aucune rubrique gratuite compl\u00e9t\u00e9e n'est disponible pour l'export.";
       return;
     }
-    // @ts-ignore
+
     $pdfMake
+      // @ts-ignore
       .createPdf(docDefinition)
       .download("checklist-rubriques-gratuites.pdf");
     closeModal();
@@ -48,10 +50,20 @@ const downloadPartialExport = async () => {
 <template>
   <aside class="export-menu">
     <div class="export-menu__block">
-      <h3 class="export-menu__title">Téléchargez le récapitulatif</h3>
+      <h3 class="export-menu__title">
+        Téléchargez votre récapitulatif personnalisé
+      </h3>
       <p class="export-menu__hint">
-        Téléchargez le récapitulatif structuré des informations et documents à
-        fournir à votre notaire pour la vente de votre bien immobilier.
+        Obtenez un récapitulatif structuré des informations et documents
+        nécessaires pour votre dossier de vente immobilière.
+      </p>
+      <p class="export-menu__hint">
+        Joignez-y les documents qui y sont listés, et remettez-le à votre
+        notaire.
+      </p>
+      <p class="export-menu__hint">
+        Il saura immédiatement si votre dossier est complet, et vous gagnerez un
+        temps précieux sur la vente de votre bien.
       </p>
       <UISecondaryButton
         variant="accent-color"
