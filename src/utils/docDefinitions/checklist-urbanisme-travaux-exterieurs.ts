@@ -89,7 +89,11 @@ export function buildDocDefinition(
         ? "Plans approuvés non disponibles"
         : "Plans approuvés disponibles";
     addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === false);
-    addInfo(`${label} - Travaux achevés`, travauxEtat, t.arreteExiste === false);
+    addInfo(
+      `${label} - Travaux achevés`,
+      travauxEtat,
+      t.arreteExiste === false
+    );
     addInfo(
       `${label} - Date de dépôt DAACT`,
       t.dateDepotDaact,
@@ -112,7 +116,10 @@ export function buildDocDefinition(
       "Arrêté de permis de construire ou arrêté de non-opposition à déclaration préalable",
       t.arreteExiste === false
     );
-    addDoc(t.arreteType ?? "", t.arreteExiste === false && Boolean(t.arreteType));
+    addDoc(
+      t.arreteType ?? "",
+      t.arreteExiste === false && Boolean(t.arreteType)
+    );
     addDoc(
       "Accusé de réception ou preuve de dépôt de la DAACT",
       t.arreteExiste === false &&
@@ -214,7 +221,7 @@ export function buildDocDefinition(
       { text: "Documents à fournir", style: "h2" },
       docs.length
         ? {
-            ul: docs.map((doc) => `• ${doc}`),
+            ul: docs.map((doc) => `${doc}`),
             margin: [0, 0, 0, 24],
           }
         : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },

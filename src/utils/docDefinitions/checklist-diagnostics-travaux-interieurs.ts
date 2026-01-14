@@ -42,10 +42,7 @@ export function buildDocDefinition(
     diagnostics.dateDiagAssainissement,
     diagnostics.raccordToutALegout === true
   );
-  addDoc(
-    "Diagnostic assainissement",
-    diagnostics.raccordToutALegout === true
-  );
+  addDoc("Diagnostic assainissement", diagnostics.raccordToutALegout === true);
 
   addInfo(
     "Le bien est en zone termites",
@@ -86,10 +83,7 @@ export function buildDocDefinition(
     diagnostics.dateCrepPlomb,
     diagnostics.construitAvant1949 === true
   );
-  addDoc(
-    "Diagnostic plomb (CREP)",
-    diagnostics.construitAvant1949 === true
-  );
+  addDoc("Diagnostic plomb (CREP)", diagnostics.construitAvant1949 === true);
 
   addInfo(
     "Construit avant juillet 1997",
@@ -125,10 +119,7 @@ export function buildDocDefinition(
     diagnostics.dateDiagnosticElectricite,
     diagnostics.installationElec15Ans === true
   );
-  addDoc(
-    "Diagnostic électricité",
-    diagnostics.installationElec15Ans === true
-  );
+  addDoc("Diagnostic électricité", diagnostics.installationElec15Ans === true);
 
   addInfo("Date du DPE", diagnostics.dateDpe);
   addDoc("DPE – Diagnostic de performance énergétique", true);
@@ -139,7 +130,11 @@ export function buildDocDefinition(
     travaux.realises === true ? "Oui" : travaux.realises === false ? "Non" : "-"
   );
   addInfo("Nature des travaux", travaux.nature, travaux.realises === true);
-  addInfo("Travaux réalisés par", travaux.realisesPar, travaux.realises === true);
+  addInfo(
+    "Travaux réalisés par",
+    travaux.realisesPar,
+    travaux.realises === true
+  );
 
   addDoc(
     "Justificatifs (devis, factures, assurance, etc.) (si disponible)",
@@ -185,7 +180,7 @@ export function buildDocDefinition(
       { text: "Documents à fournir", style: "h2" },
       docs.length
         ? {
-            ul: docs.map((doc) => `• ${doc}`),
+            ul: docs.map((doc) => `${doc}`),
             margin: [0, 0, 0, 24],
           }
         : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },
