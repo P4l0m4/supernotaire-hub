@@ -61,7 +61,7 @@ useHead({
     {
       name: "description",
       content:
-        "Supernotaire vous guide pas à pas dans vos démarches immobilières. Suivez nos tutoriels simples et efficaces pour créer facilement votre dossier de vente.",
+        "EasyCase vous guide pas à pas dans vos démarches immobilières. Suivez nos tutoriels simples et efficaces pour créer facilement votre dossier de vente.",
     },
   ],
 });
@@ -72,7 +72,7 @@ useHead({
     <div class="headlines">
       <h1 class="headlines__title">Tutoriels faciles</h1>
       <h2 class="headlines__subtitle paragraphs">
-        Supernotaire vous guide pas à pas dans vos démarches immobilières.
+        EasyCase vous guide pas à pas dans vos démarches immobilières.
       </h2>
     </div>
     <div class="subjects-list">

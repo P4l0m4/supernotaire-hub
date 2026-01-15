@@ -32,7 +32,7 @@ useHead({
             ><img
               class="logo"
               src="@/assets/images/logo-dark.svg"
-              alt="logo supernotaire" />
+              alt="logo EasyCase" />
             <svg
               viewBox="0 0 100 6"
               preserveAspectRatio="none"
@@ -136,8 +136,8 @@ useHead({
 }
 
 .logo {
-  width: 11.125rem;
-  height: 1.56rem;
+  width: 8rem;
+  height: 2rem;
 }
 
 .header {

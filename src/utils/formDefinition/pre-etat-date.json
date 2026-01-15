@@ -373,7 +373,7 @@
           "required": true,
           "icon": "calendar_dots_fill",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#date-darret-des-comptes"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#date-darret-des-comptes"
         },
         {
           "path": "financier_lot.solde_compte",
@@ -388,7 +388,7 @@
           "step": 0.01,
           "required": true,
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-du-compte-du-coproprietaire"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-du-compte-du-coproprietaire"
         },
         {
           "path": "financier_lot.solde_crediteur_exercice_anterieur",
@@ -402,7 +402,7 @@
           "required": true,
           "placeholder": "100",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-crediteur-exercice-anterieur-non-impute"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-crediteur-exercice-anterieur-non-impute"
         },
 
         {
@@ -417,7 +417,7 @@
           "step": 0.01,
           "required": true,
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#appels-echus-non-payes"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#appels-echus-non-payes"
         },
         {
           "path": "financier_lot.echeances_a_venir",
@@ -451,7 +451,7 @@
                 "required": true,
                 "icon": "hand_coins_fill",
                 "tooltip": "Cliquer pour savoir où trouver cette information.",
-                "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#budget-previsionnel-vote-date-et-proportion-des-appels"
+                "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#budget-previsionnel-vote-date-et-proportion-des-appels"
               }
             ]
           }
@@ -474,7 +474,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#au-titre-du-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#au-titre-du-budget-previsionnel"
         },
 
         {
@@ -489,7 +489,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#hors-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#hors-budget-previsionnel"
         },
 
         {
@@ -504,7 +504,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#charges-impayees-anterieures"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#charges-impayees-anterieures"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.du_fait_de_la_future_vente",
@@ -518,7 +518,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#verifiez-si-vous-etes-concerne-par-des-sommes-exigibles-du-fait-de-la-future-vente"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#verifiez-si-vous-etes-concerne-par-des-sommes-exigibles-du-fait-de-la-future-vente"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_reserve",
@@ -532,7 +532,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-constituant-la-reserve"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-constituant-la-reserve"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_provisions_speciales",
@@ -546,7 +546,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-au-titre-de-provisions-speciales"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-au-titre-de-provisions-speciales"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.avances_exigibles_emprunt",
@@ -560,7 +560,7 @@
           "required": false,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-representant-un-emprunt"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-representant-un-emprunt"
         },
         {
           "path": "financier_lot_sommes_dues_cedant.cotisations_fonds_travaux_exigibles",
@@ -855,7 +855,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_1.bp_reelle",
@@ -869,7 +869,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_1.hb_appelee",
@@ -883,7 +883,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_1.hb_reelle",
@@ -897,7 +897,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_2.bp_appelee",
@@ -911,7 +911,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_2.bp_reelle",
@@ -925,7 +925,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_2.hb_appelee",
@@ -939,7 +939,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
         },
         {
           "path": "financier_lot_autres.charges.N_2.hb_reelle",
@@ -953,7 +953,7 @@
           "required": true,
           "placeholder": "1000",
           "tooltip": "Cliquer pour savoir où trouver cette information.",
-          "tooltipLink": "https://www.supernotaire.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
         }
       ]
     }

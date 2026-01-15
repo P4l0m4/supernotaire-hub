@@ -12,7 +12,11 @@ describe("buildPartialDocDefinitionFromData", () => {
           maison: { vendue_avec_terrain: true, nature_terrain: "Jardin" },
         },
         identite: {
-          identite: { nom: "Doe", prenoms: "Jane", date_naissance: "1990-01-01" },
+          identite: {
+            nom: "Doe",
+            prenoms: "Jane",
+            date_naissance: "1990-01-01",
+          },
           etat_civil: {},
         },
       },
@@ -25,7 +29,7 @@ describe("buildPartialDocDefinitionFromData", () => {
       definition?.content?.filter((item: any) => item?.pageBreak === "after")
         .length || 0;
     expect(pageBreaks).toBe(1);
-    expect(definition?.images?.logoSupernotaire).toBe(baseLogo);
+    expect(definition?.images?.logoEasyCase).toBe(baseLogo);
   });
 
   it("retourne null quand aucune donnée utile n'est présente", () => {

@@ -17,5 +17,5 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://supernotaire.fr/sitemap.xml
-RSS: https://supernotaire.fr/rss.xml
+Sitemap: https://easycase.fr/sitemap.xml
+RSS: https://easycase.fr/rss.xml

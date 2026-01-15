@@ -84,7 +84,7 @@ export function buildDocDefinition(
     pageSize: "A4",
     pageMargins: [24, 24, 24, 72],
     images: {
-      logoSupernotaire: logoBase64,
+      logoEasyCase: logoBase64,
     },
     content: [
       {
@@ -144,12 +144,12 @@ export function buildDocDefinition(
       return {
         columns: [
           {
-            image: "logoSupernotaire",
+            image: "logoEasyCase",
             width: 20,
             margin: [0, 2, 10, 0],
           },
           {
-            text: "Créé sur Supernotaire.fr, la plateforme qui facilite les ventes immobilières.",
+            text: "Créé sur easycase.fr, la plateforme qui facilite les ventes immobilières.",
             alignment: "left",
             margin: [0, 0, 0, 0],
             fontSize: 10,

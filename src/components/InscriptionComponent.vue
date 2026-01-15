@@ -143,7 +143,7 @@ async function validContactState() {
       @close-confirmation="isPopupOpen = false"
     >
       <template #title>Vous faites partie de l'aventure 🎉</template>
-      Envie de soutenir Supernotaire dès maintenant ? Bénéficiez de notre offre
+      Envie de soutenir EasyCase dès maintenant ? Bénéficiez de notre offre
       exclusive limitée aux 100 premiers adoptants.
       <template #button>
         <NuxtLink

@@ -12,7 +12,7 @@ import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
 import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 const route = useRoute();
 
 const validSections = [
@@ -96,7 +96,7 @@ const breadcrumbs = ref([
 ]);
 
 useHead({
-  title: `Supernotaire | ${
+  title: `EasyCase | ${
     sectionParam.value ? sectionLabels[sectionParam.value] : "Checklist"
   }`,
   meta: [
@@ -115,4 +115,3 @@ useHead({
     <component v-if="sectionParam && currentComponent" :is="currentComponent" />
   </Container>
 </template>
-

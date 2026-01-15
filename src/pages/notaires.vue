@@ -10,11 +10,10 @@ import dots from "@/assets/images/dots-big.svg";
 import { colors } from "@/utils/colors";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 useHead({
-  title:
-    "Supernotaire | Digitalisation des dossiers de formalités immobilières",
+  title: "EasyCase | Digitalisation des dossiers de formalités immobilières",
   meta: [
     {
       name: "description",
@@ -28,7 +27,7 @@ useHead({
     {
       property: "og:title",
       content:
-        "Supernotaire | Digitalisation des dossiers de formalités immobilières",
+        "EasyCase | Digitalisation des dossiers de formalités immobilières",
     },
     {
       property: "og:url",
@@ -70,7 +69,7 @@ const features = ref([
     title: "Déontologie respectée",
     subtitle: "Gagnez du temps sur les tâches à faible valeur ajoutée",
     description:
-      "Avec Supernotaire, vous vous débarassez des tâches répétitives à faible valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
+      "Avec EasyCase, vous vous débarassez des tâches répétitives à faible valeur ajoutée tout en préservant votre devoir de conseil. Vous gardez toujours le contrôle du temps que vous y consacrez.",
     image: contact,
     color: colors["accent-color"],
   },
@@ -79,7 +78,7 @@ const features = ref([
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Digitalisation des dossiers de formalités immobilières",
+  name: "EasyCase | Digitalisation des dossiers de formalités immobilières",
   description:
     "Digitalisez la gestion de vos mandats de vente immobilière, soyez visible à l’échelle nationale et gagnez du temps facturable.",
   url: `${baseUrl}/notaires`,
@@ -107,7 +106,7 @@ useJsonld(() => ({
       <div class="hero__image">
         <img
           :src="hero"
-          alt="Supernotaire, la plateforme qui accélère la finalisation des ventes immobilières"
+          alt="EasyCase, la plateforme qui accélère la finalisation des ventes immobilières"
         />
         <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>

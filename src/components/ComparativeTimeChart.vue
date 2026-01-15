@@ -5,8 +5,8 @@ import { useIsDesktop } from "@/utils/otherFunctions";
 
 type Step = {
   name: string;
-  beforeHours: number; // sans Supernotaire
-  afterHours: number; // avec Supernotaire
+  beforeHours: number; // sans EasyCase
+  afterHours: number; // avec EasyCase
   description?: string;
 };
 
@@ -110,7 +110,7 @@ const option = computed(() => ({
 
   series: [
     {
-      name: "Temps passé avec Supernotaire",
+      name: "Temps passé avec EasyCase",
       type: "bar",
       barCategoryGap: "20%",
       stack: "temps",
@@ -176,8 +176,8 @@ const option = computed(() => ({
           <thead>
             <tr>
               <th>Étape</th>
-              <th>Sans Supernotaire</th>
-              <th>Avec Supernotaire</th>
+              <th>Sans EasyCase</th>
+              <th>Avec EasyCase</th>
               <th>Gain</th>
             </tr>
           </thead>

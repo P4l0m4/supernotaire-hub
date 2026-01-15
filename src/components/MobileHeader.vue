@@ -19,7 +19,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
       @keydown.space="isMenuOpen = false"
       tabindex="0"
       aria-label="accueil"
-      ><img src="@/assets/images/logo-dark.svg" alt="logo supernotaire"
+      ><img src="@/assets/images/logo-dark.svg" alt="logo EasyCase"
     /></NuxtLink>
     <button
       type="button"

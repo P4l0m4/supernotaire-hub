@@ -14,7 +14,7 @@ const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 const profiles = ref([
   {
@@ -37,7 +37,7 @@ const profiles = ref([
 ]);
 
 useHead({
-  title: "Supernotaire | Finalisation rapide de vente immobilière",
+  title: "EasyCase | Finalisation rapide de vente immobilière",
   meta: [
     {
       name: "description",
@@ -50,7 +50,7 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Supernotaire | Finalisation rapide de vente immobilière",
+      content: "EasyCase | Finalisation rapide de vente immobilière",
     },
     {
       property: "og:url",
@@ -72,7 +72,7 @@ useHead({
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Finalisation rapide de vente immobilière",
+  name: "EasyCase | Finalisation rapide de vente immobilière",
   description:
     "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
   url: `${baseUrl}/`,
@@ -81,7 +81,7 @@ useJsonld(() => ({
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Supernotaire",
+  name: "EasyCase",
   operatingSystem: "Web",
   applicationCategory: "Legal, BusinessApplication",
   offers: {
@@ -90,14 +90,14 @@ useJsonld(() => ({
     priceCurrency: "EUR",
   },
   url: `${baseUrl}/`,
-  logo: `https://www.supernotaire.fr/${logo}`,
+  logo: `https://www.easycase.fr/${logo}`,
   image:
     "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
   description:
-    "Supernotaire est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
+    "EasyCase est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
   publisher: {
     "@type": "Organization",
-    name: "Supernotaire",
+    name: "EasyCase",
     url: `${baseUrl}/`,
   },
 }));
@@ -138,7 +138,7 @@ onMounted(async () => {
         </h1>
 
         <p class="centered-hero__text__subtitle">
-          Supernotaire fait avancer la paperasse des vendeurs pressés et des
+          EasyCase fait avancer la paperasse des vendeurs pressés et des
           notaires débordés.
         </p>
         <div class="centered-hero__text__link">

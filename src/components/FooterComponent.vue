@@ -9,7 +9,7 @@
           <img
             class="footer__links-container__special-box__title-section__logo"
             src="@/assets/images/logo-light.svg"
-            alt="logo supernotaire"
+            alt="logo EasyCase"
           />
         </NuxtLink>
         <p class="paragraphs" style="text-wrap: balance">
@@ -133,7 +133,7 @@
         >Mentions légales</NuxtLink
       >
       <NuxtLink to="https://tekilawebfactory.com" target="_blank"
-        >©Supernotaire 2025</NuxtLink
+        >©EasyCase 2025</NuxtLink
       >
     </div>
   </footer>
@@ -201,8 +201,8 @@
         align-items: center;
 
         &__logo {
-          width: 11.125rem;
-          height: 1.56rem;
+          width: 8rem;
+          height: 2rem;
         }
 
         &__title {

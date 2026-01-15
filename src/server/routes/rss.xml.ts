@@ -7,7 +7,7 @@ const storyblok = new StoryblokClient({
 });
 
 export default defineEventHandler(async (event) => {
-  const siteUrl = "https://supernotaire.fr"; // ou via runtime config
+  const siteUrl = "https://easycase.fr"; // ou via runtime config
   const { data } = await storyblok.get("cdn/stories/tutoriels", {});
   const tutorials = data.story.content.tutorials || [];
 
@@ -33,9 +33,9 @@ export default defineEventHandler(async (event) => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Supernotaire – Tutoriels</title>
+    <title>EasyCase – Tutoriels</title>
     <link>${siteUrl}</link>
-    <description>Tutoriels Supernotaire</description>
+    <description>Tutoriels EasyCase</description>
     ${items}
   </channel>
 </rss>`;

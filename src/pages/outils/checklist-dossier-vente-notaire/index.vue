@@ -4,7 +4,7 @@ import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 const route = useRoute();
 
 const notifyVisible = ref(false);
@@ -35,12 +35,15 @@ const showToast = (message: string, color: string) => {
 };
 
 const handlePaymentStatus = async () => {
-  const payment = typeof route.query.payment === "string" ? route.query.payment : null;
+  const payment =
+    typeof route.query.payment === "string" ? route.query.payment : null;
   if (!payment) return;
 
   if (payment === "success") {
     const sessionId =
-      typeof route.query.session_id === "string" ? route.query.session_id : undefined;
+      typeof route.query.session_id === "string"
+        ? route.query.session_id
+        : undefined;
     const isValid = await refreshAccess(sessionId);
     if (isValid) {
       showToast("Paiement validé, export débloqué.", colors["success-color"]);
@@ -62,14 +65,14 @@ onMounted(() => {
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Checklist dossier de vente",
+  name: "EasyCase | Checklist dossier de vente",
   description:
     "Créez une checklist personnalisée des informations et documents à fournir au notaire pour votre dossier de vente.",
   url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
 }));
 
 useHead({
-  title: "Supernotaire | Checklist dossier de vente",
+  title: "EasyCase | Checklist dossier de vente",
   meta: [
     {
       name: "description",

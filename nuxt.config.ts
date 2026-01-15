@@ -79,7 +79,7 @@ export default defineNuxtConfig({
     },
   },
   site: {
-    url: "https://supernotaire.fr",
-    name: "Supernotaire",
+    url: "https://easycase.fr",
+    name: "EasyCase",
   },
 });

@@ -13,17 +13,17 @@ const questions = [
   {
     title: "Quels types de biens puis-je estimer avec ce service ?",
     answer:
-      "Vous pouvez utiliser Supernotaire pour estimer la valeur foncière des appartements et maisons, avec ou sans terrain. En revanche, les immeubles, terrains nus, garages, granges, et autres types de biens ne sont pas pris en charge.",
+      "Vous pouvez utiliser EasyCase pour estimer la valeur foncière des appartements et maisons, avec ou sans terrain. En revanche, les immeubles, terrains nus, garages, granges, et autres types de biens ne sont pas pris en charge.",
   },
   {
     title: "Combient coûte le service de calcul de valeur foncière ?",
     answer:
-      "Vous pouvez utiliser Supernotaire.fr pour estimer gratuitement la valeur foncière de votre bien immobilier.",
+      "Vous pouvez utiliser easycase.fr pour estimer gratuitement la valeur foncière de votre bien immobilier.",
   },
   {
     title: "L'estimation de la valeur foncière est-elle fiable ?",
     answer:
-      "Oui, l'estimation de la valeur foncière sur Supernotaire est basée sur les données DVF fournies par le gouvernement français et des algorithmes de calcul précis tenant compte de nombreux facteurs et de leur impact réel sur le prix d'un bien. ",
+      "Oui, l'estimation de la valeur foncière sur EasyCase est basée sur les données DVF fournies par le gouvernement français et des algorithmes de calcul précis tenant compte de nombreux facteurs et de leur impact réel sur le prix d'un bien. ",
   },
   {
     title: "Le service de calcul de valeur foncière est-il sécurisé ?",
@@ -38,7 +38,7 @@ const questions = [
   {
     title: "Puis-je utiliser ce service pour plusieurs biens immobiliers ?",
     answer:
-      "Oui, vous pouvez utiliser Supernotaire pour estimer la valeur foncière de plusieurs biens immobiliers. Il vous suffit de remplir un nouveau formulaire pour chaque bien.",
+      "Oui, vous pouvez utiliser EasyCase pour estimer la valeur foncière de plusieurs biens immobiliers. Il vous suffit de remplir un nouveau formulaire pour chaque bien.",
   },
   {
     title:
@@ -67,12 +67,12 @@ const questions = [
 ];
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Calculateur de valeur foncière",
+  name: "EasyCase | Calculateur de valeur foncière",
   description:
     "Calculez la valeur foncière de votre bien immobilier (appartement ou maison) en quelques secondes grâce à notre calculateur en ligne gratuit.",
   url: `${baseUrl}/outils/valeur-fonciere`,
@@ -96,7 +96,7 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "Supernotaire | Calculateur de valeur foncière",
+  title: "EasyCase | Calculateur de valeur foncière",
   meta: [
     {
       name: "description",

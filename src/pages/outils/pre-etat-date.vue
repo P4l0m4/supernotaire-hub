@@ -3,12 +3,12 @@ const questions = [
   {
     title: "Combient coûte le service de génération de Pré-état daté ?",
     answer:
-      "Vous pouvez utiliser Supernotaire.fr pour créer un Pré-état daté gratuitement (pour le moment). Habituellement, un Pré-état daté coûte entre 150 et 300 euros lorsqu'il est réalisé par un professionnel.",
+      "Vous pouvez utiliser easycase.fr pour créer un Pré-état daté gratuitement (pour le moment). Habituellement, un Pré-état daté coûte entre 150 et 300 euros lorsqu'il est réalisé par un professionnel.",
   },
   {
     title: "Le Pré-état daté généré est-il conforme aux exigences légales ?",
     answer:
-      "Oui, le Pré-état daté généré sur Supernotaire est conforme aux exigences légales en vigueur. Nous nous assurons que toutes les informations nécessaires sont incluses, mais il est toujours recommandé de faire vérifier le document par un professionnel avant de l'utiliser.",
+      "Oui, le Pré-état daté généré sur EasyCase est conforme aux exigences légales en vigueur. Nous nous assurons que toutes les informations nécessaires sont incluses, mais il est toujours recommandé de faire vérifier le document par un professionnel avant de l'utiliser.",
   },
   {
     title: "Quels documents dois-je fournir pour générer un Pré-état daté ?",
@@ -39,7 +39,7 @@ const questions = [
   {
     title: "Puis-je utiliser ce service pour plusieurs biens immobiliers ?",
     answer:
-      "Oui, vous pouvez utiliser Supernotaire pour générer des Pré-états datés pour plusieurs biens immobiliers. Il vous suffit de remplir un nouveau formulaire pour chaque bien.",
+      "Oui, vous pouvez utiliser EasyCase pour générer des Pré-états datés pour plusieurs biens immobiliers. Il vous suffit de remplir un nouveau formulaire pour chaque bien.",
   },
   {
     title: "Combien de temps faut-il pour générer un Pré-état daté ?",
@@ -57,9 +57,9 @@ const questions = [
       "Le Pré-état daté est un document essentiel dans le cadre de la vente d'un bien en copropriété. Il informe l'acheteur et le notaire sur la situation financière et administrative de la copropriété, ce qui est crucial pour prendre une décision éclairée.",
   },
   {
-    title: "Pourquoi utiliser Supernotaire pour générer un Pré-état daté ?",
+    title: "Pourquoi utiliser EasyCase pour générer un Pré-état daté ?",
     answer:
-      "Supernotaire simplifie et accélère le processus de création du Pré-état daté grâce à son interface intuitive et ses fonctionnalités intelligentes. Nous vous guidons pour que vous puissiez créer votre document en toute simplicité.Vous gagnez du temps et réduisez les risques d'erreurs en utilisant notre service.",
+      "EasyCase simplifie et accélère le processus de création du Pré-état daté grâce à son interface intuitive et ses fonctionnalités intelligentes. Nous vous guidons pour que vous puissiez créer votre document en toute simplicité.Vous gagnez du temps et réduisez les risques d'erreurs en utilisant notre service.",
   },
 ];
 
@@ -75,12 +75,12 @@ const jsonLDFAQ = questions.map((question) => {
 });
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Générateur de Pré-état daté gratuit",
+  name: "EasyCase | Générateur de Pré-état daté gratuit",
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
   url: `${baseUrl}/outils/pre-etat-date`,
@@ -93,7 +93,7 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "Supernotaire | Générateur de Pré-état daté gratuit",
+  title: "EasyCase | Générateur de Pré-état daté gratuit",
   meta: [
     {
       name: "description",

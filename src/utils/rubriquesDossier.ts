@@ -63,7 +63,8 @@ const hasValue = (val: unknown): boolean => {
   if (typeof val === "number") return true;
   if (typeof val === "string") return val.trim().length > 0;
   if (Array.isArray(val)) return val.length > 0;
-  if (typeof val === "object") return Object.values(val).some((v) => hasValue(v));
+  if (typeof val === "object")
+    return Object.values(val).some((v) => hasValue(v));
   return false;
 };
 
@@ -170,7 +171,7 @@ function buildCombinedDocDefinition(
     pageSize: "A4",
     pageMargins: [24, 24, 24, 72],
     images: {
-      logoSupernotaire: logoBase64,
+      logoEasyCase: logoBase64,
     },
     content: combinedContent,
     styles: mergedStyles,

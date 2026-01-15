@@ -3,10 +3,10 @@ import { colors } from "@/utils/colors";
 
 const features = ref([
   {
-    text: "1 an de Supernotaire Premium dès sa sortie",
+    text: "1 an de EasyCase Premium dès sa sortie",
   },
   {
-    text: "-30% à vie sur Supernotaire Premium",
+    text: "-30% à vie sur EasyCase Premium",
   },
   {
     text: "Accès anticipé aux nouvelles fonctionnalités",
@@ -20,7 +20,7 @@ const features = ref([
   <div id="founder-promo" class="founder-promo">
     <div class="founder-promo__text">
       <h2 class="founder-promo__text__title">
-        Devenez un Fondateur de Supernotaire
+        Devenez un Fondateur de EasyCase
       </h2>
       <p class="founder-promo__text__subtitle">
         Bénéficiez de notre offre exclusive limitée aux 100 premiers

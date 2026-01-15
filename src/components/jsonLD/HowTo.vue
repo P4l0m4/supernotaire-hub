@@ -111,7 +111,7 @@ useJsonld(() => ({
 }));
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 const breadcrumbs = ref([
   {
@@ -197,7 +197,7 @@ onBeforeUnmount(() => {
   <UIQuote
     v-if="tutorialClarification"
     :quote="tutorialClarification"
-    author="Supernotaire"
+    author="EasyCase"
   />
 
   <div ref="el" class="how-to">

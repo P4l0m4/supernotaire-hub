@@ -10,10 +10,10 @@ import dots from "@/assets/images/dots-big.svg";
 import { colors } from "@/utils/colors";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 useHead({
-  title: "Supernotaire | Facilitez vos démarches de vente immobilière",
+  title: "EasyCase | Facilitez vos démarches de vente immobilière",
   meta: [
     {
       name: "description",
@@ -26,7 +26,7 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Supernotaire | Facilitez vos démarches de vente immobilière",
+      content: "EasyCase | Facilitez vos démarches de vente immobilière",
     },
     {
       property: "og:url",
@@ -76,7 +76,7 @@ const features = ref([
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Facilitez vos démarches de vente immobilière",
+  name: "EasyCase | Facilitez vos démarches de vente immobilière",
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
   url: `${baseUrl}/vendeurs`,
@@ -103,7 +103,7 @@ useJsonld(() => ({
       <div class="hero__image">
         <img
           :src="hero"
-          alt="Supernotaire, la plateforme qui accélère la finalisation des ventes immobilières"
+          alt="EasyCase, la plateforme qui accélère la finalisation des ventes immobilières"
         />
         <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>

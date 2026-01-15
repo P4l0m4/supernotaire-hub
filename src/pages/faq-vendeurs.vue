@@ -1,36 +1,36 @@
 <script setup lang="ts">
 const questions = [
   {
-    title: "Comment fonctionne Supernotaire ?",
+    title: "Comment fonctionne EasyCase ?",
     answer:
       "Inscrivez vous et commencez à créer votre dossier et attribuez-le rapidement à un notaire. Vous êtes guidé à chaque étape pour fournir les documents et informations nécessaires et nous automatisons au maximum la collecte d'informations pour vous faire gagner du temps. Tout se fait en ligne, et vous pouvez suivre l'avancement de votre dossier en temps réel.",
   },
   {
-    title: "Supernotaire est-il fiable ?",
+    title: "EasyCase est-il fiable ?",
     answer:
-      "Oui, Supernotaire est une plateforme fiable. Nous nous mettons régulièrement l'outil à jour et veillons à la sécurité des données qui transitent par la plateforme. De plus, nous travaillons en étroite collaboration avec des notaires pour garantir la fiabilité de l'outil.",
+      "Oui, EasyCase est une plateforme fiable. Nous nous mettons régulièrement l'outil à jour et veillons à la sécurité des données qui transitent par la plateforme. De plus, nous travaillons en étroite collaboration avec des notaires pour garantir la fiabilité de l'outil.",
   },
   {
-    title: "A quoi sert Supernotaire ?",
+    title: "A quoi sert EasyCase ?",
     answer:
-      "Supernotaire est une plateforme qui permet aux vendeurs et aux acheteurs de biens de finaliser rapidement une vente immobilière. Ils peuvent confier rapidement leur dossier à un notaire via l'annuaire et gagnent énormément de temps sur le processus de collecte d'informations et de signature.",
+      "EasyCase est une plateforme qui permet aux vendeurs et aux acheteurs de biens de finaliser rapidement une vente immobilière. Ils peuvent confier rapidement leur dossier à un notaire via l'annuaire et gagnent énormément de temps sur le processus de collecte d'informations et de signature.",
   },
 
   {
     title: "Quels types de ventes de biens puis-je accélérer ?",
     answer:
-      "Vous pouvez accélérer la finalisation de vente immobilière de maisons et d'appartements. En revanche, Supernotaire n'est pas conçu pour les ventes de terrains ou autres types de biens immobiliers.",
+      "Vous pouvez accélérer la finalisation de vente immobilière de maisons et d'appartements. En revanche, EasyCase n'est pas conçu pour les ventes de terrains ou autres types de biens immobiliers.",
   },
 
   {
-    title: "A qui s'adresse Supernotaire ?",
+    title: "A qui s'adresse EasyCase ?",
     answer:
-      "Supernotaire s'adresse aux particuliers et professionnels qui souhaitent simplifier et accélérer la finalisation d'une vente immobilière. La plateforme bénéficie également aux notaires gérant des mandats de vente immobilière.",
+      "EasyCase s'adresse aux particuliers et professionnels qui souhaitent simplifier et accélérer la finalisation d'une vente immobilière. La plateforme bénéficie également aux notaires gérant des mandats de vente immobilière.",
   },
   {
-    title: "Combien coûte Supernotaire ?",
+    title: "Combien coûte EasyCase ?",
     answer:
-      "Supernotaire est totalement gratuit pour les vendeurs et acheteurs de biens, qu'ils soient particuliers ou professionnels. ",
+      "EasyCase est totalement gratuit pour les vendeurs et acheteurs de biens, qu'ils soient particuliers ou professionnels. ",
   },
 ];
 
@@ -52,12 +52,12 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "Supernotaire | Questions fréquentes des vendeurs de biens",
+  title: "EasyCase | Questions fréquentes des vendeurs de biens",
   meta: [
     {
       name: "description",
       content:
-        "Retrouvez les réponses aux questions les plus fréquentes des vendeurs de biens et acheteurs de biens sur Supernotaire.",
+        "Retrouvez les réponses aux questions les plus fréquentes des vendeurs de biens et acheteurs de biens sur EasyCase.",
     },
   ],
 });
@@ -71,7 +71,7 @@ useHead({
         </h1>
         <h2 class="paragraphs">
           Réponses aux questions des vendeurs et acheteurs de biens immobiliers
-          sur Supernotaire
+          sur EasyCase
         </h2>
       </div>
 

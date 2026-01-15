@@ -18,12 +18,12 @@ const options = [
 ];
 
 useHead({
-  title: "Supernotaire | Contact",
+  title: "EasyCase | Contact",
   meta: [
     {
       name: "description",
       content:
-        "Contactez-nous pour toute question ou pour participer gratuitement à la bêta de Supernotaire",
+        "Contactez-nous pour toute question ou pour participer gratuitement à la bêta de EasyCase",
     },
   ],
 });

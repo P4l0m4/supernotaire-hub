@@ -40,7 +40,7 @@ const steps = [
 <template>
   <section id="roadmap" class="roadmap">
     <div class="roadmap__headlines">
-      <h2 class="roadmap__headlines__title">Où en est Supernotaire ?</h2>
+      <h2 class="roadmap__headlines__title">Où en est EasyCase ?</h2>
       <div class="roadmap__headlines__subtitle">
         Suivez notre progression vers le lancement officiel 🚀
       </div>

@@ -287,7 +287,7 @@ useJsonld(() => {
   const p = profile.value;
   if (!p) return null;
   const runtimeConfig = useRuntimeConfig();
-  const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+  const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
   const url = `${baseUrl}/annuaire/${rawSlug.value}`;
   const name = titleText.value;
 
@@ -320,7 +320,7 @@ useHead(() => {
 });
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 const breadcrumbs = [
   {

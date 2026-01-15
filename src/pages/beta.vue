@@ -6,7 +6,7 @@ import clock from "@/assets/animated-icons/clock-animated.svg?raw";
 import lock from "@/assets/animated-icons/lock-animated.svg?raw";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
+const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 const featureCards = [
   {
@@ -84,25 +84,24 @@ const steps = [
 
 const questions = [
   {
-    title: "Quand Supernotaire sera-t-il officiellement lancé ?",
+    title: "Quand EasyCase sera-t-il officiellement lancé ?",
     answer:
-      "Le lancement officiel de Supernotaire est prévu pour le troisième trimestre 2026. En rejoignant l'accès anticipé, vous pourrez commencer à utiliser certaines fonctionnalités en avant-première.",
+      "Le lancement officiel de EasyCase est prévu pour le troisième trimestre 2026. En rejoignant l'accès anticipé, vous pourrez commencer à utiliser certaines fonctionnalités en avant-première.",
   },
   {
-    title:
-      "Quel sera le prix de Supernotaire après la période d'accès anticipé ?",
+    title: "Quel sera le prix de EasyCase après la période d'accès anticipé ?",
     answer:
-      "L'accès complet à Supernotaire coûtera 280€ par mois et par notaire, ce qui inclut également deux sièges collaborateurs. En devenant Notaire Fondateur pendant l'accès anticipé, vous bénéficierez d'une réduction permanente de 70% sur ce tarif.",
+      "L'accès complet à EasyCase coûtera 280€ par mois et par notaire, ce qui inclut également deux sièges collaborateurs. En devenant Notaire Fondateur pendant l'accès anticipé, vous bénéficierez d'une réduction permanente de 70% sur ce tarif.",
   },
   {
-    title: "Supernotaire est-il gratuit pendant l'accès anticipé ?",
+    title: "EasyCase est-il gratuit pendant l'accès anticipé ?",
     answer:
-      "Oui, Supernotaire sera proposé gratuitement et exclusivement aux utilisateurs inscrits à l'accès anticipé. En devenant Notaire Fondateur, vous bénéficierez d'un tarif préférentiel même après le lancement officiel.",
+      "Oui, EasyCase sera proposé gratuitement et exclusivement aux utilisateurs inscrits à l'accès anticipé. En devenant Notaire Fondateur, vous bénéficierez d'un tarif préférentiel même après le lancement officiel.",
   },
   {
-    title: "Supernotaire est-il gratuit pour les particuliers ?",
+    title: "EasyCase est-il gratuit pour les particuliers ?",
     answer:
-      "Oui, Supernotaire restera toujours gratuit pour les vendeurs et acheteurs de biens immobiliers.",
+      "Oui, EasyCase restera toujours gratuit pour les vendeurs et acheteurs de biens immobiliers.",
   },
 ];
 
@@ -124,12 +123,12 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "Supernotaire | Accès anticipé et pré-vente limitée",
+  title: "EasyCase | Accès anticipé et pré-vente limitée",
   meta: [
     {
       name: "description",
       content:
-        "Rejoignez l'accès anticipé de Supernotaire et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
+        "Rejoignez l'accès anticipé de EasyCase et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
     },
     {
       property: "og:type",
@@ -137,11 +136,11 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Supernotaire | Finalisation rapide de vente immobilière",
+      content: "EasyCase | Finalisation rapide de vente immobilière",
     },
     {
       property: "og:url",
-      content: "https://supernotaire.fr/",
+      content: "https://easycase.fr/",
     },
     {
       property: "og:image",
@@ -151,7 +150,7 @@ useHead({
     {
       property: "og:description",
       content:
-        "Rejoignez l'accès anticipé de Supernotaire et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
+        "Rejoignez l'accès anticipé de EasyCase et bénéficiez de tarifs avantageux ainsi qu'un accès privilégié aux fonctionnalités avant le lancement officiel.",
     },
   ],
 });
@@ -159,7 +158,7 @@ useHead({
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Supernotaire | Finalisation rapide de vente immobilière",
+  name: "EasyCase | Finalisation rapide de vente immobilière",
   description:
     "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
   url: `${baseUrl}/beta`,
@@ -168,7 +167,7 @@ useJsonld(() => ({
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Supernotaire",
+  name: "EasyCase",
   operatingSystem: "Web",
   applicationCategory: "Legal, BusinessApplication",
   offers: {
@@ -176,15 +175,15 @@ useJsonld(() => ({
     price: "0",
     priceCurrency: "EUR",
   },
-  url: "https://www.supernotaire.fr",
-  logo: `https://www.supernotaire.fr/${logo}`,
+  url: "https://www.easycase.fr",
+  logo: `https://www.easycase.fr/${logo}`,
   image:
     "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
   description:
-    "Supernotaire est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
+    "EasyCase est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
   publisher: {
     "@type": "Organization",
-    name: "Supernotaire",
+    name: "EasyCase",
     url: `${baseUrl}`,
   },
 }));
@@ -212,13 +211,13 @@ useJsonld(() => ({
         </h1>
 
         <p class="centered-hero__text__subtitle">
-          Supernotaire vous libère du temps sur les tâches qui n’ont pas besoin
-          de vous.
+          EasyCase vous libère du temps sur les tâches qui n’ont pas besoin de
+          vous.
         </p>
         <div class="centered-hero__text__link">
           <NuxtLink
             to="/inscription"
-            aria-label="Réserver votre accès anticipé à Supernotaire"
+            aria-label="Réserver votre accès anticipé à EasyCase"
             style="width: 100%"
           >
             <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
@@ -265,7 +264,7 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     <Benefits
       title="✨ Efficace ✨"
       subtitle="Optimisez la gestion de vos dossiers, sans compromis sur l’accompagnement."
-      text="Supernotaire automatise les tâches répétitives à faible valeur ajoutée, pour vous laisser le temps de vous concentrer sur l’essentiel: vos clients."
+      text="EasyCase automatise les tâches répétitives à faible valeur ajoutée, pour vous laisser le temps de vous concentrer sur l’essentiel: vos clients."
     />
 
     <img class="interface-image" src="@/assets/images/interface-mandats.webp" />
@@ -274,7 +273,7 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
       title="✨ Pratique ✨"
       subtitle="Ne renseignez plus jamais la même
       information deux fois."
-      text="Crééz vos propres modèles de documents, Supernotaire se charge de les remplir à partir des informations du dossier."
+      text="Crééz vos propres modèles de documents, EasyCase se charge de les remplir à partir des informations du dossier."
     />
     <img
       class="interface-image"

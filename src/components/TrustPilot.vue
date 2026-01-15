@@ -28,11 +28,11 @@ onMounted(async () => {
   <ClientOnly>
     <NuxtLink
       class="trustpilot"
-      to="https://fr.trustpilot.com/review/supernotaire.fr"
+      to="https://fr.trustpilot.com/review/easycase.fr"
       target="_blank"
       rel="noopener"
     >
-      <span class="trustpilot__title">Vous aimez Supernotaire ?</span>
+      <span class="trustpilot__title">Vous aimez EasyCase ?</span>
       <span class="trustpilot__subtitle"
         >Aidez des millions de français à nous découvrir</span
       >
@@ -47,7 +47,7 @@ onMounted(async () => {
         data-token="26ac862f-06f7-4963-aec9-56b86964b144"
       >
         <a
-          href="https://fr.trustpilot.com/review/supernotaire.fr"
+          href="https://fr.trustpilot.com/review/easycase.fr"
           target="_blank"
           rel="noopener"
           >Trustpilot</a

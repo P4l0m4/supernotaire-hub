@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
   title:
-    "Supernotaire | Inscrivez-vous pour avancer rapidement sur votre dossier de vente immobilière",
+    "EasyCase | Inscrivez-vous pour avancer rapidement sur votre dossier de vente immobilière",
   meta: [
     {
       name: "description",
@@ -17,7 +17,7 @@ useHead({
       <div class="inscription__headlines">
         <h1 class="titles">Rejoignez l'accès anticipé</h1>
         <h2 class="subtitles">
-          Profitez en avant-première des fonctionnalités de Supernotaire 🚀
+          Profitez en avant-première des fonctionnalités de EasyCase 🚀
         </h2>
       </div>
 
