@@ -1,0 +1,60 @@
+{
+  "title": "Situation matrimoniale",
+  "sections": [
+    {
+      "id": "situation-matrimoniale",
+      "label": "Situation matrimoniale",
+      "fields": [
+        {
+          "path": "situation_matrimoniale.statut",
+          "id": "situation-matrimoniale-statut",
+          "label": "Situation matrimoniale",
+          "name": "statut",
+          "type": "select",
+          "options": [
+            "Célibataire / Concubin(e) / Union libre",
+            "Marié(e) (communauté)",
+            "Marié(e) (contrat spécifique)",
+            "Pacsé",
+            "Divorcé(e) (non remarié(e))",
+            "Dissolution PACS",
+            "Veuf / Veuve",
+            "Séparé de corps"
+          ],
+          "placeholder": "Sélectionner une option",
+          "required": true
+        },
+        {
+          "path": "situation_matrimoniale.celibataire.etranger",
+          "id": "situation-matrimoniale-celibataire-etranger",
+          "label": "Je suis de nationalité étrangère",
+          "name": "celibataire_etranger",
+          "type": "checkbox",
+          "requiredIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Célibataire / Concubin(e) / Union libre"
+          },
+          "showIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Célibataire / Concubin(e) / Union libre"
+          }
+        },
+        {
+          "path": "situation_matrimoniale.separe_de_corps.contrat_mariage",
+          "id": "situation-matrimoniale-separe-contrat",
+          "label": "J'ai un contrat de mariage",
+          "name": "separe_contrat",
+          "type": "checkbox",
+          "requiredIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Séparé de corps"
+          },
+          "showIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Séparé de corps"
+          }
+        }
+      ]
+    }
+  ]
+}

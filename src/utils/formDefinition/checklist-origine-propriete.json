@@ -1,0 +1,46 @@
+{
+  "title": "Origine de propriété",
+  "sections": [
+    {
+      "id": "origine-propriete",
+      "label": "Origine de propriété",
+      "fields": [
+        {
+          "path": "origine_propriete",
+          "id": "origine-propriete-origine",
+          "label": "Origine de propriété",
+          "name": "origine_propriete",
+          "type": "select",
+          "options": [
+            "Achat classique",
+            "Succession / Testament",
+            "Achat en VEFA (vente sur plan / programme neuf)",
+            "Donation entre vifs",
+            "Partage / Licitation",
+            "Échange",
+            "Apport en société",
+            "Adjudication / Vente aux enchères",
+            "Dation en paiement",
+            "Vente à terme / paiement différé",
+            "Cession de nue-propriété / usufruit"
+          ],
+          "placeholder": "Sélectionnez l'origine de propriété",
+          "required": true
+        },
+        {
+          "path": "sous_type_succession",
+          "id": "origine-propriete-sous-type-succession",
+          "label": "Type de succession / testament",
+          "name": "sous_type_succession",
+          "type": "select",
+          "options": ["Succession / Héritage", "Legs particulier (testament)"],
+          "placeholder": "Sélectionnez le type",
+          "showIf": {
+            "path": "origine_propriete",
+            "equals": "Succession / Testament"
+          }
+        }
+      ]
+    }
+  ]
+}

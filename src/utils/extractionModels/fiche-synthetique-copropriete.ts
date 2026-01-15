@@ -1,7 +1,4 @@
-import type {
-  Syndic,
-  Copropriete,
-} from "@/utils/types/pre-etat-date-complet.ts";
+import type { Syndic, Copropriete } from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionFicheSynthétiqueCopropriété {
   nom_du_syndic: Syndic["nom"];

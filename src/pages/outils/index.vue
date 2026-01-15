@@ -4,6 +4,7 @@ import fileDashed from "@/assets/animated-icons/FileDashed.svg?raw";
 import signature from "@/assets/animated-icons/Signature.svg?raw";
 import filePDF from "@/assets/animated-icons/FilePdf.svg?raw";
 import fileText from "@/assets/animated-icons/FileText.svg?raw";
+import filePlus from "@/assets/animated-icons/FilePlus.svg?raw";
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://supernotaire.fr";
@@ -24,6 +25,13 @@ const tools = [
     description:
       "Créer un pré-état daté conforme à la réglementation en quelques minutes.",
     icon: fileDashed,
+  },
+  {
+    name: "Constituer votre dossier de vente",
+    path: "/outils/checklist-dossier-vente-notaire",
+    description:
+      "Générez une liste personnalisée des informations et documents à fournir à votre notaire.",
+    icon: filePlus,
   },
   {
     name: "Estimer une valeur foncière",

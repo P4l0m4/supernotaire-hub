@@ -16,6 +16,7 @@ interface Props {
   iconSize?: string;
   fontSize?: string;
   reverse?: boolean;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -25,6 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
   iconSize: "1.25rem",
   radius: "",
   reverse: false,
+  disabled: false,
 });
 
 const iconColor = computed(() => {
@@ -53,7 +55,7 @@ const iconColor = computed(() => {
     role="button"
     tabindex="0"
     class="button noselect"
-    :class="variant"
+    :class="[variant, { disabled: disabled }]"
     :style="{ flexDirection: direction, fontSize }"
   >
     <slot />

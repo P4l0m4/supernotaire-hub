@@ -1,9 +1,6 @@
 import { fmtEur } from "@/utils/docDefinitions/formatters";
 
-import type {
-  PreEtatDate,
-  Provision,
-} from "@/utils/types/pre-etat-date-complet";
+import type { PreEtatDate, Provision } from "@/types/pre-etat-date-complet";
 
 export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const FL = d.financier_lot;

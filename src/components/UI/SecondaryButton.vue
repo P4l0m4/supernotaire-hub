@@ -16,6 +16,7 @@ interface Props {
   iconSize?: string;
   fontSize?: string;
   reverse?: boolean;
+  disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -25,6 +26,7 @@ withDefaults(defineProps<Props>(), {
   iconSize: "1.25rem",
   radius: "",
   reverse: false,
+  disabled: false,
 });
 </script>
 <template>
@@ -32,7 +34,7 @@ withDefaults(defineProps<Props>(), {
     role="button"
     tabindex="0"
     class="button noselect"
-    :class="variant"
+    :class="[variant, { disabled: disabled }]"
     :style="{ flexDirection: direction, fontSize }"
   >
     <slot />

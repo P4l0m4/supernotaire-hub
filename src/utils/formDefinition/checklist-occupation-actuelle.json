@@ -1,0 +1,129 @@
+{
+  "title": "Occupation actuelle",
+  "sections": [
+    {
+      "id": "occupation-actuelle",
+      "label": "Occupation actuelle",
+      "fields": [
+        {
+          "path": "bien_occupe",
+          "id": "occupation-bien-occupe",
+          "label": "Le bien est-il actuellement occupé ?",
+          "name": "bien_occupe",
+          "type": "checkbox"
+        },
+        {
+          "path": "bien_libre_moment_vente",
+          "id": "occupation-bien-libre-vente",
+          "label": "Le bien sera-t-il libre au moment de la vente ?",
+          "name": "bien_libre_moment_vente",
+          "type": "checkbox",
+          "showIf": {
+            "path": "bien_occupe",
+            "equals": false
+          }
+        },
+        {
+          "path": "date_liberation",
+          "id": "occupation-date-liberation",
+          "label": "Date estimée de libération du bien",
+          "name": "date_liberation",
+          "type": "date",
+          "placeholder": "JJ/MM/AAAA",
+          "showIf": {
+            "all": [
+              { "path": "bien_occupe", "equals": false },
+              { "path": "bien_libre_moment_vente", "equals": false }
+            ]
+          }
+        },
+        {
+          "path": "par_qui",
+          "id": "occupation-par-qui",
+          "label": "Par qui ?",
+          "name": "par_qui",
+          "type": "select",
+          "options": [
+            "Locataire",
+            "Occupant gratuit",
+            "Proprietaire vendeur",
+            "Indivisaire",
+            "Squatteur"
+          ],
+          "placeholder": "Sélectionnez l'occupant",
+          "showIf": {
+            "path": "bien_occupe",
+            "equals": true
+          }
+        },
+        {
+          "path": "occupant_gratuit_nom",
+          "id": "occupation-gratuit-nom",
+          "label": "Nom complet de l'occupant",
+          "name": "occupant_gratuit_nom",
+          "type": "text",
+          "placeholder": "Nom complet",
+          "showIf": {
+            "path": "par_qui",
+            "equals": "Occupant gratuit"
+          }
+        },
+        {
+          "path": "nature_occupation",
+          "id": "occupation-nature",
+          "label": "Nature de l'occupation",
+          "name": "nature_occupation",
+          "type": "select",
+          "options": [
+            "Residence principale",
+            "Residence secondaire",
+            "Occupation temporaire"
+          ],
+          "placeholder": "Sélectionnez la nature de l'occupation",
+          "showIf": {
+            "path": "par_qui",
+            "equals": "Proprietaire vendeur"
+          }
+        },
+        {
+          "path": "procedure_en_cours",
+          "id": "occupation-procedure",
+          "label": "Une procédure est-elle en cours ?",
+          "name": "procedure_en_cours",
+          "type": "checkbox",
+          "showIf": {
+            "path": "par_qui",
+            "equals": "Squatteur"
+          }
+        },
+        {
+          "path": "type_bail",
+          "id": "occupation-type-bail",
+          "label": "Type de bail",
+          "name": "type_bail",
+          "type": "select",
+          "options": ["Habitation nue", "Meuble", "Autre"],
+          "placeholder": "Sélectionnez le type de bail",
+          "showIf": {
+            "path": "par_qui",
+            "equals": "Locataire"
+          }
+        },
+        {
+          "path": "bail_autre_precisions",
+          "id": "occupation-type-bail-autre",
+          "label": "Précisez le type de bail",
+          "name": "bail_autre_precisions",
+          "type": "text",
+          "placeholder": "Précisez",
+          "showIf": {
+            "all": [
+              { "path": "par_qui", "equals": "Locataire" },
+              { "path": "type_bail", "equals": "Autre" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

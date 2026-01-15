@@ -1,0 +1,96 @@
+{
+  "title": "Situation professionnelle & Fiscale",
+  "sections": [
+    {
+      "id": "situation-pro-fiscale",
+      "label": "Situation professionnelle & Fiscale",
+      "fields": [
+        {
+          "path": "situation_pro_fiscale.lieu_imposition",
+          "id": "situation-pro-lieu-imposition",
+          "label": "Lieu d'imposition",
+          "name": "lieu_imposition",
+          "type": "text",
+          "placeholder": "Paris",
+          "required": true
+        },
+        {
+          "path": "situation_pro_fiscale.numero_fiscal",
+          "id": "situation-pro-numero-fiscal",
+          "label": "Numéro fiscal",
+          "name": "numero_fiscal",
+          "type": "text",
+          "placeholder": "13 chiffres",
+          "required": true,
+          "pattern": "^\\d{13}$"
+        },
+        {
+          "path": "situation_pro_fiscale.profession",
+          "id": "situation-pro-profession",
+          "label": "Profession",
+          "name": "profession",
+          "type": "text",
+          "placeholder": "Ingénieur",
+          "required": true
+        },
+        {
+          "path": "situation_pro_fiscale.employeur",
+          "id": "situation-pro-employeur",
+          "label": "Employeur",
+          "name": "employeur",
+          "type": "text",
+          "placeholder": "Entreprise ABC",
+          "required": true
+        },
+        {
+          "path": "situation_pro_fiscale.assujetti_isf_ifi",
+          "id": "situation-pro-assujetti-isf-ifi",
+          "label": "Je suis assujetti(e) à ISF/IFI",
+          "name": "assujetti_isf_ifi",
+          "type": "checkbox",
+          "required": false
+        },
+        {
+          "path": "situation_pro_fiscale.non_resident_fiscal_francais",
+          "id": "situation-pro-non-resident",
+          "label": "Je ne suis pas résident fiscal français",
+          "name": "non_resident_fiscal_francais",
+          "type": "checkbox",
+          "required": false
+        },
+        {
+          "path": "situation_pro_fiscale.residence_fiscale.pays",
+          "id": "situation-pro-residence-pays",
+          "label": "Pays de résidence fiscale",
+          "name": "residence_fiscale_pays",
+          "type": "text",
+          "placeholder": "Suisse",
+          "requiredIf": {
+            "path": "situation_pro_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          },
+          "showIf": {
+            "path": "situation_pro_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          }
+        },
+        {
+          "path": "situation_pro_fiscale.residence_fiscale.nif_etranger",
+          "id": "situation-pro-nif-etranger",
+          "label": "NIF étranger (Tax Identification Number)",
+          "name": "nif_etranger",
+          "type": "text",
+          "placeholder": "NIF",
+          "requiredIf": {
+            "path": "situation_pro_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          },
+          "showIf": {
+            "path": "situation_pro_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          }
+        }
+      ]
+    }
+  ]
+}

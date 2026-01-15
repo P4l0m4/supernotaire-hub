@@ -13,7 +13,7 @@ defineProps<{
 }>();
 </script>
 <template>
-  <div id="features" class="features">
+  <div id="features" class="features-list">
     <UIFeatureComponent
       v-for="feature in features"
       :key="feature.title"
@@ -27,7 +27,7 @@ defineProps<{
   </div>
 </template>
 <style lang="scss" scoped>
-.features {
+.features-list {
   display: flex;
   width: 100%;
   gap: 2rem;

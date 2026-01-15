@@ -55,11 +55,17 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+    STRIPE_WEBHOOK_SECRET_TEST: process.env.STRIPE_WEBHOOK_SECRET_TEST || "",
+    STRIPE_PRICE_EXPORT: process.env.STRIPE_PRICE_EXPORT,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
     public: {
       STORYBLOK_KEY: process.env.STORYBLOK_KEY,
       GEMINI_KEY: process.env.NUXT_PUBLIC_GEMINI_KEY,
       SUPABASE_URL: process.env.NUXT_PUBLIC_SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
+      STRIPE_PUBLIC_KEY: process.env.NUXT_PUBLIC_STRIPE_PUBLIC_KEY,
     },
   },
   dayjs: {

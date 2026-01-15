@@ -1,4 +1,4 @@
-import type { FinancierLot } from "@/utils/types/pre-etat-date-complet.ts";
+import type { FinancierLot } from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionRIC {
   solde_compte: FinancierLot["solde_compte"]; // format: number

@@ -1,7 +1,7 @@
 import { fmtEur } from "@/utils/docDefinitions/formatters";
 
 import type { ValuationResult } from "@/utils/calculateDVF";
-import type { ValeurFonciere } from "@/utils/types/valeur-fonciere";
+import type { ValeurFonciere } from "@/types/valeur-fonciere";
 
 export function buildDocDefinition(
   formData: ValeurFonciere,

@@ -1,0 +1,260 @@
+import type { ChecklistCapaciteRepresentation } from "@/types/checklist-capacite-representation";
+
+const val = (v: unknown) => {
+  if (v === true) return "Oui";
+  if (v === false) return "Non";
+  if (v == null || v === "") return "-";
+  return String(v);
+};
+
+export function buildDocDefinition(
+  data: ChecklistCapaciteRepresentation,
+  logoBase64: string
+) {
+  if (!data) return;
+
+  const rows: Array<[string, string]> = [];
+  const docs: string[] = [];
+
+  const addInfo = (label: string, value: unknown, when = true) => {
+    if (!when) return;
+    rows.push([label, val(value)]);
+  };
+  const addDoc = (label: string, when = true) => {
+    if (!when) return;
+    docs.push(label);
+  };
+
+  addInfo("Statut de la partie", data.statut_partie);
+
+  if (data.statut_partie === "Personne physique") {
+    addInfo("Vente en nom propre", data.bien_vendu_en_nom_propre);
+
+    if (data.bien_vendu_en_nom_propre) {
+      addInfo(
+        "Sous protection juridique",
+        data.sous_protection_personne_physique
+      );
+      addInfo(
+        "Type de protection",
+        data.type_protection_personne_physique,
+        data.sous_protection_personne_physique
+      );
+
+      if (data.sous_protection_personne_physique) {
+        if (data.type_protection_personne_physique === "Curatelle") {
+          addDoc("Accord ecrit du curateur (lettre datee et signee)");
+          addDoc("Jugement de mise sous curatelle");
+          addDoc("Piece d’identite du curateur");
+        }
+        if (data.type_protection_personne_physique === "Tutelle") {
+          addDoc("Autorisation du juge des tutelles pour la vente");
+          addDoc("Piece d’identite du tuteur");
+          addDoc("Jugement de mise sous tutelle");
+        }
+        if (
+          data.type_protection_personne_physique ===
+          "Mandat de protection future ou autre"
+        ) {
+          addDoc("Mandat de protection future ou procuration notarisee");
+          addDoc("Piece d’identite du mandataire");
+        }
+      }
+    }
+
+    if (data.bien_vendu_en_nom_propre === false) {
+      addInfo(
+        "Type de representation",
+        data.type_representation_personne_physique
+      );
+
+      if (
+        data.type_representation_personne_physique ===
+        "Mandat simple (procuration sous seing prive)"
+      ) {
+        addDoc("Procuration signee par le vendeur");
+        addDoc("Piece d’identite du mandataire");
+      }
+
+      if (
+        data.type_representation_personne_physique ===
+        "Representation d’un majeur protege"
+      ) {
+        addInfo(
+          "Type de protection pour la representation",
+          data.type_protection_representation
+        );
+        if (data.type_protection_representation === "Tutelle") {
+          addDoc("Autorisation du juge des tutelles pour la vente");
+          addDoc("Piece d’identite du tuteur");
+          addDoc("Jugement de mise sous tutelle");
+        }
+        if (data.type_protection_representation === "Curatelle") {
+          addDoc("Jugement de mise sous curatelle");
+          addDoc("Accord ecrit du curateur");
+          addDoc("Piece d’identite du curateur");
+        }
+        if (data.type_protection_representation === "Mandataire special") {
+          addDoc("Procuration notarisee ou sous seing prive");
+          addDoc("Piece d’identite du mandataire");
+        }
+        if (data.type_protection_representation === "Habilitation familiale") {
+          addDoc("Acte constitutif de l’habilitation familiale");
+          addDoc("Piece d’identite de l’habilitant");
+        }
+      }
+
+      if (
+        data.type_representation_personne_physique ===
+        "Mandataire special (procuration ponctuelle ou generale)"
+      ) {
+        addDoc("Procuration notarisee ou sous seing prive");
+        addDoc("Piece d’identite du mandataire");
+      }
+
+      if (
+        data.type_representation_personne_physique === "Habilitation familiale"
+      ) {
+        addDoc("Acte constitutif de l’habilitation familiale");
+        addDoc("Piece d’identite de l’habilitant");
+      }
+    }
+  }
+
+  if (data.statut_partie === "Personne morale") {
+    addInfo("Type d’entite", data.type_entite_personne_morale);
+    addInfo(
+      "Entite representee par un mandataire",
+      data.entite_representee_par_mandataire
+    );
+
+    if (data.type_entite_personne_morale === "Societe") {
+      addDoc("Extrait Kbis de moins de 3 mois");
+      addDoc(
+        "Statuts a jour de la societe (si pouvoirs non precises dans le Kbis)"
+      );
+      addDoc("Piece d’identite du representant legal");
+      addDoc(
+        "Proces-verbal d’assemblee autorisant la vente (si requis par les statuts)"
+      );
+    }
+
+    if (data.type_entite_personne_morale === "Association") {
+      addDoc("Statuts de l’association");
+      addDoc("Proces-verbal de nomination du president ou representant");
+      addDoc("Proces-verbal autorisant la vente du bien immobilier");
+      addDoc("Piece d’identite du representant legal");
+    }
+
+    if (data.entite_representee_par_mandataire) {
+      addDoc("Piece d’identite du mandataire");
+      addDoc("Mandat ecrit / procuration du mandataire");
+    }
+  }
+
+  if (data.statut_partie === "Indivision") {
+    addInfo(
+      "Mandataire / representant unique designe",
+      data.indivision_representant_unique
+    );
+    addDoc("Titre d’indivision (acte ou convention)");
+    addDoc("Identite et parts de chaque indivisaire");
+    addDoc("Proces-verbal ou accord des indivisaires autorisant la vente");
+    if (data.indivision_representant_unique) {
+      addDoc("Mandat commun / procuration du representant de l’indivision");
+    }
+  }
+
+  const infoBody = [
+    ["Information", "Reponse"],
+    ...(rows.length ? rows : [["Informations", "-"]]),
+  ];
+
+  return {
+    pageSize: "A4",
+    pageMargins: [24, 24, 24, 72],
+    images: {
+      logoSupernotaire: logoBase64,
+    },
+    content: [
+      {
+        text: "Capacite & Representation",
+        style: "h1",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "Capacite juridique, protections et pouvoirs pour signer la vente",
+        italics: true,
+        margin: [0, 0, 0, 16],
+      },
+      { text: "Informations a fournir", style: "h2" },
+      {
+        table: {
+          widths: ["*", "*"],
+          body: infoBody,
+        },
+        layout: "lightHorizontalLines",
+        margin: [0, 0, 0, 24],
+      },
+      { text: "Documents a fournir", style: "h2" },
+      docs.length
+        ? { ul: docs.map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
+        : { text: "Aucun document supplementaire.", margin: [0, 0, 0, 24] },
+      { text: "Metadonnees", style: "h3" },
+      {
+        table: {
+          widths: ["auto", "*"],
+          body: [
+            [
+              { text: "Genere le", noWrap: true },
+              {
+                text: new Date().toLocaleString("fr-FR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }),
+                noWrap: true,
+              },
+            ],
+          ],
+        },
+        layout: "lightHorizontalLines",
+      },
+      {
+        text: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+        italics: true,
+        margin: [0, 8, 0, 0],
+      },
+    ],
+    styles: {
+      h1: { fontSize: 18, bold: true },
+      h2: { fontSize: 14, bold: true, margin: [0, 10, 0, 6] },
+      h3: { fontSize: 12, bold: true, margin: [0, 6, 0, 4] },
+    },
+    footer: (currentPage: number, pageCount: number) => {
+      return {
+        columns: [
+          {
+            image: "logoSupernotaire",
+            width: 20,
+            margin: [0, 2, 10, 0],
+          },
+          {
+            text: "Cree sur Supernotaire.fr, la plateforme qui facilite les ventes immobilieres.",
+            alignment: "left",
+            margin: [0, 0, 0, 0],
+            fontSize: 10,
+            color: "#22262e",
+          },
+          {
+            text: `${currentPage}/${pageCount}`,
+            alignment: "right",
+            margin: [0, 10, 16, 0],
+            fontSize: 9,
+          },
+        ],
+        columnGap: 8,
+        margin: [24, 24, 24, 24],
+      };
+    },
+  };
+}

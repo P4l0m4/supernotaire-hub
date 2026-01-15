@@ -1,0 +1,121 @@
+{
+  "title": "Charges & Taxes",
+  "sections": [
+    {
+      "id": "charges-taxes",
+      "label": "Charges & Taxes",
+      "fields": [
+        {
+          "path": "type_bien",
+          "id": "charges-taxes-type-bien",
+          "label": "Type de bien",
+          "name": "type_bien",
+          "type": "select",
+          "options": ["Appartement", "Maison"],
+          "placeholder": "Sélectionnez le type de bien",
+          "required": true
+        },
+        {
+          "path": "type_chauffage",
+          "id": "charges-taxes-type-chauffage",
+          "label": "Type de chauffage",
+          "name": "type_chauffage",
+          "type": "select",
+          "options": [
+            "Pompe à chaleur",
+            "Gaz",
+            "Fioul",
+            "Bois",
+            "Electrique",
+            "Autre"
+          ],
+          "placeholder": "Sélectionnez le type de chauffage",
+          "required": true
+        },
+        {
+          "path": "type_chauffage_autre",
+          "id": "charges-taxes-type-chauffage-autre",
+          "label": "Précisez le type de chauffage",
+          "name": "type_chauffage_autre",
+          "type": "text",
+          "placeholder": "Chauffage à...",
+          "showIf": {
+            "path": "type_chauffage",
+            "equals": "Autre"
+          }
+        },
+        {
+          "path": "date_entretien_chauffage",
+          "id": "charges-taxes-date-entretien-chauffage",
+          "label": "Date du dernier entretien du chauffage",
+          "name": "date_entretien_chauffage",
+          "type": "date",
+          "placeholder": "JJ/MM/AAAA"
+        },
+        {
+          "path": "date_ramonage",
+          "id": "charges-taxes-date-ramonage",
+          "label": "Date du dernier ramonage",
+          "name": "date_ramonage",
+          "type": "date",
+          "placeholder": "JJ/MM/AAAA"
+        },
+        {
+          "path": "mode_assainissement",
+          "id": "charges-taxes-mode-assainissement",
+          "label": "Mode d'assainissement",
+          "name": "mode_assainissement",
+          "type": "select",
+          "options": ["Collectif", "Individuel"],
+          "placeholder": "Sélectionnez le mode d'assainissement",
+          "required": true
+        },
+        {
+          "path": "situation_fiscale",
+          "id": "charges-taxes-situation-fiscale",
+          "label": "Situation d'occupation fiscale",
+          "name": "situation_fiscale",
+          "type": "select",
+          "options": [
+            "Résidence principale",
+            "Résidence secondaire",
+            "Bien vacant"
+          ],
+          "placeholder": "Sélectionnez la situation fiscale",
+          "required": true
+        },
+        {
+          "path": "montant_taxe_fonciere",
+          "id": "charges-taxes-montant-taxe-fonciere",
+          "label": "Montant annuel de la taxe foncière",
+          "name": "montant_taxe_fonciere",
+          "type": "text",
+          "placeholder": "Ex : 1200 €"
+        },
+        {
+          "path": "presence_teom",
+          "id": "charges-taxes-presence-teom",
+          "label": "Présence d'une TEOM",
+          "name": "presence_teom",
+          "type": "checkbox",
+          "tooltip": "Taxe d'enlèvement des ordures ménagères"
+        },
+        {
+          "path": "bien_soumis_taxe_habitation",
+          "id": "charges-taxes-soumis-taxe-habitation",
+          "label": "Le bien est soumis à la taxe d'habitation",
+          "name": "bien_soumis_taxe_habitation",
+          "type": "checkbox"
+        },
+        {
+          "path": "montant_derniere_taxe_habitation",
+          "id": "charges-taxes-montant-derniere-taxe-habitation",
+          "label": "Montant annuel de la dernière taxe d’habitation",
+          "name": "montant_derniere_taxe_habitation",
+          "type": "text",
+          "placeholder": "Ex : 650 €"
+        }
+      ]
+    }
+  ]
+}

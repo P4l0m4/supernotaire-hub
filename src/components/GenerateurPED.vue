@@ -17,9 +17,9 @@ import { TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs } from "@/utils/extr
 
 import { extractDataFromResults } from "@/utils/AIExtraction";
 
-import type { PreEtatDate } from "@/utils/types/pre-etat-date-complet";
-import type { FormDefinition } from "@/utils/types/forms";
-import type { ISODate } from "@/utils/types/pre-etat-date-complet";
+import type { PreEtatDate } from "@/types/pre-etat-date-complet";
+import type { FormDefinition } from "@/types/forms";
+import type { ISODate } from "@/types/pre-etat-date-complet";
 
 const annexes = [
   "Dernier procès-verbal d’assemblée générale approuvé.",

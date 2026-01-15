@@ -1,0 +1,530 @@
+﻿{
+  "title": "Urbanisme \u0026 Travaux extérieurs",
+  "sections": [
+    {
+      "id": "procedure_contentieux",
+      "label": "Procédures administratives \u0026 contentieux",
+      "fields": [
+        {
+          "path": "procedure.enCours",
+          "id": "procedure_en_cours",
+          "label": "Une procédure administrative est en cours",
+          "tooltip": "Exemples : refus de permis, obligation de démolition…",
+          "name": "enCours",
+          "type": "checkbox"
+        },
+        {
+          "path": "procedure.types",
+          "id": "types_procedure",
+          "label": "Sélectionner le(s) type(s) de procédure(s)",
+          "name": "types",
+          "type": "checkbox-group",
+          "requiredIf": {
+            "path": "procedure.enCours",
+            "equals": true
+          },
+          "showIf": {
+            "path": "procedure.enCours",
+            "equals": true
+          },
+          "options": [
+            {
+              "label": "Procédure de droit de préemption",
+              "value": "preemption"
+            },
+            {
+              "label": "Astreinte administrative",
+              "value": "astreinte_administrative"
+            },
+            {
+              "label": "Obligation de démolition ou de remise en état",
+              "value": "demolition_remise_etat"
+            },
+            {
+              "label": "Obligation de régularisation",
+              "value": "regularisation"
+            },
+            {
+              "label": "Procès-verbal d’infraction d’urbanisme",
+              "value": "pv_infraction_urbanisme"
+            },
+            {
+              "label": "Mise en demeure de mise en conformité",
+              "value": "mise_en_demeure"
+            },
+            {
+              "label": "Arrêté interruptif de travaux",
+              "value": "arrete_interruptif_travaux"
+            },
+            {
+              "label": "Refus de déclaration préalable",
+              "value": "refus_dp"
+            },
+            {
+              "label": "Retrait ou annulation de permis",
+              "value": "retrait_annulation_permis"
+            },
+            {
+              "label": "Refus de permis de construire",
+              "value": "refus_pc"
+            },
+            {
+              "label": "Procédure administrative",
+              "value": "procedure_administrative"
+            },
+            {
+              "label": "Autre",
+              "value": "autre"
+            }
+          ]
+        },
+        {
+          "path": "contentieux.enCours",
+          "id": "contentieux_en_cours",
+          "label": "Un contentieux est en cours",
+          "tooltip": "Exemples : litige avec la mairie, recours…",
+          "name": "enCours",
+          "type": "checkbox"
+        },
+        {
+          "path": "contentieux.types",
+          "id": "types_contentieux",
+          "label": "Sélectionner le(s) type(s) de contentieux",
+          "name": "types",
+          "type": "checkbox-group",
+          "requiredIf": {
+            "path": "contentieux.enCours",
+            "equals": true
+          },
+          "showIf": {
+            "path": "contentieux.enCours",
+            "equals": true
+          },
+          "options": [
+            {
+              "label": "Contentieux pénal d’urbanisme",
+              "value": "penal"
+            },
+            {
+              "label": "Contentieux judiciaire lié au bien",
+              "value": "judiciaire"
+            },
+            {
+              "label": "Litige avec la mairie",
+              "value": "mairie"
+            },
+            {
+              "label": "Recours contentieux devant le tribunal administratif",
+              "value": "ta"
+            },
+            {
+              "label": "Recours gracieux contre une décision d’urbanisme",
+              "value": "gracieux"
+            },
+            {
+              "label": "Contentieux portant sur la légalité des constructions",
+              "value": "legalite"
+            },
+            {
+              "label": "Autre",
+              "value": "autre"
+            }
+          ]
+        },
+        {
+          "path": "contentieux.autreDetail",
+          "id": "contentieux_autre",
+          "label": "Merci de préciser",
+          "name": "autreDetail",
+          "type": "textarea",
+          "requiredIf": {
+            "path": "contentieux.types",
+            "in": ["autre"]
+          },
+          "showIf": {
+            "path": "contentieux.types",
+            "in": ["autre"]
+          },
+          "placeholder": "Ex: détail du contentieux ou de la procédure"
+        }
+      ]
+    },
+    {
+      "id": "servitudes",
+      "label": "Servitudes",
+      "fields": [
+        {
+          "path": "servitudes.existent",
+          "id": "servitudes_existantes",
+          "label": "Le bien est grevé de servitudes connues",
+          "name": "existent",
+          "type": "checkbox"
+        },
+        {
+          "path": "servitudes.types",
+          "id": "types_servitudes",
+          "label": "Sélectionner le(s) type(s) de servitude(s)",
+          "name": "types",
+          "type": "checkbox-group",
+          "requiredIf": {
+            "path": "servitudes.existent",
+            "equals": true
+          },
+          "showIf": {
+            "path": "servitudes.existent",
+            "equals": true
+          },
+          "options": [
+            {
+              "label": "Passage",
+              "value": "passage"
+            },
+            {
+              "label": "Vue",
+              "value": "vue"
+            },
+            {
+              "label": "Canalisation(s) ou réseau",
+              "value": "canalisation"
+            },
+            {
+              "label": "Utilité publique (zones inondables, monuments historiques…)",
+              "value": "utilite_publique"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zonage",
+      "label": "Zonage d’urbanisme",
+      "fields": [
+        {
+          "path": "zonage.reglemente",
+          "id": "zonage_reglemente",
+          "label": "Le bien est situé dans une zone réglementée par un document d\u0027urbanisme",
+          "name": "reglemente",
+          "type": "checkbox"
+        },
+        {
+          "path": "zonage.type",
+          "id": "type_zonage",
+          "label": "Type de document",
+          "name": "type",
+          "type": "select",
+          "requiredIf": {
+            "path": "zonage.reglemente",
+            "equals": true
+          },
+          "showIf": {
+            "path": "zonage.reglemente",
+            "equals": true
+          },
+          "options": [
+            "Plan local d\u0027urbanisme (PLU)",
+            "Carte communale",
+            "Zone d\u0027aménagement (ZAC, secteur sauvegardé, etc.)",
+            "Autre"
+          ],
+          "placeholder": "Sélectionner un document"
+        },
+        {
+          "path": "zonage.typeAutre",
+          "id": "type_zonage_autre",
+          "label": "Précisez le document d’urbanisme",
+          "name": "typeAutre",
+          "type": "text",
+          "requiredIf": {
+            "path": "zonage.type",
+            "equals": "Autre"
+          },
+          "showIf": {
+            "path": "zonage.type",
+            "equals": "Autre"
+          },
+          "placeholder": "Ex: règlement national d’urbanisme local"
+        }
+      ]
+    },
+    {
+      "id": "impact_travaux",
+      "label": "Travaux à impact",
+      "fields": [
+        {
+          "path": "travaux.impactExterieur",
+          "id": "impact_exterieur",
+          "label": "Des travaux à impact extérieur ou urbanistique ont été réalisés",
+          "name": "impactExterieur",
+          "type": "checkbox",
+          "required": true,
+          "options": null
+        },
+        {
+          "path": "travaux.details",
+          "id": "travaux_details",
+          "label": "Liste des travaux",
+          "name": "travauxDetails",
+          "type": "array",
+          "showIf": {
+            "equals": true,
+            "path": "travaux.impactExterieur"
+          },
+          "itemLabel": "Travaux {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "arreteExiste",
+                "id": "arrete_existe",
+                "label": "Il n\u0027existe pas d\u0027arrêté d\u0027autorisation d\u0027urbanisme pour ces travaux",
+                "tooltip": "Permis de construire / déclaration préalable / permis d’aménager. Ne cochez pas cette case si le document existe mais que vous ne l\u0027avez pas en votre possession.",
+                "name": "arreteExiste",
+                "type": "checkbox",
+                "required": true,
+                "options": null
+              },
+              {
+                "path": "arreteType",
+                "id": "arrete_type",
+                "label": "Type d\u0027autorisation",
+                "name": "arreteType",
+                "type": "select",
+                "options": [
+                  "Permis de construire",
+                  "Déclaration préalable",
+                  "Permis d’aménager"
+                ],
+                "placeholder": "Sélectionner",
+                "requiredIf": {
+                  "equals": false,
+                  "path": "arreteExiste"
+                },
+                "showIf": {
+                  "equals": false,
+                  "path": "arreteExiste"
+                }
+              },
+              {
+                "path": "motifAbsenceArrete",
+                "id": "motif_absence_arrete",
+                "label": "Motif de l\u0027absence d\u0027arrêté d\u0027autorisation",
+                "name": "motifAbsenceArrete",
+                "type": "select",
+                "tooltip": "Pour quelles raisons n\u0027y a-t-il pas de document d\u0027autorisation officielle pour ces travaux ?",
+                "requiredIf": {
+                  "equals": true,
+                  "path": "arreteExiste"
+                },
+                "showIf": {
+                  "equals": true,
+                  "path": "arreteExiste"
+                },
+                "options": [
+                  "Autorisation requise mais non obtenue",
+                  "Autorisation non requise par le droit de l’urbanisme"
+                ],
+                "placeholder": "Sélectionner un motif"
+              },
+              {
+                "path": "typeTravaux",
+                "id": "type_travaux",
+                "label": "Les travaux portent sur :",
+                "name": "typeTravaux",
+                "type": "checkbox-group",
+                "required": true,
+                "options": [
+                  {
+                    "label": "Un changement de destination (usage du bien ou d’une pièce)",
+                    "value": "Un changement de destination (usage du bien ou d’une pièce)"
+                  },
+                  {
+                    "label": "L\u0027occupation ou l\u0027aménagement du sol (terrasse, piscine, abri, etc)",
+                    "value": "L\u0027occupation ou l\u0027aménagement du sol (terrasse, piscine, abri, etc)"
+                  },
+                  {
+                    "label": "L’aspect extérieur (toiture, matériaux visibles)",
+                    "value": "L’aspect extérieur (toiture, matériaux visibles)"
+                  },
+                  {
+                    "label": "Les surfaces ou volumes (agrandissement, extension)",
+                    "value": "Les surfaces ou volumes (agrandissement, extension)"
+                  },
+                  {
+                    "label": "Une surélévation (niveau supplémentaire par le haut)",
+                    "value": "Une surélévation (niveau supplémentaire par le haut)"
+                  },
+                  {
+                    "label": "Les façades (murs extérieurs)",
+                    "value": "Les façades (murs extérieurs)"
+                  },
+                  {
+                    "label": "Les structures porteuses avec impact extérieur (murs porteurs)",
+                    "value": "Les structures porteuses avec impact extérieur (murs porteurs)"
+                  },
+                  {
+                    "label": "Les ouvertures (fenêtres, baie, etc)",
+                    "value": "Les ouvertures (fenêtres, baie, etc)"
+                  },
+                  {
+                    "label": "La division intérieure (logements supplémentaires)",
+                    "value": "La division intérieure (logements supplémentaires)"
+                  }
+                ]
+              },
+              {
+                "path": "travauxAcheves",
+                "id": "travaux_acheves",
+                "label": "Les travaux ne sont pas achevés",
+                "name": "travauxAcheves",
+                "type": "checkbox",
+                "showIf": {
+                  "equals": false,
+                  "path": "arreteExiste"
+                }
+              },
+              {
+                "path": "dateAchevement",
+                "id": "date_achevement",
+                "label": "Date d\u0027achèvement prévue",
+                "name": "dateAchevement",
+                "type": "date",
+                "mode": "date-picker",
+                "placeholder": "JJ/MM/AAAA",
+                "showIf": {
+                  "all": [
+                    {
+                      "equals": false,
+                      "path": "arreteExiste"
+                    },
+                    {
+                      "equals": true,
+                      "path": "travauxAcheves"
+                    }
+                  ]
+                },
+                "requiredIf": {
+                  "all": [
+                    {
+                      "equals": false,
+                      "path": "arreteExiste"
+                    },
+                    {
+                      "equals": true,
+                      "path": "travauxAcheves"
+                    }
+                  ]
+                }
+              },
+              {
+                "path": "travauxNonConformes",
+                "id": "travaux_non_conformes",
+                "label": "Les travaux ne sont pas conformes",
+                "name": "travauxNonConformes",
+                "type": "checkbox",
+                "showIf": {
+                  "equals": false,
+                  "path": "arreteExiste"
+                }
+              },
+              {
+                "path": "dateDepotDaact",
+                "id": "date_depot_daact",
+                "label": "Date de dépôt de la DAACT",
+                "name": "dateDepotDaact",
+                "type": "date",
+                "mode": "date-picker",
+                "requiredIf": {
+                  "all": [
+                    {
+                      "equals": false,
+                      "path": "arreteExiste"
+                    },
+                    {
+                      "equals": false,
+                      "path": "travauxNonConformes"
+                    },
+                    {
+                      "not": {
+                        "equals": true,
+                        "path": "travauxAcheves"
+                      }
+                    }
+                  ]
+                },
+                "showIf": {
+                  "all": [
+                    {
+                      "equals": false,
+                      "path": "arreteExiste"
+                    },
+                    {
+                      "equals": false,
+                      "path": "travauxNonConformes"
+                    },
+                    {
+                      "not": {
+                        "equals": true,
+                        "path": "travauxAcheves"
+                      }
+                    }
+                  ]
+                },
+                "placeholder": "JJ/MM/AAAA"
+              },
+              {
+                "path": "plansDisponibles",
+                "id": "plans_disponibles",
+                "label": "Plans approuvés non disponibles",
+                "name": "plansDisponibles",
+                "type": "checkbox",
+                "showIf": {
+                  "equals": false,
+                  "path": "arreteExiste"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cadastre",
+      "label": "Références cadastrales",
+      "fields": [
+        {
+          "path": "cadastre.section",
+          "id": "section_cadastrale",
+          "label": "Section",
+          "name": "section",
+          "type": "text",
+          "required": true,
+          "placeholder": "Ex: AB"
+        },
+        {
+          "path": "cadastre.parcelle",
+          "id": "numero_parcelle",
+          "label": "Numéro de parcelle",
+          "name": "parcelle",
+          "type": "text",
+          "required": true,
+          "placeholder": "Ex: 123"
+        },
+        {
+          "path": "cadastre.superficie",
+          "id": "superficie_cadastrale",
+          "label": "Superficie cadastrale (en m²)",
+          "name": "superficie",
+          "type": "number",
+          "required": false,
+          "placeholder": "Ex: 250"
+        },
+        {
+          "path": "cadastre.planDisponible",
+          "id": "plan_cadastral_disponible",
+          "label": "Je possède un extrait ou plan cadastral du bien",
+          "name": "planDisponible",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}

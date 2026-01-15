@@ -8,9 +8,13 @@ interface Props {
   label: string;
   number?: number;
   icon?: string;
+  error?: string;
+  required?: boolean;
+  tooltip?: string;
+  tooltipLink?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const isDropdownOpen = ref(false);
 
@@ -22,7 +26,11 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
 });
 </script>
 <template>
-  <div ref="target" class="dropdown">
+  <div
+    ref="target"
+    class="dropdown"
+    :class="{ 'dropdown--has-error': !!props.error }"
+  >
     <span
       class="dropdown__header"
       @click="isDropdownOpen = !isDropdownOpen"
@@ -38,6 +46,36 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
         :color="colors['text-color-faded']" />{{ label }}
       <template v-if="number">({{ number }})</template
       ><UIIconComponent
+        v-if="required"
+        icon="asterisk"
+        size="0.75rem"
+        :color="colors['error-color']"
+        style="margin-left: 0.2rem" />
+      <UIIconComponent
+        v-if="tooltip?.length && !tooltipLink?.length"
+        icon="question"
+        class="dropdown__tooltip"
+        :color="colors['text-color-faded']"
+        size="1.15rem"
+        v-tooltip="tooltip"
+        tabindex="0"
+      />
+      <NuxtLink
+        v-else-if="tooltip?.length && tooltipLink?.length"
+        :to="tooltipLink"
+        target="_blank"
+        rel="noreferrer"
+        v-tooltip="tooltip"
+        :aria-label="tooltip"
+        class="dropdown__tooltip"
+      >
+        <UIIconComponent
+          icon="question"
+          :color="colors['text-color-faded']"
+          size="1.15rem"
+        />
+      </NuxtLink>
+      <UIIconComponent
         style="margin-left: auto"
         :icon="isDropdownOpen ? 'caret_down_bold' : 'caret_right_bold'"
         :color="colors['text-color-faded']"
@@ -45,6 +83,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
     <div ref="contentEl" class="dropdown__content" v-if="isDropdownOpen">
       <slot />
     </div>
+    <span v-if="props.error" class="dropdown__error">{{ props.error }}</span>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -56,6 +95,12 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
   width: 100%;
   border: 1px solid rgba($text-color, 0.1);
   border-radius: calc($radius/2);
+  position: relative;
+
+  &--has-error {
+    border-color: $error-color;
+    background-color: rgba($error-color, 0.08);
+  }
 
   &__header {
     display: flex;
@@ -70,6 +115,28 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  &__tooltip {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__error {
+    display: inline-block;
+    position: absolute;
+    color: $error-color;
+    font-size: $small-text;
+    bottom: 0rem;
+    right: 0;
+    padding: 0.1rem 0.25rem;
+    border: 1px solid rgba($error-color, 0.1);
+    background-color: rgba($error-color, 0.1);
+    border-radius: calc($radius/2.2);
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 </style>

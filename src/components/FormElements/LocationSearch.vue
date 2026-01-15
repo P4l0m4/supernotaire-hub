@@ -2,7 +2,7 @@
 import { ref, watch, onMounted, nextTick } from "vue";
 import { onClickOutside, useDebounceFn } from "@vueuse/core";
 
-import type { Adresse } from "@/utils/types/adresse";
+import type { Adresse } from "@/types/adresse";
 
 const props = defineProps<{
   modelValue?: Adresse | null;

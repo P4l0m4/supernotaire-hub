@@ -1,4 +1,4 @@
-import type { ValeurFonciere } from "@/utils/types/valeur-fonciere";
+import type { ValeurFonciere } from "@/types/valeur-fonciere";
 
 export interface DvfRecord {
   id: string;

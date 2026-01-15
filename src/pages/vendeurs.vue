@@ -115,7 +115,7 @@ useJsonld(() => ({
         papiers et laissez l’IA remplir les formalités à votre place."
     />
 
-    <UIFeaturesComponent :features="features" />
+    <UIFeaturesList :features="features" />
   </Container>
   <HotjarTracking />
 </template>

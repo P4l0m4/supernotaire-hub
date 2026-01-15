@@ -4,7 +4,7 @@ import { fr } from "@/utils/validators-fr";
 import useVuelidate from "@vuelidate/core";
 import { helpers, required, minLength, maxLength } from "@vuelidate/validators";
 
-import type { FormDefinition } from "@/utils/types/forms";
+import type { FormDefinition } from "@/types/forms";
 import { evaluateShowIf } from "@/utils/showIf";
 
 interface Suggestion {
@@ -217,6 +217,10 @@ async function validateCurrentSection() {
     })
   );
 
+  if (!results.every(Boolean) && v$.value.$errors.length > 0) {
+    console.log("[DynamicForm] validation errors", v$.value.$errors);
+  }
+
   return results.every(Boolean);
 }
 
@@ -419,12 +423,13 @@ const visibleFields = computed(() => {
     &__fields {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1rem;
 
       @media (min-width: $big-tablet-screen) {
         gap: 1.5rem;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
       }
     }
   }

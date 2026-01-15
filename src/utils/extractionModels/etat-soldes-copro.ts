@@ -1,7 +1,7 @@
 import type {
   FinancierLot,
   FinancierLotSommesDuesCedant,
-} from "@/utils/types/pre-etat-date-complet.ts";
+} from "@/types/pre-etat-date-complet.ts";
 
 export interface ExtractionFicheSynthétiqueCopropriété {
   date_arret_soldes_coproprietaires: FinancierLot["arrete_au"]; // format: date (jj-mm-aaaa), date de l'état des soldes

@@ -7,7 +7,7 @@ import { fr } from "@/utils/validators-fr";
 import useVuelidate from "@vuelidate/core";
 import { numeric, helpers } from "@vuelidate/validators";
 
-import type { ArrayField } from "@/utils/types/forms";
+import type { ArrayField } from "@/types/forms";
 
 type Primitive = string | number | boolean | undefined;
 type ArrayItem = { __id: string } & Record<string, any>;
@@ -71,13 +71,18 @@ const rulesForScalar = (f: any) => {
     const o = oneOf(f.options);
     if (o) r.oneOf = o;
   }
+  if (f.type === "checkbox-group" && f.required) {
+    r.minLength = fr.minLength(1);
+  }
   if (f.type === "email") r.email = fr.email;
   return Object.keys(r).length ? r : null;
 };
 
+const itemFields = computed<any[]>(() => props.field.itemSchema?.fields ?? []);
+
 const itemRuleShape = computed(() => {
   const r: any = {};
-  for (const f of props.field.itemSchema?.fields ?? []) {
+  for (const f of itemFields.value) {
     const leaf = rulesForScalar(f);
     if (leaf) setDeep(r, f.path.split("."), leaf);
   }
@@ -144,8 +149,10 @@ async function updateItem(idx: number, path: string, value: Primitive) {
   await n?.$validate?.();
 }
 
-function defaultForType(t: string) {
+function defaultForType(t?: string | null) {
   if (t === "number" || t === "date") return null;
+  if (t === "checkbox") return false;
+  if (t === "checkbox-group") return [];
   return "";
 }
 
@@ -176,6 +183,32 @@ function removeItem(idx: number) {
   }
   next.splice(idx, 1);
   model.value = next;
+}
+
+function checkboxGroupValues(item: any, path: string): string[] {
+  const v = getByPath(item, path);
+  return Array.isArray(v) ? v : [];
+}
+
+async function toggleCheckboxGroup(
+  idx: number,
+  path: string,
+  optionValue: string,
+  checked: boolean
+) {
+  const next = clone(model.value);
+  const current = new Set(checkboxGroupValues(next[idx], path));
+  checked ? current.add(optionValue) : current.delete(optionValue);
+  setByPath(next[idx], path, Array.from(current));
+  model.value = next;
+  await nextTick();
+  const n: any = fieldNode(idx, path);
+  n?.$touch?.();
+  await n?.$validate?.();
+}
+
+async function updateCheckbox(idx: number, path: string, value: boolean) {
+  await updateItem(idx, path, value);
 }
 
 const childrenErrors = computed(() => {
@@ -294,12 +327,11 @@ async function applyAllSuggestions() {
         class="array-item__grid"
         v-show="!isCollapsed(item.__id || String(idx))"
       >
-        <template
-          v-for="(f, index) in field.itemSchema?.fields ?? []"
-          :key="index"
-        >
+        <template v-for="(f, index) in itemFields" :key="index">
           <label class="fi">
-            <span class="fi__label"
+            <span
+              v-if="f.type !== 'checkbox' && f.type !== 'checkbox-group'"
+              class="fi__label"
               >{{ f.label
               }}<UIIconComponent
                 v-if="f.required"
@@ -342,6 +374,39 @@ async function applyAllSuggestions() {
               :icon="f.icon || ''"
               :error="firstItemMsg(idx, f.path)"
             />
+            <FormElementsCheckboxField
+              v-else-if="f.type === 'checkbox'"
+              :label="f.label"
+              :id="`${f.id || f.path}-${idx}`"
+              :name="f.name || f.path"
+              :modelValue="Boolean(getByPath(item, f.path))"
+              @update:modelValue="
+                (val) => updateCheckbox(idx, f.path, Boolean(val))
+              "
+              :error="firstItemMsg(idx, f.path)"
+            />
+            <FormElementsDropDown
+              v-else-if="f.type === 'checkbox-group'"
+              :label="f.placeholder || f.label"
+              :icon="f.icon"
+              :error="firstItemMsg(idx, f.path)"
+              :required="Boolean(f.required)"
+            >
+              <FormElementsCheckboxField
+                v-for="(option, cIdx) in f.options"
+                :key="cIdx"
+                :id="`${f.id || f.path}-${idx}-${cIdx}`"
+                :name="f.name || f.path"
+                :label="option.label"
+                :modelValue="
+                  checkboxGroupValues(item, f.path).includes(option.value)
+                "
+                @update:modelValue="
+                  (val) =>
+                    toggleCheckboxGroup(idx, f.path, option.value, Boolean(val))
+                "
+              />
+            </FormElementsDropDown>
             <ClientOnly v-else-if="f.type === 'date'">
               <FormElementsDateField
                 :id="f.label"
@@ -460,8 +525,13 @@ async function applyAllSuggestions() {
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+
+    @media (min-width: $big-tablet-screen) {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
   }
 }
 

@@ -1,0 +1,111 @@
+{
+  "title": "Capacite & Representation",
+  "sections": [
+    {
+      "id": "capacite-representation",
+      "label": "Capacite & Representation",
+      "fields": [
+        {
+          "path": "statut_partie",
+          "id": "capacite-statut-partie",
+          "label": "Le vendeur est une :",
+          "name": "statut_partie",
+          "type": "select",
+          "options": ["Personne physique", "Personne morale", "Indivision"],
+          "placeholder": "Selectionnez un statut",
+          "required": true
+        },
+        {
+          "path": "bien_vendu_en_nom_propre",
+          "id": "capacite-bien-nom-propre",
+          "label": "Le bien est-il vendu en nom propre ?",
+          "name": "bien_vendu_en_nom_propre",
+          "type": "checkbox",
+          "showIf": { "path": "statut_partie", "equals": "Personne physique" }
+        },
+        {
+          "path": "sous_protection_personne_physique",
+          "id": "capacite-sous-protection-physique",
+          "label": "La personne est-elle sous protection juridique (tutelle, curatelle, habilitation, mandat de protection future) ?",
+          "name": "sous_protection_personne_physique",
+          "type": "checkbox",
+          "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": true }
+            ]
+          }
+        },
+        {
+          "path": "type_protection_personne_physique",
+          "id": "capacite-type-protection-physique",
+          "label": "Type de protection",
+          "name": "type_protection_personne_physique",
+          "type": "select",
+          "options": ["Curatelle", "Tutelle", "Mandat de protection future ou autre"],
+          "placeholder": "Selectionnez le type",
+          "showIf": { "path": "sous_protection_personne_physique", "equals": true }
+        },
+        {
+          "path": "type_representation_personne_physique",
+          "id": "capacite-type-representation-physique",
+          "label": "Type de representation",
+          "name": "type_representation_personne_physique",
+          "type": "select",
+          "options": [
+            "Mandat simple (procuration sous seing prive)",
+            "Representation d\u2019un majeur protege",
+            "Mandataire special (procuration ponctuelle ou generale)",
+            "Habilitation familiale"
+          ],
+          "placeholder": "Selectionnez le type de representation",
+          "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": false }
+            ]
+          }
+        },
+        {
+          "path": "type_protection_representation",
+          "id": "capacite-type-protection-representation",
+          "label": "Type de protection pour la representation",
+          "name": "type_protection_representation",
+          "type": "select",
+          "options": ["Tutelle", "Curatelle", "Mandataire special", "Habilitation familiale"],
+          "placeholder": "Selectionnez le type de protection",
+          "showIf": {
+            "path": "type_representation_personne_physique",
+            "equals": "Representation d\u2019un majeur protege"
+          }
+        },
+        {
+          "path": "type_entite_personne_morale",
+          "id": "capacite-type-entite-pm",
+          "label": "Type d'entite",
+          "name": "type_entite_personne_morale",
+          "type": "select",
+          "options": ["Societe", "Association"],
+          "placeholder": "Selectionnez le type",
+          "showIf": { "path": "statut_partie", "equals": "Personne morale" }
+        },
+        {
+          "path": "entite_representee_par_mandataire",
+          "id": "capacite-entite-mandataire",
+          "label": "L'entite est-elle representee par un mandataire ?",
+          "name": "entite_representee_par_mandataire",
+          "type": "checkbox",
+          "showIf": { "path": "statut_partie", "equals": "Personne morale" }
+        },
+        {
+          "path": "indivision_representant_unique",
+          "id": "capacite-indivision-representant",
+          "label": "Un mandataire / representant unique de l'indivision est-il designe ?",
+          "name": "indivision_representant_unique",
+          "type": "checkbox",
+          "showIf": { "path": "statut_partie", "equals": "Indivision" }
+        }
+      ]
+    }
+  ]
+}
