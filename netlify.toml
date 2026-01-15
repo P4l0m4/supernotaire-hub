@@ -1,23 +1,23 @@
 [[redirects]]
   from = "http://supernotaire.fr/*"
-  to = "https://eazycase.fr/:splat"
+  to = "https://easycase.fr/:splat"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://supernotaire.fr/*"
-  to = "https://eazycase.fr/:splat"
+  to = "https://easycase.fr/:splat"
   status = 301
   force = true
 
 [[redirects]]
   from = "http://www.supernotaire.fr/*"
-  to = "https://eazycase.fr/:splat"
+  to = "https://easycase.fr/:splat"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.supernotaire.fr/*"
-  to = "https://eazycase.fr/:splat"
+  to = "https://easycase.fr/:splat"
   status = 301
   force = true
