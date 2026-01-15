@@ -162,8 +162,8 @@ onClickOutside(target, () => (isMenuOpen.value = false));
 
 .logo {
   img {
-    width: 11.125rem;
-    height: 1.56rem;
+    width: 8rem;
+    height: 2rem;
   }
 }
 </style>

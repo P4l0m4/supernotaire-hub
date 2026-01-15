@@ -16,11 +16,19 @@ export default defineEventHandler(async (event) => {
 
   const sessionId = getQuery(event).session_id as string | undefined;
   if (!sessionId || !stripe) {
+    console.info("[access/export] missing session or stripe", {
+      sessionId: sessionId || null,
+      hasStripeKey: Boolean(secretKey),
+    });
     return { access: false };
   }
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+    console.info("[access/export] session fetched", {
+      sessionId,
+      paymentStatus: session.payment_status,
+    });
     const isPaid = session.payment_status === "paid";
     if (isPaid) {
       setCookie(event, COOKIE_NAME, "1", {

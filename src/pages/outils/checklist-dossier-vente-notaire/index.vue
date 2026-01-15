@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
@@ -11,22 +11,27 @@ const notifyVisible = ref(false);
 const notifyMessage = ref<string | null>(null);
 const notifyColor = ref(colors["error-color"]);
 
-const { refresh: refreshAccess } = useExportAccess();
+const { access: exportUnlocked, refresh: refreshAccess } = useExportAccess();
 
 const breadcrumbs = ref([
-  {
-    name: "Accueil",
-    url: "/",
-  },
-  {
-    name: "Outils",
-    url: "/outils",
-  },
+  { name: "Accueil", url: "/" },
+  { name: "Outils", url: "/outils" },
   {
     name: "Checklists par rubrique",
     url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
   },
 ]);
+
+const LAST_SESSION_KEY = "sn_last_session_id";
+const storeSessionId = (sessionId: string) => {
+  if (process.client && sessionId) {
+    sessionStorage.setItem(LAST_SESSION_KEY, sessionId);
+  }
+};
+const getStoredSessionId = () => {
+  if (!process.client) return undefined;
+  return sessionStorage.getItem(LAST_SESSION_KEY) || undefined;
+};
 
 const showToast = (message: string, color: string) => {
   notifyMessage.value = message;
@@ -40,14 +45,25 @@ const handlePaymentStatus = async () => {
   if (!payment) return;
 
   if (payment === "success") {
-    const sessionId =
+    let sessionId =
       typeof route.query.session_id === "string"
         ? route.query.session_id
         : undefined;
-    const isValid = await refreshAccess(sessionId);
-    if (isValid) {
+    console.info("[checklist] payment success, session from query:", sessionId);
+    if (!sessionId) {
+      sessionId = getStoredSessionId();
+      console.info("[checklist] payment success, session from storage:", sessionId);
+    }
+    if (!sessionId) return;
+    storeSessionId(sessionId);
+
+    const wasUnlocked = exportUnlocked.value;
+    const result = await refreshAccess(sessionId);
+    const isUnlocked = exportUnlocked.value;
+
+    if (isUnlocked) {
       showToast("Paiement validé, export débloqué.", colors["success-color"]);
-    } else {
+    } else if (!wasUnlocked && !result) {
       showToast(
         "Impossible de valider le paiement. Réessayez ou contactez le support.",
         colors["error-color"]
@@ -61,6 +77,25 @@ const handlePaymentStatus = async () => {
 onMounted(() => {
   handlePaymentStatus();
 });
+
+watch(
+  () => route.query.session_id,
+  async (sessionId) => {
+    if (typeof sessionId !== "string" || !sessionId) return;
+    console.info("[checklist] watch session_id:", sessionId);
+    storeSessionId(sessionId);
+    const wasUnlocked = exportUnlocked.value;
+    const result = await refreshAccess(sessionId);
+    if (exportUnlocked.value) {
+      showToast("Paiement validé, export débloqué.", colors["success-color"]);
+    } else if (!wasUnlocked && !result) {
+      showToast(
+        "Impossible de valider le paiement. Réessayez ou contactez le support.",
+        colors["error-color"]
+      );
+    }
+  }
+);
 
 useJsonld(() => ({
   "@context": "https://schema.org",
