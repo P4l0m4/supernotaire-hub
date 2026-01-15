@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "https://supernotaire.fr/*"
+  to = "https://eazycase.fr/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.supernotaire.fr/*"
+  to = "https://eazycase.fr/:splat"
+  status = 301
+  force = true

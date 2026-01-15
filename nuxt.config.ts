@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_WEBHOOK_SECRET_TEST: process.env.STRIPE_WEBHOOK_SECRET_TEST || "",
     STRIPE_PRICE_EXPORT: process.env.STRIPE_PRICE_EXPORT,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
     public: {
       STORYBLOK_KEY: process.env.STORYBLOK_KEY,
       GEMINI_KEY: process.env.NUXT_PUBLIC_GEMINI_KEY,

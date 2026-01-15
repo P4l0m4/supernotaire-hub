@@ -178,14 +178,16 @@ onMounted(() => {
           <template v-if="partialLoading">Export en cours...</template>
           <template v-else>Export partiel</template>
         </UITertiaryButton>
+
         <p v-if="partialError" class="export-modal__error">
           {{ partialError }}
         </p>
         <p v-if="fullError" class="export-modal__error">
           {{ fullError }}
         </p>
-      </div> </UIFullPageModal
-    ><UINotificationModal
+      </div>
+    </UIFullPageModal>
+    <UINotificationModal
       v-if="notifyVisible && notifyMessage"
       :progress-color="notifyColor"
       @close="notifyVisible = false"
