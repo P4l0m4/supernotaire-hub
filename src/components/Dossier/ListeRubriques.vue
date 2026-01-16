@@ -170,23 +170,26 @@ onMounted(() => {
       :key="card.id"
       class="liste-rubriques__card"
       :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
-    >
-      <UITagComponent
-        v-if="card.premium"
-        :color="
-          exportUnlocked ? colors['success-color'] : colors['accent-color']
-        "
-        :icon="exportUnlocked ? 'unlock' : 'lock'"
-        size="small"
-        >{{ exportUnlocked ? "Débloqué" : "Premium" }}</UITagComponent
-      >
-      <UITagComponent
-        v-else
-        :color="colors['success-color']"
-        icon="unlock"
-        size="small"
-        >Gratuit</UITagComponent
-      ><ChartsProgressBar
+      ><div class="liste-rubriques__card__header">
+        {{ card.title }}
+        <UITagComponent
+          v-if="card.premium"
+          :color="
+            exportUnlocked ? colors['success-color'] : colors['accent-color']
+          "
+          :icon="exportUnlocked ? 'unlock' : 'lock'"
+          size="small"
+          >{{ exportUnlocked ? "Débloqué" : "Premium" }}</UITagComponent
+        >
+        <UITagComponent
+          v-else
+          :color="colors['success-color']"
+          icon="unlock"
+          size="small"
+          >Gratuit</UITagComponent
+        >
+      </div>
+      <ChartsProgressBar
         :progress="progressByRubrique[card.id]"
         :state="
           progressByRubrique[card.id] === 100
@@ -195,7 +198,13 @@ onMounted(() => {
             ? 'progress'
             : 'default'
         "
-        :label="card.title"
+        :label="
+          progressByRubrique[card.id] === 100
+            ? 'Terminé'
+            : `${Math.round(
+                (100 - progressByRubrique[card.id]) * 0.6
+              )}s restantes`
+        "
         :legend="card.subtitle"
     /></NuxtLink>
   </div>
@@ -239,6 +248,16 @@ onMounted(() => {
         box-shadow: $shadow-black;
         border: 1px solid $primary-color;
         cursor: pointer;
+      }
+
+      &__header {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        font-size: 1.25rem;
+        font-weight: $semi-bold;
+        align-items: end;
       }
     }
   }
