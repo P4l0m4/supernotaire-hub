@@ -108,6 +108,7 @@ useHead({
   grid-template-columns: 1fr;
   gap: 2rem;
   width: 100%;
+  height: fit-content;
 
   @media (min-width: $big-tablet-screen) {
     grid-template-columns: repeat(2, 1fr);
