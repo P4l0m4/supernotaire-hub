@@ -8,7 +8,7 @@ export function buildDocDefinition(
   if (!data) return;
 
   const rows: Array<[string, string]> = [];
-  const docs: string[] = [];
+  const docs = new Set<string>();
 
   const addInfo = (label: string, value: unknown, when = true) => {
     if (!when) return;
@@ -16,7 +16,7 @@ export function buildDocDefinition(
   };
   const addDoc = (label: string, when = true) => {
     if (!when) return;
-    docs.push(label);
+    docs.add(label);
   };
 
   addInfo("Statut de la partie", data.statut_partie);
@@ -191,8 +191,8 @@ export function buildDocDefinition(
         margin: [0, 0, 0, 24],
       },
       { text: "Documents a fournir", style: "h2" },
-      docs.length
-        ? { ul: docs.map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
+      docs.size
+        ? { ul: Array.from(docs).map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
         : { text: "Aucun document supplementaire.", margin: [0, 0, 0, 24] },
       { text: "Metadonnees", style: "h3" },
       {
@@ -252,6 +252,7 @@ export function buildDocDefinition(
     },
   };
 }
+
 
 
 

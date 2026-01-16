@@ -8,7 +8,7 @@ export function buildDocDefinition(
   if (!data) return;
 
   const rows: Array<[string, string]> = [];
-  const docs: string[] = [];
+  const docs = new Set<string>();
 
   const addInfo = (label: string, value: unknown, when = true) => {
     if (!when) return;
@@ -16,7 +16,7 @@ export function buildDocDefinition(
   };
   const addDoc = (label: string, when = true) => {
     if (!when) return;
-    docs.push(label);
+    docs.add(label);
   };
 
   addInfo("Bien occupé actuellement", data.bien_occupe);
@@ -112,8 +112,8 @@ export function buildDocDefinition(
         margin: [0, 0, 0, 24],
       },
       { text: "Documents à fournir", style: "h2" },
-      docs.length
-        ? { ul: docs.map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
+      docs.size
+        ? { ul: Array.from(docs).map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
         : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },
       { text: "Métadonnées", style: "h3" },
       {
@@ -173,6 +173,7 @@ export function buildDocDefinition(
     },
   };
 }
+
 
 
 
