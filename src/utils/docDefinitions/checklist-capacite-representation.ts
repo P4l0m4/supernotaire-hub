@@ -1,5 +1,6 @@
 import type { ChecklistCapaciteRepresentation } from "@/types/checklist-capacite-representation";
 import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
+import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistCapaciteRepresentation,
@@ -164,94 +165,23 @@ export function buildDocDefinition(
     ...(rows.length ? rows : [["Informations", "-"]]),
   ];
 
-  return {
-    pageSize: "A4",
-    pageMargins: [24, 24, 24, 72],
-    images: {
-      logoEasyCase: logoBase64,
-    },
-    content: [
-      {
-        text: "Capacite & Representation",
-        style: "h1",
-        margin: [0, 0, 0, 8],
-      },
-      {
-        text: "Capacite juridique, protections et pouvoirs pour signer la vente",
-        italics: true,
-        margin: [0, 0, 0, 16],
-      },
-      { text: "Informations a fournir", style: "h2" },
-      {
-        table: {
-          widths: ["*", "*"],
-          body: infoBody,
-        },
-        layout: "lightHorizontalLines",
-        margin: [0, 0, 0, 24],
-      },
-      { text: "Documents a fournir", style: "h2" },
-      docs.size
-        ? { ul: Array.from(docs).map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
-        : { text: "Aucun document supplementaire.", margin: [0, 0, 0, 24] },
-      { text: "Metadonnees", style: "h3" },
-      {
-        table: {
-          widths: ["auto", "*"],
-          body: [
-            [
-              { text: "Genere le", noWrap: true },
-              {
-                text: new Date().toLocaleString("fr-FR", {
-                  dateStyle: "short",
-                  timeStyle: "short",
-                }),
-                noWrap: true,
-              },
-            ],
-          ],
-        },
-        layout: "lightHorizontalLines",
-      },
-      {
-        text: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
-        italics: true,
-        margin: [0, 8, 0, 0],
-      },
-    ],
-    styles: {
-      h1: { fontSize: 18, bold: true },
-      h2: { fontSize: 14, bold: true, margin: [0, 10, 0, 6] },
-      h3: { fontSize: 12, bold: true, margin: [0, 6, 0, 4] },
-    },
-    footer: (currentPage: number, pageCount: number) => {
-      return {
-        columns: [
-          {
-            image: "logoEasyCase",
-            width: 20,
-            margin: [0, 2, 10, 0],
-          },
-          {
-            text: "Cree sur easycase.fr, la plateforme qui facilite les ventes immobilieres.",
-            alignment: "left",
-            margin: [0, 0, 0, 0],
-            fontSize: 10,
-            color: "#22262e",
-          },
-          {
-            text: `${currentPage}/${pageCount}`,
-            alignment: "right",
-            margin: [0, 10, 16, 0],
-            fontSize: 9,
-          },
-        ],
-        columnGap: 8,
-        margin: [24, 24, 24, 24],
-      };
-    },
-  };
+  return buildChecklistPdfStructure({
+    title: "Capacite & Representation",
+    subtitle: "Capacite juridique, protections et pouvoirs pour signer la vente",
+    infoTitle: "Informations a fournir",
+    docsTitle: "Documents a fournir",
+    metadataTitle: "Metadonnees",
+    generatedOnLabel: "Genere le",
+    emptyDocsText: "Aucun document supplementaire.",
+    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    infoBody,
+    docs: Array.from(docs),
+    logoBase64,
+  });
 }
+
+
+
 
 
 

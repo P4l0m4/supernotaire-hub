@@ -1,5 +1,6 @@
 import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
 import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
+import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistChargesTaxes,
@@ -22,7 +23,7 @@ export function buildDocDefinition(
   addInfo("Type de bien", data.type_bien);
   addInfo("Type de chauffage", data.type_chauffage);
   addInfo(
-    "Précision chauffage",
+    "Precision chauffage",
     data.type_chauffage_autre,
     data.type_chauffage === "Autre"
   );
@@ -34,138 +35,59 @@ export function buildDocDefinition(
 
   addInfo("Mode d'assainissement", data.mode_assainissement);
   addInfo("Situation d'occupation fiscale", data.situation_fiscale);
-  addInfo("Montant annuel de la taxe foncière", data.montant_taxe_fonciere);
+  addInfo("Montant annuel de la taxe fonciere", data.montant_taxe_fonciere);
   addInfo(
-    "Montant annuel de la dernière taxe d’habitation",
+    "Montant annuel de la derniere taxe d'habitation",
     data.montant_derniere_taxe_habitation
   );
   addInfo(
-    "Présence d'une TEOM",
+    "Presence d'une TEOM",
     data.presence_teom,
     data.presence_teom !== undefined
   );
   addInfo(
-    "Bien soumis à la taxe d'habitation",
+    "Bien soumis a la taxe d'habitation",
     data.bien_soumis_taxe_habitation,
     data.bien_soumis_taxe_habitation !== undefined
   );
 
   // Documents
   addDoc(
-    "Dernière attestation d'entretien du chauffage",
+    "Derniere attestation d'entretien du chauffage",
     Boolean(data.type_chauffage)
   );
   addDoc(
-    "Rapport de diagnostic assainissement non collectif (en cours de validité)",
+    "Rapport de diagnostic assainissement non collectif (en cours de validite)",
     data.mode_assainissement === "Individuel"
   );
-  addDoc("Dernier avis de taxe foncière");
+  addDoc("Dernier avis de taxe fonciere");
   addDoc(
     "Dernier avis de taxe d'habitation",
     data.bien_soumis_taxe_habitation === true
   );
   addDoc(
-    "Montant annuel de la dernière taxe d'habitation (si applicable)",
+    "Montant annuel de la derniere taxe d'habitation (si applicable)",
     data.bien_soumis_taxe_habitation === false
   );
 
   const infoBody = [
-    ["Information", "Réponse"],
+    ["Information", "Reponse"],
     ...(rows.length ? rows : [["Informations", "-"]]),
   ];
 
-  return {
-    pageSize: "A4",
-    pageMargins: [24, 24, 24, 72],
-    images: {
-      logoEasyCase: logoBase64,
-    },
-    content: [
-      {
-        text: "Charges & Taxes",
-        style: "h1",
-        margin: [0, 0, 0, 8],
-      },
-      {
-        text: "Chauffage, assainissement et situation fiscale",
-        italics: true,
-        margin: [0, 0, 0, 16],
-      },
-      { text: "Informations à fournir", style: "h2" },
-      {
-        table: {
-          widths: ["*", "*"],
-          body: infoBody,
-        },
-        layout: "lightHorizontalLines",
-        margin: [0, 0, 0, 24],
-      },
-      { text: "Documents à fournir", style: "h2" },
-      docs.size
-        ? { ul: Array.from(docs).map((doc) => `${doc}`), margin: [0, 0, 0, 24] }
-        : { text: "Aucun document supplémentaire.", margin: [0, 0, 0, 24] },
-      { text: "Métadonnées", style: "h3" },
-      {
-        table: {
-          widths: ["auto", "*"],
-          body: [
-            [
-              { text: "Généré le", noWrap: true },
-              {
-                text: new Date().toLocaleString("fr-FR", {
-                  dateStyle: "short",
-                  timeStyle: "short",
-                }),
-                noWrap: true,
-              },
-            ],
-          ],
-        },
-        layout: "lightHorizontalLines",
-      },
-      {
-        text: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
-        italics: true,
-        margin: [0, 8, 0, 0],
-      },
-    ],
-    styles: {
-      h1: { fontSize: 18, bold: true },
-      h2: { fontSize: 14, bold: true, margin: [0, 10, 0, 6] },
-      h3: { fontSize: 12, bold: true, margin: [0, 6, 0, 4] },
-    },
-    footer: (currentPage: number, pageCount: number) => {
-      return {
-        columns: [
-          {
-            image: "logoEasyCase",
-            width: 20,
-            margin: [0, 2, 10, 0],
-          },
-          {
-            text: "Créé sur easycase.fr, la plateforme qui facilite les ventes immobilières.",
-            alignment: "left",
-            margin: [0, 0, 0, 0],
-            fontSize: 10,
-            color: "#22262e",
-          },
-          {
-            text: `${currentPage}/${pageCount}`,
-            alignment: "right",
-            margin: [0, 10, 16, 0],
-            fontSize: 9,
-          },
-        ],
-        columnGap: 8,
-        margin: [24, 24, 24, 24],
-      };
-    },
-  };
+  return buildChecklistPdfStructure({
+    title: "Charges & Taxes",
+    subtitle: "Chauffage, assainissement et situation fiscale",
+    infoTitle: "Informations a fournir",
+    docsTitle: "Documents a fournir",
+    metadataTitle: "Metadonnees",
+    generatedOnLabel: "Genere le",
+    emptyDocsText: "Aucun document supplementaire.",
+    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    infoBody,
+    docs: Array.from(docs),
+    logoBase64,
+  });
 }
-
-
-
-
-
 
 
