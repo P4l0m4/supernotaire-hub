@@ -8,16 +8,16 @@ export function buildDocDefinition(
 ) {
   if (!data) return;
 
-  const rows: Array<[string, string]> = [];
-  const docs = new Set<string>();
+  const infoRows: Array<[string, string]> = [];
+  const docsSet = new Set<string>();
 
   const addInfo = (label: string, value: unknown, when = true) => {
     if (!when) return;
-    rows.push([label, val(value)]);
+    infoRows.push([label, val(value)]);
   };
   const addDoc = (label: string, when = true) => {
     if (!when) return;
-    docs.add(label);
+    docsSet.add(label);
   };
 
   addInfo("Type de bien", data.type_bien);
@@ -72,7 +72,7 @@ export function buildDocDefinition(
 
   const infoBody = [
     ["Information", "Reponse"],
-    ...(rows.length ? rows : [["Informations", "-"]]),
+    ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
@@ -85,9 +85,10 @@ export function buildDocDefinition(
     emptyDocsText: "Aucun document supplementaire.",
     note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
     infoBody,
-    docs: Array.from(docs),
+    docs: Array.from(docsSet),
     logoBase64,
   });
 }
+
 
 
