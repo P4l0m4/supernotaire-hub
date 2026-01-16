@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const questions = [
   {
-    title: "Combient coûte le service de génération de Pré-état daté ?",
+    title: "Combien coûte le service de génération de Pré-état daté ?",
     answer:
       "Vous pouvez utiliser easycase.fr pour créer un Pré-état daté gratuitement (pour le moment). Habituellement, un Pré-état daté coûte entre 150 et 300 euros lorsqu'il est réalisé par un professionnel.",
   },
