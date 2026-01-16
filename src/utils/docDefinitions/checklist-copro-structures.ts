@@ -26,8 +26,8 @@ export function buildDocDefinition(
     data.gestion_copropriete,
     data.bien_en_copropriete === true
   );
-  addInfo("Email du syndic", data.email_syndic, data.email_syndic);
-  addInfo("Numéro du syndic", data.tel_syndic, data.tel_syndic);
+  addInfo("Email du syndic", data.email_syndic, Boolean(data.email_syndic));
+  addInfo("Numéro du syndic", data.tel_syndic, Boolean(data.tel_syndic));
 
   addInfo(
     "Travaux parties communes en cours",

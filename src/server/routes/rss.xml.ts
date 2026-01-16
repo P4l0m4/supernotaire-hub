@@ -1,5 +1,5 @@
 import StoryblokClient from "storyblok-js-client";
-import { stringToSlug } from "@/utils/slugify";
+import { stringToSlug } from "../../utils/slugify";
 
 const storyblok = new StoryblokClient({
   accessToken: process.env.STORYBLOK_KEY,
