@@ -52,7 +52,10 @@ const handlePaymentStatus = async () => {
     console.info("[checklist] payment success, session from query:", sessionId);
     if (!sessionId) {
       sessionId = getStoredSessionId();
-      console.info("[checklist] payment success, session from storage:", sessionId);
+      console.info(
+        "[checklist] payment success, session from storage:",
+        sessionId
+      );
     }
     if (!sessionId) return;
     storeSessionId(sessionId);
@@ -131,6 +134,7 @@ useHead({
           fournir à votre notaire pour la vente de votre bien.
         </span>
       </div>
+
       <div class="checklist-tool__content">
         <DossierListeRubriques />
         <DossierExportMenu />
@@ -153,6 +157,7 @@ useHead({
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 
   @media (min-width: $big-tablet-screen) {
     gap: 3rem;
