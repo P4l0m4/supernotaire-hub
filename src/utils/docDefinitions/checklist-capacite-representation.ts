@@ -1,6 +1,6 @@
 import type { ChecklistCapaciteRepresentation } from "@/types/checklist-capacite-representation";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistCapaciteRepresentation,
@@ -167,7 +167,8 @@ export function buildDocDefinition(
 
   return buildChecklistPdfStructure({
     title: "Capacite & Representation",
-    subtitle: "Capacite juridique, protections et pouvoirs pour signer la vente",
+    subtitle:
+      "Capacite juridique, protections et pouvoirs pour signer la vente",
     infoTitle: "Informations a fournir",
     docsTitle: "Documents a fournir",
     metadataTitle: "Metadonnees",
@@ -179,13 +180,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
-import type { ChecklistInformationsPrealables } from "@/types/checklist-informations-prealables";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import type { ChecklistInformationsPrealables } from "../../types/checklist-informations-prealables";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistInformationsPrealables,
@@ -47,7 +47,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Informations prealables",
     subtitle: "Type de bien et informations associees",
     infoTitle: "Informations a fournir",
@@ -61,5 +61,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-

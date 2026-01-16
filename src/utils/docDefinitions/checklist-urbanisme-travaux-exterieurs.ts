@@ -1,6 +1,6 @@
 import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistUrbanismeTravauxExterieurs,
@@ -181,7 +181,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Urbanisme & travaux exterieurs",
     subtitle: "Autorisation d'urbanisme et travaux exterieurs",
     infoTitle: "Informations a fournir",

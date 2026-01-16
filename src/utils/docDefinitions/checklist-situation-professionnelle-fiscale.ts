@@ -1,6 +1,6 @@
 import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistSituationProfessionnelleFiscale,
@@ -55,7 +55,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Situation professionnelle & fiscale",
     subtitle: "Emploi, revenus et fiscalite",
     infoTitle: "Informations a fournir",

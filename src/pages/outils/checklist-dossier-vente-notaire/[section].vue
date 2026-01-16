@@ -114,4 +114,5 @@ useHead({
     <JsonLDBreadcrumbs v-if="breadcrumbs?.length" :links="breadcrumbs" />
     <component v-if="sectionParam && currentComponent" :is="currentComponent" />
   </Container>
+  <HotjarTracking />
 </template>

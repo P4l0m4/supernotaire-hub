@@ -1,4 +1,8 @@
-import { getNotariesPages, getTutorialPages } from "./src/utils/sitemap";
+import {
+  getNotariesPages,
+  getTutorialPages,
+  getRubriquesPages,
+} from "./src/utils/sitemap";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
@@ -74,8 +78,10 @@ export default defineNuxtConfig({
   sitemap: {
     urls: async () => {
       const tutorialPages = await getTutorialPages();
+      const notariesPages = getNotariesPages();
+      const rubriquePages = await getRubriquesPages();
 
-      return [...tutorialPages, ...getNotariesPages()];
+      return [...tutorialPages, ...notariesPages, ...rubriquePages];
     },
   },
   site: {

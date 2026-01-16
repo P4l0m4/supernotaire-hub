@@ -145,6 +145,7 @@ useHead({
       </div>
     </div>
   </Container>
+  <HotjarTracking />
 </template>
 <style lang="scss" scoped>
 .text-extraction {

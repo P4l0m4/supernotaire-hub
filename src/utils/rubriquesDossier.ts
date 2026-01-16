@@ -1,20 +1,15 @@
-import { loadLogo } from "@/utils/otherFunctions";
-import { buildDocDefinition as buildPrealablesDoc } from "@/utils/docDefinitions/checklist-informations-prealables";
-import { buildDocDefinition as buildIdentiteDoc } from "@/utils/docDefinitions/checklist-identite-etat-civil";
-import { buildDocDefinition as buildSituationDoc } from "@/utils/docDefinitions/checklist-situation-matrimoniale";
-import { buildDocDefinition as buildChargesTaxesDoc } from "@/utils/docDefinitions/checklist-charges-taxes";
-import { buildDocDefinition as buildProFiscaleDoc } from "@/utils/docDefinitions/checklist-situation-professionnelle-fiscale";
-import { buildDocDefinition as buildCoproDoc } from "@/utils/docDefinitions/checklist-copro-structures";
-import { buildDocDefinition as buildOccupationDoc } from "@/utils/docDefinitions/checklist-occupation-actuelle";
-import { buildDocDefinition as buildOrigineDoc } from "@/utils/docDefinitions/checklist-origine-propriete";
-import { buildDocDefinition as buildCapaciteDoc } from "@/utils/docDefinitions/checklist-capacite-representation";
-import { buildDocDefinition as buildUrbanismeDoc } from "@/utils/docDefinitions/checklist-urbanisme-travaux-exterieurs";
-import { buildDocDefinition as buildDiagnosticsTIDoc } from "@/utils/docDefinitions/checklist-diagnostics-travaux-interieurs";
-import type { ChecklistInformationsPrealables } from "@/types/checklist-informations-prealables";
-import type { ChecklistIdentiteEtatCivil } from "@/types/checklist-identite-etat-civil";
-import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
-import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
-import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
+import { loadLogo } from "./otherFunctions";
+import { buildDocDefinition as buildPrealablesDoc } from "./docDefinitions/checklist-informations-prealables";
+import { buildDocDefinition as buildIdentiteDoc } from "./docDefinitions/checklist-identite-etat-civil";
+import { buildDocDefinition as buildSituationDoc } from "./docDefinitions/checklist-situation-matrimoniale";
+import { buildDocDefinition as buildChargesTaxesDoc } from "./docDefinitions/checklist-charges-taxes";
+import { buildDocDefinition as buildProFiscaleDoc } from "./docDefinitions/checklist-situation-professionnelle-fiscale";
+import { buildDocDefinition as buildCoproDoc } from "./docDefinitions/checklist-copro-structures";
+import { buildDocDefinition as buildOccupationDoc } from "./docDefinitions/checklist-occupation-actuelle";
+import { buildDocDefinition as buildOrigineDoc } from "./docDefinitions/checklist-origine-propriete";
+import { buildDocDefinition as buildCapaciteDoc } from "./docDefinitions/checklist-capacite-representation";
+import { buildDocDefinition as buildUrbanismeDoc } from "./docDefinitions/checklist-urbanisme-travaux-exterieurs";
+import { buildDocDefinition as buildDiagnosticsTIDoc } from "./docDefinitions/checklist-diagnostics-travaux-interieurs";
 
 type FreeRubriqueId =
   | "prealables"
@@ -98,7 +93,7 @@ export async function buildPartialDocDefinition() {
 
 type AnyRubriqueConfig = RubriqueConfig<any> & { id: string };
 
-const allRubriques: AnyRubriqueConfig[] = [
+export const allRubriques: AnyRubriqueConfig[] = [
   ...freeRubriques,
   {
     id: "copro",

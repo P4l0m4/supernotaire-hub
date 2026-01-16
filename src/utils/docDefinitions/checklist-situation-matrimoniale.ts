@@ -1,6 +1,6 @@
 import type { ChecklistSituationMatrimoniale } from "@/types/checklist-situation-matrimoniale";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistSituationMatrimoniale,
@@ -81,7 +81,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Situation matrimoniale",
     subtitle: "Regime matrimonial, protection du conjoint et gestion des biens",
     infoTitle: "Informations a fournir",

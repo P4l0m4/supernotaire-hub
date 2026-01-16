@@ -1,6 +1,6 @@
 import type { ChecklistOccupationActuelle } from "@/types/checklist-occupation-actuelle";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistOccupationActuelle,
@@ -100,7 +100,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-
-
-

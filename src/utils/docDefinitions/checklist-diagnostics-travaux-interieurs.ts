@@ -1,6 +1,6 @@
 import type { ChecklistDiagnosticsTravauxInterieurs } from "@/types/checklist-diagnostics-travaux-interieurs";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 export function buildDocDefinition(
   data: ChecklistDiagnosticsTravauxInterieurs,
   logoBase64: string
@@ -153,5 +153,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-

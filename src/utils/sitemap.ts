@@ -1,5 +1,6 @@
 import { stringToSlug } from "./slugify";
 import { notariesPages } from "./notariesPages";
+import { allRubriques } from "./rubriquesDossier";
 
 import StoryblokClient from "storyblok-js-client";
 
@@ -27,5 +28,13 @@ export function getNotariesPages() {
     loc: `/annuaire/departement${page.slug}`,
     changefreq: "weekly",
     priority: 0.7,
+  }));
+}
+
+export async function getRubriquesPages() {
+  return allRubriques.map((r: any) => ({
+    loc: `/outils/checklist-dossier-vente-notaire/${stringToSlug(r.id)}`,
+    changefreq: "monthly",
+    priority: 0.6,
   }));
 }

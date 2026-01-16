@@ -3,6 +3,8 @@ import { onMounted, ref, watch } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
+import { getRubriquesPages } from "@/utils/sitemap";
+
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 const route = useRoute();
@@ -150,6 +152,7 @@ useHead({
       </UIActionToast>
     </UINotificationModal>
   </Container>
+  <HotjarTracking />
 </template>
 
 <style scoped lang="scss">

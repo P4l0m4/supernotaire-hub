@@ -1,6 +1,6 @@
 import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistChargesTaxes,
@@ -89,6 +89,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-
-

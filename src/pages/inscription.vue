@@ -24,6 +24,7 @@ useHead({
       <InscriptionComponent />
     </div>
   </Container>
+  <HotjarTracking />
 </template>
 <style lang="scss" scoped>
 .inscription {

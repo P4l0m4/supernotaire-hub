@@ -162,6 +162,7 @@ useHead({
       </template>
     </UIDidYouKnow></Container
   >
+  <HotjarTracking />
 </template>
 <style scoped lang="scss">
 .valeur-fonciere {

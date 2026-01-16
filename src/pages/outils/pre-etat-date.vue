@@ -154,6 +154,7 @@ useHead({
       </template>
     </UIDidYouKnow></Container
   >
+  <HotjarTracking />
 </template>
 <style scoped lang="scss">
 .pre-etat-date {

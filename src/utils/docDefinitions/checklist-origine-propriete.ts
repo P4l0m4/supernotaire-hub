@@ -1,6 +1,6 @@
 import type { ChecklistOriginePropriete } from "@/types/checklist-origine-propriete";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistOriginePropriete,
@@ -85,7 +85,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Origine de propriete",
     subtitle: "Titre de propriete, origine et modalites d'acquisition",
     infoTitle: "Informations a fournir",
@@ -99,5 +99,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-

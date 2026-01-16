@@ -257,7 +257,6 @@ onMounted(() => {
         justify-content: space-between;
         font-size: 1.25rem;
         font-weight: $semi-bold;
-        align-items: end;
       }
     }
   }

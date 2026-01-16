@@ -3,8 +3,8 @@ import type {
   LieuNaissanceType,
   TypeChangementEtatCivil,
 } from "@/types/checklist-identite-etat-civil";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 const TYPE_CHANGEMENT_NOM_DECRET: TypeChangementEtatCivil =
   "Changement de nom par décret";

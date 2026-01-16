@@ -1,6 +1,6 @@
 import type { ChecklistCoproStructures } from "@/types/checklist-copro-structures";
-import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
-import { buildChecklistPdfStructure } from "@/utils/docDefinitions/pdfStructure";
+import { formatChecklistValue as val } from "./formatters";
+import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistCoproStructures,
@@ -117,7 +117,7 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Informations", "-"]]),
   ];
 
-      return buildChecklistPdfStructure({
+  return buildChecklistPdfStructure({
     title: "Copropriete & structures",
     subtitle: "Informations sur la copropriete et la structure de l'immeuble",
     infoTitle: "Informations a fournir",
@@ -131,5 +131,3 @@ export function buildDocDefinition(
     logoBase64,
   });
 }
-
-

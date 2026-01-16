@@ -99,6 +99,7 @@ useHead({
       </NuxtLink>
     </div>
   </Container>
+  <HotjarTracking />
 </template>
 <style lang="scss" scoped>
 .tools {
