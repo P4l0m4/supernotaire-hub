@@ -1,11 +1,5 @@
 import type { ChecklistCapaciteRepresentation } from "@/types/checklist-capacite-representation";
-
-const val = (v: unknown) => {
-  if (v === true) return "Oui";
-  if (v === false) return "Non";
-  if (v == null || v === "") return "-";
-  return String(v);
-};
+import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
 
 export function buildDocDefinition(
   data: ChecklistCapaciteRepresentation,
@@ -258,3 +252,7 @@ export function buildDocDefinition(
     },
   };
 }
+
+
+
+

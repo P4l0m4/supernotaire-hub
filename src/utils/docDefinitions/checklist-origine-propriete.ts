@@ -1,9 +1,5 @@
 import type { ChecklistOriginePropriete } from "@/types/checklist-origine-propriete";
-
-const val = (v: unknown) => {
-  if (v == null || v === "") return "-";
-  return String(v);
-};
+import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
 
 export function buildDocDefinition(
   data: ChecklistOriginePropriete,
@@ -176,3 +172,7 @@ export function buildDocDefinition(
     },
   };
 }
+
+
+
+

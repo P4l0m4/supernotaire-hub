@@ -1,16 +1,5 @@
 import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
-
-const val = (v: unknown) => {
-  if (v === true) return "Oui";
-  if (v === false) return "Non";
-  if (v && typeof v === "object") {
-    const anyVal = v as Record<string, unknown>;
-    if (typeof anyVal.label === "string") return anyVal.label;
-    if (typeof anyVal.value === "string") return anyVal.value;
-    return "-";
-  }
-  return v == null || v === "" ? "-" : String(v);
-};
+import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
 
 export function buildDocDefinition(
   data: ChecklistSituationProfessionnelleFiscale,
@@ -156,3 +145,7 @@ export function buildDocDefinition(
     },
   };
 }
+
+
+
+

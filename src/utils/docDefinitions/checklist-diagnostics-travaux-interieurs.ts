@@ -1,17 +1,5 @@
 import type { ChecklistDiagnosticsTravauxInterieurs } from "@/types/checklist-diagnostics-travaux-interieurs";
-
-const val = (v: unknown) => {
-  if (v === true) return "Oui";
-  if (v === false) return "Non";
-  if (Array.isArray(v)) return v.map((x) => val(x)).join(", ");
-  if (v && typeof v === "object") {
-    const anyVal = v as Record<string, unknown>;
-    if (typeof anyVal.label === "string") return anyVal.label;
-    if (typeof anyVal.value === "string") return anyVal.value;
-    return "-";
-  }
-  return v == null || v === "" ? "-" : String(v);
-};
+import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
 
 export function buildDocDefinition(
   data: ChecklistDiagnosticsTravauxInterieurs,
@@ -242,3 +230,7 @@ export function buildDocDefinition(
     },
   };
 }
+
+
+
+

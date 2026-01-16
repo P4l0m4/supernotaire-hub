@@ -1,11 +1,5 @@
 import type { ChecklistInformationsPrealables } from "@/types/checklist-informations-prealables";
-
-const val = (v: unknown) => {
-  if (v === true) return "Oui";
-  if (v === false) return "Non";
-  if (v == null || v === "") return "-";
-  return String(v);
-};
+import { formatChecklistValue as val } from "@/utils/docDefinitions/formatters";
 
 export function buildDocDefinition(
   data: ChecklistInformationsPrealables,
@@ -140,3 +134,7 @@ export function buildDocDefinition(
     },
   };
 }
+
+
+
+
