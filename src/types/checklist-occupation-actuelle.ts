@@ -1,16 +1,16 @@
 export type OccupationParQui =
-  | "Locataire"
-  | "Occupant gratuit"
-  | "Proprietaire vendeur"
-  | "Indivisaire"
-  | "Squatteur";
+  | "Un locataire"
+  | "Un occupant à titre gratuit"
+  | "Le propriétaire vendeur"
+  | "Un indivisaire (plusieurs propriétaires)"
+  | "Un squatteur";
 
 export type NatureOccupationProprietaire =
   | "Residence principale"
   | "Residence secondaire"
   | "Occupation temporaire";
 
-export type TypeBail = "Habitation nue" | "Meuble" | "Autre";
+export type TypeBail = "Habitation nue" | "Meublé" | "Autre";
 
 export interface ChecklistOccupationActuelle {
   bien_occupe?: boolean;

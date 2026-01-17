@@ -8,19 +8,19 @@
         {
           "path": "bien_occupe",
           "id": "occupation-bien-occupe",
-          "label": "Le bien est-il actuellement occupé ?",
+          "label": "Le bien est actuellement occupé",
           "name": "bien_occupe",
           "type": "checkbox"
         },
         {
           "path": "bien_libre_moment_vente",
           "id": "occupation-bien-libre-vente",
-          "label": "Le bien sera-t-il libre au moment de la vente ?",
+          "label": "Le bien ne sera pas libre au moment de la vente",
           "name": "bien_libre_moment_vente",
           "type": "checkbox",
           "showIf": {
             "path": "bien_occupe",
-            "equals": false
+            "equals": true
           }
         },
         {
@@ -29,26 +29,27 @@
           "label": "Date estimée de libération du bien",
           "name": "date_liberation",
           "type": "date",
-          "placeholder": "JJ/MM/AAAA",
+          "mode": "date-picker",
+          "placeholder": "jj/mm/aaaa",
           "showIf": {
             "all": [
-              { "path": "bien_occupe", "equals": false },
-              { "path": "bien_libre_moment_vente", "equals": false }
+              { "path": "bien_occupe", "equals": true },
+              { "path": "bien_libre_moment_vente", "equals": true }
             ]
           }
         },
         {
           "path": "par_qui",
           "id": "occupation-par-qui",
-          "label": "Par qui ?",
+          "label": "Qui occupe le bien ?",
           "name": "par_qui",
           "type": "select",
           "options": [
-            "Locataire",
-            "Occupant gratuit",
-            "Proprietaire vendeur",
-            "Indivisaire",
-            "Squatteur"
+            "Un locataire",
+            "Le propriétaire vendeur",
+            "Un occupant à titre gratuit",
+            "Un indivisaire (plusieurs propriétaires)",
+            "Un squatteur"
           ],
           "placeholder": "Sélectionnez l'occupant",
           "showIf": {
@@ -82,7 +83,7 @@
           "placeholder": "Sélectionnez la nature de l'occupation",
           "showIf": {
             "path": "par_qui",
-            "equals": "Proprietaire vendeur"
+            "equals": "Le propriétaire vendeur"
           }
         },
         {
@@ -93,7 +94,7 @@
           "type": "checkbox",
           "showIf": {
             "path": "par_qui",
-            "equals": "Squatteur"
+            "equals": "Un squatteur"
           }
         },
         {
@@ -102,11 +103,11 @@
           "label": "Type de bail",
           "name": "type_bail",
           "type": "select",
-          "options": ["Habitation nue", "Meuble", "Autre"],
+          "options": ["Habitation nue", "Meublé", "Autre"],
           "placeholder": "Sélectionnez le type de bail",
           "showIf": {
             "path": "par_qui",
-            "equals": "Locataire"
+            "equals": "Un locataire"
           }
         },
         {
@@ -115,10 +116,10 @@
           "label": "Précisez le type de bail",
           "name": "bail_autre_precisions",
           "type": "text",
-          "placeholder": "Précisez",
+          "placeholder": "Précisez le type de bail",
           "showIf": {
             "all": [
-              { "path": "par_qui", "equals": "Locataire" },
+              { "path": "par_qui", "equals": "Un locataire" },
               { "path": "type_bail", "equals": "Autre" }
             ]
           }

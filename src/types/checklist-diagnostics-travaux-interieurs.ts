@@ -14,9 +14,7 @@ export interface ChecklistDiagnostics {
   zoneRisques?: boolean;
   dateErp?: string;
   dateConstruction?: string;
-  construitAvant1949?: boolean;
   dateCrepPlomb?: string;
-  construitAvantJuillet1997?: boolean;
   dateAmiante?: string;
   installationGaz15Ans?: boolean;
   dateDiagnosticGaz?: string;

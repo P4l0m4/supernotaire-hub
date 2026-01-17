@@ -1,6 +1,7 @@
 import type { ChecklistDiagnosticsTravauxInterieurs } from "@/types/checklist-diagnostics-travaux-interieurs";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
+
 export function buildDocDefinition(
   data: ChecklistDiagnosticsTravauxInterieurs,
   logoBase64: string
@@ -20,9 +21,24 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
+  const parseYear = (input?: string | number): number | null => {
+    if (input == null) return null;
+    if (typeof input === "number") return input;
+    const str = String(input).trim();
+    const yearMatch = str.match(/(\d{4})/);
+    if (yearMatch?.[1]) return Number(yearMatch[1]);
+    const parsed = Date.parse(str);
+    return Number.isNaN(parsed) ? null : parsed;
+  };
+
   const diagnostics = data.diagnostics ?? {};
+  const constructionYear = parseYear(diagnostics.dateConstruction);
+  const before1949 = constructionYear != null && constructionYear < 1949;
+  const before1997 = constructionYear != null && constructionYear < 1997;
+  const before2008 = constructionYear != null && constructionYear < 2008;
+
   addInfo(
-    "Le bien est raccordé au tout-à-l’égout",
+    "Bien raccorde au tout-a-l'egout",
     diagnostics.raccordToutALegout
   );
   addInfo(
@@ -32,11 +48,7 @@ export function buildDocDefinition(
   );
   addDoc("Diagnostic assainissement", diagnostics.raccordToutALegout === true);
 
-  addInfo(
-    "Le bien est en zone termites",
-    diagnostics.zoneTermites,
-    diagnostics.zoneTermites !== undefined
-  );
+  addInfo("En zone termites", diagnostics.zoneTermites);
   addInfo(
     "Date du diagnostic termites",
     diagnostics.dateDiagTermites,
@@ -44,51 +56,26 @@ export function buildDocDefinition(
   );
   addDoc("Diagnostic termites", diagnostics.zoneTermites === true);
 
-  addInfo(
-    "Le bien est en zone à risques (ERP)",
-    diagnostics.zoneRisques,
-    diagnostics.zoneRisques !== undefined
-  );
+  addInfo("En zone a risques (ERP)", diagnostics.zoneRisques);
   addInfo(
     "Date du diagnostic ERP",
     diagnostics.dateErp,
     diagnostics.zoneRisques === true
   );
-  addDoc(
-    "ERP – État des Risques et Pollutions",
-    diagnostics.zoneRisques === true
-  );
+  addDoc("ERP - Etat des Risques et Pollutions", diagnostics.zoneRisques === true);
 
   addInfo("Date de construction", diagnostics.dateConstruction);
 
-  addInfo(
-    "Construit avant 1949",
-    diagnostics.construitAvant1949,
-    diagnostics.construitAvant1949 !== undefined
-  );
-  addInfo(
-    "Date du diagnostic plomb (CREP)",
-    diagnostics.dateCrepPlomb,
-    diagnostics.construitAvant1949 === true
-  );
-  addDoc("Diagnostic plomb (CREP)", diagnostics.construitAvant1949 === true);
+  addInfo("Date du diagnostic plomb (CREP)", diagnostics.dateCrepPlomb, before1949);
+  addDoc("Diagnostic plomb (CREP)", before1949);
+
+  addInfo("Date du diagnostic amiante (DTA)", diagnostics.dateAmiante, before1997);
+  addDoc("Diagnostic amiante", before1997);
 
   addInfo(
-    "Construit avant juillet 1997",
-    diagnostics.construitAvantJuillet1997,
-    diagnostics.construitAvantJuillet1997 !== undefined
-  );
-  addInfo(
-    "Date du diagnostic amiante",
-    diagnostics.dateAmiante,
-    diagnostics.construitAvantJuillet1997 === true
-  );
-  addDoc("Diagnostic amiante", diagnostics.construitAvantJuillet1997 === true);
-
-  addInfo(
-    "Installation gaz de plus de 15 ans",
+    "Installation gaz en place depuis plus de 15 ans",
     diagnostics.installationGaz15Ans,
-    diagnostics.installationGaz15Ans !== undefined
+    before2008
   );
   addInfo(
     "Date du diagnostic gaz",
@@ -98,56 +85,69 @@ export function buildDocDefinition(
   addDoc("Diagnostic gaz", diagnostics.installationGaz15Ans === true);
 
   addInfo(
-    "Installation électrique de plus de 15 ans",
+    "Installation electrique de plus de 15 ans",
     diagnostics.installationElec15Ans,
-    diagnostics.installationElec15Ans !== undefined
+    before2008
   );
   addInfo(
-    "Date du diagnostic électricité",
+    "Date du diagnostic electricite",
     diagnostics.dateDiagnosticElectricite,
     diagnostics.installationElec15Ans === true
   );
-  addDoc("Diagnostic électricité", diagnostics.installationElec15Ans === true);
+  addDoc("Diagnostic electricite", diagnostics.installationElec15Ans === true);
 
-  addInfo("Date du DPE", diagnostics.dateDpe);
-  addDoc("DPE – Diagnostic de performance énergétique", true);
+  addInfo("Date du DPE", diagnostics.dateDpe, Boolean(diagnostics.dateDpe));
+  addDoc("DPE - Diagnostic de performance energetique", true);
 
   const travaux = data.travaux ?? {};
+  const natureTravaux = travaux.nature || [];
+  const hasStructureLike =
+    Array.isArray(natureTravaux) &&
+    natureTravaux.some((v) =>
+      [
+        "structure_gros_oeuvre",
+        "distribution_interieure",
+        "reseaux_techniques",
+        "locaux_techniques",
+        "confort_equipement",
+      ].includes(v)
+    );
+
   addInfo(
-    "Travaux réalisés dans le bien",
+    "Travaux realises dans le bien",
     travaux.realises === true ? "Oui" : travaux.realises === false ? "Non" : "-"
   );
-  addInfo("Nature des travaux", travaux.nature, travaux.realises === true);
+  addInfo("Nature des travaux", natureTravaux, travaux.realises === true);
   addInfo(
-    "Travaux réalisés par",
+    "Travaux realises par",
     travaux.realisesPar,
-    travaux.realises === true
+    travaux.realises === true && hasStructureLike
   );
 
   addDoc(
-    "Justificatifs (devis, factures, assurance, etc.) (si disponible)",
+    "Justificatifs (devis, factures, assurance, etc.)",
     travaux.realisesPar === "Un professionnel"
   );
   addDoc(
-    "Assurance décennale (si disponible)",
+    "Assurance decennale (si disponible)",
     travaux.realisesPar === "Un professionnel"
   );
 
   const docs = Array.from(docsSet);
   const infoBody = [
-    ["Questions", "Réponses"],
+    ["Questions", "Reponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
-    title: "Diagnostics & Travaux intérieurs",
-    subtitle: "Documents et informations à fournir à votre notaire",
+    title: "Diagnostics & Travaux interieurs",
+    subtitle: "Documents et informations a fournir a votre notaire",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: "Documents a joindre",
     metadataTitle: "",
-    generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
-    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
+    generatedOnLabel: "Genere le",
+    emptyDocsText: "Aucun document supplementaire.",
+    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
     infoBody,
     docs,
     logoBase64,

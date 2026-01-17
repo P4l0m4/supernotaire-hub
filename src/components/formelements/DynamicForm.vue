@@ -213,6 +213,16 @@ async function validateCurrentSection() {
   const s = sections.value[currentSection.value];
   if (!s) return true;
 
+  resetHiddenFieldErrors();
+
+  // clear errors for fields that are no longer visible
+  s.fields
+    .filter((f) => !isFieldVisible(f))
+    .forEach((f) => {
+      const node = nodeFor(f.path);
+      if (node?.$reset) node.$reset();
+    });
+
   const results = await Promise.all(
     s.fields
       .filter((f) => isFieldVisible(f))
@@ -243,8 +253,10 @@ async function next() {
     // valider tout le formulaire si on est sur la dernière étape
     if (nextIdx >= sections.value.length) {
       await nextTick();
-      await v$.value.$validate(); // valide toutes les sections
-      if (v$.value.$errors.length > 0) {
+      resetHiddenFieldErrors();
+      const allFields = sections.value.flatMap((s) => s.fields);
+      const allValid = await validateVisibleFields(allFields);
+      if (!allValid) {
         triggerErrorState();
         return;
       }
@@ -345,6 +357,41 @@ const visibleFields = computed(() => {
   if (!s) return [];
   return s.fields.filter((f) => isFieldVisible(f));
 });
+
+const normalizePath = (p?: string) => (p || "").replace(/\[(\d+)\]/g, ".$1");
+
+const findFieldByPath = (path?: string) => {
+  const norm = normalizePath(path);
+  for (const s of sections.value) {
+    for (const f of s.fields) {
+      if (norm.startsWith(f.path)) return f;
+    }
+  }
+  return null;
+};
+
+const resetHiddenFieldErrors = () => {
+  const errs = v$.value?.$errors || [];
+  errs.forEach((e: any) => {
+    const errPath = e.$propertyPath ?? e.$property ?? "";
+    const field = findFieldByPath(errPath);
+    if (field && !isFieldVisible(field)) {
+      const node = nodeFor(normalizePath(errPath));
+      if (node?.$reset) node.$reset();
+    }
+  });
+};
+
+const validateVisibleFields = async (fields: any[]) => {
+  const visible = fields.filter((f) => isFieldVisible(f));
+  const results = await Promise.all(
+    visible.map(async (f) => {
+      const node = nodeFor(f.path);
+      return node ? node.$validate() : true;
+    })
+  );
+  return results.every(Boolean);
+};
 
 const currentSectionPaths = computed(() => {
   const s = sections.value[currentSection.value];

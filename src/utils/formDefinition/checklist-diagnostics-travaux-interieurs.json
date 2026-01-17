@@ -27,12 +27,12 @@
             "path": "diagnostics.raccordToutALegout",
             "equals": true
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.zoneTermites",
           "id": "diagnostics_zone_termites",
-          "label": "Le bien est-il situé dans une zone délimitée par arrêté préfectoral termites ?",
+          "label": "Le bien est situé dans une zone délimitée par un arrêté préfectoral termites",
           "name": "zoneTermites",
           "type": "checkbox"
         },
@@ -51,12 +51,13 @@
             "path": "diagnostics.zoneTermites",
             "equals": true
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.zoneRisques",
           "id": "diagnostics_zone_risques",
-          "label": "Le bien est-il situé dans une zone à risques (naturels, miniers, technologiques, radon…) ?",
+          "label": "Le bien situé dans une zone à risques",
+          "tooltip": "naturels, miniers, technologiques, radon…",
           "name": "zoneRisques",
           "type": "checkbox"
         },
@@ -75,7 +76,7 @@
             "path": "diagnostics.zoneRisques",
             "equals": true
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.dateConstruction",
@@ -84,68 +85,68 @@
           "name": "dateConstruction",
           "type": "date",
           "mode": "date-picker",
-          "placeholder": "JJ/MM/AAAA",
-          "tooltip": "Si la date exacte est inconnue, renseigner une date estimée ou l’année."
-        },
-        {
-          "path": "diagnostics.construitAvant1949",
-          "id": "diagnostics_construit_avant_1949",
-          "label": "Le bien a-t-il été construit avant 1949 ?",
-          "name": "construitAvant1949",
-          "type": "checkbox"
+          "placeholder": "jj/mm/aaaa",
+          "tooltip": "Si la date exacte est inconnue, renseigner une date estimée."
         },
         {
           "path": "diagnostics.dateCrepPlomb",
           "id": "diagnostics_date_crep_plomb",
-          "label": "Date du diagnostic (plomb)",
+          "label": "Date du dernier diagnostic plomb (CREP)",
           "name": "dateCrepPlomb",
           "type": "date",
           "mode": "date-picker",
           "showIf": {
-            "path": "diagnostics.construitAvant1949",
-            "equals": true
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-1949"
+            }
           },
           "requiredIf": {
-            "path": "diagnostics.construitAvant1949",
-            "equals": true
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-1949"
+            }
           },
-          "placeholder": "JJ/MM/AAAA"
-        },
-        {
-          "path": "diagnostics.construitAvantJuillet1997",
-          "id": "diagnostics_construit_avant_juillet_1997",
-          "label": "Le bien a-t-il été construit avant juillet 1997 ?",
-          "name": "construitAvantJuillet1997",
-          "type": "checkbox"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.dateAmiante",
           "id": "diagnostics_date_amiante",
-          "label": "Date du diagnostic (amiante)",
+          "label": "Date du dernier diagnostic amiante (DTA)",
           "name": "dateAmiante",
           "type": "date",
           "mode": "date-picker",
           "showIf": {
-            "path": "diagnostics.construitAvantJuillet1997",
-            "equals": true
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-1997"
+            }
           },
           "requiredIf": {
-            "path": "diagnostics.construitAvantJuillet1997",
-            "equals": true
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-1997"
+            }
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.installationGaz15Ans",
           "id": "diagnostics_installation_gaz_15ans",
           "label": "Le logement est-il équipé d’une installation gaz en place depuis plus de 15 ans ?",
           "name": "installationGaz15Ans",
-          "type": "checkbox"
+          "type": "checkbox",
+          "showIf": {
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-2008"
+            }
+          }
         },
         {
           "path": "diagnostics.dateDiagnosticGaz",
           "id": "diagnostics_date_diagnostic_gaz",
-          "label": "Date du diagnostic (gaz)",
+          "label": "Date du dernier diagnostic gaz",
           "name": "dateDiagnosticGaz",
           "type": "date",
           "mode": "date-picker",
@@ -157,19 +158,25 @@
             "path": "diagnostics.installationGaz15Ans",
             "equals": true
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.installationElec15Ans",
           "id": "diagnostics_installation_elec_15ans",
           "label": "Le logement est-il équipé d’une installation électrique de plus de 15 ans ?",
           "name": "installationElec15Ans",
-          "type": "checkbox"
+          "type": "checkbox",
+          "showIf": {
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-2008"
+            }
+          }
         },
         {
           "path": "diagnostics.dateDiagnosticElectricite",
           "id": "diagnostics_date_diagnostic_electricite",
-          "label": "Date du diagnostic (électricité)",
+          "label": "Date du dernier diagnostic électricité",
           "name": "dateDiagnosticElectricite",
           "type": "date",
           "mode": "date-picker",
@@ -181,17 +188,17 @@
             "path": "diagnostics.installationElec15Ans",
             "equals": true
           },
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.dateDpe",
           "id": "diagnostics_date_dpe",
-          "label": "Date du DPE",
+          "label": "Date du dernier DPE",
           "name": "dateDpe",
           "type": "date",
           "mode": "date-picker",
           "required": true,
-          "placeholder": "JJ/MM/AAAA"
+          "placeholder": "jj/mm/aaaa"
         }
       ]
     },
@@ -202,7 +209,7 @@
         {
           "path": "travaux.realises",
           "id": "travaux_realises",
-          "label": "Avez-vous réalisé des travaux dans le bien ?",
+          "label": "Des travaux ont été réalisés dans le bien",
           "name": "realises",
           "type": "checkbox"
         },
@@ -238,7 +245,7 @@
               "value": "locaux_techniques"
             },
             {
-              "label": "Le confort ou l’équipement (climatisation, cheminée, domotique, rangements intégrés, etc.)",
+              "label": "Le confort et/ou l’équipement (climatisation, cheminée, domotique, rangements intégrés, etc.)",
               "value": "confort_equipement"
             },
             {
@@ -253,18 +260,31 @@
           "label": "Travaux réalisés par :",
           "name": "realisesPar",
           "type": "select",
-          "options": [
-            "Un professionnel",
-            "Le vendeur lui-même"
-          ],
+          "options": ["Un professionnel", "Le vendeur lui-même"],
           "placeholder": "Sélectionner",
           "requiredIf": {
-            "path": "travaux.realises",
-            "equals": true
+            "any": [
+              { "path": "travaux.nature", "contains": "structure_gros_oeuvre" },
+              {
+                "path": "travaux.nature",
+                "contains": "distribution_interieure"
+              },
+              { "path": "travaux.nature", "contains": "reseaux_techniques" },
+              { "path": "travaux.nature", "contains": "locaux_techniques" },
+              { "path": "travaux.nature", "contains": "confort_equipement" }
+            ]
           },
           "showIf": {
-            "path": "travaux.realises",
-            "equals": true
+            "any": [
+              { "path": "travaux.nature", "contains": "structure_gros_oeuvre" },
+              {
+                "path": "travaux.nature",
+                "contains": "distribution_interieure"
+              },
+              { "path": "travaux.nature", "contains": "reseaux_techniques" },
+              { "path": "travaux.nature", "contains": "locaux_techniques" },
+              { "path": "travaux.nature", "contains": "confort_equipement" }
+            ]
           }
         }
       ]
