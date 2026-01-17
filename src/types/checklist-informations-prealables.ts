@@ -19,6 +19,5 @@ export interface ChecklistInformationsPrealables {
       | "Terrain en indivision"
       | "Terrain en copropriete"
       | "Terrain non constructible ou agricole";
-    titre_occupation?: string;
   };
 }

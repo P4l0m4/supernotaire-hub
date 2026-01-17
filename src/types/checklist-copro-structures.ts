@@ -26,8 +26,6 @@ export interface ChecklistCoproStructures {
   type_association_syndicale?: TypeAssociationSyndicale;
   asl_cotisations_a_jour?: boolean;
   email_asl?: string;
-  nom_asl?: string;
-  contact_asl?: string;
   telephone_asl?: string;
   precision_type_structure?: string;
 

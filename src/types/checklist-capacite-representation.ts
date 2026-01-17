@@ -34,14 +34,4 @@ export interface ChecklistCapaciteRepresentation {
   // Personne morale
   type_entite_personne_morale?: TypeEntitePersonneMorale;
   entite_representee_par_mandataire?: boolean;
-
-  // Champs historiques conserves
-  signature_par_procuration?: boolean;
-  type_procuration?: "Notariee" | "Sous seing prive";
-  type_personne_morale?: "SCI" | "SARL" | "SAS / SASU" | "SA" | "Autre";
-  societe_unipersonnelle?: boolean;
-  signature_par_representant?: boolean;
-  representant_societe?: "Dirigeant statutaire" | "Mandataire delegue";
-  type_procuration_societe?: "Notariee" | "Sous seing prive";
-  indivision_representant_unique?: boolean;
 }

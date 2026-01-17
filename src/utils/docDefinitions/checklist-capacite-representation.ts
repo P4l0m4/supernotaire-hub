@@ -148,16 +148,9 @@ export function buildDocDefinition(
   }
 
   if (data.statut_partie === "Indivision") {
-    addInfo(
-      "Mandataire / representant unique designe",
-      data.indivision_representant_unique
-    );
-    addDoc("Titre d’indivision (acte ou convention)");
+    addDoc("Titre d'indivision (acte ou convention)");
     addDoc("Identite et parts de chaque indivisaire");
     addDoc("Proces-verbal ou accord des indivisaires autorisant la vente");
-    if (data.indivision_representant_unique) {
-      addDoc("Mandat commun / procuration du representant de l’indivision");
-    }
   }
 
   const infoBody = [

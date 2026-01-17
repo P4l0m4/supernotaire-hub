@@ -1,4 +1,4 @@
-export type OuiNon = "Oui" | "Non";
+﻿export type OuiNon = "Oui" | "Non";
 
 export type TypeAutorisation =
   | "Permis de construire"
@@ -71,10 +71,6 @@ export interface TravauxItem {
 }
 
 export interface ChecklistUrbanismeTravauxExterieurs {
-  urbanisme: {
-    autorisationsObtenues?: boolean; // true = aucune autorisation obtenue
-    typeAutorisation?: TypeAutorisation;
-  };
   travaux: {
     impactExterieur?: boolean;
     details?: TravauxItem[];
@@ -102,6 +98,5 @@ export interface ChecklistUrbanismeTravauxExterieurs {
     parcelle?: string;
     superficie?: number | null;
     planDisponible?: boolean; // true = possède un extrait ou plan
-    plan?: File;
   };
 }

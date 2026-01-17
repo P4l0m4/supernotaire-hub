@@ -1,4 +1,4 @@
-﻿import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
+import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -21,17 +21,6 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
-  const urbanisme = data.urbanisme ?? {};
-  addInfo(
-    "Aucune autorisation d'urbanisme obtenue",
-    urbanisme.autorisationsObtenues
-  );
-  addInfo(
-    "Type d'autorisation",
-    urbanisme.typeAutorisation,
-    urbanisme.autorisationsObtenues === false
-  );
-
   const travaux = data.travaux ?? {};
   addInfo(
     "Travaux avec impact extérieur / urbanistique",
@@ -40,7 +29,7 @@ export function buildDocDefinition(
 
   const details = Array.isArray(travaux.details) ? travaux.details : [];
   details.forEach((t, idx) => {
-    const label = travaux;
+    const label = `Travaux ${idx + 1}`;
     const arreteState =
       t.arreteExiste === false
         ? "Oui (arrêté existant)"
@@ -78,11 +67,7 @@ export function buildDocDefinition(
         ? "Plans approuvés non disponibles"
         : "Plans approuvés disponibles";
     addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === false);
-    addInfo(
-      `${label} - Travaux achevés`,
-      travauxEtat,
-      t.arreteExiste === false
-    );
+    addInfo(`${label} - Travaux achevés`, travauxEtat, t.arreteExiste === false);
     addInfo(
       `${label} - Date de dépôt DAACT`,
       t.dateDepotDaact,
@@ -190,7 +175,7 @@ export function buildDocDefinition(
     title: "Urbanisme & travaux extérieurs",
     subtitle: "Autorisation d'urbanisme et travaux extérieurs",
     infoTitle: "Informations fournies",
-    docsTitle: docsTitle,
+    docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
     emptyDocsText: "",
