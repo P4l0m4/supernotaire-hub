@@ -326,7 +326,7 @@ onBeforeUnmount(() => {
 
     @media (min-width: $big-tablet-screen) {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
       padding-right: 1.5rem;
       overflow-y: scroll;
       min-width: 70%;
