@@ -214,10 +214,12 @@ async function validateCurrentSection() {
   if (!s) return true;
 
   const results = await Promise.all(
-    s.fields.map(async (f) => {
-      const node = nodeFor(f.path);
-      return node ? node.$validate() : true;
-    })
+    s.fields
+      .filter((f) => isFieldVisible(f))
+      .map(async (f) => {
+        const node = nodeFor(f.path);
+        return node ? node.$validate() : true;
+      })
   );
 
   if (!results.every(Boolean) && v$.value.$errors.length > 0) {
@@ -299,9 +301,13 @@ const stepsState = computed(() => {
   return sections.value.map((section, idx) => {
     const paths = section.fields.map((f) => f.path);
 
-    const hasError = v$.value.$errors.some((e) =>
-      inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
-    );
+    const hasError = v$.value.$errors.some((e) => {
+      const errPath = e.$propertyPath ?? e.$property ?? "";
+      if (!inSectionPath(errPath, paths)) return false;
+      const field = section.fields.find((f) => errPath.startsWith(f.path));
+      if (field && !isFieldVisible(field)) return false; // ignore errors on hidden fields
+      return true;
+    });
 
     return {
       index: idx + 1,
@@ -348,9 +354,16 @@ const currentSectionPaths = computed(() => {
 const isCurrentSectionValid = computed(() => {
   const paths = currentSectionPaths.value;
   if (!paths.length) return true;
-  return !v$.value.$errors.some((e) =>
-    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
-  );
+  return !v$.value.$errors.some((e) => {
+    const errPath = e.$propertyPath ?? e.$property ?? "";
+    if (!inSectionPath(errPath, paths)) return false;
+    // si le champ est masqué, on ignore l'erreur
+    const field = sections.value[currentSection.value]?.fields.find((f) =>
+      errPath.startsWith(f.path)
+    );
+    if (field && !isFieldVisible(field)) return false;
+    return true;
+  });
 });
 
 const primaryVariant = computed(() => {

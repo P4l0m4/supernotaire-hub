@@ -18,7 +18,6 @@ const emit = defineEmits<{
   (e: "changeStep", step: number): void;
 }>();
 
-//on mobile and tablet, make sure the current step is visible by scrolling horizontally
 watch(
   () => props.stepsState.find((s) => s.isCurrentStep),
   () => {
@@ -176,6 +175,13 @@ watch(
       flex-direction: row;
       border: none;
       padding: 0 1.5rem;
+
+      &:nth-of-type(1) {
+        padding-left: 0;
+      }
+      &:last-of-type {
+        padding-right: 0;
+      }
     }
 
     &__circle {
