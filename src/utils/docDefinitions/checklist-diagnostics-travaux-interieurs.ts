@@ -37,10 +37,7 @@ export function buildDocDefinition(
   const before1997 = constructionYear != null && constructionYear < 1997;
   const before2008 = constructionYear != null && constructionYear < 2008;
 
-  addInfo(
-    "Bien raccorde au tout-a-l'egout",
-    diagnostics.raccordToutALegout
-  );
+  addInfo("Bien raccorde au tout-a-l'egout", diagnostics.raccordToutALegout);
   addInfo(
     "Date du diagnostic assainissement",
     diagnostics.dateDiagAssainissement,
@@ -62,14 +59,25 @@ export function buildDocDefinition(
     diagnostics.dateErp,
     diagnostics.zoneRisques === true
   );
-  addDoc("ERP - Etat des Risques et Pollutions", diagnostics.zoneRisques === true);
+  addDoc(
+    "ERP - Etat des Risques et Pollutions",
+    diagnostics.zoneRisques === true
+  );
 
   addInfo("Date de construction", diagnostics.dateConstruction);
 
-  addInfo("Date du diagnostic plomb (CREP)", diagnostics.dateCrepPlomb, before1949);
+  addInfo(
+    "Date du diagnostic plomb (CREP)",
+    diagnostics.dateCrepPlomb,
+    before1949
+  );
   addDoc("Diagnostic plomb (CREP)", before1949);
 
-  addInfo("Date du diagnostic amiante (DTA)", diagnostics.dateAmiante, before1997);
+  addInfo(
+    "Date du diagnostic amiante (DTA)",
+    diagnostics.dateAmiante,
+    before1997
+  );
   addDoc("Diagnostic amiante", before1997);
 
   addInfo(
@@ -138,12 +146,16 @@ export function buildDocDefinition(
     ["Questions", "Reponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
 
   return buildChecklistPdfStructure({
     title: "Diagnostics & Travaux interieurs",
     subtitle: "Documents et informations a fournir a votre notaire",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents a joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Genere le",
     emptyDocsText: "Aucun document supplementaire.",

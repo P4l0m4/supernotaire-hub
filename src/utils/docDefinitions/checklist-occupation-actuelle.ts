@@ -79,21 +79,31 @@ export function buildDocDefinition(
     "Dernier avis d'échéance ou quittance de loyer",
     data.par_qui === "Un locataire"
   );
-  addDoc("Etat des lieux d'entrée (si disponible)", data.par_qui === "Un locataire");
+  addDoc(
+    "Etat des lieux d'entrée (si disponible)",
+    data.par_qui === "Un locataire"
+  );
 
   const infoBody = [
     ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
+  const docs = Array.from(docsSet);
+
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
+
   return buildChecklistPdfStructure({
     title: "Occupation actuelle du bien",
     subtitle: "Situation d'occupation du bien et pièces associées",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
+    emptyDocsText: "",
     note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),

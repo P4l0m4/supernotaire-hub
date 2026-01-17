@@ -61,7 +61,11 @@ export function buildDocDefinition(
   addInfo("Type de structure", data.type_association_syndicale, isAsl);
   addInfo("Cotisations à jour", data.asl_cotisations_a_jour, isAsl);
   addInfo("Email ASL / AFUL", data.email_asl, Boolean(data.email_asl));
-  addInfo("Téléphone ASL / AFUL", data.telephone_asl, Boolean(data.telephone_asl));
+  addInfo(
+    "Téléphone ASL / AFUL",
+    data.telephone_asl,
+    Boolean(data.telephone_asl)
+  );
   addInfo(
     "Précision type de structure",
     data.precision_type_structure,
@@ -69,22 +73,13 @@ export function buildDocDefinition(
   );
 
   // Documents copro (si en copropriété)
-  addDoc(
-    "Historique des charges de copropriété (3 dernières années)",
-    isCopro
-  );
-  addDoc(
-    "Fiche synthétique de la copropriété (si disponible)",
-    isCopro
-  );
+  addDoc("Historique des charges de copropriété (3 dernières années)", isCopro);
+  addDoc("Fiche synthétique de la copropriété (si disponible)", isCopro);
   addDoc("Compte-rendu de la dernière AG (PV)", isCopro);
   addDoc("Procès-verbal d’AG N-1", isCopro);
   addDoc("Procès-verbal d’AG N-2", isCopro);
   addDoc("Convocation et ordre du jour de la prochaine AG", isCopro);
-  addDoc(
-    "Règlement de copropriété et état descriptif de division",
-    isCopro
-  );
+  addDoc("Règlement de copropriété et état descriptif de division", isCopro);
   addDoc("Pré-état daté", isCopro);
   addDoc("Carnet d'entretien de l'immeuble", isCopro);
   addDoc(
@@ -103,32 +98,33 @@ export function buildDocDefinition(
     "Devis ou autorisations pour travaux sur parties communes",
     isCopro && data.gestion_copropriete !== "Aucun syndic"
   );
-  addDoc(
-    "Coordonnées du représentant du syndic / conseil syndical",
-    isCopro
-  );
+  addDoc("Coordonnées du représentant du syndic / conseil syndical", isCopro);
 
   // ASL / AFUL
   addDoc("Statuts et règlement intérieur de l'ASL / AFUL", isAsl);
   addDoc("Appels de charges / contributions ASL", isAsl);
-  addDoc(
-    "Coordonnées de l'administrateur / président de l'ASL",
-    isAsl
-  );
+  addDoc("Coordonnées de l'administrateur / président de l'ASL", isAsl);
 
   const infoBody = [
     ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
+  const docs = Array.from(docsSet);
+
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
+
   return buildChecklistPdfStructure({
     title: "Copropriété & Structures collectives",
     subtitle: "Informations sur la copropriété et la structure de l'immeuble",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
+    emptyDocsText: "",
     note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),

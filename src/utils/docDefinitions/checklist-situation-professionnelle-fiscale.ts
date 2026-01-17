@@ -1,4 +1,4 @@
-import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
+﻿import type { ChecklistSituationProfessionnelleFiscale } from "@/types/checklist-situation-professionnelle-fiscale";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -55,14 +55,19 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
+
   return buildChecklistPdfStructure({
     title: "Situation professionnelle & fiscale",
     subtitle: "Emploi, revenus et fiscalité",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
+    emptyDocsText: "",
     note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docs),

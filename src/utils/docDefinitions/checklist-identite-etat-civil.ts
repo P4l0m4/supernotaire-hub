@@ -146,15 +146,19 @@ export function buildDocDefinition(
     ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
 
   return buildChecklistPdfStructure({
     title: "Identité & État civil",
     subtitle: "Identification du vendeur ou de son représentant",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
+    emptyDocsText: "",
     note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs,

@@ -1,4 +1,4 @@
-import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
+﻿import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -40,7 +40,7 @@ export function buildDocDefinition(
 
   const details = Array.isArray(travaux.details) ? travaux.details : [];
   details.forEach((t, idx) => {
-    const label = `Travaux ${idx + 1}`;
+    const label = travaux;
     const arreteState =
       t.arreteExiste === false
         ? "Oui (arrêté existant)"
@@ -60,7 +60,7 @@ export function buildDocDefinition(
         : t.travauxAcheves
         ? "Travaux non-achevés"
         : "Travaux terminés";
-    addInfo(`${label} - État`, travauxEtat);
+    addInfo(`${label} - Etat`, travauxEtat);
     addInfo(
       `${label} - Date d'achèvement prévue`,
       t.dateAchevement,
@@ -116,7 +116,7 @@ export function buildDocDefinition(
         t.travauxAcheves !== true
     );
     addDoc(
-      "DAACT (Déclaration attestant l'achèvement et la conformité des travaux)",
+      "DAACT (déclaration attestant l'achèvement et la conformité des travaux)",
       t.arreteExiste === false &&
         t.travauxNonConformes === false &&
         t.travauxAcheves !== true
@@ -129,8 +129,8 @@ export function buildDocDefinition(
 
   const cadastre = data.cadastre ?? {};
   addInfo("Section cadastrale", cadastre.section);
-  addInfo("Numéro de parcelle", cadastre.parcelle);
-  addInfo("Superficie cadastrale (m²)", cadastre.superficie);
+  addInfo("Numero de parcelle", cadastre.parcelle);
+  addInfo("Superficie cadastrale (m2)", cadastre.superficie);
   addInfo(
     "Plan cadastral disponible",
     cadastre.planDisponible === true ? "Oui" : "Non"
@@ -181,17 +181,22 @@ export function buildDocDefinition(
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
+
   return buildChecklistPdfStructure({
     title: "Urbanisme & travaux extérieurs",
     subtitle: "Autorisation d'urbanisme et travaux extérieurs",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle: docsTitle,
     metadataTitle: "",
     generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
+    emptyDocsText: "",
     note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
-    docs: Array.from(docs),
+    docs,
     logoBase64,
   });
 }

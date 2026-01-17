@@ -1,4 +1,4 @@
-import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
+﻿import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -71,21 +71,27 @@ export function buildDocDefinition(
   );
 
   const infoBody = [
-    ["Questions", "Réponses"],
+    ["Questions", "Reponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
+
+  const docs = Array.from(docsSet);
+  const docsTitle =
+    docs.length === 0
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
 
   return buildChecklistPdfStructure({
     title: "Charges & Taxes",
     subtitle: "Chauffage, assainissement et situation fiscale",
     infoTitle: "Informations fournies",
-    docsTitle: "Documents à joindre",
+    docsTitle,
     metadataTitle: "",
-    generatedOnLabel: "Généré le",
-    emptyDocsText: "Aucun document supplémentaire.",
-    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
+    generatedOnLabel: "Genere le",
+    emptyDocsText: "",
+    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
     infoBody,
-    docs: Array.from(docsSet),
+    docs,
     logoBase64,
   });
 }

@@ -65,7 +65,7 @@ export const buildChecklistPdfStructure = ({
         [
           { text: "", ...headerCellStyle },
           {
-            text: "Transmettez ces documents à votre notaire",
+            text: "Documents à joindre",
             ...headerCellStyle,
           },
           { text: "Observations", ...headerCellStyle },
@@ -76,7 +76,7 @@ export const buildChecklistPdfStructure = ({
         [
           { text: "", ...headerCellStyle },
           {
-            text: "Transmettez ces documents à votre notaire",
+            text: "Documents à joindre",
             ...headerCellStyle,
           },
           { text: "Observations", ...headerCellStyle },

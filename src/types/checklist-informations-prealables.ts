@@ -10,15 +10,7 @@ export interface ChecklistInformationsPrealables {
     | "Immeuble"
     | "Appartement"
     | "Maison";
-  type_terrain?:
-    | "Terrain agricole"
-    | "Terrain forestier"
-    | "Parcelle de loisir"
-    | "Terrain non constructible"
-    | "Terrain a batir";
-  immeuble?: {
-    configuration?: "Lotisseur" | "En lots";
-  };
+  adresse_bien?: string;
   maison?: {
     vendue_avec_terrain?: boolean;
     edifiee_domaine_public?: boolean;

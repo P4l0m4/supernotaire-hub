@@ -6,6 +6,14 @@
       "label": "Informations préalables sur le bien",
       "fields": [
         {
+          "label": "Adresse du bien",
+          "id": "prealables-adresse-bien",
+          "path": "adresse_bien",
+          "name": "adresse_bien",
+          "type": "location",
+          "required": true
+        },
+        {
           "path": "type_bien",
           "id": "prealables-type-bien",
           "label": "Type de bien",
