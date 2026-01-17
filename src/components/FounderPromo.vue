@@ -20,7 +20,7 @@ const features = ref([
   <div id="founder-promo" class="founder-promo">
     <div class="founder-promo__text">
       <h2 class="founder-promo__text__title">
-        Devenez un Fondateur de EasyCase
+        Devenez un Fondateur d'EasyCase
       </h2>
       <p class="founder-promo__text__subtitle">
         Bénéficiez de notre offre exclusive limitée aux 100 premiers

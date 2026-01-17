@@ -5,6 +5,12 @@ import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
 import clock from "@/assets/animated-icons/clock-animated.svg?raw";
 import lock from "@/assets/animated-icons/lock-animated.svg?raw";
 
+import interfaceMandats from "@/assets/images/interface-mandats.webp";
+import interfaceDocuments from "@/assets/images/interface-documents.webp";
+import interfaceFormulaires from "@/assets/images/interface-formulaires.webp";
+
+import { colors } from "@/utils/colors";
+
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
@@ -259,35 +265,29 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
       </NuxtLink>
     </div>
   </Container>
-
   <Container>
-    <Benefits
-      title="✨ Efficace ✨"
-      subtitle="Optimisez la gestion de vos dossiers, sans compromis sur l’accompagnement."
-      text="EasyCase automatise les tâches répétitives à faible valeur ajoutée, pour vous laisser le temps de vous concentrer sur l’essentiel: vos clients."
-    />
-
-    <img class="interface-image" src="@/assets/images/interface-mandats.webp" />
-
-    <Benefits
-      title="✨ Pratique ✨"
-      subtitle="Ne renseignez plus jamais la même
+    <UILandingShowcase
+      title="Optimisez la gestion de vos dossiers, sans compromis sur l’accompagnement."
+      highlightedTitle="sans compromis sur l’accompagnement."
+      subtitle="EasyCase automatise les tâches répétitives à faible valeur ajoutée, pour vous laisser le temps de vous concentrer sur l’essentiel: vos clients."
+      :imagePath="interfaceMandats"
+  /></Container>
+  <Container>
+    <UILandingShowcase
+      title="Gagnez en efficacité, ne renseignez plus jamais la même
       information deux fois."
-      text="Crééz vos propres modèles de documents, EasyCase se charge de les remplir à partir des informations du dossier."
+      highlightedTitle="Gagnez en efficacité,"
+      subtitle="Crééz vos propres modèles de documents, EasyCase se charge de les remplir à partir des informations du dossier."
+      :imagePath="interfaceDocuments"
+      reversed
     />
-    <img
-      class="interface-image"
-      src="@/assets/images/interface-documents.webp"
-    />
-    <h3 class="interface-title"></h3>
-    <Benefits
-      title="✨ Intuitif ✨"
-      subtitle="Collectez les pièces rapidement, sans stress pour vos clients."
-      text="Laissez nous guider vos clients dans la collecte des éléments du dossier, même les plus complexes. Ils gagnent du temps, et vous aussi."
-    />
-    <img
-      class="interface-image"
-      src="@/assets/images/interface-formulaires.webp"
+  </Container>
+  <Container>
+    <UILandingShowcase
+      title="Collectez les pièces rapidement, sans stress pour vos clients."
+      highlightedTitle="sans stress pour vos clients."
+      subtitle="Laissez nous guider vos clients dans la collecte des éléments du dossier, même les plus complexes. Ils gagnent du temps, et vous aussi."
+      :imagePath="interfaceFormulaires"
     />
   </Container>
 
@@ -345,13 +345,13 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
   width: 100%;
   max-width: 80rem;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: $semi-bold;
   text-wrap: balance;
   margin-bottom: 1rem;
 
   @media (min-width: $big-tablet-screen) {
-    font-size: 2.5rem;
+    font-size: 3rem;
     grid-column: span 3;
     margin-bottom: 2rem;
   }
