@@ -1,7 +1,6 @@
 ﻿<script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import { colors } from "@/utils/colors";
-import { useIsMobile } from "@/utils/otherFunctions";
 
 import {
   buildPartialDocDefinition,
@@ -9,8 +8,6 @@ import {
   wipeAllStorageData,
 } from "@/utils/rubriquesDossier";
 import { useExportAccess } from "@/composables/useExportAccess";
-
-const isMobile = useIsMobile();
 
 const { $pdfMake } = useNuxtApp();
 const route = useRoute();
@@ -175,7 +172,7 @@ onMounted(() => {
   <aside class="export-menu">
     <UISecondaryButton
       variant="accent-color"
-      :icon="isMobile ? '' : 'download'"
+      icon="download"
       :disabled="fullLoading"
       @click="openModalOrDownload"
     >
