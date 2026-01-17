@@ -105,6 +105,11 @@ const storageKeys: Record<RubriqueId, string> = {
     "sn-checklist-diagnostics-travaux-interieurs",
 };
 
+const completedCards = computed(() => {
+  return Object.values(progressByRubrique.value).filter((p) => p === 100)
+    .length;
+});
+
 const hasValue = (val: unknown): boolean => {
   if (val == null) return false;
   if (typeof val === "boolean") return val === true;
@@ -205,6 +210,7 @@ onMounted(() => {
           ? 'progress'
           : 'default'
       "
+      :legend="`${completedCards} / ${cards.length} rubriques complétées`"
       style="grid-column: 1 / -1"
     />
     <TransitionGroup name="rubriques" tag="div" class="liste-rubriques__list">
