@@ -1,4 +1,4 @@
-﻿import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
+import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
 
 type FieldType =
   | "text"
@@ -22,7 +22,7 @@ export interface BaseField {
   suggestionRef?: string;
   label: string;
   name: string;
-  // types "simples" autorisÃ©s uniquement
+  // types simples autorises uniquement
   type: Exclude<
     FieldType,
     | "array"
@@ -38,26 +38,29 @@ export interface BaseField {
   requiredIf?: ShowIf;
   placeholder?: string;
   icon?: string;
-  TS_TYPE?: string; // clÃ© extraction AI
+  TS_TYPE?: string; // cle extraction AI
   tooltip?: string;
   tooltipLink?: string; // si tooltip renvoie vers une doc
   pattern?: string; // validation par regex
-  showIf?: ShowIf; // champ affichÃ© si la condition est vraie
+  showIf?: ShowIf; // champ affiche si la condition est vraie
 }
 
-// RÃ¨gles affichage conditionnel
+// Regles d'affichage conditionnel
 export type ShowIf =
   | {
-      path: string; // chemin absolu depuis la racine du modÃ¨le
-      equals?: any; // valeur attendue (Ã©galitÃ© stricte)
+      path: string; // chemin absolu depuis la racine du modele
+      equals?: any; // valeur attendue (egalite stricte)
       in?: any[]; // une des valeurs
       contains?: any; // inclusion (tableaux / strings)
-      truthy?: boolean; // valeur considÃ©rÃ©e comme vraie (par dÃ©faut true)
+      truthy?: boolean; // valeur consideree comme vraie (par defaut true)
+      greaterThan?: number;
+      lessThan?: number;
     }
   | { not: ShowIf }
   | { all: ShowIf[] }
   | { any: ShowIf[] }
-  | { or: ShowIf[] };
+  | { or: ShowIf[] }
+  | { is: { before?: string | number; after?: string | number } };
 
 // Options textuelles pour des groupes de choix
 export interface ChoiceOption {
@@ -87,8 +90,9 @@ export interface NumberField extends Omit<BaseField, "type"> {
 
 export interface FileField extends Omit<BaseField, "type"> {
   type: "file";
-  accept?: string[]; // types de fichiers acceptÃ©s, ex: ['image/png', 'application/pdf']
-  multiple?: boolean; // permet la sÃ©lection de plusieurs fichiers
+  accept?: string[]; // ex: ['image/png', 'application/pdf']
+  multiple?: boolean; // autorise plusieurs fichiers
+  maxSizeMb?: number; // taille max par fichier (Mo)
 }
 
 export interface RangeField extends Omit<BaseField, "type"> {

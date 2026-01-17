@@ -1,6 +1,9 @@
-﻿import type { ChecklistInformationsPrealables } from "../../types/checklist-informations-prealables";
+import type { ChecklistInformationsPrealables } from "../../types/checklist-informations-prealables";
+import type { Adresse } from "@/types/adresse";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
+
+const adresseLabel = (adresse?: Adresse) => adresse?.properties?.label;
 
 export function buildDocDefinition(
   data: ChecklistInformationsPrealables,
@@ -20,7 +23,7 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
-  addInfo("Adresse du bien", data.adresse_bien);
+  addInfo("Adresse du bien", adresseLabel(data.adresse_bien));
   addInfo("Type de bien", data.type_bien);
 
   addInfo(

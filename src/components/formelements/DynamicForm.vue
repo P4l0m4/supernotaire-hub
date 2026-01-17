@@ -124,6 +124,11 @@ function buildRules(def?: FormDefinition) {
     }
     if (f.type === "email") r.email = fr.email;
     if (f.type === "location") r.location = fr.isAddress;
+    if (f.type === "file") {
+      if (f.accept?.length) r.fileType = fr.fileType(f.accept);
+      if (f.maxSizeMb != null)
+        r.fileMaxSize = fr.fileMaxSize(f.maxSizeMb * 1024 * 1024);
+    }
     if (f.pattern) {
       const rg = regexFrom(f.pattern);
       if (rg) r.pattern = rg;

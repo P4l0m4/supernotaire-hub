@@ -1,3 +1,5 @@
+import type { Adresse } from "./adresse";
+
 export interface ChecklistInformationsPrealables {
   type_bien?:
     | "Terrain"
@@ -10,7 +12,7 @@ export interface ChecklistInformationsPrealables {
     | "Immeuble"
     | "Appartement"
     | "Maison";
-  adresse_bien?: string;
+  adresse_bien: Adresse;
   maison?: {
     vendue_avec_terrain?: boolean;
     edifiee_domaine_public?: boolean;

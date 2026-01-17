@@ -10,7 +10,7 @@ import {
   email,
 } from "@vuelidate/validators";
 
-// for validating address ------------------
+// simple helpers
 const isFiniteNumber = (n: unknown): n is number =>
   typeof n === "number" && Number.isFinite(n);
 
@@ -34,7 +34,6 @@ const hasLabel = (v: any) =>
   v.properties &&
   typeof v.properties.label === "string" &&
   v.properties.label.trim().length > 0;
-//---------------------------------------
 
 export const fr = {
   required: helpers.withMessage("Champ obligatoire", required),
@@ -42,18 +41,35 @@ export const fr = {
     helpers.withMessage("Champ obligatoire", requiredIf(condition)),
   minLength: (n: number) =>
     helpers.withMessage(
-      `Au moins ${n} caractère${n > 1 ? "s" : ""}`,
+      `Au moins ${n} caractere${n > 1 ? "s" : ""}`,
       minLength(n)
     ),
   maxLength: (n: number) =>
     helpers.withMessage(
-      `Au plus ${n} caractère${n > 1 ? "s" : ""}`,
+      `Au plus ${n} caractere${n > 1 ? "s" : ""}`,
       maxLength(n)
     ),
-  numeric: helpers.withMessage("Doit être un nombre", numeric),
-  minValue: (n: number) => helpers.withMessage(`Doit être ≥ ${n}`, minValue(n)),
-  maxValue: (n: number) => helpers.withMessage(`Doit être ≤ ${n}`, maxValue(n)),
+  numeric: helpers.withMessage("Doit etre un nombre", numeric),
+  minValue: (n: number) => helpers.withMessage(`Doit etre >= ${n}`, minValue(n)),
+  maxValue: (n: number) => helpers.withMessage(`Doit etre <= ${n}`, maxValue(n)),
   email: helpers.withMessage("Email invalide", email),
+
+  fileType: (accept: readonly string[]) =>
+    helpers.withMessage("Type de fichier non autorise", (v: unknown) => {
+      if (v == null || v === "") return true;
+      const files = Array.isArray(v) ? v : [v];
+      return files.every((f) => {
+        if (!(f instanceof File)) return false;
+        if (!accept?.length) return true;
+        return accept.includes(f.type) || accept.some((a) => f.name.endsWith(a));
+      });
+    }),
+  fileMaxSize: (maxBytes: number) =>
+    helpers.withMessage("Fichier trop volumineux", (v: unknown) => {
+      if (v == null || v === "") return true;
+      const files = Array.isArray(v) ? v : [v];
+      return files.every((f) => f instanceof File && f.size <= maxBytes);
+    }),
 
   isDate: helpers.withMessage(
     "Format de date invalide (JJ-MM-AAAA)",
@@ -72,7 +88,7 @@ export const fr = {
     }
   ),
   isYear: helpers.withMessage(
-    "Format d'année invalide (AAAA)",
+    "Format d'annee invalide (AAAA)",
     (v: unknown) => {
       if (v == null || v === "") return true;
       if (typeof v !== "string") return false;
@@ -93,9 +109,7 @@ export const fr = {
   }),
   isAddress: (withCoords = false) =>
     helpers.withMessage(
-      withCoords
-        ? "Adresse invalide ou coordonnées manquantes"
-        : "Adresse invalide",
+      withCoords ? "Adresse invalide ou coordonnees manquantes" : "Adresse invalide",
       (v: unknown) => {
         if (v == null || v === "") return true;
         if (!hasLabel(v)) return false;
@@ -105,7 +119,7 @@ export const fr = {
 
   oneOf: (opts: readonly string[]) =>
     helpers.withMessage(
-      "Valeur non autorisée",
+      "Valeur non autorisee",
       (v: unknown) =>
         v == null ||
         (typeof v === "string" && v.trim() === "") ||
