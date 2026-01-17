@@ -29,6 +29,12 @@ export function evaluateShowIf(
     const arr = (rule as any).in as any[];
     return arr.some((v) => v === value);
   }
+  if (Object.prototype.hasOwnProperty.call(rule, "contains")) {
+    const target = (rule as any).contains;
+    if (Array.isArray(value)) return value.includes(target);
+    if (typeof value === "string") return value.includes(String(target));
+    return false;
+  }
   if (Object.prototype.hasOwnProperty.call(rule, "truthy")) {
     const t = Boolean((rule as any).truthy);
     return t ? Boolean(value) : !Boolean(value);

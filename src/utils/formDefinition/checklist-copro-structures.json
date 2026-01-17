@@ -8,28 +8,28 @@
         {
           "path": "bien_en_copropriete",
           "id": "copro-bien-en-copro",
-          "label": "Le bien est-il en copropriété ?",
+          "label": "Le bien dépend d'une copropriété",
           "name": "bien_en_copropriete",
-          "type": "checkbox"
+          "type": "checkbox",
+          "showIf": {
+            "path": "est_en_asl",
+            "equals": false
+          }
         },
         {
-          "path": "lots_annexes",
-          "id": "copro-lots-annexes",
-          "label": "Lots et annexes (cave, parking, jardin...)",
-          "name": "lots_annexes",
-          "type": "array",
-          "itemLabel": "Annexe",
-          "itemSchema": {
-            "fields": [
-              {
-                "path": "label",
-                "id": "copro-lot-annexe-libelle",
-                "label": "Libellé",
-                "name": "label",
-                "type": "text",
-                "placeholder": "Ex : Cave, Parking, Jardin..."
-              }
-            ]
+          "path": "type_copropriete",
+          "id": "copro-type-copropriete",
+          "label": "Type de copropriété",
+          "name": "type_copropriete",
+          "type": "select",
+          "options": [
+            "Copropriété classique (immeuble)",
+            "Copropriété horizontale ou partielle (lotissements, maisons, etc)"
+          ],
+          "placeholder": "Sélectionnez le type de copropriété",
+          "requiredIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
           },
           "showIf": {
             "path": "bien_en_copropriete",
@@ -37,14 +37,126 @@
           }
         },
         {
-          "path": "travaux_parties_communes",
-          "id": "copro-travaux-parties-communes",
-          "label": "Des travaux sont-ils en cours sur les parties communes ?",
-          "name": "travaux_parties_communes",
-          "type": "checkbox",
+          "path": "montant_annuel_charges",
+          "id": "copro-montant-annuel-charges",
+          "label": "Montant annuel moyen des charges de copropriété",
+          "name": "montant_annuel_charges",
+          "type": "number",
+          "placeholder": "4000",
+          "requiredIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          },
           "showIf": {
             "path": "bien_en_copropriete",
             "equals": true
+          }
+        },
+        {
+          "path": "copro-fond-travaux",
+          "label": "La copropriété dispose d'un fond de travaux",
+          "type": "checkbox",
+          "id": "copro-fond-travaux",
+          "name": "copro_fond_travaux",
+          "showIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          }
+        },
+        {
+          "path": "copro-quote-part-lot",
+          "id": "copro-quote-part-lot",
+          "label": "Montant de la quote-part attachée au lot",
+          "name": "copro_quote_part_lot",
+          "placeholder": "1000",
+          "type": "number",
+          "showIf": {
+            "path": "copro-fond-travaux",
+            "equals": true
+          }
+        },
+        {
+          "path": "copro-charges-a-jour",
+          "id": "copro-charges-a-jour",
+          "label": "Le vendeur n'est pas à jour de ses charges de copropriété",
+          "name": "copro_charges_a_jour",
+          "type": "checkbox",
+          "requiredIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          },
+          "showIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          }
+        },
+        {
+          "path": "montant_sommes_dues",
+          "id": "copro-montant-sommes-dues",
+          "label": "Montant approximatif des sommes dues",
+          "name": "montant_sommes_dues",
+          "placeholder": "500",
+          "type": "number",
+          "showIf": {
+            "path": "copro-charges-a-jour",
+            "equals": true
+          }
+        },
+        {
+          "path": "copro_lots_inclus_vente",
+          "label": "Quels lots sont inclus dans la vente ?",
+          "type": "checkbox-group",
+          "id": "copro-lots-inclus-vente",
+          "name": "copro_lots_inclus_vente",
+          "options": [
+            {
+              "label": "Lot principal d’habitation",
+              "value": "Lot principal d’habitation"
+            },
+            {
+              "label": "Jardin / terrasse en lot",
+              "value": "Jardin / terrasse en lot"
+            },
+            {
+              "label": "Cave",
+              "value": "Cave"
+            },
+            {
+              "label": "Parking / box",
+              "value": "Parking / box"
+            },
+            {
+              "label": "Grenier / cellier",
+              "value": "Grenier / cellier"
+            },
+            {
+              "label": "Autre lot annexe",
+              "value": "Autre lot annexe"
+            }
+          ],
+          "requiredIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          },
+          "showIf": {
+            "path": "bien_en_copropriete",
+            "equals": true
+          }
+        },
+        {
+          "path": "copro_precision_autre_lot",
+          "id": "copro-precision-autre-lot",
+          "label": "Décrivez le lot annexe",
+          "name": "copro_precision_autre_lot",
+          "type": "text",
+          "placeholder": "",
+          "requiredIf": {
+            "path": "copro_lots_inclus_vente",
+            "contains": "Autre lot annexe"
+          },
+          "showIf": {
+            "path": "copro_lots_inclus_vente",
+            "contains": "Autre lot annexe"
           }
         },
         {
@@ -55,10 +167,9 @@
           "type": "select",
           "options": [
             "Syndic professionnel",
-            "Syndic benevole",
-            "Syndic cooperatif",
-            "Auto-syndic",
-            "Aucun syndic (situation a regulariser pour finaliser la vente)"
+            "Syndic bénévole",
+            "Syndic coopératif",
+            "Aucun syndic"
           ],
           "placeholder": "Sélectionnez",
           "showIf": {
@@ -76,9 +187,8 @@
             "path": "gestion_copropriete",
             "in": [
               "Syndic professionnel",
-              "Syndic benevole",
-              "Syndic cooperatif",
-              "Auto-syndic"
+              "Syndic bénévole",
+              "Syndic coopératif"
             ]
           }
         },
@@ -88,89 +198,63 @@
           "label": "Numéro du syndic",
           "name": "tel_syndic",
           "type": "text",
-          "placeholder": "Téléphone du syndic",
+          "placeholder": "Téléphone du Syndic",
           "showIf": {
             "path": "gestion_copropriete",
             "in": [
               "Syndic professionnel",
-              "Syndic benevole",
-              "Syndic cooperatif",
-              "Auto-syndic"
+              "Syndic bénévole",
+              "Syndic coopératif"
             ]
-          }
-        },
-        {
-          "path": "compteurs_individualises",
-          "id": "copro-compteurs-individualises",
-          "label": "Les compteurs sont-ils individualisés ?",
-          "name": "compteurs_individualises",
-          "type": "checkbox",
-          "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
-          }
-        },
-        {
-          "path": "types_compteurs",
-          "id": "copro-types-compteurs",
-          "label": "Types de compteurs individualisés",
-          "name": "types_compteurs",
-          "type": "array",
-          "itemLabel": "Type de compteur",
-          "itemSchema": {
-            "fields": [
-              {
-                "path": "label",
-                "id": "copro-type-compteur-label",
-                "label": "Type",
-                "name": "label",
-                "type": "text",
-                "placeholder": "Eau, Gaz, Electricité, Chauffage..."
-              }
-            ]
-          },
-          "showIf": {
-            "path": "compteurs_individualises",
-            "equals": true
-          }
-        },
-        {
-          "path": "conformite_installations",
-          "id": "copro-conformite-installations",
-          "label": "Les installations sont-elles conformes ?",
-          "name": "conformite_installations",
-          "type": "checkbox",
-          "showIf": {
-            "path": "compteurs_individualises",
-            "equals": true
           }
         },
         {
           "path": "est_en_asl",
           "id": "copro-est-en-asl",
-          "label": "Le bien est-il situé dans un lotissement / ASL / AFUL ?",
+          "label": "Le bien dépend d’une association syndicale",
+          "tooltip": "Association Syndicale Libre, Association Foncière Urbaine Libre...",
           "name": "est_en_asl",
-          "type": "checkbox"
+          "type": "checkbox",
+          "showIf": {
+            "path": "bien_en_copropriete",
+            "equals": false
+          }
         },
         {
-          "path": "nom_asl",
-          "id": "copro-nom-asl",
-          "label": "Nom de l'ASL / AFUL",
-          "name": "nom_asl",
-          "type": "text",
-          "placeholder": "Nom de l'ASL / AFUL",
+          "path": "type_association_syndicale",
+          "id": "copro-type-association-syndicale",
+          "label": "Type de structure",
+          "name": "type_association_syndicale",
+          "type": "select",
+          "options": [
+            "ASL (Association Syndicale Libre)",
+            "AFUL (Association Foncière Urbaine Libre)",
+            "Autre"
+          ],
+          "placeholder": "Sélectionnez le type",
           "showIf": {
             "path": "est_en_asl",
             "equals": true
           }
         },
         {
-          "path": "contact_asl",
-          "id": "copro-contact-asl",
-          "label": "Contact de l'ASL / AFUL",
-          "name": "contact_asl",
+          "path": "asl_cotisations_a_jour",
+          "id": "copro-asl-cotisations-a-jour",
+          "label": "Le vendeur n'est pas à jour de ses cotisations",
+          "name": "asl_cotisations_a_jour",
+          "type": "checkbox",
+          "showIf": {
+            "path": "est_en_asl",
+            "equals": true
+          }
+        },
+        {
+          "path": "email_asl",
+          "id": "copro-email-asl",
+          "label": "Email de l'ASL / AFUL",
+          "name": "email_asl",
           "type": "text",
-          "placeholder": "Nom du représentant",
+          "placeholder": "Email du gestionnaire",
           "showIf": {
             "path": "est_en_asl",
             "equals": true
@@ -179,13 +263,29 @@
         {
           "path": "telephone_asl",
           "id": "copro-telephone-asl",
-          "label": "Téléphone de l'ASL / AFUL",
+          "label": "Téléphone du gestionnaire",
           "name": "telephone_asl",
           "type": "text",
-          "placeholder": "Téléphone",
+          "placeholder": "06 00 00 00 00",
           "showIf": {
             "path": "est_en_asl",
             "equals": true
+          }
+        },
+        {
+          "path": "precision_type_structure",
+          "id": "copro-precision-type-structure",
+          "label": "Précisez le type de structure",
+          "name": "precision_type_structure",
+          "type": "text",
+          "placeholder": "Type de structure",
+          "requiredIf": {
+            "path": "type_association_syndicale",
+            "equals": "Autre"
+          },
+          "showIf": {
+            "path": "type_association_syndicale",
+            "equals": "Autre"
           }
         }
       ]

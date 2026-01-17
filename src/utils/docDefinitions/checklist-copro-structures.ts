@@ -1,4 +1,4 @@
-import type { ChecklistCoproStructures } from "@/types/checklist-copro-structures";
+﻿import type { ChecklistCoproStructures } from "@/types/checklist-copro-structures";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -20,96 +20,100 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
+  const isCopro = data.bien_en_copropriete === true;
+  const isAsl = data.est_en_asl === true;
+  const lots = data.copro_lots_inclus_vente || [];
+
   addInfo("Bien en copropriété", data.bien_en_copropriete);
+  addInfo("Type de copropriété", data.type_copropriete, isCopro);
   addInfo(
-    "Gestion de la copropriété",
-    data.gestion_copropriete,
-    data.bien_en_copropriete === true
+    "Montant annuel moyen des charges",
+    data.montant_annuel_charges,
+    isCopro
   );
+  addInfo("Fonds de travaux", data.copro_fond_travaux, isCopro);
+  addInfo(
+    "Quote-part attachée au lot",
+    data.copro_quote_part_lot,
+    data.copro_fond_travaux === true
+  );
+  addInfo("Charges à jour", data.copro_charges_a_jour, isCopro);
+  addInfo(
+    "Montant des sommes dues",
+    data.montant_sommes_dues,
+    data.copro_charges_a_jour === true
+  );
+  addInfo(
+    "Lots inclus dans la vente",
+    lots.join(", "),
+    isCopro && lots.length > 0
+  );
+  addInfo(
+    "Précision lot annexe",
+    data.copro_precision_autre_lot,
+    lots.includes("Autre lot annexe")
+  );
+  addInfo("Gestion de la copropriété", data.gestion_copropriete, isCopro);
   addInfo("Email du syndic", data.email_syndic, Boolean(data.email_syndic));
   addInfo("Numéro du syndic", data.tel_syndic, Boolean(data.tel_syndic));
 
+  addInfo("Association syndicale", data.est_en_asl);
+  addInfo("Type de structure", data.type_association_syndicale, isAsl);
+  addInfo("Cotisations à jour", data.asl_cotisations_a_jour, isAsl);
+  addInfo("Email ASL / AFUL", data.email_asl, Boolean(data.email_asl));
+  addInfo("Téléphone ASL / AFUL", data.telephone_asl, Boolean(data.telephone_asl));
   addInfo(
-    "Travaux parties communes en cours",
-    data.travaux_parties_communes,
-    data.bien_en_copropriete === true
+    "Précision type de structure",
+    data.precision_type_structure,
+    data.type_association_syndicale === "Autre"
   );
-
-  addInfo(
-    "Compteurs individualisés",
-    data.compteurs_individualises,
-    data.bien_en_copropriete === true
-  );
-  addInfo(
-    "Types de compteurs",
-    (data.types_compteurs || [])
-      .map((t) => val((t as any).label ?? t))
-      .join(", "),
-    data.compteurs_individualises === true
-  );
-  addInfo(
-    "Installations conformes",
-    data.conformite_installations,
-    data.compteurs_individualises === true
-  );
-
-  addInfo("Lotissement / ASL / AFUL", data.est_en_asl);
-  addInfo("Nom ASL/AFUL", data.nom_asl, data.est_en_asl === true);
-  addInfo("Contact ASL/AFUL", data.contact_asl, data.est_en_asl === true);
-  addInfo("Téléphone ASL/AFUL", data.telephone_asl, data.est_en_asl === true);
 
   // Documents copro (si en copropriété)
   addDoc(
     "Historique des charges de copropriété (3 dernières années)",
-    data.bien_en_copropriete === true
+    isCopro
   );
   addDoc(
-    "Compte-rendu de la dernière AG (PV)",
-    data.bien_en_copropriete === true
+    "Fiche synthétique de la copropriété (si disponible)",
+    isCopro
   );
+  addDoc("Compte-rendu de la dernière AG (PV)", isCopro);
+  addDoc("Procès-verbal d’AG N-1", isCopro);
+  addDoc("Procès-verbal d’AG N-2", isCopro);
+  addDoc("Convocation et ordre du jour de la prochaine AG", isCopro);
   addDoc(
-    "Convocation et ordre du jour de la prochaine AG",
-    data.bien_en_copropriete === true
+    "Règlement de copropriété et état descriptif de division",
+    isCopro
   );
-  addDoc(
-    "Reglement de copropriété et état descriptif de division",
-    data.bien_en_copropriete === true
-  );
-  addDoc("Carnet d'entretien de l'immeuble", data.bien_en_copropriete === true);
+  addDoc("Pré-état daté", isCopro);
+  addDoc("Carnet d'entretien de l'immeuble", isCopro);
   addDoc(
     "Relevé des charges annuelles (budget prévisionnel et dépenses)",
-    data.bien_en_copropriete === true
+    isCopro
   );
-  addDoc(
-    "Mises en demeure / relances de charges éventuelles",
-    data.bien_en_copropriete === true
-  );
-  addDoc(
-    "Protocole de recouvrement en cours (le cas échéant)",
-    data.bien_en_copropriete === true
-  );
+  addDoc("Dernier relevé de charges", isCopro);
+  addDoc("Dernier appel de charges", isCopro);
+  addDoc("Mises en demeure / relances de charges éventuelles", isCopro);
+  addDoc("Protocole de recouvrement en cours (le cas échéant)", isCopro);
   addDoc(
     "Diagnostics parties communes (DTG, audits énergétiques le cas échéant)",
-    data.bien_en_copropriete === true
+    isCopro
   );
   addDoc(
     "Devis ou autorisations pour travaux sur parties communes",
-    data.travaux_parties_communes === true
+    isCopro && data.gestion_copropriete !== "Aucun syndic"
   );
   addDoc(
     "Coordonnées du représentant du syndic / conseil syndical",
-    data.bien_en_copropriete === true
+    isCopro
   );
 
   // ASL / AFUL
-  addDoc(
-    "Statuts et règlement intérieur de l'ASL / AFUL",
-    data.est_en_asl === true
-  );
-  addDoc("Appels de charges / contributions ASL", data.est_en_asl === true);
+  addDoc("Statuts et règlement intérieur de l'ASL / AFUL", isAsl);
+  addDoc("Appels de charges / contributions ASL", isAsl);
   addDoc(
     "Coordonnées de l'administrateur / président de l'ASL",
-    data.est_en_asl === true
+    isAsl
   );
 
   const infoBody = [

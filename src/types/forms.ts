@@ -1,4 +1,4 @@
-import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
+﻿import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
 
 type FieldType =
   | "text"
@@ -22,7 +22,7 @@ export interface BaseField {
   suggestionRef?: string;
   label: string;
   name: string;
-  // types "simples" autorisés uniquement
+  // types "simples" autorisÃ©s uniquement
   type: Exclude<
     FieldType,
     | "array"
@@ -38,20 +38,21 @@ export interface BaseField {
   requiredIf?: ShowIf;
   placeholder?: string;
   icon?: string;
-  TS_TYPE?: string; // clé extraction AI
+  TS_TYPE?: string; // clÃ© extraction AI
   tooltip?: string;
   tooltipLink?: string; // si tooltip renvoie vers une doc
   pattern?: string; // validation par regex
-  showIf?: ShowIf; // champ affiché si la condition est vraie
+  showIf?: ShowIf; // champ affichÃ© si la condition est vraie
 }
 
-// Règles affichage conditionnel
+// RÃ¨gles affichage conditionnel
 export type ShowIf =
   | {
-      path: string; // chemin absolu depuis la racine du modèle
-      equals?: any; // valeur attendue (égalité stricte)
+      path: string; // chemin absolu depuis la racine du modÃ¨le
+      equals?: any; // valeur attendue (Ã©galitÃ© stricte)
       in?: any[]; // une des valeurs
-      truthy?: boolean; // valeur considérée comme vraie (par défaut true)
+      contains?: any; // inclusion (tableaux / strings)
+      truthy?: boolean; // valeur considÃ©rÃ©e comme vraie (par dÃ©faut true)
     }
   | { not: ShowIf }
   | { all: ShowIf[] }
@@ -86,8 +87,8 @@ export interface NumberField extends Omit<BaseField, "type"> {
 
 export interface FileField extends Omit<BaseField, "type"> {
   type: "file";
-  accept?: string[]; // types de fichiers acceptés, ex: ['image/png', 'application/pdf']
-  multiple?: boolean; // permet la sélection de plusieurs fichiers
+  accept?: string[]; // types de fichiers acceptÃ©s, ex: ['image/png', 'application/pdf']
+  multiple?: boolean; // permet la sÃ©lection de plusieurs fichiers
 }
 
 export interface RangeField extends Omit<BaseField, "type"> {

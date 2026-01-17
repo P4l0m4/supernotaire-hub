@@ -26,7 +26,7 @@
             "Gaz",
             "Fioul",
             "Bois",
-            "Electrique",
+            "Électrique",
             "Autre"
           ],
           "placeholder": "Sélectionnez le type de chauffage",
@@ -50,7 +50,8 @@
           "label": "Date du dernier entretien du chauffage",
           "name": "date_entretien_chauffage",
           "type": "date",
-          "placeholder": "JJ/MM/AAAA"
+          "mode": "date-picker",
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "date_ramonage",
@@ -58,7 +59,8 @@
           "label": "Date du dernier ramonage",
           "name": "date_ramonage",
           "type": "date",
-          "placeholder": "JJ/MM/AAAA"
+          "mode": "date-picker",
+          "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "mode_assainissement",
