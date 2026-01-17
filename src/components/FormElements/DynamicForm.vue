@@ -28,6 +28,7 @@ const currentSection = ref(0);
 const stopNextStep = ref(false);
 
 const showErrorState = ref(false);
+const hasValidatedCurrentStep = ref(false);
 
 function triggerErrorState() {
   showErrorState.value = true;
@@ -37,6 +38,7 @@ function triggerErrorState() {
 }
 
 const model = defineModel<any>({ default: {} });
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function ensureArrayPaths(def?: FormDefinition) {
   if (!def) return;
@@ -232,6 +234,7 @@ async function next() {
       triggerErrorState();
       return;
     }
+    hasValidatedCurrentStep.value = true;
 
     const nextIdx = currentSection.value + 1;
 
@@ -246,8 +249,8 @@ async function next() {
       emit("complete");
       return;
     }
-
-    // sinon étape suivante
+    await delay(400);
+    hasValidatedCurrentStep.value = false;
     currentSection.value = nextIdx;
     formRef.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) {
@@ -267,6 +270,7 @@ watch(sections, (list) => {
 
 function prev() {
   currentSection.value--;
+  hasValidatedCurrentStep.value = false;
 
   if (formRef.value) {
     formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -280,11 +284,13 @@ async function changeStep(step: number) {
 
   if (step < currentSection.value) {
     currentSection.value = step;
+    hasValidatedCurrentStep.value = false;
     return;
   }
 
   const isValid = await validateCurrentSection();
   if (isValid) {
+    hasValidatedCurrentStep.value = false;
     currentSection.value = step;
   }
 }
@@ -332,6 +338,33 @@ const visibleFields = computed(() => {
   const s = sections.value[currentSection.value];
   if (!s) return [];
   return s.fields.filter((f) => isFieldVisible(f));
+});
+
+const currentSectionPaths = computed(() => {
+  const s = sections.value[currentSection.value];
+  return s ? s.fields.map((f) => f.path) : [];
+});
+
+const isCurrentSectionValid = computed(() => {
+  const paths = currentSectionPaths.value;
+  if (!paths.length) return true;
+  return !v$.value.$errors.some((e) =>
+    inSectionPath(e.$propertyPath ?? e.$property ?? "", paths)
+  );
+});
+
+const primaryVariant = computed(() => {
+  if (showErrorState.value) return "error-color";
+  if (hasValidatedCurrentStep.value && isCurrentSectionValid.value)
+    return "success-color";
+  return "accent-color";
+});
+
+const primaryIcon = computed(() => {
+  if (showErrorState.value) return "x_circle";
+  if (hasValidatedCurrentStep.value && isCurrentSectionValid.value)
+    return "check_circle";
+  return "arrow_right";
 });
 
 const emitValidState = () => {
@@ -382,14 +415,20 @@ watch(
     </div>
     <div class="dynamic-form__buttons">
       <UIPrimaryButton
-        :variant="showErrorState ? 'error-color' : 'accent-color'"
-        :icon="showErrorState ? 'x_circle' : 'arrow_right'"
+        :variant="primaryVariant"
+        :icon="primaryIcon"
         :class="{ shake: showErrorState }"
         @click="next"
         @keydown.enter="next"
         @keydown.space="next"
       >
-        {{ showErrorState ? "Corrigez les erreurs" : "Suivant" }}
+        {{
+          showErrorState
+            ? "Corrigez les erreurs"
+            : currentSection === stepsState.length - 1
+            ? "Terminer"
+            : "Suivant"
+        }}
       </UIPrimaryButton>
       <UISecondaryButton
         v-if="currentSection > 0"

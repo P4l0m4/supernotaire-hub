@@ -10,10 +10,9 @@ import RubriqueCapacite from "@/components/Dossier/RubriqueCapacite.vue";
 import RubriqueProFiscale from "@/components/Dossier/RubriqueProFiscale.vue";
 import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
 import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
-import TertiaryButton from "~/components/UI/TertiaryButton.vue";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
+const baseUrl = runtimeConfig.public?.baseURL;
 const route = useRoute();
 
 const validSections = [
@@ -85,7 +84,7 @@ const breadcrumbs = ref([
     url: "/outils",
   },
   {
-    name: "Checklists par rubrique",
+    name: "Rubriques",
     url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
   },
   {

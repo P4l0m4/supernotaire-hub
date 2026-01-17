@@ -18,8 +18,11 @@ const { $pdfMake } = useNuxtApp();
 const formData = reactive<Record<string, any>>({});
 const showLastAction = ref(false);
 const lastValidSnapshot = ref<Record<string, any> | null>(null);
-const { access: exportUnlocked, checked: accessChecked, refresh: refreshAccess } =
-  useExportAccess();
+const {
+  access: exportUnlocked,
+  checked: accessChecked,
+  refresh: refreshAccess,
+} = useExportAccess();
 const cloneData = (data: Record<string, any>) =>
   JSON.parse(JSON.stringify(data ?? {}));
 
@@ -64,6 +67,7 @@ const onComplete = () => {
   lastValidSnapshot.value = snapshot;
   persistSnapshot(snapshot);
   showLastAction.value = true;
+  navigateTo(`/outils/checklist-dossier-vente-notaire`);
 };
 
 const onValidState = (payload: { isValid: boolean; model: any }) => {
