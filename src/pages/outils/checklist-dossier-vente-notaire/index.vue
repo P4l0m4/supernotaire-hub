@@ -139,7 +139,6 @@ useHead({
 
       <div class="checklist-tool__content">
         <DossierListeRubriques />
-        <DossierExportMenu />
       </div>
     </div>
     <UINotificationModal

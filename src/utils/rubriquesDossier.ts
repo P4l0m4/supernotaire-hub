@@ -182,3 +182,14 @@ export async function buildFullDocDefinition() {
   });
   return buildCombinedDocDefinition(allRubriques, dataByRubrique, logoBase64);
 }
+
+export function wipeAllStorageData() {
+  if (!process.client) return;
+  try {
+    allRubriques.forEach((config) => {
+      localStorage.removeItem(config.storageKey);
+    });
+  } catch (e) {
+    console.warn("[rubriquesDossier] wipeAllStorageData failed", e);
+  }
+}

@@ -200,19 +200,21 @@ onMounted(() => {
 
 <template>
   <div class="liste-rubriques">
-    <ChartsProgressBar
-      label="Progression globale"
-      :progress="overallProgress"
-      :state="
-        overallProgress === 100
-          ? 'completed'
-          : overallProgress > 0
-          ? 'progress'
-          : 'default'
-      "
-      :legend="`${completedCards} / ${cards.length} rubriques complétées`"
-      style="grid-column: 1 / -1"
-    />
+    <div class="liste-rubriques__header">
+      <ChartsProgressBar
+        label="Progression globale"
+        :progress="overallProgress"
+        :state="
+          overallProgress === 100
+            ? 'completed'
+            : overallProgress > 0
+            ? 'progress'
+            : 'default'
+        "
+        :legend="`${completedCards} / ${cards.length} rubriques complétées`"
+      />
+      <DossierExportMenu />
+    </div>
     <TransitionGroup name="rubriques" tag="div" class="liste-rubriques__list">
       <NuxtLink
         v-for="card in sortedCards"
@@ -268,6 +270,25 @@ onMounted(() => {
   max-width: 100%;
   gap: 1.5rem;
 
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: calc($radius / 2);
+    border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
+
+    @media (min-width: $laptop-screen) {
+      flex-direction: row;
+      align-items: stretch;
+      padding: 1.5rem;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
@@ -306,15 +327,15 @@ onMounted(() => {
         border: 1px solid $primary-color;
         cursor: pointer;
       }
+    }
 
-      &__header {
-        width: 100%;
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-        font-size: 1.25rem;
-        font-weight: $semi-bold;
-      }
+    &__header {
+      width: 100%;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      font-size: 1.25rem;
+      font-weight: $semi-bold;
     }
   }
 }

@@ -1,11 +1,16 @@
 ﻿<script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { colors } from "@/utils/colors";
+import { useIsMobile } from "@/utils/otherFunctions";
+
 import {
   buildPartialDocDefinition,
   buildFullDocDefinition,
+  wipeAllStorageData,
 } from "@/utils/rubriquesDossier";
 import { useExportAccess } from "@/composables/useExportAccess";
+
+const isMobile = useIsMobile();
 
 const { $pdfMake } = useNuxtApp();
 const route = useRoute();
@@ -18,6 +23,9 @@ const fullError = ref<string | null>(null);
 const notifyVisible = ref(false);
 const notifyMessage = ref<string | null>(null);
 const notifyColor = ref(colors["error-color"]);
+const wipeLoading = ref(false);
+const wipeError = ref(false);
+const wipeSuccess = ref(false);
 
 const { access: exportUnlocked, refresh: refreshAccess } = useExportAccess();
 
@@ -113,6 +121,47 @@ const startCheckout = async () => {
   }
 };
 
+async function wipeAll() {
+  if (!process.client) return;
+  wipeLoading.value = true;
+
+  try {
+    wipeAllStorageData();
+    notifyColor.value = colors["success-color"];
+    notifyMessage.value = "Toutes les données locales ont été supprimées.";
+    notifyVisible.value = true;
+    wipeSuccess.value = true;
+    wipeLoading.value = false;
+  } catch (error) {
+    console.error("[ExportMenu] wipe all failed", error);
+    notifyColor.value = colors["error-color"];
+    notifyMessage.value =
+      "Impossible de supprimer les données locales. Réessayez.";
+    notifyVisible.value = true;
+    wipeError.value = true;
+    wipeLoading.value = false;
+  } finally {
+    setTimeout(() => {
+      wipeLoading.value = false;
+      wipeSuccess.value = false;
+      wipeError.value = false;
+    }, 2000);
+  }
+}
+
+const wipeStatusIcon = computed(() => {
+  if (wipeLoading.value) return "circle_notch";
+  if (wipeError.value) return "x_circle";
+  if (wipeSuccess.value) return "check_circle";
+  return "trash";
+});
+
+const wipeStatusVariant = computed(() => {
+  if (wipeSuccess.value) return "success-color";
+  else if (wipeError.value) return "error-color";
+  else return "text-color-faded";
+});
+
 onMounted(() => {
   const sessionId =
     typeof route.query.session_id === "string"
@@ -124,31 +173,22 @@ onMounted(() => {
 
 <template>
   <aside class="export-menu">
-    <div class="export-menu__block">
-      <h3 class="export-menu__title">
-        Téléchargez votre récapitulatif personnalisé
-      </h3>
-      <p class="export-menu__hint">
-        Obtenez un récapitulatif structuré des informations et documents
-        nécessaires pour votre dossier de vente immobilière.
-      </p>
-      <p class="export-menu__hint">
-        Joignez-y les documents qui y sont listés, et remettez-le à votre
-        notaire.
-      </p>
-      <p class="export-menu__hint">
-        Il saura immédiatement si votre dossier est complet, et vous gagnerez un
-        temps précieux sur la vente de votre bien.
-      </p>
-      <UISecondaryButton
-        variant="accent-color"
-        icon="download"
-        :disabled="fullLoading"
-        @click="openModalOrDownload"
-      >
-        Exporter le récapitulatif complet
-      </UISecondaryButton>
-    </div>
+    <UISecondaryButton
+      variant="accent-color"
+      :icon="isMobile ? '' : 'download'"
+      :disabled="fullLoading"
+      @click="openModalOrDownload"
+    >
+      Exporter le récapitulatif complet
+    </UISecondaryButton>
+    <UITertiaryButton
+      :variant="wipeStatusVariant"
+      :icon="wipeStatusIcon"
+      @click="wipeAll"
+      style="margin-top: 0"
+    >
+      Supprimer les données
+    </UITertiaryButton>
 
     <UIFullPageModal
       v-if="showModal"
@@ -202,48 +242,21 @@ onMounted(() => {
 .export-menu {
   display: flex;
   flex-direction: column;
+  align-items: end;
   gap: 1rem;
   width: 100%;
-  padding-top: 1.5rem;
-  border-top: 1px solid color-mix(in srgb, $text-color 10%, transparent);
+  height: fit-content;
 
   @media (min-width: $big-tablet-screen) {
     flex-direction: row;
+    justify-content: end;
+    align-items: center;
   }
 
-  @media (min-width: $desktop-screen) {
-    flex-direction: column;
-    max-width: 22rem;
-    padding-left: 1.5rem;
-    border-left: 1px solid color-mix(in srgb, $text-color 10%, transparent);
-    border-top: none;
-    padding-top: 0;
-  }
-
-  &__block {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 0.5rem;
-    padding: 1rem;
-    height: 100%;
-    width: 100%;
-    min-height: 160px;
-    border-radius: calc($radius / 2);
-    border: 1px solid color-mix(in srgb, $text-color 8%, transparent);
-  }
-
-  &__title {
-    font-size: 1.1rem;
-    font-weight: $semi-bold;
-    width: 100%;
-  }
-
-  &__hint {
-    color: $text-color-faded;
-    font-size: 0.95rem;
-    width: 100%;
-    margin-bottom: auto;
+  @media (min-width: $laptop-screen) {
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
   }
 }
 
