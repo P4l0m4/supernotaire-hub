@@ -10,6 +10,7 @@ import RubriqueCapacite from "@/components/Dossier/RubriqueCapacite.vue";
 import RubriqueProFiscale from "@/components/Dossier/RubriqueProFiscale.vue";
 import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
 import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
+import TertiaryButton from "~/components/UI/TertiaryButton.vue";
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
@@ -113,6 +114,15 @@ useHead({
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs?.length" :links="breadcrumbs" />
     <component v-if="sectionParam && currentComponent" :is="currentComponent" />
+    <NuxtLink
+      to="/outils/checklist-dossier-vente-notaire"
+      aria-label="Retourner aux rubriques"
+      style="margin-left: auto"
+    >
+      <UITertiaryButton icon="arrow_left" direction="row-reverse"
+        >Retourner aux rubriques</UITertiaryButton
+      ></NuxtLink
+    >
   </Container>
   <HotjarTracking />
 </template>

@@ -162,7 +162,11 @@ function calculateResult() {
         continue;
       }
       const parsed = JSON.parse(raw);
-      result[id] = hasValue(parsed) ? 50 : 0;
+      result[id] = parsed?.__completed
+        ? 100
+        : hasValue(parsed)
+        ? 50
+        : 0;
     } catch {
       result[id] = 0;
     }

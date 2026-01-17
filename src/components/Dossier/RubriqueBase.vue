@@ -52,6 +52,7 @@ const pdfFileName = (prefix: string) => {
 };
 
 const onComplete = () => {
+  formData.__completed = true;
   showLastAction.value = true;
 };
 
@@ -90,7 +91,7 @@ const downloadPdf = async () => {
         icon="download"
         @click="downloadPdf"
       >
-        Télécharger le PDF de la rubrique
+        Télécharger le récapitulatif
       </UITertiaryButton>
     </div>
   </div>
