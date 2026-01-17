@@ -71,19 +71,19 @@ export function buildDocDefinition(
   );
 
   const infoBody = [
-    ["Information", "Reponse"],
-    ...(infoRows.length ? infoRows : [["Informations", "-"]]),
+    ["Questions", "Réponses"],
+    ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
     title: "Charges & Taxes",
     subtitle: "Chauffage, assainissement et situation fiscale",
-    infoTitle: "Informations a fournir",
-    docsTitle: "Documents a fournir",
-    metadataTitle: "Metadonnees",
-    generatedOnLabel: "Genere le",
-    emptyDocsText: "Aucun document supplementaire.",
-    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    infoTitle: "Informations fournies",
+    docsTitle: "Documents à joindre",
+    metadataTitle: "",
+    generatedOnLabel: "Généré le",
+    emptyDocsText: "Aucun document supplémentaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),
     logoBase64,

@@ -81,19 +81,19 @@ export function buildDocDefinition(
   }
 
   const infoBody = [
-    ["Information", "Réponse"],
-    ...(infoRows.length ? infoRows : [["Informations", "-"]]),
+    ["Questions", "Réponses"],
+    ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
-    title: "Origine de propriete",
-    subtitle: "Titre de propriete, origine et modalites d'acquisition",
-    infoTitle: "Informations a fournir",
-    docsTitle: "Documents a fournir",
-    metadataTitle: "Metadonnees",
-    generatedOnLabel: "Genere le",
-    emptyDocsText: "Aucun document supplementaire.",
-    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    title: "Origine de propriété",
+    subtitle: "Titre de propriété, origine et modalités d'acquisition",
+    infoTitle: "Informations fournies",
+    docsTitle: "Documents à joindre",
+    metadataTitle: "",
+    generatedOnLabel: "Généré le",
+    emptyDocsText: "Aucun document supplémentaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),
     logoBase64,

@@ -140,8 +140,20 @@ const {
   refresh: refreshAccess,
 } = useExportAccess();
 
-onMounted(() => {
-  const result: Record<RubriqueId, number> = { ...initialProgress };
+const overallProgress = ref(0);
+
+const calculateOverallProgress = () => {
+  const totalRubriques = cards.length;
+  const totalProgress = Object.values(progressByRubrique.value).reduce(
+    (acc, val) => acc + val,
+    0
+  );
+  overallProgress.value = Math.round(totalProgress / totalRubriques);
+};
+
+const result: Record<RubriqueId, number> = { ...initialProgress };
+
+function calculateResult() {
   for (const id of Object.keys(storageKeys) as RubriqueId[]) {
     try {
       const raw = process.client ? localStorage.getItem(storageKeys[id]) : null;
@@ -156,7 +168,11 @@ onMounted(() => {
     }
   }
   progressByRubrique.value = result;
+}
 
+onMounted(() => {
+  calculateResult();
+  calculateOverallProgress();
   if (!accessChecked.value) {
     refreshAccess();
   }
@@ -165,6 +181,18 @@ onMounted(() => {
 
 <template>
   <div class="liste-rubriques">
+    <ChartsProgressBar
+      label="Progression globale"
+      :progress="overallProgress"
+      :state="
+        overallProgress === 100
+          ? 'completed'
+          : overallProgress > 0
+          ? 'progress'
+          : 'default'
+      "
+      style="grid-column: span 2"
+    />
     <NuxtLink
       v-for="card in cards"
       :key="card.id"

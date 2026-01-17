@@ -113,19 +113,19 @@ export function buildDocDefinition(
   );
 
   const infoBody = [
-    ["Information", "Réponse"],
-    ...(infoRows.length ? infoRows : [["Informations", "-"]]),
+    ["Questions", "Réponses"],
+    ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
-    title: "Copropriete & structures",
-    subtitle: "Informations sur la copropriete et la structure de l'immeuble",
-    infoTitle: "Informations a fournir",
-    docsTitle: "Documents a fournir",
-    metadataTitle: "Metadonnees",
-    generatedOnLabel: "Genere le",
-    emptyDocsText: "Aucun document supplementaire.",
-    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    title: "Copropriété & Structures collectives",
+    subtitle: "Informations sur la copropriété et la structure de l'immeuble",
+    infoTitle: "Informations fournies",
+    docsTitle: "Documents à joindre",
+    metadataTitle: "",
+    generatedOnLabel: "Généré le",
+    emptyDocsText: "Aucun document supplémentaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),
     logoBase64,

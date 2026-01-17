@@ -161,20 +161,20 @@ export function buildDocDefinition(
   }
 
   const infoBody = [
-    ["Information", "Reponse"],
-    ...(infoRows.length ? infoRows : [["Informations", "-"]]),
+    ["Questions", "Réponses"],
+    ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   return buildChecklistPdfStructure({
-    title: "Capacite & Representation",
+    title: "Capacité & Représentation",
     subtitle:
-      "Capacite juridique, protections et pouvoirs pour signer la vente",
-    infoTitle: "Informations a fournir",
-    docsTitle: "Documents a fournir",
-    metadataTitle: "Metadonnees",
-    generatedOnLabel: "Genere le",
-    emptyDocsText: "Aucun document supplementaire.",
-    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+      "Capacité juridique, protections et pouvoirs pour signer la vente",
+    infoTitle: "Informations fournies",
+    docsTitle: "Documents à joindre",
+    metadataTitle: "",
+    generatedOnLabel: "Généré le",
+    emptyDocsText: "Aucun document supplémentaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs: Array.from(docsSet),
     logoBase64,

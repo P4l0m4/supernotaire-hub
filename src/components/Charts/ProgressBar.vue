@@ -77,7 +77,7 @@ const currentState = computed(() => {
         class="progress-bar__track__fill"
         :style="{
           width: props.progress + '%',
-          background: currentState?.color,
+          background: `${currentState?.color}60`,
         }"
       ></span>
     </div>
@@ -99,12 +99,24 @@ const currentState = computed(() => {
     display: flex;
     height: clamp(0.5rem, 0.5rem, 0.5rem);
     width: 100%;
-    background-color: rgba($secondary-color, 0.1);
+    background-color: rgba($text-color, 0.05);
     border-radius: calc($radius/2);
 
     &__fill {
       height: clamp(0.5rem, 0.5rem, 0.5rem);
       border-radius: calc($radius/2);
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: calc($radius/2);
+        background-color: $primary-color;
+        z-index: -1;
+      }
     }
   }
 
