@@ -143,7 +143,7 @@ onMounted(async () => {
         </p>
         <div class="centered-hero__text__link">
           <NuxtLink
-            to="#profiles"
+            to="/inscription"
             aria-label="Découvrir notre offre"
             style="width: 100%"
           >
@@ -282,7 +282,8 @@ onMounted(async () => {
     width: 100vw;
     height: 100vh;
     margin: auto;
-    background: linear-gradient(
+    background:
+      linear-gradient(
           90deg,
           color-mix(in hsl, canvasText, transparent 80%) 1px,
           transparent 1px 45px
