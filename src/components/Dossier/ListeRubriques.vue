@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
@@ -189,11 +189,40 @@ function calculateResult() {
   progressByRubrique.value = result;
 }
 
-onMounted(() => {
+const refreshProgress = () => {
   calculateResult();
   calculateOverallProgress();
+};
+
+const refreshProgressWithDelay = (() => {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  return () => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      refreshProgress();
+      timer = null;
+    }, 1000);
+  };
+})();
+
+const handleStorageChange = (event: StorageEvent) => {
+  if (!event?.key || !event.key.startsWith("sn-checklist-")) return;
+  refreshProgressWithDelay();
+};
+
+onMounted(() => {
+  refreshProgressWithDelay();
+  if (process.client) {
+    window.addEventListener("storage", handleStorageChange);
+  }
   if (!accessChecked.value) {
     refreshAccess();
+  }
+});
+
+onBeforeUnmount(() => {
+  if (process.client) {
+    window.removeEventListener("storage", handleStorageChange);
   }
 });
 </script>
