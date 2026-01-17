@@ -105,6 +105,7 @@ const currentState = computed(() => {
     &__fill {
       height: clamp(0.5rem, 0.5rem, 0.5rem);
       border-radius: calc($radius/2);
+      transition: width 0.6s ease-in-out, background-color 0.3s ease-in-out;
       position: relative;
 
       &::after {
