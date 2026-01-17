@@ -33,7 +33,7 @@ const states: State[] = [
   {
     name: "progress",
     color: colors["accent-color"],
-    icon: "circle_notch",
+    icon: "spinner",
   },
   {
     name: "completed",
