@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
@@ -134,6 +134,20 @@ const progressByRubrique = ref<Record<RubriqueId, number>>({
   ...initialProgress,
 });
 
+const sortedCards = computed(() => {
+  const completed: RubriqueCard[] = [];
+  const others: RubriqueCard[] = [];
+  cards.forEach((card) => {
+    const progress = progressByRubrique.value[card.id] ?? 0;
+    if (progress === 100) {
+      completed.push(card);
+    } else {
+      others.push(card);
+    }
+  });
+  return [...others, ...completed];
+});
+
 const {
   access: exportUnlocked,
   checked: accessChecked,
@@ -193,48 +207,50 @@ onMounted(() => {
       "
       style="grid-column: 1 / -1"
     />
-    <NuxtLink
-      v-for="card in cards"
-      :key="card.id"
-      class="liste-rubriques__card"
-      :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
-      ><div class="liste-rubriques__card__header">
-        {{ card.title }}
-        <UITagComponent
-          v-if="card.premium"
-          :color="
-            exportUnlocked ? colors['success-color'] : colors['accent-color']
+    <TransitionGroup name="rubriques" tag="div" class="liste-rubriques__list">
+      <NuxtLink
+        v-for="card in sortedCards"
+        :key="card.id"
+        class="liste-rubriques__card"
+        :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
+        ><div class="liste-rubriques__card__header">
+          {{ card.title }}
+          <UITagComponent
+            v-if="card.premium"
+            :color="
+              exportUnlocked ? colors['success-color'] : colors['accent-color']
+            "
+            :icon="exportUnlocked ? 'unlock' : 'lock'"
+            size="small"
+            >{{ exportUnlocked ? "Débloqué" : "Premium" }}</UITagComponent
+          >
+          <UITagComponent
+            v-else
+            :color="colors['success-color']"
+            icon="unlock"
+            size="small"
+            >Gratuit</UITagComponent
+          >
+        </div>
+        <ChartsProgressBar
+          :progress="progressByRubrique[card.id]"
+          :state="
+            progressByRubrique[card.id] === 100
+              ? 'completed'
+              : progressByRubrique[card.id] > 0
+              ? 'progress'
+              : 'default'
           "
-          :icon="exportUnlocked ? 'unlock' : 'lock'"
-          size="small"
-          >{{ exportUnlocked ? "Débloqué" : "Premium" }}</UITagComponent
-        >
-        <UITagComponent
-          v-else
-          :color="colors['success-color']"
-          icon="unlock"
-          size="small"
-          >Gratuit</UITagComponent
-        >
-      </div>
-      <ChartsProgressBar
-        :progress="progressByRubrique[card.id]"
-        :state="
-          progressByRubrique[card.id] === 100
-            ? 'completed'
-            : progressByRubrique[card.id] > 0
-            ? 'progress'
-            : 'default'
-        "
-        :label="
-          progressByRubrique[card.id] === 100
-            ? 'Terminé'
-            : `${Math.round(
-                (100 - progressByRubrique[card.id]) * 0.6
-              )}s restantes`
-        "
-        :legend="card.subtitle"
-    /></NuxtLink>
+          :label="
+            progressByRubrique[card.id] === 100
+              ? 'Terminé'
+              : `${Math.round(
+                  (100 - progressByRubrique[card.id]) * 0.6
+                )}s restantes`
+          "
+          :legend="card.subtitle"
+      /></NuxtLink>
+    </TransitionGroup>
   </div>
 </template>
 
@@ -246,12 +262,19 @@ onMounted(() => {
   max-width: 100%;
   gap: 1.5rem;
 
-  @media (min-width: $big-tablet-screen) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    padding-right: 1.5rem;
-    overflow-y: scroll;
-    min-width: 70%;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+
+    @media (min-width: $big-tablet-screen) {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      padding-right: 1.5rem;
+      overflow-y: scroll;
+      min-width: 70%;
+    }
   }
 
   &__card {
@@ -288,5 +311,20 @@ onMounted(() => {
       }
     }
   }
+}
+
+.rubriques-enter-active,
+.rubriques-leave-active {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.rubriques-enter-from,
+.rubriques-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.rubriques-move {
+  transition: transform 1s ease;
 }
 </style>
