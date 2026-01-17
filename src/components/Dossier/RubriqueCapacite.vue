@@ -12,5 +12,6 @@ import { buildDocDefinition as buildCapaciteDocDefinition } from "@/utils/docDef
     pdfPrefix="capacite-representation"
     :formDefinition="capaciteFormDefinition"
     :docBuilder="buildCapaciteDocDefinition"
+    :requireAccess="true"
   />
 </template>

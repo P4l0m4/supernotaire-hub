@@ -12,5 +12,6 @@ import { buildDocDefinition as buildOrigineDocDefinition } from "@/utils/docDefi
     pdfPrefix="origine-propriete"
     :formDefinition="origineFormDefinition"
     :docBuilder="buildOrigineDocDefinition"
+    :requireAccess="true"
   />
 </template>

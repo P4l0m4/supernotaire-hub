@@ -12,5 +12,6 @@ import { buildDocDefinition as buildUrbanismeDocDefinition } from "@/utils/docDe
     pdfPrefix="urbanisme-travaux-exterieurs"
     :formDefinition="urbanismeFormDefinition"
     :docBuilder="buildUrbanismeDocDefinition"
+    :requireAccess="true"
   />
 </template>

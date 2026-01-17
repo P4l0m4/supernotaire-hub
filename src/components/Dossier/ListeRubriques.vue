@@ -162,11 +162,7 @@ function calculateResult() {
         continue;
       }
       const parsed = JSON.parse(raw);
-      result[id] = parsed?.__completed
-        ? 100
-        : hasValue(parsed)
-        ? 50
-        : 0;
+      result[id] = parsed?.__completed ? 100 : hasValue(parsed) ? 50 : 0;
     } catch {
       result[id] = 0;
     }
@@ -195,7 +191,7 @@ onMounted(() => {
           ? 'progress'
           : 'default'
       "
-      style="grid-column: span 2"
+      style="grid-column: 1 / -1"
     />
     <NuxtLink
       v-for="card in cards"

@@ -12,5 +12,6 @@ import { buildDocDefinition as buildDiagnosticsTravauxInterieursDocDefinition } 
     pdfPrefix="diagnostics-travaux-interieurs"
     :formDefinition="diagnosticsTravauxInterieursFormDefinition"
     :docBuilder="buildDiagnosticsTravauxInterieursDocDefinition"
+    :requireAccess="true"
   />
 </template>

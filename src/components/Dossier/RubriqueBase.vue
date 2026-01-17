@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
 import { loadLogo } from "@/utils/otherFunctions";
+import { useExportAccess } from "@/composables/useExportAccess";
 import type { FormDefinition } from "@/types/forms";
 
 const props = defineProps<{
@@ -10,12 +11,15 @@ const props = defineProps<{
   pdfPrefix: string;
   formDefinition: FormDefinition;
   docBuilder: (data: any, logo: string) => any;
+  requireAccess?: boolean;
 }>();
 
 const { $pdfMake } = useNuxtApp();
 const formData = reactive<Record<string, any>>({});
 const showLastAction = ref(false);
 const lastValidSnapshot = ref<Record<string, any> | null>(null);
+const { access: exportUnlocked, checked: accessChecked, refresh: refreshAccess } =
+  useExportAccess();
 const cloneData = (data: Record<string, any>) =>
   JSON.parse(JSON.stringify(data ?? {}));
 
@@ -81,6 +85,15 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
 const downloadPdf = async () => {
   // @ts-ignore
   if (!process.client || !$pdfMake?.createPdf) return;
+  if (props.requireAccess && !exportUnlocked.value) {
+    if (!accessChecked.value) {
+      await refreshAccess();
+    }
+    if (!exportUnlocked.value) {
+      console.warn("[RubriqueBase] export locked for premium rubrique");
+      return;
+    }
+  }
   const logo = await loadLogo();
   const doc = props.docBuilder(formData, logo);
   if (!doc) return;

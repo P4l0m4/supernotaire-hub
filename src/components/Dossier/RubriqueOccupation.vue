@@ -12,5 +12,6 @@ import { buildDocDefinition as buildOccupationDocDefinition } from "@/utils/docD
     pdfPrefix="occupation-actuelle"
     :formDefinition="occupationFormDefinition"
     :docBuilder="buildOccupationDocDefinition"
+    :requireAccess="true"
   />
 </template>

@@ -12,5 +12,6 @@ import { buildDocDefinition as buildCoproDocDefinition } from "@/utils/docDefini
     pdfPrefix="copropriete-structures"
     :formDefinition="coproFormDefinition"
     :docBuilder="buildCoproDocDefinition"
+    :requireAccess="true"
   />
 </template>
