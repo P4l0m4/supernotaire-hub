@@ -85,7 +85,7 @@ const breadcrumbs = ref([
   },
   {
     name: "Rubriques",
-    url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+    url: `/outils/checklist-dossier-vente-notaire`,
   },
   {
     name: sectionParam.value ? sectionLabels[sectionParam.value] : "Checklist",

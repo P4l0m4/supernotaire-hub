@@ -18,6 +18,7 @@ const { $pdfMake } = useNuxtApp();
 const formData = reactive<Record<string, any>>({});
 const showLastAction = ref(false);
 const lastValidSnapshot = ref<Record<string, any> | null>(null);
+const isHydrated = ref(false);
 const {
   access: exportUnlocked,
   checked: accessChecked,
@@ -38,6 +39,7 @@ const hydrateFromStorage = () => {
         showLastAction.value = true;
       }
     }
+    isHydrated.value = true;
   } catch (e) {
     console.warn("[Rubrique] hydrate failed", props.storageKey, e);
   }
@@ -71,13 +73,13 @@ const onComplete = () => {
 };
 
 const onValidState = (payload: { isValid: boolean; model: any }) => {
+  if (!isHydrated.value) return;
   if (!payload?.isValid) {
     formData.__completed = false;
     showLastAction.value = false;
-    const base = lastValidSnapshot.value
-      ? { ...lastValidSnapshot.value, __completed: false }
-      : { __completed: false };
-    persistSnapshot(base);
+    if (lastValidSnapshot.value) {
+      persistSnapshot({ ...lastValidSnapshot.value, __completed: false });
+    }
     return;
   }
   const snapshot = cloneData(payload.model || {});
