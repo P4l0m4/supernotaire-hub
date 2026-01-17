@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted, watch } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { loadLogo } from "@/utils/otherFunctions";
 import type { FormDefinition } from "@/types/forms";
 
@@ -15,35 +15,38 @@ const props = defineProps<{
 const { $pdfMake } = useNuxtApp();
 const formData = reactive<Record<string, any>>({});
 const showLastAction = ref(false);
+const lastValidSnapshot = ref<Record<string, any> | null>(null);
+const cloneData = (data: Record<string, any>) =>
+  JSON.parse(JSON.stringify(data ?? {}));
 
 const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
     const raw = localStorage.getItem(props.storageKey);
-    if (raw) Object.assign(formData, JSON.parse(raw));
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      Object.assign(formData, parsed);
+      lastValidSnapshot.value = cloneData(parsed);
+      if (parsed?.__completed) {
+        showLastAction.value = true;
+      }
+    }
   } catch (e) {
     console.warn("[Rubrique] hydrate failed", props.storageKey, e);
   }
 };
 
-const persistToStorage = () => {
+const persistSnapshot = (data: Record<string, any>) => {
   if (!process.client) return;
-  watch(
-    () => formData,
-    (val) => {
-      try {
-        localStorage.setItem(props.storageKey, JSON.stringify(val));
-      } catch (e) {
-        console.warn("[Rubrique] persist failed", props.storageKey, e);
-      }
-    },
-    { deep: true }
-  );
+  try {
+    localStorage.setItem(props.storageKey, JSON.stringify(data));
+  } catch (e) {
+    console.warn("[Rubrique] persist failed", props.storageKey, e);
+  }
 };
 
 onMounted(() => {
   hydrateFromStorage();
-  persistToStorage();
 });
 
 const pdfFileName = (prefix: string) => {
@@ -53,7 +56,26 @@ const pdfFileName = (prefix: string) => {
 
 const onComplete = () => {
   formData.__completed = true;
+  const snapshot = cloneData(formData);
+  lastValidSnapshot.value = snapshot;
+  persistSnapshot(snapshot);
   showLastAction.value = true;
+};
+
+const onValidState = (payload: { isValid: boolean; model: any }) => {
+  if (!payload?.isValid) {
+    formData.__completed = false;
+    showLastAction.value = false;
+    const base = lastValidSnapshot.value
+      ? { ...lastValidSnapshot.value, __completed: false }
+      : { __completed: false };
+    persistSnapshot(base);
+    return;
+  }
+  const snapshot = cloneData(payload.model || {});
+  if (formData.__completed) snapshot.__completed = true;
+  lastValidSnapshot.value = snapshot;
+  persistSnapshot(snapshot);
 };
 
 const downloadPdf = async () => {
@@ -82,6 +104,7 @@ const downloadPdf = async () => {
       v-model="formData"
       :suggestions="[]"
       @complete="onComplete"
+      @valid-state="onValidState"
     />
 
     <div class="rubrique__actions">

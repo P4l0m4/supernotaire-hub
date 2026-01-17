@@ -18,6 +18,7 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (e: "complete"): void;
+  (e: "valid-state", payload: { isValid: boolean; model: any }): void;
 }>();
 
 const formRef = ref<HTMLFormElement | null>(null);
@@ -332,6 +333,19 @@ const visibleFields = computed(() => {
   if (!s) return [];
   return s.fields.filter((f) => isFieldVisible(f));
 });
+
+const emitValidState = () => {
+  const isValid = (v$.value?.$silentErrors?.length ?? 0) === 0;
+  emit("valid-state", { isValid, model: model.value });
+};
+
+watch(
+  model,
+  () => {
+    emitValidState();
+  },
+  { deep: true, immediate: true }
+);
 </script>
 
 <template>
