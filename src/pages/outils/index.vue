@@ -22,15 +22,14 @@ const tools = [
   {
     name: "Créer un Pré-état daté",
     path: "/outils/pre-etat-date",
-    description:
-      "Créer un pré-état daté conforme à la réglementation en quelques minutes.",
+    description: "Créez un pré-état daté conforme en quelques minutes.",
     icon: fileDashed,
   },
   {
-    name: "Préparer votre dossier",
+    name: "Préparer votre dossier de vente",
     path: "/outils/checklist-dossier-vente-notaire",
     description:
-      "Ne perdez plus de temps sur la vente, vous saurez exactement quels documents fournir à votre notaire en quelques minutes.",
+      "Vous saurez exactement quels documents fournir à votre notaire en quelques minutes.",
     icon: filePlus,
   },
   {
@@ -52,7 +51,7 @@ const tools = [
     name: "Fusionner des PDF",
     path: "https://www.ilovepdf.com/fr/fusionner_pdf",
     description:
-      "Fusionner et combiner des fichiers PDF et les mettre dans l'ordre que vous voulez.",
+      "Fusionnez et combinez des fichiers PDF et organisez-les dans l'ordre que vous voulez.",
     target: "_blank",
     icon: filePDF,
   },
@@ -60,7 +59,7 @@ const tools = [
     name: "Extraire le texte d'un document",
     path: "/outils/text-from-document",
     description:
-      "Extraitre le texte d'un document PDF (scanné ou à base de texte) ou d'une image.",
+      "Extrayez le texte d'un document PDF (scanné ou à base de texte) ou d'une image.",
     icon: fileText,
   },
 ];

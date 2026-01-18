@@ -1,4 +1,5 @@
 ﻿<script setup lang="ts">
+import { ref, computed } from "vue";
 import RubriquePrealables from "@/components/Dossier/RubriquePrealables.vue";
 import RubriqueIdentite from "@/components/Dossier/RubriqueIdentite.vue";
 import RubriqueSituation from "@/components/Dossier/RubriqueSituation.vue";
@@ -122,5 +123,6 @@ useHead({
       ></NuxtLink
     >
   </Container>
+
   <HotjarTracking />
 </template>
