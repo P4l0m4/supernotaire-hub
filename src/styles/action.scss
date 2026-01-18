@@ -9,6 +9,13 @@
   min-height: 21.87rem;
   scroll-margin-top: 4rem;
 
+  transform: scale(1);
+  transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  @starting-style {
+    transform: scale(0);
+  }
+
   @media (min-width: $big-tablet-screen) {
     padding: 1.5rem;
     gap: 3rem;

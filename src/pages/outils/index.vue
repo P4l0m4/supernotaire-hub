@@ -122,6 +122,12 @@ useHead({
     display: flex;
     width: 100%;
     height: fit-content;
+    transform: scale(1);
+    transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+    @starting-style {
+      transform: scale(0);
+    }
 
     &__description {
       font-weight: $regular;
