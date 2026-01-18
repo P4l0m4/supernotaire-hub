@@ -3,8 +3,6 @@ import { onMounted, ref, watch } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
 
-import { getRubriquesPages } from "@/utils/sitemap";
-
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 const route = useRoute();
@@ -19,7 +17,7 @@ const breadcrumbs = ref([
   { name: "Accueil", url: "/" },
   { name: "Outils", url: "/outils" },
   {
-    name: "Checklists par rubrique",
+    name: "Rubriques",
     url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
   },
 ]);
@@ -112,12 +110,12 @@ useJsonld(() => ({
 }));
 
 useHead({
-  title: "EasyCase | Checklist dossier de vente",
+  title: "Gagnez des semaines sur votre vente immobilière",
   meta: [
     {
       name: "description",
       content:
-        "Créez une checklist personnalisée des informations et documents à fournir au notaire pour votre dossier de vente.",
+        "Répondez à quelques questions et trouvez en quelques minutes quelles informations et documents fournir à votre notaire en fonction de votre situation.",
     },
   ],
 });
@@ -207,11 +205,11 @@ const questions = [
     <div id="checklist-dossier-vente-notaire" class="checklist-tool">
       <div class="checklist-tool__headlines">
         <h1 class="checklist-tool__headlines__title titles">
-          Constituez votre dossier de vente immobilière
+          Préparez votre dossier de vente immobilière
         </h1>
         <span class="checklist-tool__headlines__subtitle subtitles">
-          Générez une liste personnalisée des informations et documents à
-          fournir à votre notaire pour la vente de votre bien.
+          Ne perdez plus de temps sur la vente, vous saurez exactement quels
+          documents fournir à votre notaire en quelques minutes.
         </span>
       </div>
 
