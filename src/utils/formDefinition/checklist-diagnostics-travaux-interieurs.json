@@ -133,7 +133,7 @@
         {
           "path": "diagnostics.installationGaz15Ans",
           "id": "diagnostics_installation_gaz_15ans",
-          "label": "Le logement est-il équipé d’une installation gaz en place depuis plus de 15 ans ?",
+          "label": "Le logement est équipé d’une installation gaz de plus de 15 ans",
           "name": "installationGaz15Ans",
           "type": "checkbox",
           "showIf": {
@@ -163,7 +163,7 @@
         {
           "path": "diagnostics.installationElec15Ans",
           "id": "diagnostics_installation_elec_15ans",
-          "label": "Le logement est-il équipé d’une installation électrique de plus de 15 ans ?",
+          "label": "Le logement est équipé d’une installation électrique de plus de 15 ans",
           "name": "installationElec15Ans",
           "type": "checkbox",
           "showIf": {

@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
         :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
         v-tooltip="card.subtitle"
         ><div class="liste-rubriques__card__header">
-          {{ card.title }}
+          <h2 class="liste-rubriques__card__header__title">{{ card.title }}</h2>
           <UITagComponent
             v-if="card.premium"
             :color="
@@ -325,12 +325,12 @@ onBeforeUnmount(() => {
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     width: 100%;
 
     @media (min-width: $big-tablet-screen) {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
       padding-right: 1.5rem;
       overflow-y: scroll;
       min-width: 70%;
@@ -369,8 +369,15 @@ onBeforeUnmount(() => {
       display: flex;
       gap: 1rem;
       justify-content: space-between;
-      font-size: 1.25rem;
-      font-weight: $semi-bold;
+
+      &__title {
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 1.25rem;
+        font-weight: $semi-bold;
+      }
     }
   }
 }
