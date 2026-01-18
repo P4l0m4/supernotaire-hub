@@ -4,7 +4,7 @@ interface FAQQuestion {
   answer: string;
 }
 
-defineProps({
+const props = defineProps({
   questions: {
     type: Array as () => FAQQuestion[],
     required: true,
@@ -19,6 +19,23 @@ function toggleQuestion(index: number) {
     questionOpened.value = index;
   }
 }
+
+const jsonLDFAQ = props.questions.map((question) => {
+  return {
+    "@type": "Question" as const,
+    name: question.title,
+    acceptedAnswer: {
+      "@type": "Answer" as const,
+      text: question.answer,
+    },
+  };
+});
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage" as const,
+  mainEntity: jsonLDFAQ,
+}));
 </script>
 <template>
   <div class="faq-component">

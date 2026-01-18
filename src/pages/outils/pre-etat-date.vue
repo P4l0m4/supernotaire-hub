@@ -63,17 +63,6 @@ const questions = [
   },
 ];
 
-const jsonLDFAQ = questions.map((question) => {
-  return {
-    "@type": "Question" as const,
-    name: question.title,
-    acceptedAnswer: {
-      "@type": "Answer" as const,
-      text: question.answer,
-    },
-  };
-});
-
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
@@ -84,12 +73,6 @@ useJsonld(() => ({
   description:
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
   url: `${baseUrl}/outils/pre-etat-date`,
-}));
-
-useJsonld(() => ({
-  "@context": "https://schema.org",
-  "@type": "FAQPage" as const,
-  mainEntity: jsonLDFAQ,
 }));
 
 useHead({

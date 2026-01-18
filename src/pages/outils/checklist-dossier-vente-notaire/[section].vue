@@ -71,7 +71,7 @@ const componentMap: Record<SectionParam, any> = {
 };
 
 const currentComponent = computed(() =>
-  sectionParam.value ? componentMap[sectionParam.value] : null
+  sectionParam.value ? componentMap[sectionParam.value] : null,
 );
 
 const breadcrumbs = ref([

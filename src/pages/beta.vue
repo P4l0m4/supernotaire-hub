@@ -111,23 +111,6 @@ const questions = [
   },
 ];
 
-const jsonLDFAQ = questions.map((question) => {
-  return {
-    "@type": "Question" as const,
-    name: question.title,
-    acceptedAnswer: {
-      "@type": "Answer" as const,
-      text: question.answer,
-    },
-  };
-});
-
-useJsonld(() => ({
-  "@context": "https://schema.org",
-  "@type": "FAQPage" as const,
-  mainEntity: jsonLDFAQ,
-}));
-
 useHead({
   title: "EasyCase | Accès anticipé et pré-vente limitée",
   meta: [
@@ -443,7 +426,8 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     width: 100vw;
     height: 100vh;
     margin: auto;
-    background: linear-gradient(
+    background:
+      linear-gradient(
           90deg,
           color-mix(in hsl, canvasText, transparent 80%) 1px,
           transparent 1px 45px
