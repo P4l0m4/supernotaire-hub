@@ -165,7 +165,7 @@ const calculateOverallProgress = () => {
   const totalRubriques = cards.length;
   const totalProgress = Object.values(progressByRubrique.value).reduce(
     (acc, val) => acc + val,
-    0
+    0,
   );
   overallProgress.value = Math.round(totalProgress / totalRubriques);
 };
@@ -237,8 +237,8 @@ onBeforeUnmount(() => {
           overallProgress === 100
             ? 'completed'
             : overallProgress > 0
-            ? 'progress'
-            : 'default'
+              ? 'progress'
+              : 'default'
         "
         :legend="`${completedCards} / ${cards.length} rubriques complétées`"
       />
@@ -250,6 +250,7 @@ onBeforeUnmount(() => {
         :key="card.id"
         class="liste-rubriques__card"
         :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
+        v-tooltip="card.subtitle"
         ><div class="liste-rubriques__card__header">
           {{ card.title }}
           <UITagComponent
@@ -275,17 +276,16 @@ onBeforeUnmount(() => {
             progressByRubrique[card.id] === 100
               ? 'completed'
               : progressByRubrique[card.id] > 0
-              ? 'progress'
-              : 'default'
+                ? 'progress'
+                : 'default'
           "
           :label="
             progressByRubrique[card.id] === 100
               ? 'Terminé'
               : `${Math.round(
-                  (100 - progressByRubrique[card.id]) * 0.6
+                  (100 - progressByRubrique[card.id]) * 0.6,
                 )}s restantes`
           "
-          :legend="card.subtitle"
       /></NuxtLink>
     </TransitionGroup>
   </div>
@@ -304,15 +304,11 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1rem;
     gap: 1rem;
-    border-radius: calc($radius / 2);
-    border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
 
     @media (min-width: $laptop-screen) {
       flex-direction: row;
       align-items: stretch;
-      padding: 1.5rem;
       gap: 2rem;
       justify-content: space-between;
     }
@@ -343,7 +339,9 @@ onBeforeUnmount(() => {
     border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
     height: fit-content;
     align-items: end;
-    transition: box-shadow 0.2s linear, background-color 0.2s linear,
+    transition:
+      box-shadow 0.2s linear,
+      background-color 0.2s linear,
       border 0.2s linear;
 
     @media (min-width: $big-tablet-screen) {
@@ -371,7 +369,9 @@ onBeforeUnmount(() => {
 
 .rubriques-enter-active,
 .rubriques-leave-active {
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .rubriques-enter-from,

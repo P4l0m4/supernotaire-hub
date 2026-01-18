@@ -102,8 +102,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Créez une checklist personnalisée des informations et documents à fournir au notaire pour votre dossier de vente.",
+      content: `Complétez la rubrique ${sectionParam.value ? sectionLabels[sectionParam.value] : ""} en répondant à quelques questions simples.`,
     },
   ],
 });
