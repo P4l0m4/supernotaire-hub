@@ -72,9 +72,9 @@ useHead({
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "EasyCase | Finalisation rapide de vente immobilière",
+  name: "EasyCase | Ne perdez plus de temps sur vos ventes immobilières",
   description:
-    "La plateforme qui accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
+    "La plateforme qui facilite et accélère la finalisation des ventes immobilières pour les notaires débordés et les vendeurs pressés.",
   url: `${baseUrl}/`,
 }));
 
@@ -121,7 +121,7 @@ onMounted(async () => {
     <div class="centered-hero">
       <div class="centered-hero__text">
         <h1 class="centered-hero__text__title">
-          Accélérez vos ventes immobilières
+          Gagnez des semaines sur vos ventes immobilières
           <svg
             viewBox="0 0 100 6"
             preserveAspectRatio="none"
@@ -233,10 +233,10 @@ onMounted(async () => {
 .svg-underline {
   display: block;
   position: absolute;
-  right: 2px;
-  bottom: 0;
+  left: 16px;
+  bottom: -6px;
   height: 6px;
-  width: calc(56% - 2px);
+  width: calc(40% - 2px);
   fill: none;
   stroke: var(--underline-color, #ffbf00);
   stroke-width: 3px;
