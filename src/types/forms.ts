@@ -118,6 +118,10 @@ export interface SegmentedControlField extends Omit<BaseField, "type"> {
 export interface DateField extends Omit<BaseField, "type"> {
   type: "date";
   mode: "year-picker" | "month-picker" | "date-picker";
+  maxDateOffsetYears?: number;
+  maxDate?: string | Date;
+  startDate?: string | Date;
+  minDate?: string | Date;
 }
 
 export type FormField =

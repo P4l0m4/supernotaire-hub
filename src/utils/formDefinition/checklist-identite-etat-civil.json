@@ -13,7 +13,9 @@
           "type": "date",
           "mode": "date-picker",
           "placeholder": "01/01/1990",
-          "required": true
+          "required": true,
+          "maxDateOffsetYears": 16,
+          "startDate": "1980-01-01"
         },
         {
           "path": "identite.nom",

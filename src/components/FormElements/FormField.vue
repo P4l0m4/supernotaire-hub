@@ -23,6 +23,33 @@ function setByPath(obj: any, path: string, val: any) {
   tgt[last] = val;
 }
 
+const toDateValue = (value: unknown) => {
+  if (value instanceof Date) return new Date(value);
+  if (typeof value === "string") {
+    if (value === "today") return new Date();
+    const d = new Date(value);
+    if (!Number.isNaN(d.getTime())) return d;
+  }
+  return undefined;
+};
+
+const resolveMaxDate = (field: FormField) => {
+  if (field.type !== "date") return undefined;
+  const direct = toDateValue(field.maxDate);
+  if (direct) return direct;
+  const offset = field.maxDateOffsetYears;
+  if (typeof offset !== "number") return undefined;
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - offset);
+  return d;
+};
+
+const resolveStartDate = (field: FormField) =>
+  field.type === "date" ? toDateValue(field.startDate) : undefined;
+
+const resolveMinDate = (field: FormField) =>
+  field.type === "date" ? toDateValue(field.minDate) : undefined;
+
 const valueRef = computed({
   get: () => getByPath(model.value, props.formField.path),
   set: (v) => setByPath(model.value, props.formField.path, v),
@@ -143,6 +170,9 @@ const errorMessage = computed(() => {
         :mode="formField.mode"
         :icon="formField.icon"
         :error="errorMessage"
+        :startDate="resolveStartDate(formField)"
+        :minDate="resolveMinDate(formField)"
+        :maxDate="resolveMaxDate(formField)"
       />
     </ClientOnly>
 

@@ -40,6 +40,27 @@ function triggerErrorState() {
 const model = defineModel<any>({ default: {} });
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const parseDateDdMmYyyy = (v?: unknown) => {
+  if (typeof v !== "string") return null;
+  const m = v.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+  if (!m) return null;
+  const [_, dd, mm, yyyy] = m;
+  const d = Number(dd);
+  const mo = Number(mm);
+  const y = Number(yyyy);
+  const dt = new Date(y, mo - 1, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d)
+    return null;
+  return dt;
+};
+
+const formatDateDdMmYyyy = (d: Date) => {
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = String(d.getFullYear());
+  return `${day}-${month}-${year}`;
+};
+
 function ensureArrayPaths(def?: FormDefinition) {
   if (!def) return;
   for (const s of def.sections) {
@@ -121,6 +142,61 @@ function buildRules(def?: FormDefinition) {
       r.isMonth = fr.isMonth;
     } else if (f.type === "date" && f.mode === "date-picker") {
       r.isDate = fr.isDate;
+      const maxDateFromOffset = () => {
+        if (typeof f.maxDateOffsetYears !== "number") return null;
+        const limit = new Date();
+        limit.setFullYear(limit.getFullYear() - f.maxDateOffsetYears);
+        return new Date(
+          limit.getFullYear(),
+          limit.getMonth(),
+          limit.getDate()
+        );
+      };
+      const maxDateFromField = () => {
+        if (!f.maxDate) return null;
+        if (f.maxDate === "today") {
+          const d = new Date();
+          return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        }
+        const d = new Date(f.maxDate as any);
+        if (Number.isNaN(d.getTime())) return null;
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      };
+      const limitDate = maxDateFromField() || maxDateFromOffset();
+      if (limitDate) {
+        const limitMs = limitDate.getTime();
+        r.maxDate = helpers.withMessage(
+          `Doit être antérieur ou égal au ${formatDateDdMmYyyy(limitDate)}`,
+          (v) => {
+            if (v == null || v === "") return true;
+            const parsed = parseDateDdMmYyyy(v);
+            if (!parsed) return true;
+            return parsed.getTime() <= limitMs;
+          }
+        );
+      }
+      if (f.minDate) {
+        const bound =
+          f.minDate instanceof Date
+            ? new Date(
+                f.minDate.getFullYear(),
+                f.minDate.getMonth(),
+                f.minDate.getDate()
+              )
+            : new Date(f.minDate);
+        if (!Number.isNaN(bound.getTime())) {
+          const boundMs = bound.getTime();
+          r.minDate = helpers.withMessage(
+            `Doit être postérieur ou égal au ${formatDateDdMmYyyy(bound)}`,
+            (v) => {
+              if (v == null || v === "") return true;
+              const parsed = parseDateDdMmYyyy(v);
+              if (!parsed) return true;
+              return parsed.getTime() >= boundMs;
+            }
+          );
+        }
+      }
     }
     if (f.type === "email") r.email = fr.email;
     if (f.type === "location") r.location = fr.isAddress;

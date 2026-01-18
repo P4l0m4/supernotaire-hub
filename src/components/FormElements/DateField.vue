@@ -2,13 +2,16 @@
 import { computed } from "vue";
 import { colors } from "@/utils/colors";
 
-defineProps<{
+const props = defineProps<{
   error?: string | null;
   placeholder?: string;
   id: string;
   label: string;
   icon?: string;
   mode: "year-picker" | "month-picker" | "date-picker";
+  maxDate?: Date | null;
+  minDate?: Date | null;
+  startDate?: Date | null;
 }>();
 
 const model = defineModel<string>();
@@ -75,11 +78,12 @@ const monthBridge = computed<Date | number | null>({
       v-model="yearBridge"
       locale="fr"
       cancelText="Annuler"
-      selectText="Sélectionner"
+      selectText="Selectionner"
       auto-apply
       year-picker
-      start-date="2000-01-01"
-      :max-date="new Date()"
+      :start-date="startDate || new Date('2000-01-01')"
+      :max-date="maxDate || undefined"
+      :min-date="minDate || undefined"
       :year-range="[1700, new Date().getFullYear()]"
       :placeholder="placeholder || ''"
       time-picker-inline
@@ -93,9 +97,12 @@ const monthBridge = computed<Date | number | null>({
       v-model="monthBridge"
       locale="fr"
       cancelText="Annuler"
-      selectText="Sélectionner"
+      selectText="Selectionner"
       auto-apply
       month-picker
+      :start-date="startDate || undefined"
+      :min-date="minDate || undefined"
+      :max-date="maxDate || undefined"
       time-picker-inline
       :enable-time-picker="false"
       :placeholder="placeholder || ''"
@@ -111,10 +118,13 @@ const monthBridge = computed<Date | number | null>({
       format="dd-MM-yyyy"
       locale="fr"
       cancelText="Annuler"
-      selectText="Sélectionner"
+      selectText="Selectionner"
       auto-apply
       time-picker-inline
       :enable-time-picker="false"
+      :start-date="startDate || undefined"
+      :min-date="minDate || undefined"
+      :max-date="maxDate || undefined"
       :placeholder="placeholder || ''"
     ></VueDatePicker>
     <span class="date-field__error" v-if="error">{{ error }}</span>
