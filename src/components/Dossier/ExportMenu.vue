@@ -105,7 +105,7 @@ const startCheckout = async () => {
   try {
     const { url } = await $fetch<{ url?: string; error?: string }>(
       "/api/checkout/create-session",
-      { method: "POST" }
+      { method: "POST" },
     );
     if (!url) throw new Error("URL de paiement introuvable");
     window.location.href = url;
@@ -176,7 +176,7 @@ onMounted(() => {
       :disabled="fullLoading"
       @click="openModalOrDownload"
     >
-      Exporter le récapitulatif complet
+      Exporter le récapitulatif
     </UISecondaryButton>
     <UITertiaryButton
       :variant="wipeStatusVariant"

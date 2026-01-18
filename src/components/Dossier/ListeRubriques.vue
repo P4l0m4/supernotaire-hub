@@ -243,6 +243,13 @@ onBeforeUnmount(() => {
         :legend="`${completedCards} / ${cards.length} rubriques complétées`"
       />
       <DossierExportMenu />
+      <AnimationsConfetti
+        :active="overallProgress === 100"
+        :count="20"
+        :delay="800"
+        size="20rem"
+        style="position: absolute; inset: 0; margin: auto; z-index: -1"
+      />
     </div>
     <TransitionGroup name="rubriques" tag="div" class="liste-rubriques__list">
       <NuxtLink
@@ -305,6 +312,7 @@ onBeforeUnmount(() => {
     align-items: center;
     width: 100%;
     gap: 1rem;
+    position: relative;
 
     @media (min-width: $laptop-screen) {
       flex-direction: row;
