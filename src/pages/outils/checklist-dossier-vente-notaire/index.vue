@@ -241,6 +241,27 @@ const questions = [
       <FAQComponent :questions />
     </div>
   </Container>
+  <Container>
+    <UIDidYouKnow
+      title="Vous pouvez générer un pré-état daté en quelques clics"
+    >
+      <template #text>
+        Besoin d'un pré-état daté pour la vente de votre bien en copropriété ?
+        Notre outil vous permet de le générer gratuitement et facilement, avec
+        toutes les informations nécessaires pour votre notaire.
+      </template>
+      <template #cta>
+        <NuxtLink
+          to="/outils/pre-etat-date"
+          aria-label="Créer mon pré-état daté"
+        >
+          <UIPrimaryButton variant="accent-color"
+            >Créer mon pré-état daté</UIPrimaryButton
+          >
+        </NuxtLink>
+      </template>
+    </UIDidYouKnow>
+  </Container>
   <HotjarTracking />
 </template>
 
