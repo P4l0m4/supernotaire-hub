@@ -4,7 +4,7 @@ import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistSituationMatrimoniale,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -43,7 +43,7 @@ export function buildDocDefinition(
     addDoc("Pièce d'identité du conjoint (CNI, titre de séjour ou passeport)");
   }
 
-  if (situation.statut === "Pacsé") {
+  if (situation.statut === "Pacsé(e)") {
     addDoc("Attestation d'enregistrement PACS");
     addDoc("Pièce d'identité du conjoint (CNI, titre de séjour ou passeport)");
     addDoc("Convention de PACS");
@@ -56,7 +56,7 @@ export function buildDocDefinition(
 
   if (situation.statut === "Dissolution PACS") {
     addDoc(
-      "Ordonnance de dissolution avec formule exécutoire avec certificat de non-appel"
+      "Ordonnance de dissolution avec formule exécutoire avec certificat de non-appel",
     );
     addDoc("Attestation d'enregistrement de dissolution");
   }
@@ -71,7 +71,7 @@ export function buildDocDefinition(
     addDoc("Jugement de séparation de corps exécutoire");
     addDoc(
       "Copie authentique du contrat de mariage",
-      situation.separe_de_corps?.contrat_mariage === true
+      situation.separe_de_corps?.contrat_mariage === true,
     );
   }
 

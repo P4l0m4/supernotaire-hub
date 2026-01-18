@@ -170,23 +170,22 @@ const calculateOverallProgress = () => {
   overallProgress.value = Math.round(totalProgress / totalRubriques);
 };
 
-const result: Record<RubriqueId, number> = { ...initialProgress };
-
 function calculateResult() {
+  const newProgress: Record<RubriqueId, number> = { ...initialProgress };
   for (const id of Object.keys(storageKeys) as RubriqueId[]) {
     try {
       const raw = process.client ? localStorage.getItem(storageKeys[id]) : null;
       if (!raw) {
-        result[id] = 0;
+        newProgress[id] = 0;
         continue;
       }
       const parsed = JSON.parse(raw);
-      result[id] = parsed?.__completed ? 100 : hasValue(parsed) ? 50 : 0;
+      newProgress[id] = parsed?.__completed ? 100 : hasValue(parsed) ? 50 : 0;
     } catch {
-      result[id] = 0;
+      newProgress[id] = 0;
     }
   }
-  progressByRubrique.value = result;
+  progressByRubrique.value = newProgress;
 }
 
 const refreshProgress = () => {
@@ -371,7 +370,7 @@ onBeforeUnmount(() => {
       justify-content: space-between;
 
       &__title {
-        width: 100%;
+        width: calc(100% - 6rem);
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;

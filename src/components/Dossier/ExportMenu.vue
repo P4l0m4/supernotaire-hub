@@ -124,6 +124,12 @@ async function wipeAll() {
 
   try {
     wipeAllStorageData();
+    window.dispatchEvent(
+      new StorageEvent("storage", {
+        key: "sn-checklist-prealables",
+        storageArea: localStorage,
+      }),
+    );
     notifyColor.value = colors["success-color"];
     notifyMessage.value = "Toutes les données locales ont été supprimées.";
     notifyVisible.value = true;

@@ -15,11 +15,11 @@
             "Célibataire / Concubin(e) / Union libre",
             "Marié(e) (communauté)",
             "Marié(e) (contrat spécifique)",
-            "Pacsé",
+            "Pacsé(e)",
             "Divorcé(e) (non remarié(e))",
             "Dissolution PACS",
             "Veuf / Veuve",
-            "Séparé de corps"
+            "Séparé de corps (mariés mais autorisés à vivre séparément)"
           ],
           "placeholder": "Sélectionner une option",
           "required": true
@@ -30,10 +30,6 @@
           "label": "Je suis de nationalité étrangère",
           "name": "celibataire_etranger",
           "type": "checkbox",
-          "requiredIf": {
-            "path": "situation_matrimoniale.statut",
-            "equals": "Célibataire / Concubin(e) / Union libre"
-          },
           "showIf": {
             "path": "situation_matrimoniale.statut",
             "equals": "Célibataire / Concubin(e) / Union libre"
@@ -45,13 +41,10 @@
           "label": "J'ai un contrat de mariage",
           "name": "separe_contrat",
           "type": "checkbox",
-          "requiredIf": {
-            "path": "situation_matrimoniale.statut",
-            "equals": "Séparé de corps"
-          },
+          "tooltip": "Séparation des biens, participation aux acquêts, etc.",
           "showIf": {
             "path": "situation_matrimoniale.statut",
-            "equals": "Séparé de corps"
+            "equals": "Séparé de corps (mariés mais autorisés à vivre séparément)"
           }
         }
       ]
