@@ -43,12 +43,23 @@ const reloadIconAnimation = () => {
   width: 100%;
   border-radius: calc($radius / 2);
   box-shadow: 20px 40px 40px -30px rgba($text-color, 0.03);
-  transition: transform 0.2s linear, color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s linear,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+  transform: scale(1);
+  transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+
+  @starting-style {
+    transform: scale(0);
+  }
 
   ::v-deep svg {
     height: 2rem;
     width: auto;
-    transition: fill 0.2s ease, stroke 0.2s ease;
+    transition:
+      fill 0.2s ease,
+      stroke 0.2s ease;
     stroke: currentColor;
     fill: none !important;
   }
@@ -67,7 +78,10 @@ const reloadIconAnimation = () => {
     height: 100%;
     border-radius: calc($radius / 2);
     // border: 1px solid rgba($text-color, 0.1);
-    transition: transform 0.2s linear, color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s linear,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
 
     @media (min-width: $big-tablet-screen) {
       padding: 1.5rem;
@@ -94,7 +108,9 @@ const reloadIconAnimation = () => {
       border-radius: calc($radius / 2);
       background-color: rgba($accent-color, 0.1);
       border: 1px solid transparent;
-      transition: background-color 0.2s ease, border 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        border 0.2s ease;
     }
   }
 }

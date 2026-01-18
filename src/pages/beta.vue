@@ -9,8 +9,6 @@ import interfaceMandats from "@/assets/images/interface-mandats.webp";
 import interfaceDocuments from "@/assets/images/interface-documents.webp";
 import interfaceFormulaires from "@/assets/images/interface-formulaires.webp";
 
-import { colors } from "@/utils/colors";
-
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
