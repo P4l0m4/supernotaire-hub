@@ -1,6 +1,8 @@
+import type { Adresse } from "@/types/adresse";
+
 export interface ChecklistSituationProfessionnelleFiscale {
   situation_pro_fiscale: {
-    lieu_imposition?: string;
+    lieu_imposition?: Adresse;
     numero_fiscal?: string;
     profession?: string;
     employeur?: string;

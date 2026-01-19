@@ -8,10 +8,11 @@
         {
           "path": "situation_pro_fiscale.lieu_imposition",
           "id": "situation-pro-lieu-imposition",
-          "label": "Lieu d'imposition",
+          "label": "Adresse à laquelle vous êtes rattaché(e) fiscalement",
           "name": "lieu_imposition",
-          "type": "text",
-          "placeholder": "Paris",
+          "type": "location",
+          "suggestionRef": "suggestion_lieu_imposition",
+          "tooltip": "Figure sur votre avis d’imposition",
           "required": true
         },
         {

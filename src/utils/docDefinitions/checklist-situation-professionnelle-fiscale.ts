@@ -11,6 +11,13 @@ export function buildDocDefinition(
   const docsSet = new Set<string>();
   const infoRows: Array<[string, string]> = [];
 
+  const formatLocation = (loc: unknown) => {
+    if (!loc) return "";
+    if (typeof loc === "string") return loc;
+    const anyVal = loc as any;
+    return anyVal?.label || anyVal?.value || anyVal?.properties?.label || "";
+  };
+
   const addDoc = (label: string, when = true) => {
     if (!when) return;
     docsSet.add(label);
@@ -22,7 +29,7 @@ export function buildDocDefinition(
   };
 
   const situation = data.situation_pro_fiscale ?? {};
-  addInfo("Lieu d'imposition", situation.lieu_imposition);
+  addInfo("Lieu d'imposition", formatLocation(situation.lieu_imposition));
   addInfo("Numéro fiscal", situation.numero_fiscal);
   addInfo("Profession", situation.profession);
   addInfo("Employeur", situation.employeur);

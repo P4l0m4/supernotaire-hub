@@ -50,6 +50,52 @@ const resolveStartDate = (field: FormField) =>
 const resolveMinDate = (field: FormField) =>
   field.type === "date" ? toDateValue(field.minDate) : undefined;
 
+const hasSuggestionValue = (suggestion: unknown) => {
+  if (suggestion == null) return false;
+  if (typeof suggestion === "string") return suggestion.trim().length > 0;
+  if (typeof suggestion === "number") return true;
+  if (Array.isArray(suggestion)) return suggestion.length > 0;
+  if (typeof suggestion === "object") return true;
+  return false;
+};
+
+const formatSuggestionLabel = (suggestion: unknown) => {
+  if (suggestion == null) return "";
+  if (typeof suggestion === "string" || typeof suggestion === "number")
+    return String(suggestion);
+  if (Array.isArray(suggestion))
+    return `${suggestion.length} valeur${suggestion.length > 1 ? "s" : ""} proposées`;
+  if (typeof suggestion === "object") {
+    const anyVal = suggestion as any;
+    if (typeof anyVal?.properties?.label === "string")
+      return anyVal.properties.label;
+    if (typeof anyVal?.label === "string") return anyVal.label;
+    if (typeof anyVal?.value === "string") return anyVal.value;
+  }
+  try {
+    return JSON.stringify(suggestion);
+  } catch {
+    return "";
+  }
+};
+
+const isSameSuggestion = (suggestion: unknown, current: unknown) => {
+  if (suggestion === current) return true;
+  if (
+    suggestion &&
+    current &&
+    typeof suggestion === "object" &&
+    typeof current === "object"
+  ) {
+    try {
+      return JSON.stringify(suggestion) === JSON.stringify(current);
+    } catch {
+      return false;
+    }
+  }
+  return false;
+};
+
 const valueRef = computed({
   get: () => getByPath(model.value, props.formField.path),
   set: (v) => setByPath(model.value, props.formField.path, v),
@@ -265,14 +311,8 @@ const errorMessage = computed(() => {
 
     <Transition name="form-field-fade">
       <UISmartSuggestion
-        v-if="
-          suggestion !== undefined &&
-          suggestion !== null &&
-          suggestion !== '' &&
-          (typeof suggestion === 'string' || typeof suggestion === 'number') &&
-          valueRef !== suggestion
-        "
-        :suggestion="suggestion.toString()"
+        v-if="hasSuggestionValue(suggestion) && !isSameSuggestion(suggestion, valueRef)"
+        :suggestion="formatSuggestionLabel(suggestion)"
         @click="
           () => {
             valueRef = suggestion;
