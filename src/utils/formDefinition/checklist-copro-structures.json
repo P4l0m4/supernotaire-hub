@@ -1,4 +1,4 @@
-{
+﻿{
   "title": "Copropriété & Structures collectives",
   "sections": [
     {
@@ -6,15 +6,18 @@
       "label": "Copropriété & Structures collectives",
       "fields": [
         {
-          "path": "bien_en_copropriete",
-          "id": "copro-bien-en-copro",
-          "label": "Le bien dépend d'une copropriété",
-          "name": "bien_en_copropriete",
-          "type": "checkbox",
-          "showIf": {
-            "path": "est_en_asl",
-            "equals": false
-          }
+          "path": "type_structure_collective",
+          "id": "copro-type-structure-collective",
+          "name": "type_structure_collective",
+          "label": "Le bien dépend :",
+          "type": "select",
+          "placeholder": "Sélectionnez une option",
+          "options": [
+            "D'une copropriété",
+            "D’une association syndicale (ASL / AFUL…)",
+            "D'aucune structure collective"
+          ],
+          "required": true
         },
         {
           "path": "type_copropriete",
@@ -28,12 +31,12 @@
           ],
           "placeholder": "Sélectionnez le type de copropriété",
           "requiredIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           },
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -44,12 +47,12 @@
           "type": "number",
           "placeholder": "4000",
           "requiredIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           },
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -59,8 +62,8 @@
           "id": "copro-fond-travaux",
           "name": "copro_fond_travaux",
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -81,13 +84,9 @@
           "label": "Le vendeur n'est pas à jour de ses charges de copropriété",
           "name": "copro_charges_a_jour",
           "type": "checkbox",
-          "requiredIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
-          },
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -135,12 +134,12 @@
             }
           ],
           "requiredIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           },
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -171,10 +170,11 @@
             "Syndic coopératif",
             "Aucun syndic"
           ],
+          "required": true,
           "placeholder": "Sélectionnez",
           "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
           }
         },
         {
@@ -183,6 +183,8 @@
           "label": "Email du syndic",
           "name": "email_syndic",
           "type": "email",
+          "placeholder": "syndic@example.com",
+          "required": true,
           "showIf": {
             "path": "gestion_copropriete",
             "in": [
@@ -198,7 +200,7 @@
           "label": "Numéro du syndic",
           "name": "tel_syndic",
           "type": "text",
-          "placeholder": "Téléphone du Syndic",
+          "placeholder": "06 00 00 00 00",
           "showIf": {
             "path": "gestion_copropriete",
             "in": [
@@ -206,18 +208,6 @@
               "Syndic bénévole",
               "Syndic coopératif"
             ]
-          }
-        },
-        {
-          "path": "est_en_asl",
-          "id": "copro-est-en-asl",
-          "label": "Le bien dépend d’une association syndicale",
-          "tooltip": "Association Syndicale Libre, Association Foncière Urbaine Libre...",
-          "name": "est_en_asl",
-          "type": "checkbox",
-          "showIf": {
-            "path": "bien_en_copropriete",
-            "equals": false
           }
         },
         {
@@ -233,8 +223,8 @@
           ],
           "placeholder": "Sélectionnez le type",
           "showIf": {
-            "path": "est_en_asl",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
           }
         },
         {
@@ -244,20 +234,21 @@
           "name": "asl_cotisations_a_jour",
           "type": "checkbox",
           "showIf": {
-            "path": "est_en_asl",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
           }
         },
         {
           "path": "email_asl",
           "id": "copro-email-asl",
-          "label": "Email de l'ASL / AFUL",
+          "label": "Email du gestionnaire",
           "name": "email_asl",
           "type": "text",
-          "placeholder": "Email du gestionnaire",
+          "required": true,
+          "placeholder": "gestionnaire@example.com",
           "showIf": {
-            "path": "est_en_asl",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
           }
         },
         {
@@ -268,8 +259,8 @@
           "type": "text",
           "placeholder": "06 00 00 00 00",
           "showIf": {
-            "path": "est_en_asl",
-            "equals": true
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
           }
         },
         {

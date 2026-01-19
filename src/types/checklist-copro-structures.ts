@@ -1,4 +1,4 @@
-export type TypeGestionSyndic =
+﻿export type TypeGestionSyndic =
   | "Syndic professionnel"
   | "Syndic bénévole"
   | "Syndic coopératif"
@@ -9,8 +9,13 @@ export type TypeAssociationSyndicale =
   | "AFUL (Association Foncière Urbaine Libre)"
   | "Autre";
 
+export type TypeStructureCollective =
+  | "D'une copropriété"
+  | "D'une association syndicale (ASL / AFUL.)"
+  | "D'aucune structure collective";
+
 export interface ChecklistCoproStructures {
-  bien_en_copropriete?: boolean;
+  type_structure_collective?: TypeStructureCollective;
   type_copropriete?: string;
   montant_annuel_charges?: number;
   copro_fond_travaux?: boolean;
@@ -22,7 +27,6 @@ export interface ChecklistCoproStructures {
   gestion_copropriete?: TypeGestionSyndic;
   email_syndic?: string;
   tel_syndic?: string;
-  est_en_asl?: boolean;
   type_association_syndicale?: TypeAssociationSyndicale;
   asl_cotisations_a_jour?: boolean;
   email_asl?: string;

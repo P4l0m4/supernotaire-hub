@@ -13,7 +13,7 @@ import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
 import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
 
 const runtimeConfig = useRuntimeConfig();
-const baseUrl = runtimeConfig.public?.baseURL;
+const baseUrl = runtimeConfig.public?.baseURL || "";
 const route = useRoute();
 
 const validSections = [

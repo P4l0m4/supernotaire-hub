@@ -20,11 +20,12 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
-  const isCopro = data.bien_en_copropriete === true;
-  const isAsl = data.est_en_asl === true;
+  const structureType = data.type_structure_collective;
+  const isCopro = structureType === "D'une copropriété";
+  const isAsl = structureType === "D'une association syndicale (ASL / AFUL.)";
   const lots = data.copro_lots_inclus_vente || [];
 
-  addInfo("Bien en copropriété", data.bien_en_copropriete);
+  addInfo("Structure collective", structureType);
   addInfo("Type de copropriété", data.type_copropriete, isCopro);
   addInfo(
     "Montant annuel moyen des charges",
@@ -57,15 +58,10 @@ export function buildDocDefinition(
   addInfo("Email du syndic", data.email_syndic, Boolean(data.email_syndic));
   addInfo("Numéro du syndic", data.tel_syndic, Boolean(data.tel_syndic));
 
-  addInfo("Association syndicale", data.est_en_asl);
-  addInfo("Type de structure", data.type_association_syndicale, isAsl);
+  addInfo("Type de structure (ASL/AFUL)", data.type_association_syndicale, isAsl);
   addInfo("Cotisations à jour", data.asl_cotisations_a_jour, isAsl);
-  addInfo("Email ASL / AFUL", data.email_asl, Boolean(data.email_asl));
-  addInfo(
-    "Téléphone ASL / AFUL",
-    data.telephone_asl,
-    Boolean(data.telephone_asl)
-  );
+  addInfo("Email du gestionnaire", data.email_asl, Boolean(data.email_asl));
+  addInfo("Téléphone du gestionnaire", data.telephone_asl, Boolean(data.telephone_asl));
   addInfo(
     "Précision type de structure",
     data.precision_type_structure,
@@ -76,8 +72,8 @@ export function buildDocDefinition(
   addDoc("Historique des charges de copropriété (3 dernières années)", isCopro);
   addDoc("Fiche synthétique de la copropriété (si disponible)", isCopro);
   addDoc("Compte-rendu de la dernière AG (PV)", isCopro);
-  addDoc("Procès-verbal d’AG N-1", isCopro);
-  addDoc("Procès-verbal d’AG N-2", isCopro);
+  addDoc("Procès-verbal d'AG N-1", isCopro);
+  addDoc("Procès-verbal d'AG N-2", isCopro);
   addDoc("Convocation et ordre du jour de la prochaine AG", isCopro);
   addDoc("Règlement de copropriété et état descriptif de division", isCopro);
   addDoc("Pré-état daté", isCopro);
