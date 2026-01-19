@@ -127,7 +127,9 @@ const monthBridge = computed<Date | number | null>({
       :max-date="maxDate || undefined"
       :placeholder="placeholder || ''"
     ></VueDatePicker>
-    <span class="date-field__error" v-if="error">{{ error }}</span>
+    <Transition name="form-field-fade">
+      <span class="date-field__error" v-if="error">{{ error }}</span>
+    </Transition>
   </div>
 </template>
 <style lang="scss" scoped>

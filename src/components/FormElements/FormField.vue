@@ -263,21 +263,23 @@ const errorMessage = computed(() => {
         :error="errorMessage"
     /></ClientOnly>
 
-    <UISmartSuggestion
-      v-if="
-        suggestion !== undefined &&
-        suggestion !== null &&
-        suggestion !== '' &&
-        (typeof suggestion === 'string' || typeof suggestion === 'number') &&
-        valueRef !== suggestion
-      "
-      :suggestion="suggestion.toString()"
-      @click="
-        () => {
-          valueRef = suggestion;
-        }
-      "
-    />
+    <Transition name="form-field-fade">
+      <UISmartSuggestion
+        v-if="
+          suggestion !== undefined &&
+          suggestion !== null &&
+          suggestion !== '' &&
+          (typeof suggestion === 'string' || typeof suggestion === 'number') &&
+          valueRef !== suggestion
+        "
+        :suggestion="suggestion.toString()"
+        @click="
+          () => {
+            valueRef = suggestion;
+          }
+        "
+      />
+    </Transition>
   </div>
 </template>
 <style scoped lang="scss">

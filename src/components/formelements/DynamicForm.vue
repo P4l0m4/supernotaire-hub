@@ -542,7 +542,11 @@ watch(
       class="dynamic-form__section"
       v-show="currentSection === index"
     >
-      <div class="dynamic-form__section__fields">
+      <TransitionGroup
+        name="form-field-fade"
+        tag="div"
+        class="dynamic-form__section__fields"
+      >
         <FormElementsFormField
           v-for="field in visibleFields"
           :key="field.path"
@@ -552,7 +556,7 @@ watch(
           :validation="nodeFor(field.path)"
           @hasErrors="stopNextStep = $event.hasErrors"
         />
-      </div>
+      </TransitionGroup>
     </div>
     <div class="dynamic-form__buttons">
       <UIPrimaryButton
@@ -638,6 +642,19 @@ watch(
       align-items: center;
       justify-content: flex-start;
     }
+  }
+
+  .form-field-fade-enter-active,
+  .form-field-fade-leave-active {
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .form-field-fade-enter-from,
+  .form-field-fade-leave-to {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 </style>
