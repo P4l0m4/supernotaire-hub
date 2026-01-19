@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   if (!apiKey) {
     setResponseStatus(event, 500);
-    return { error: "ClǸ SendGrid manquante (SENDGRID_API_KEY)." };
+    return { error: "Clé SendGrid manquante (SENDGRID_API_KEY)." };
   }
 
   sgMail.setApiKey(apiKey);
@@ -54,6 +54,6 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error("[SendGrid] send failed", error);
     setResponseStatus(event, 500);
-    return { error: "Envoi email ǸchouǸ." };
+    return { error: "Envoi email échoué." };
   }
 });

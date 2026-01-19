@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { colors } from "@/utils/colors";
 
 import type { Validation } from "@vuelidate/core";
@@ -9,6 +9,7 @@ const props = defineProps<{
   formField: FormField;
   suggestion?: any;
   validation?: Validation<any> | null;
+  highlightPaths?: string[];
 }>();
 
 const model = defineModel<Record<string, any>>({ default: {} });
@@ -163,10 +164,29 @@ const errorMessage = computed(() => {
   const msg = props.validation?.$errors[0].$message;
   return msg && typeof msg === "object" && "value" in msg ? msg.value : msg;
 });
+
+const isHighlighted = computed(() =>
+  props.highlightPaths?.includes(props.formField.path),
+);
+
+const manualHighlight = ref(false);
+const MANUAL_HIGHLIGHT_DURATION = 1200;
+
+const triggerManualHighlight = () => {
+  manualHighlight.value = true;
+  setTimeout(() => {
+    manualHighlight.value = false;
+  }, MANUAL_HIGHLIGHT_DURATION);
+};
+
+const isAnyHighlight = computed(
+  () => isHighlighted.value || manualHighlight.value,
+);
 </script>
 <template>
   <div
     class="form-field"
+    :class="{ 'form-field--prefill': isAnyHighlight }"
     :style="{ gridColumn: formField.type === 'array' ? '1 / -1' : '' }"
   >
     <label
@@ -199,8 +219,8 @@ const errorMessage = computed(() => {
         formField.required
           ? formField.required
           : formField.requiredIf
-          ? false
-          : undefined
+            ? false
+            : undefined
       "
       :icon="formField.icon || ''"
       :error="errorMessage"
@@ -303,19 +323,23 @@ const errorMessage = computed(() => {
           formField.required
             ? formField.required
             : formField.requiredIf
-            ? false
-            : undefined
+              ? false
+              : undefined
         "
         :error="errorMessage"
     /></ClientOnly>
 
     <Transition name="form-field-fade">
       <UISmartSuggestion
-        v-if="hasSuggestionValue(suggestion) && !isSameSuggestion(suggestion, valueRef)"
+        v-if="
+          hasSuggestionValue(suggestion) &&
+          !isSameSuggestion(suggestion, valueRef)
+        "
         :suggestion="formatSuggestionLabel(suggestion)"
         @click="
           () => {
             valueRef = suggestion;
+            triggerManualHighlight();
           }
         "
       />
@@ -339,6 +363,24 @@ const errorMessage = computed(() => {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+  }
+
+  &--prefill {
+    animation: prefillPulse 1s ease-in-out 0s 1;
+    box-shadow: 0 0 0 0 rgba($purple-color, 0.25);
+    border-radius: calc($radius / 2);
+  }
+}
+
+@keyframes prefillPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($purple-color, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba($purple-color, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($purple-color, 0);
   }
 }
 </style>

@@ -15,6 +15,7 @@ interface Suggestion {
 const props = defineProps<{
   formDefinition: FormDefinition;
   suggestions?: Suggestion[] | null;
+  prefillHighlights?: string[];
 }>();
 const emit = defineEmits<{
   (e: "complete"): void;
@@ -550,6 +551,7 @@ watch(
           :suggestion="getSuggestion(field.suggestionRef)"
           v-model="model"
           :validation="nodeFor(field.path)"
+          :highlightPaths="props.prefillHighlights"
           @hasErrors="stopNextStep = $event.hasErrors"
         />
       </TransitionGroup>

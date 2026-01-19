@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
 import { loadLogo } from "@/utils/otherFunctions";
 import { useExportAccess } from "@/composables/useExportAccess";
 import type { FormDefinition } from "@/types/forms";
@@ -23,6 +23,7 @@ const props = defineProps<{
     occupantValue?: string;
   };
   suggestions?: Array<{ key: string; value: unknown }>;
+  prefillEntries?: Array<{ path: string; value: unknown }>;
 }>();
 
 const { $pdfMake } = useNuxtApp();
@@ -30,6 +31,11 @@ const formData = reactive<Record<string, any>>({});
 const showLastAction = ref(false);
 const lastValidSnapshot = ref<Record<string, any> | null>(null);
 const isHydrated = ref(false);
+const prefillHighlights = ref<string[]>([]);
+const prefillTimers: Array<ReturnType<typeof setTimeout>> = [];
+const PREFILL_DELAY = 700;
+const HIGHLIGHT_DURATION = 1200;
+const appliedPrefills = new Set<string>();
 const {
   access: exportUnlocked,
   checked: accessChecked,
@@ -76,6 +82,23 @@ const normalizeAddress = (value: unknown) => {
   return "";
 };
 
+const schedulePrefill = (path: string, value: unknown) => {
+  const timer = setTimeout(() => {
+    setByPath(formData, path.split("."), value);
+    persistSnapshot(formData);
+    prefillHighlights.value = Array.from(
+      new Set([...prefillHighlights.value, path]),
+    );
+    const clearTimer = setTimeout(() => {
+      prefillHighlights.value = prefillHighlights.value.filter(
+        (p) => p !== path,
+      );
+    }, HIGHLIGHT_DURATION);
+    prefillTimers.push(clearTimer);
+  }, PREFILL_DELAY);
+  prefillTimers.push(timer);
+};
+
 const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
@@ -91,7 +114,7 @@ const hydrateFromStorage = () => {
     if (props.sharedTypeStorageKey) {
       const sharedType = localStorage.getItem(props.sharedTypeStorageKey);
       if (!formData.type_bien && sharedType) {
-        formData.type_bien = sharedType;
+        schedulePrefill("type_bien", sharedType);
       }
     }
     if (props.sharedAddressCompare) {
@@ -120,7 +143,7 @@ const hydrateFromStorage = () => {
         if (propertyNorm && currentNorm && propertyNorm === currentNorm) {
           const existing = getByPath(formData, cfg.targetPath.split("."));
           if (existing !== true) {
-            setByPath(formData, cfg.targetPath.split("."), true);
+            schedulePrefill(cfg.targetPath, true);
           }
           if (cfg.occupantPath && cfg.occupantValue) {
             const currentOccupant = getByPath(
@@ -128,14 +151,9 @@ const hydrateFromStorage = () => {
               cfg.occupantPath.split("."),
             );
             if (!currentOccupant) {
-              setByPath(
-                formData,
-                cfg.occupantPath.split("."),
-                cfg.occupantValue,
-              );
+              schedulePrefill(cfg.occupantPath, cfg.occupantValue);
             }
           }
-          persistSnapshot(formData);
         }
       }
     }
@@ -157,9 +175,33 @@ const persistSnapshot = (data: Record<string, any>) => {
   }
 };
 
+const tryApplyPrefillEntries = () => {
+  if (!props.prefillEntries?.length) return;
+  props.prefillEntries.forEach(({ path, value }) => {
+    if (appliedPrefills.has(path)) return;
+    const current = getByPath(formData, path.split("."));
+    const isEmpty =
+      current == null ||
+      current === "" ||
+      (typeof current === "object" && Object.keys(current).length === 0);
+    if (!isEmpty) return;
+    appliedPrefills.add(path);
+    schedulePrefill(path, value);
+  });
+};
+
 onMounted(() => {
   hydrateFromStorage();
+  tryApplyPrefillEntries();
 });
+
+watch(
+  () => props.prefillEntries,
+  () => {
+    tryApplyPrefillEntries();
+  },
+  { deep: true },
+);
 
 const pdfFileName = (prefix: string) => {
   const date = new Date().toISOString().slice(0, 10);
@@ -209,6 +251,10 @@ const downloadPdf = async () => {
   // @ts-ignore
   $pdfMake.createPdf(doc).download(pdfFileName(props.pdfPrefix));
 };
+
+onBeforeUnmount(() => {
+  prefillTimers.forEach((t) => clearTimeout(t));
+});
 </script>
 
 <template>
@@ -244,6 +290,7 @@ const downloadPdf = async () => {
         :formDefinition="formDefinition"
         v-model="formData"
         :suggestions="suggestions || []"
+        :prefillHighlights="prefillHighlights"
         @complete="onComplete"
         @valid-state="onValidState"
       />
