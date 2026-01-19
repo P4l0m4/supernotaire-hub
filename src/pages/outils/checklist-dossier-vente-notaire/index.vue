@@ -103,9 +103,20 @@ watch(
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "EasyCase | Checklist dossier de vente",
+  name: "Préparation de dossier de vente immobilière",
   description:
-    "Créez une checklist personnalisée des informations et documents à fournir au notaire pour votre dossier de vente.",
+    "Créez un récapitulatif personnalisé des informations et documents à fournir au notaire pour votre dossier de vente.",
+  url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+}));
+
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Préparation de dossier de vente immobilière",
+  description:
+    "Créer un récapitulatif personnalisé des documents à fournir au notaire pour la vente d'un bien immobilier.",
+  applicationCategory: "Tool",
+  operatingSystem: "Web",
   url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
 }));
 

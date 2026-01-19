@@ -75,6 +75,17 @@ useJsonld(() => ({
   url: `${baseUrl}/outils/pre-etat-date`,
 }));
 
+useJsonld(() => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Créateur de Pré-état daté immobilier gratuit",
+  description:
+    "Créer un Pré-état daté conforme à la réglementation pour la vente d'un bien en copropriété.",
+  applicationCategory: "Tool",
+  operatingSystem: "Web",
+  url: `${baseUrl}/outils/pre-etat-date`,
+}));
+
 useHead({
   title: "EasyCase | Générateur de Pré-état daté gratuit",
   meta: [
