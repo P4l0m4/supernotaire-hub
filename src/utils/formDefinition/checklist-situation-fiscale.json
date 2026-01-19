@@ -1,0 +1,332 @@
+﻿{
+  "title": "Situation fiscale",
+  "sections": [
+    {
+      "id": "situation-fiscale",
+      "label": "Situation fiscale",
+      "fields": [
+        {
+          "path": "situation_fiscale.type_proprietaire",
+          "id": "situation-fiscale-type-proprietaire",
+          "label": "Le propriétaire du bien est une :",
+          "name": "type_proprietaire",
+          "type": "select",
+          "options": ["Personne physique", "Personne morale"],
+          "placeholder": "Sélectionner une option",
+          "required": true
+        },
+        {
+          "path": "situation_fiscale.proprietaire_impose",
+          "id": "situation-fiscale-proprietaire-impose",
+          "label": "Le propriétaire du bien est-il imposé ?",
+          "name": "proprietaire_impose",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          }
+        },
+        {
+          "path": "situation_fiscale.assujetti_ifi",
+          "id": "situation-fiscale-assujetti-ifi",
+          "label": "Le propriétaire du bien est-il assujetti à l’IFI ?",
+          "name": "assujetti_ifi",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "tooltip": "impôt sur la fortune immobilière",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          }
+        },
+        {
+          "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+          "id": "situation-fiscale-residence-fiscale",
+          "label": "Résidence fiscale",
+          "name": "residence_fiscale_personne_physique_statut",
+          "type": "select",
+          "options": ["En France", "A l’étranger"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          }
+        },
+        {
+          "path": "situation_fiscale.residence_fiscale_personne_physique.pays_etranger",
+          "id": "situation-fiscale-residence-fiscale-pays-etranger",
+          "label": "Pays de résidence fiscale étrangère",
+          "name": "residence_fiscale_personne_physique_pays_etranger",
+          "type": "text",
+          "placeholder": "Pays de résidence fiscale étrangère",
+          "showIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l’étranger"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l’étranger"
+          }
+        },
+        {
+          "path": "situation_fiscale.residence_fiscale_personne_physique.nif_etranger",
+          "id": "situation-fiscale-residence-fiscale-nif-etranger",
+          "label": "NIF étranger",
+          "name": "residence_fiscale_personne_physique_nif_etranger",
+          "type": "number",
+          "placeholder": "NIF",
+          "tooltip": "Tax Identification Number",
+          "showIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l’étranger"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l’étranger"
+          }
+        },
+        {
+          "path": "situation_fiscale.avis_impot_revenu_disponible",
+          "id": "situation-fiscale-avis-impot-revenu-disponible",
+          "label": "Le propriétaire du bien dispose t’il d’un avis d’impôt sur le revenu ?",
+          "name": "avis_impot_revenu_disponible",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          }
+        },
+        {
+          "path": "situation_fiscale.type_entite",
+          "id": "situation-fiscale-type-entite",
+          "label": "Type d’entité",
+          "name": "type_entite",
+          "type": "select",
+          "options": ["Société : SARL, SAS, SCI, etc.", "Association"],
+          "placeholder": "Sélectionner un type d’entité",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          }
+        },
+        {
+          "path": "situation_fiscale.entite_imposee_en_france",
+          "id": "situation-fiscale-entite-imposee-en-france",
+          "label": "L’entité est-elle soumise à l’impôt en France ?",
+          "name": "entite_imposee_en_france",
+          "type": "select",
+          "options": ["Oui", "Non", "Partiellement"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          }
+        },
+        {
+          "path": "situation_fiscale.bien_inscrit_actif_entite",
+          "id": "situation-fiscale-bien-inscrit-actif-entite",
+          "label": "Le bien vendu est-il inscrit à l’actif de l’entité ?",
+          "name": "bien_inscrit_actif_entite",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne morale"
+          }
+        },
+        {
+          "path": "situation_fiscale.regime_imposition_entite",
+          "id": "situation-fiscale-regime-imposition-entite",
+          "label": "Régime d’imposition",
+          "name": "regime_imposition_entite",
+          "type": "select",
+          "options": [
+            "Impôt sur les sociétés (IS)",
+            "Impôt sur le revenu (IR)",
+            "Régime étranger"
+          ],
+          "placeholder": "Sélectionner un régime",
+          "showIf": {
+            "path": "situation_fiscale.type_entite",
+            "equals": "Société : SARL, SAS, SCI, etc."
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_entite",
+            "equals": "Société : SARL, SAS, SCI, etc."
+          }
+        },
+        {
+          "path": "situation_fiscale.regime_imposition_association",
+          "id": "situation-fiscale-regime-imposition-association",
+          "label": "Régime d’imposition",
+          "name": "regime_imposition_association",
+          "type": "select",
+          "options": [
+            "Non lucrative (hors IS)",
+            "Lucrative ou fiscalisée partiellement",
+            "Soumise à l’impôt sur les sociétés (IS)"
+          ],
+          "placeholder": "Sélectionner un régime",
+          "showIf": {
+            "path": "situation_fiscale.type_entite",
+            "equals": "Association"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_entite",
+            "equals": "Association"
+          }
+        },
+        {
+          "path": "situation_fiscale.numero_fiscal_francais",
+          "id": "situation-fiscale-numero-fiscal-francais",
+          "label": "Le propriétaire du bien a-t-il un numéro fiscal français ?",
+          "name": "numero_fiscal_francais",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.type_proprietaire",
+            "equals": "Personne physique"
+          }
+        },
+        {
+          "path": "situation_fiscale.numero_fiscal",
+          "id": "situation-fiscale-numero-fiscal",
+          "label": "Numéro fiscal",
+          "name": "numero_fiscal",
+          "type": "text",
+          "placeholder": "13 chiffres",
+          "pattern": "^\\d{13}$",
+          "showIf": {
+            "path": "situation_fiscale.numero_fiscal_francais",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.numero_fiscal_francais",
+            "equals": "Oui"
+          }
+        },
+        {
+          "path": "situation_fiscale.lieu_imposition",
+          "id": "situation-fiscale-lieu-imposition",
+          "label": "Lieu d'imposition",
+          "name": "lieu_imposition",
+          "type": "select",
+          "options": ["En France", "A l'étranger", "En France et à l'étranger"],
+          "placeholder": "Sélectionner une option",
+          "showIf": {
+            "path": "situation_fiscale.proprietaire_impose",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.proprietaire_impose",
+            "equals": "Oui"
+          }
+        },
+        {
+          "path": "situation_fiscale.adresse_lieu_imposition",
+          "id": "situation-fiscale-adresse-lieu-imposition",
+          "label": "Adresse du lieu d'imposition",
+          "name": "adresse_lieu_imposition",
+          "type": "location",
+          "suggestionRef": "suggestion_lieu_imposition",
+          "placeholder": "Adresse du lieu d'imposition",
+          "showIf": {
+            "or": [
+              {
+                "path": "situation_fiscale.lieu_imposition",
+                "equals": "En France"
+              },
+              {
+                "path": "situation_fiscale.lieu_imposition",
+                "equals": "En France et à l'étranger"
+              }
+            ]
+          },
+          "requiredIf": {
+            "or": [
+              {
+                "path": "situation_fiscale.lieu_imposition",
+                "equals": "En France"
+              },
+              {
+                "path": "situation_fiscale.lieu_imposition",
+                "equals": "En France et à l'étranger"
+              }
+            ]
+          }
+        },
+        {
+          "path": "situation_fiscale.residence_fiscale.pays",
+          "id": "situation-fiscale-residence-pays",
+          "label": "Pays de résidence fiscale",
+          "name": "residence_fiscale_pays",
+          "type": "text",
+          "placeholder": "Suisse",
+          "requiredIf": {
+            "path": "situation_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          },
+          "showIf": {
+            "path": "situation_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          }
+        },
+        {
+          "path": "situation_fiscale.residence_fiscale.nif_etranger",
+          "id": "situation-fiscale-nif-etranger",
+          "label": "NIF étranger (Tax Identification Number)",
+          "name": "nif_etranger",
+          "type": "text",
+          "placeholder": "NIF",
+          "requiredIf": {
+            "path": "situation_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          },
+          "showIf": {
+            "path": "situation_fiscale.non_resident_fiscal_francais",
+            "equals": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import RubriqueCopro from "@/components/Dossier/RubriqueCopro.vue";
 import RubriqueOccupation from "@/components/Dossier/RubriqueOccupation.vue";
 import RubriqueOrigine from "@/components/Dossier/RubriqueOrigine.vue";
 import RubriqueCapacite from "@/components/Dossier/RubriqueCapacite.vue";
-import RubriqueProFiscale from "@/components/Dossier/RubriqueProFiscale.vue";
+import RubriqueFiscale from "@/components/Dossier/RubriqueFiscale.vue";
 import RubriqueUrbanisme from "@/components/Dossier/RubriqueUrbanisme.vue";
 import RubriqueDiagnosticsTravauxInterieurs from "@/components/Dossier/RubriqueDiagnosticsTravauxInterieurs.vue";
 
@@ -25,7 +25,7 @@ const validSections = [
   "occupation",
   "origine",
   "capacite",
-  "pro-fiscale",
+  "fiscale",
   "urbanisme",
   "diagnostics-travaux-interieurs",
 ] as const;
@@ -52,7 +52,7 @@ const sectionLabels: Record<SectionParam, string> = {
   occupation: "Occupation actuelle",
   origine: "Origine de propriété",
   capacite: "Capacité & Représentation",
-  "pro-fiscale": "Situation professionnelle & Fiscale",
+  fiscale: "Situation fiscale",
   urbanisme: "Urbanisme & Travaux extérieurs",
   "diagnostics-travaux-interieurs": "Diagnostics & Travaux intérieurs",
 };
@@ -66,7 +66,7 @@ const componentMap: Record<SectionParam, any> = {
   occupation: RubriqueOccupation,
   origine: RubriqueOrigine,
   capacite: RubriqueCapacite,
-  "pro-fiscale": RubriqueProFiscale,
+  fiscale: RubriqueFiscale,
   urbanisme: RubriqueUrbanisme,
   "diagnostics-travaux-interieurs": RubriqueDiagnosticsTravauxInterieurs,
 };

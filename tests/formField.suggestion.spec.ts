@@ -5,7 +5,10 @@ import FormField from "@/components/FormElements/FormField.vue";
 import type { FormField as FormFieldType } from "@/types/forms";
 
 const stubs = {
-  UIIconComponent: { template: "<span><slot /></span>", props: ["icon", "color"] },
+  UIIconComponent: {
+    template: "<span><slot /></span>",
+    props: ["icon", "color"],
+  },
   UISmartSuggestion: {
     template:
       '<button class="suggestion" @click="$emit(\'click\')">{{ suggestion }}</button>',
@@ -26,7 +29,7 @@ const addressSuggestion = {
 
 const baseField: FormFieldType = {
   id: "loc",
-  path: "situation_pro_fiscale.lieu_imposition",
+  path: "situation_fiscale.lieu_imposition",
   label: "Lieu",
   name: "lieu",
   type: "location",
@@ -54,9 +57,9 @@ describe("FormField suggestions", () => {
     await nextTick();
 
     const vm = wrapper.vm as any;
-    expect(
-      vm.model?.situation_pro_fiscale?.lieu_imposition,
-    ).toEqual(addressSuggestion);
+    expect(vm.model?.situation_fiscale?.lieu_imposition).toEqual(
+      addressSuggestion,
+    );
 
     expect(wrapper.find(".form-field").classes()).toContain(
       "form-field--prefill",

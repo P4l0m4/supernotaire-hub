@@ -13,7 +13,7 @@ import coproForm from "@/utils/formDefinition/checklist-copro-structures.json";
 import occupationForm from "@/utils/formDefinition/checklist-occupation-actuelle.json";
 import origineForm from "@/utils/formDefinition/checklist-origine-propriete.json";
 import capaciteForm from "@/utils/formDefinition/checklist-capacite-representation.json";
-import proFiscaleForm from "@/utils/formDefinition/checklist-situation-professionnelle-fiscale.json";
+import fiscaleForm from "@/utils/formDefinition/checklist-situation-fiscale.json";
 import diagnosticsTIForm from "@/utils/formDefinition/checklist-diagnostics-travaux-interieurs.json";
 
 type Definition = JSONSchema7 & { definitions?: Record<string, JSONSchema7> };
@@ -24,7 +24,8 @@ const cases = [
     form: urbanismeForm,
     typePath: "src/types/checklist-urbanisme-travaux-exterieurs.ts",
     typeName: "ChecklistUrbanismeTravauxExterieurs",
-    docDefPath: "src/utils/docDefinitions/checklist-urbanisme-travaux-exterieurs.ts",
+    docDefPath:
+      "src/utils/docDefinitions/checklist-urbanisme-travaux-exterieurs.ts",
   },
   {
     name: "informations-prealables",
@@ -83,18 +84,19 @@ const cases = [
     docDefPath: "src/utils/docDefinitions/checklist-capacite-representation.ts",
   },
   {
-    name: "situation-professionnelle-fiscale",
-    form: proFiscaleForm,
-    typePath: "src/types/checklist-situation-professionnelle-fiscale.ts",
-    typeName: "ChecklistSituationProfessionnelleFiscale",
-    docDefPath: "src/utils/docDefinitions/checklist-situation-professionnelle-fiscale.ts",
+    name: "situation-fiscale",
+    form: fiscaleForm,
+    typePath: "src/types/checklist-situation-fiscale.ts",
+    typeName: "ChecklistSituationFiscale",
+    docDefPath: "src/utils/docDefinitions/checklist-situation-fiscale.ts",
   },
   {
     name: "diagnostics-travaux-interieurs",
     form: diagnosticsTIForm,
     typePath: "src/types/checklist-diagnostics-travaux-interieurs.ts",
     typeName: "ChecklistDiagnosticsTravauxInterieurs",
-    docDefPath: "src/utils/docDefinitions/checklist-diagnostics-travaux-interieurs.ts",
+    docDefPath:
+      "src/utils/docDefinitions/checklist-diagnostics-travaux-interieurs.ts",
   },
 ];
 
@@ -120,7 +122,8 @@ const collectSchemaPaths = (schema: Definition, rootKey: string): PathSet => {
   };
 
   const root =
-    (schema.definitions && (schema.definitions as Record<string, JSONSchema7>)[rootKey]) ||
+    (schema.definitions &&
+      (schema.definitions as Record<string, JSONSchema7>)[rootKey]) ||
     schema;
   walk(root as JSONSchema7, rootKey);
   return paths;
@@ -152,7 +155,7 @@ const collectDocPaths = (docPath: string): string[] => {
       p
         .replace(/\?/g, "")
         .replace(/\.\[/g, ".")
-        .replace(/\[(\d+)\]/g, ".$1")
+        .replace(/\[(\d+)\]/g, ".$1"),
     );
 };
 
@@ -176,7 +179,7 @@ describe("Checklist concordance across form/type/docDefinition", () => {
         const alt = candidate.replace(/_/g, "-");
         if (
           !formPaths.some(
-            (fp) => fp.startsWith(candidate) || fp.startsWith(alt)
+            (fp) => fp.startsWith(candidate) || fp.startsWith(alt),
           )
         ) {
           missing.push(p);
@@ -195,7 +198,7 @@ describe("Checklist concordance across form/type/docDefinition", () => {
       const schema = generator.createSchema() as Definition;
       const typePaths = collectSchemaPaths(schema, c.typeName);
       const docPaths = collectDocPaths(c.docDefPath).filter(
-        (p) => !p.includes(".includes")
+        (p) => !p.includes(".includes"),
       );
       const missing: string[] = [];
       for (const p of docPaths) {

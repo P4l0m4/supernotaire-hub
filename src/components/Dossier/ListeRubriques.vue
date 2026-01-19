@@ -12,7 +12,7 @@ type RubriqueId =
   | "occupation"
   | "origine"
   | "capacite"
-  | "pro-fiscale"
+  | "fiscale"
   | "urbanisme"
   | "diagnostics-travaux-interieurs";
 
@@ -47,9 +47,9 @@ const cards: RubriqueCard[] = [
       "Chauffage, assainissement, situation fiscale (taxes foncière/habitation).",
   },
   {
-    id: "pro-fiscale",
-    title: "Situation professionnelle & Fiscale",
-    subtitle: "Activité pro, revenus, imposition, patrimoine financier.",
+    id: "fiscale",
+    title: "Situation Fiscale",
+    subtitle: "Résidence fiscale, entité et régime d’imposition.",
   },
   {
     id: "copro",
@@ -99,7 +99,7 @@ const storageKeys: Record<RubriqueId, string> = {
   occupation: "sn-checklist-occupation",
   origine: "sn-checklist-origine",
   capacite: "sn-checklist-capacite",
-  "pro-fiscale": "sn-checklist-pro-fiscale",
+  fiscale: "sn-checklist-fiscale",
   urbanisme: "sn-checklist-urbanisme",
   "diagnostics-travaux-interieurs":
     "sn-checklist-diagnostics-travaux-interieurs",
@@ -130,7 +130,7 @@ const initialProgress: Record<RubriqueId, number> = {
   occupation: 0,
   origine: 0,
   capacite: 0,
-  "pro-fiscale": 0,
+  fiscale: 0,
   urbanisme: 0,
   "diagnostics-travaux-interieurs": 0,
 };

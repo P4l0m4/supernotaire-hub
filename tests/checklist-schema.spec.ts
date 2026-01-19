@@ -10,7 +10,7 @@ import coproForm from "@/utils/formDefinition/checklist-copro-structures.json";
 import occupationForm from "@/utils/formDefinition/checklist-occupation-actuelle.json";
 import origineForm from "@/utils/formDefinition/checklist-origine-propriete.json";
 import capaciteForm from "@/utils/formDefinition/checklist-capacite-representation.json";
-import proFiscaleForm from "@/utils/formDefinition/checklist-situation-professionnelle-fiscale.json";
+import fiscaleForm from "@/utils/formDefinition/checklist-situation-fiscale.json";
 import diagnosticsTIForm from "@/utils/formDefinition/checklist-diagnostics-travaux-interieurs.json";
 
 type Definition = JSONSchema7 & { definitions?: Record<string, JSONSchema7> };
@@ -26,17 +26,18 @@ const resolveRef = (ref: string, root: Definition): JSONSchema7 | undefined => {
 
 const normalizeSchema = (
   node?: JSONSchema7,
-  root?: Definition
+  root?: Definition,
 ): JSONSchema7 | undefined => {
   if (!node) return undefined;
-  if (node.$ref && root) return normalizeSchema(resolveRef(node.$ref, root), root);
+  if (node.$ref && root)
+    return normalizeSchema(resolveRef(node.$ref, root), root);
   return node;
 };
 
 const getChild = (
   node: JSONSchema7 | undefined,
   key: string,
-  root: Definition
+  root: Definition,
 ) => {
   if (!node) return undefined;
   const normalized = normalizeSchema(node, root);
@@ -45,9 +46,15 @@ const getChild = (
     return normalizeSchema(normalized.properties[key] as JSONSchema7, root);
   }
   if (normalized.type === "array" && normalized.items) {
-    return getChild(normalizeSchema(normalized.items as JSONSchema7, root), key, root);
+    return getChild(
+      normalizeSchema(normalized.items as JSONSchema7, root),
+      key,
+      root,
+    );
   }
-  const union = (normalized.anyOf || normalized.oneOf) as JSONSchema7[] | undefined;
+  const union = (normalized.anyOf || normalized.oneOf) as
+    | JSONSchema7[]
+    | undefined;
   if (union?.length) {
     for (const option of union) {
       const found = getChild(normalizeSchema(option, root), key, root);
@@ -130,10 +137,10 @@ const cases = [
     typeName: "ChecklistCapaciteRepresentation",
   },
   {
-    name: "situation-professionnelle-fiscale",
-    form: proFiscaleForm,
-    typePath: "src/types/checklist-situation-professionnelle-fiscale.ts",
-    typeName: "ChecklistSituationProfessionnelleFiscale",
+    name: "situation-fiscale",
+    form: fiscaleForm,
+    typePath: "src/types/checklist-situation-fiscale.ts",
+    typeName: "ChecklistSituationFiscale",
   },
   {
     name: "diagnostics-travaux-interieurs",
@@ -155,8 +162,9 @@ describe("Checklist schema vs types", () => {
       const schema = generator.createSchema() as Definition;
       const rootSchema =
         normalizeSchema(
-          (schema.definitions as Record<string, JSONSchema7>)?.[c.typeName] || schema,
-          schema
+          (schema.definitions as Record<string, JSONSchema7>)?.[c.typeName] ||
+            schema,
+          schema,
         ) || normalizeSchema(schema, schema);
       expect(rootSchema).toBeDefined();
 

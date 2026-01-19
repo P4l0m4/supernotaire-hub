@@ -3,7 +3,7 @@ import { buildDocDefinition as buildPrealablesDoc } from "./docDefinitions/check
 import { buildDocDefinition as buildIdentiteDoc } from "./docDefinitions/checklist-identite-etat-civil";
 import { buildDocDefinition as buildSituationDoc } from "./docDefinitions/checklist-situation-matrimoniale";
 import { buildDocDefinition as buildChargesTaxesDoc } from "./docDefinitions/checklist-charges-taxes";
-import { buildDocDefinition as buildProFiscaleDoc } from "./docDefinitions/checklist-situation-professionnelle-fiscale";
+import { buildDocDefinition as buildFiscaleDoc } from "./docDefinitions/checklist-situation-fiscale";
 import { buildDocDefinition as buildCoproDoc } from "./docDefinitions/checklist-copro-structures";
 import { buildDocDefinition as buildOccupationDoc } from "./docDefinitions/checklist-occupation-actuelle";
 import { buildDocDefinition as buildOrigineDoc } from "./docDefinitions/checklist-origine-propriete";
@@ -16,7 +16,7 @@ type FreeRubriqueId =
   | "identite"
   | "situation"
   | "charges-taxes"
-  | "pro-fiscale";
+  | "fiscale";
 
 type RubriqueConfig<TData> = {
   id: FreeRubriqueId;
@@ -46,9 +46,9 @@ const freeRubriques: RubriqueConfig<any>[] = [
     buildDoc: buildChargesTaxesDoc,
   },
   {
-    id: "pro-fiscale",
-    storageKey: "sn-checklist-pro-fiscale",
-    buildDoc: buildProFiscaleDoc,
+    id: "fiscale",
+    storageKey: "sn-checklist-fiscale",
+    buildDoc: buildFiscaleDoc,
   },
 ];
 
@@ -75,7 +75,7 @@ const readStoredRubrique = <T>(storageKey: string): T | null => {
 
 export function buildPartialDocDefinitionFromData(
   dataByRubrique: Partial<Record<FreeRubriqueId, unknown>>,
-  logoBase64: string
+  logoBase64: string,
 ) {
   return buildCombinedDocDefinition(freeRubriques, dataByRubrique, logoBase64);
 }
@@ -130,7 +130,7 @@ export const allRubriques: AnyRubriqueConfig[] = [
 function buildCombinedDocDefinition(
   configs: AnyRubriqueConfig[],
   dataByRubrique: Partial<Record<string, unknown>>,
-  logoBase64: string
+  logoBase64: string,
 ) {
   const docDefinitions: any[] = [];
 
@@ -159,7 +159,7 @@ function buildCombinedDocDefinition(
       ...acc,
       ...(definition.styles || {}),
     }),
-    {}
+    {},
   );
 
   return {

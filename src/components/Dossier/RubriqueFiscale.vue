@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import RubriqueBase from "@/components/Dossier/RubriqueBase.vue";
-import proFiscaleFormDefinition from "@/utils/formDefinition/checklist-situation-professionnelle-fiscale.json";
-import { buildDocDefinition as buildProFiscaleDocDefinition } from "@/utils/docDefinitions/checklist-situation-professionnelle-fiscale";
+import fiscaleFormDefinition from "@/utils/formDefinition/checklist-situation-fiscale.json";
+import { buildDocDefinition as buildFiscaleDocDefinition } from "@/utils/docDefinitions/checklist-situation-fiscale";
 
 const suggestions = ref<Array<{ key: string; value: unknown }>>([]);
 const prefillEntries = ref<Array<{ path: string; value: unknown }>>([]);
@@ -14,7 +14,9 @@ onMounted(() => {
       const raw = localStorage.getItem(storageKey);
       if (!raw) return null;
       const parsed = JSON.parse(raw);
-      return path.split(".").reduce((acc: any, k: string) => (acc ? acc[k] : undefined), parsed);
+      return path
+        .split(".")
+        .reduce((acc: any, k: string) => (acc ? acc[k] : undefined), parsed);
     } catch {
       return null;
     }
@@ -31,12 +33,19 @@ onMounted(() => {
   };
 
   const adresseBien = readAddr("sn-checklist-prealables", "adresse_bien");
-  const adresseIdentite = readAddr("sn-checklist-identite", "identite.adresse_actuelle");
-  const chosen = isAdresse(adresseBien) ? adresseBien : isAdresse(adresseIdentite) ? adresseIdentite : null;
+  const adresseIdentite = readAddr(
+    "sn-checklist-identite",
+    "identite.adresse_actuelle",
+  );
+  const chosen = isAdresse(adresseBien)
+    ? adresseBien
+    : isAdresse(adresseIdentite)
+      ? adresseIdentite
+      : null;
   if (chosen) {
     suggestions.value = [{ key: "suggestion_lieu_imposition", value: chosen }];
     prefillEntries.value = [
-      { path: "situation_pro_fiscale.lieu_imposition", value: chosen },
+      { path: "situation_fiscale.lieu_imposition", value: chosen },
     ];
   }
 });
@@ -44,12 +53,12 @@ onMounted(() => {
 
 <template>
   <RubriqueBase
-    sectionId="pro-fiscale"
-    title="Situation professionnelle & Fiscale"
-    storageKey="sn-checklist-pro-fiscale"
-    pdfPrefix="situation-professionnelle-fiscale"
-    :formDefinition="proFiscaleFormDefinition"
-    :docBuilder="buildProFiscaleDocDefinition"
+    sectionId="fiscale"
+    title="Situation Fiscale"
+    storageKey="sn-checklist-fiscale"
+    pdfPrefix="situation-fiscale"
+    :formDefinition="fiscaleFormDefinition"
+    :docBuilder="buildFiscaleDocDefinition"
     :suggestions="suggestions"
     :prefillEntries="prefillEntries"
   />
