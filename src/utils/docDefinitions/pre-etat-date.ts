@@ -1,4 +1,8 @@
 import { fmtEur } from "@/utils/docDefinitions/formatters";
+import {
+  checklistHeaderCellStyle,
+  checklistTableLayout,
+} from "@/utils/docDefinitions/pdfStructure";
 
 import type { PreEtatDate, Provision } from "@/types/pre-etat-date-complet";
 
@@ -20,17 +24,21 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
         widths: ["*", "auto"],
         body: [
           [
-            { text: designation, style: "tableHeader", fillColor: "#f5f5f5" },
+            {
+              text: designation,
+              style: "tableHeader",
+              ...checklistHeaderCellStyle,
+            },
             {
               text: `Lot ${numero}`,
               style: "tableHeader",
-              fillColor: "#f5f5f5",
+              ...checklistHeaderCellStyle,
             },
           ],
           ["Usage", usage],
         ],
       },
-      layout: "lightHorizontalLines",
+      layout: checklistTableLayout,
       margin: [0, 4, 0, 8],
     };
   };
@@ -61,7 +69,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   // B) Provisions postérieures rendues exigibles (sommes_dont_…)
   const B = num(
     SDS?.sommes_dont_syndicat_pourrait_etre_debiteur
-      ?.provisions_posterieures_rendues_exigibles
+      ?.provisions_posterieures_rendues_exigibles,
   );
 
   // C) Solde créditeur exercice antérieur (FL)
@@ -111,7 +119,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       },
       {
         ul: [
-          "L règlement de copropriété et ses modificatifs publiés",
+          "Le règlement de copropriété et ses modificatifs publiés",
           "L’état descriptif de division et ses modificatifs publiés",
           "Les procès-verbaux des assemblées générales des trois dernières années",
           "Le présent document / Pré-état daté (documents relatifs à la situation financière de la copropriété et du copropriétaire vendeur)",
@@ -125,13 +133,12 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         columns: [
           [
-            { text: "Adresse", style: "h3" },
-            { text: d.bien?.adresse || "-", margin: [0, 0, 0, 6] },
-            { text: "Identification", style: "h3", margin: [0, 6, 0, 2] },
+            { text: "Le bien à vendre", style: "h3", margin: [0, 6, 0, 2] },
             {
               table: {
                 widths: ["*", "*"],
                 body: [
+                  ["Adresse", d.bien?.adresse || "-"],
                   ["Bâtiment", d.bien?.identification?.batiment ?? "-"],
                   [
                     "Entrée / Cage escalier",
@@ -141,11 +148,11 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                   ["Compléments", d.bien?.identification?.complements ?? "-"],
                 ],
               },
-              layout: "lightHorizontalLines",
+              layout: checklistTableLayout,
             },
           ],
           [
-            { text: "Lots", style: "h3" },
+            { text: "Les lots", style: "h3" },
             {
               table: {
                 widths: ["*", "*"],
@@ -159,7 +166,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                   ],
                 ],
               },
-              layout: "lightHorizontalLines",
+              layout: checklistTableLayout,
             },
           ],
         ],
@@ -187,7 +194,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
       {
@@ -208,7 +215,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
 
@@ -220,21 +227,21 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
               widths: ["*", "auto"],
               body: [["Objet", "Capital Restant Dû"], ...emprunts],
             },
-            layout: "lightHorizontalLines",
+            layout: checklistTableLayout,
             margin: [0, 0, 0, 24],
           }
         : { text: "Aucun", margin: [0, 0, 0, 24] },
 
-      { text: "Le syndicat des copropriétaires", style: "h2" },
+      { text: "Coordonnées du Syndic", style: "h2" },
       {
         table: {
           widths: ["*", "auto"],
           body: [
-            ["Nom du syndic", d.syndic?.nom ?? "-"],
+            ["Nom", d.syndic?.nom ?? "-"],
             ["Email", d.syndic?.contact?.email ?? "-"],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
 
@@ -253,7 +260,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ["Appels échus non payés", fmtEur(FL.appels_echus_non_payes)],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
 
@@ -335,7 +342,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
 
@@ -346,7 +353,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
               widths: ["auto", "auto"],
               body: [["Date", "Montant"], ...echeances],
             },
-            layout: "lightHorizontalLines",
+            layout: checklistTableLayout,
             margin: [0, 0, 0, 24],
           }
         : { text: "Aucune", margin: [0, 0, 0, 24] },
@@ -377,7 +384,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       {
@@ -389,7 +396,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           widths: ["*", "auto"],
           body: [["", fmtEur(SDC?.charges_impayees_anterieures)]],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       {
@@ -401,7 +408,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           widths: ["*", "auto"],
           body: [["", fmtEur(SDC?.du_fait_de_la_future_vente)]],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       {
@@ -426,7 +433,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       {
@@ -438,7 +445,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           widths: ["*", "auto"],
           body: [["", fmtEur(SDC?.cotisations_fonds_travaux_exigibles)]],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       // Sous-détail “Autres sommes exigibles” si présent
@@ -463,7 +470,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
               },
               {
                 table: { widths: ["*", "auto"], body: rows },
-                layout: "lightHorizontalLines",
+                layout: checklistTableLayout,
                 margin: [0, 0, 0, 8],
               },
             ]
@@ -478,7 +485,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           widths: ["*", "auto"],
           body: [["", fmtEur(SDC?.a_des_tiers_emprunts_geres_par_syndic)]],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 16],
       },
 
@@ -506,7 +513,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 16],
       },
 
@@ -528,7 +535,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 16],
       },
 
@@ -547,7 +554,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       reconstitutionRows.some((r) => r[1])
         ? {
             table: { widths: ["*", "auto"], body: reconstitutionRows },
-            layout: "lightHorizontalLines",
+            layout: checklistTableLayout,
             margin: [0, 0, 0, 8],
           }
         : { text: "Aucune", margin: [0, 0, 0, 8] },
@@ -582,7 +589,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                   widths: ["auto", "auto"],
                   body: [["Date d’exigibilité", "Montant (EUR)"], ...bpRows],
                 },
-                layout: "lightHorizontalLines",
+                layout: checklistTableLayout,
                 margin: [0, 0, 0, 6],
               }
             : { text: "Aucune", margin: [0, 0, 0, 6] },
@@ -598,7 +605,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                   widths: ["auto", "auto"],
                   body: [["Date d’exigibilité", "Montant (EUR)"], ...hbRows],
                 },
-                layout: "lightHorizontalLines",
+                layout: checklistTableLayout,
                 margin: [0, 0, 0, 6],
               }
             : { text: "Aucune", margin: [0, 0, 0, 6] },
@@ -614,7 +621,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
                   widths: ["auto", "auto"],
                   body: [["Date d’exigibilité", "Montant (EUR)"], ...ftRows],
                 },
-                layout: "lightHorizontalLines",
+                layout: checklistTableLayout,
                 margin: [0, 0, 0, 24],
               }
             : { text: "Aucune", margin: [0, 0, 0, 24] },
@@ -639,7 +646,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             ],
           ],
         },
-        layout: "lightHorizontalLines",
+        layout: checklistTableLayout,
       },
 
       {

@@ -349,7 +349,7 @@
           "path": "syndic.contact.email",
           "suggestionRef": "email_du_syndic",
           "id": "syndic-contact-email",
-          "label": "Email",
+          "label": "Email du syndic",
           "name": "syndic_contact_email",
           "type": "email",
           "placeholder": "syndic@email.com",

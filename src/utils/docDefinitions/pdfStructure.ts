@@ -19,6 +19,24 @@ export interface ChecklistPdfStructureOptions {
   logoBase64: string;
 }
 
+export const checklistTableLayout = {
+  fillColor: (rowIndex: number) => (rowIndex === 0 ? "#f5f7fa" : undefined),
+  hLineWidth: () => 1,
+  vLineWidth: () => 1,
+  hLineColor: () => "#d0d5dd",
+  vLineColor: () => "#d0d5dd",
+  paddingLeft: () => 12,
+  paddingRight: () => 12,
+  paddingTop: () => 6,
+  paddingBottom: () => 6,
+};
+
+export const checklistHeaderCellStyle = {
+  fillColor: "#f5f7fa",
+  color: "#111827",
+  bold: true,
+};
+
 export const buildChecklistPdfStructure = ({
   title,
   subtitle,
@@ -32,54 +50,36 @@ export const buildChecklistPdfStructure = ({
   docs,
   logoBase64,
 }: ChecklistPdfStructureOptions) => {
-  const headerCellStyle = {
-    fillColor: "#f5f7fa",
-    color: "#111827",
-    bold: true,
-  };
-
-  const tableLayout = {
-    fillColor: (rowIndex: number) => (rowIndex === 0 ? "#f5f7fa" : undefined),
-    hLineWidth: () => 1,
-    vLineWidth: () => 1,
-    hLineColor: () => "#d0d5dd",
-    vLineColor: () => "#d0d5dd",
-    paddingLeft: () => 12,
-    paddingRight: () => 12,
-    paddingTop: () => 6,
-    paddingBottom: () => 6,
-  };
-
   const infoTableBody = infoBody.map((row, rowIndex) =>
     row.map((cell) => {
       if (rowIndex !== 0) return cell;
       if (typeof cell === "string") {
-        return { text: cell, ...headerCellStyle };
+        return { text: cell, ...checklistHeaderCellStyle };
       }
-      return { ...cell, ...headerCellStyle };
+      return { ...cell, ...checklistHeaderCellStyle };
     })
   );
 
   const docsTableBody: TableCell[][] = docs.length
     ? [
         [
-          { text: "", ...headerCellStyle },
+          { text: "", ...checklistHeaderCellStyle },
           {
             text: "Documents à joindre",
-            ...headerCellStyle,
+            ...checklistHeaderCellStyle,
           },
-          { text: "Observations", ...headerCellStyle },
+          { text: "Observations", ...checklistHeaderCellStyle },
         ],
         ...docs.map((doc) => [{ text: "" }, { text: doc }, { text: "" }]),
       ]
     : [
         [
-          { text: "", ...headerCellStyle },
+          { text: "", ...checklistHeaderCellStyle },
           {
             text: "Documents à joindre",
-            ...headerCellStyle,
+            ...checklistHeaderCellStyle,
           },
-          { text: "Observations", ...headerCellStyle },
+          { text: "Observations", ...checklistHeaderCellStyle },
         ],
         [{ text: "" }, { text: emptyDocsText }, { text: "" }],
       ];
@@ -107,7 +107,7 @@ export const buildChecklistPdfStructure = ({
           widths: ["*", "*"],
           body: infoTableBody,
         },
-        layout: tableLayout,
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
       { text: docsTitle, style: "h2" },
@@ -116,7 +116,7 @@ export const buildChecklistPdfStructure = ({
           widths: ["auto", "*", "30%"],
           body: docsTableBody,
         },
-        layout: tableLayout,
+        layout: checklistTableLayout,
         margin: [0, 0, 0, 24],
       },
       { text: metadataTitle, style: "h3" },
