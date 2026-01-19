@@ -194,7 +194,7 @@ async function toggleCheckboxGroup(
   idx: number,
   path: string,
   optionValue: string,
-  checked: boolean
+  checked: boolean,
 ) {
   const next = clone(model.value);
   const current = new Set(checkboxGroupValues(next[idx], path));
@@ -424,7 +424,9 @@ async function applyAllSuggestions() {
                 suggestionFor(idx, f) !== getByPath(item, f.path)
               "
               :suggestion="String(suggestionFor(idx, f))"
-              @click="() => updateItem(idx, f.path, suggestionFor(idx, f) as any)"
+              @click="
+                () => updateItem(idx, f.path, suggestionFor(idx, f) as any)
+              "
             />
           </label>
         </template>
@@ -529,7 +531,7 @@ async function applyAllSuggestions() {
     gap: 1.5rem;
 
     @media (min-width: $big-tablet-screen) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       align-items: center;
     }
   }

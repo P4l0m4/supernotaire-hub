@@ -82,7 +82,7 @@ const regexFrom = (p?: string | RegExp) => {
   const re = typeof p === "string" ? new RegExp(p) : p;
   return helpers.withMessage(
     "Format invalide",
-    (v) => v == null || v === "" || re.test(String(v))
+    (v) => v == null || v === "" || re.test(String(v)),
   );
 };
 
@@ -106,7 +106,7 @@ const setDeep = (obj: any, path: string[], val: any) => {
   for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]] ??= {};
   cur[path[path.length - 1]] = Object.assign(
     cur[path[path.length - 1]] ?? {},
-    val
+    val,
   );
 };
 
@@ -119,7 +119,7 @@ function buildRules(def?: FormDefinition) {
     if (f.required) r.required = fr.required;
     if (f.requiredIf) {
       r.requiredIf = fr.requiredIf(() =>
-        evaluateShowIf(f.requiredIf, model.value)
+        evaluateShowIf(f.requiredIf, model.value),
       );
     }
     if (f.type === "number") {
@@ -146,11 +146,7 @@ function buildRules(def?: FormDefinition) {
         if (typeof f.maxDateOffsetYears !== "number") return null;
         const limit = new Date();
         limit.setFullYear(limit.getFullYear() - f.maxDateOffsetYears);
-        return new Date(
-          limit.getFullYear(),
-          limit.getMonth(),
-          limit.getDate()
-        );
+        return new Date(limit.getFullYear(), limit.getMonth(), limit.getDate());
       };
       const maxDateFromField = () => {
         if (!f.maxDate) return null;
@@ -172,7 +168,7 @@ function buildRules(def?: FormDefinition) {
             const parsed = parseDateDdMmYyyy(v);
             if (!parsed) return true;
             return parsed.getTime() <= limitMs;
-          }
+          },
         );
       }
       if (f.minDate) {
@@ -181,7 +177,7 @@ function buildRules(def?: FormDefinition) {
             ? new Date(
                 f.minDate.getFullYear(),
                 f.minDate.getMonth(),
-                f.minDate.getDate()
+                f.minDate.getDate(),
               )
             : new Date(f.minDate);
         if (!Number.isNaN(bound.getTime())) {
@@ -193,7 +189,7 @@ function buildRules(def?: FormDefinition) {
               const parsed = parseDateDdMmYyyy(v);
               if (!parsed) return true;
               return parsed.getTime() >= boundMs;
-            }
+            },
           );
         }
       }
@@ -310,7 +306,7 @@ async function validateCurrentSection() {
       .map(async (f) => {
         const node = nodeFor(f.path);
         return node ? node.$validate() : true;
-      })
+      }),
   );
 
   if (!results.every(Boolean) && v$.value.$errors.length > 0) {
@@ -419,7 +415,7 @@ if (import.meta.client) {
   watch(
     () => props.formDefinition,
     (d) => ensureArrayPaths(d),
-    { immediate: true }
+    { immediate: true },
   );
 }
 
@@ -469,7 +465,7 @@ const validateVisibleFields = async (fields: any[]) => {
     visible.map(async (f) => {
       const node = nodeFor(f.path);
       return node ? node.$validate() : true;
-    })
+    }),
   );
   return results.every(Boolean);
 };
@@ -487,7 +483,7 @@ const isCurrentSectionValid = computed(() => {
     if (!inSectionPath(errPath, paths)) return false;
     // si le champ est masqué, on ignore l'erreur
     const field = sections.value[currentSection.value]?.fields.find((f) =>
-      errPath.startsWith(f.path)
+      errPath.startsWith(f.path),
     );
     if (field && !isFieldVisible(field)) return false;
     return true;
@@ -518,7 +514,7 @@ watch(
   () => {
     emitValidState();
   },
-  { deep: true, immediate: true }
+  { deep: true, immediate: true },
 );
 </script>
 
@@ -571,8 +567,8 @@ watch(
           showErrorState
             ? "Corrigez les erreurs"
             : currentSection === stepsState.length - 1
-            ? "Terminer"
-            : "Suivant"
+              ? "Terminer"
+              : "Suivant"
         }}
       </UIPrimaryButton>
       <UISecondaryButton
@@ -599,6 +595,7 @@ watch(
   background-color: $primary-color;
   width: 100%;
   min-width: 280px;
+  max-width: 43rem;
   scroll-margin-top: 4rem;
 
   @media (min-width: $big-tablet-screen) {
@@ -626,7 +623,6 @@ watch(
 
       @media (min-width: $big-tablet-screen) {
         gap: 1.5rem;
-        grid-template-columns: 1fr 1fr;
         align-items: center;
       }
     }

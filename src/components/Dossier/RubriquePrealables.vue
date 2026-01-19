@@ -12,5 +12,6 @@ import { buildDocDefinition as buildPrealablesDocDefinition } from "@/utils/docD
     pdfPrefix="informations-prealables"
     :formDefinition="prealablesFormDefinition"
     :docBuilder="buildPrealablesDocDefinition"
+    sharedTypeStorageKey="sn-shared-type-bien"
   />
 </template>

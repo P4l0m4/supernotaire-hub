@@ -12,6 +12,16 @@ const props = defineProps<{
   formDefinition: FormDefinition;
   docBuilder: (data: any, logo: string) => any;
   requireAccess?: boolean;
+  sharedTypeStorageKey?: string;
+  sharedAddressCompare?: {
+    propertyStorageKey: string;
+    propertyPath: string;
+    currentStorageKey: string;
+    currentPath: string;
+    targetPath: string;
+    occupantPath?: string;
+    occupantValue?: string;
+  };
 }>();
 
 const { $pdfMake } = useNuxtApp();
@@ -27,6 +37,44 @@ const {
 const cloneData = (data: Record<string, any>) =>
   JSON.parse(JSON.stringify(data ?? {}));
 
+const getByPath = (obj: any, path: string[]) =>
+  path.reduce((acc, key) => (acc ? acc[key] : undefined), obj);
+
+const setByPath = (obj: any, path: string[], val: any) => {
+  let cur = obj;
+  for (let i = 0; i < path.length - 1; i++) {
+    cur = cur[path[i]] ??= {};
+  }
+  cur[path[path.length - 1]] = val;
+};
+
+const normalizeAddress = (value: unknown) => {
+  if (!value) return "";
+  const normalizeString = (s: string) =>
+    s
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/[.,;:]/g, "")
+      .trim();
+
+  if (typeof value === "string") return normalizeString(value);
+  if (typeof value === "object") {
+    const label =
+      (value as any)?.properties?.label ||
+      (value as any)?.label ||
+      (value as any)?.properties?.name;
+    if (label) return normalizeString(String(label));
+    try {
+      return normalizeString(JSON.stringify(value));
+    } catch {
+      return "";
+    }
+  }
+  return "";
+};
+
 const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
@@ -39,6 +87,47 @@ const hydrateFromStorage = () => {
         showLastAction.value = true;
       }
     }
+    if (props.sharedTypeStorageKey) {
+      const sharedType = localStorage.getItem(props.sharedTypeStorageKey);
+      if (!formData.type_bien && sharedType) {
+        formData.type_bien = sharedType;
+      }
+    }
+    if (props.sharedAddressCompare) {
+      const cfg = props.sharedAddressCompare;
+      const readAddress = (storageKey: string, path: string) => {
+        try {
+          const rawAddress = localStorage.getItem(storageKey);
+          if (!rawAddress) return null;
+          const parsedAddress = JSON.parse(rawAddress);
+          return getByPath(parsedAddress, path.split("."));
+        } catch {
+          return null;
+        }
+      };
+      const propertyAddress = readAddress(cfg.propertyStorageKey, cfg.propertyPath);
+      const currentAddress = readAddress(cfg.currentStorageKey, cfg.currentPath);
+      if (propertyAddress && currentAddress) {
+        const propertyNorm = normalizeAddress(propertyAddress);
+        const currentNorm = normalizeAddress(currentAddress);
+        if (propertyNorm && currentNorm && propertyNorm === currentNorm) {
+          const existing = getByPath(formData, cfg.targetPath.split("."));
+          if (existing !== true) {
+            setByPath(formData, cfg.targetPath.split("."), true);
+          }
+          if (cfg.occupantPath && cfg.occupantValue) {
+            const currentOccupant = getByPath(
+              formData,
+              cfg.occupantPath.split(".")
+            );
+            if (!currentOccupant) {
+              setByPath(formData, cfg.occupantPath.split("."), cfg.occupantValue);
+            }
+          }
+          persistSnapshot(formData);
+        }
+      }
+    }
     isHydrated.value = true;
   } catch (e) {
     console.warn("[Rubrique] hydrate failed", props.storageKey, e);
@@ -49,6 +138,9 @@ const persistSnapshot = (data: Record<string, any>) => {
   if (!process.client) return;
   try {
     localStorage.setItem(props.storageKey, JSON.stringify(data));
+    if (props.sharedTypeStorageKey && data?.type_bien) {
+      localStorage.setItem(props.sharedTypeStorageKey, data.type_bien);
+    }
   } catch (e) {
     console.warn("[Rubrique] persist failed", props.storageKey, e);
   }

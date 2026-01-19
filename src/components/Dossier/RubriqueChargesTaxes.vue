@@ -12,5 +12,6 @@ import { buildDocDefinition as buildChargesTaxesDocDefinition } from "@/utils/do
     pdfPrefix="charges-taxes"
     :formDefinition="chargesTaxesFormDefinition"
     :docBuilder="buildChargesTaxesDocDefinition"
+    sharedTypeStorageKey="sn-shared-type-bien"
   />
 </template>

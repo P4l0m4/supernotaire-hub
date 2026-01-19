@@ -31,6 +31,12 @@
           "type": "date",
           "mode": "date-picker",
           "placeholder": "jj/mm/aaaa",
+          "requiredIf": {
+            "all": [
+              { "path": "bien_occupe", "equals": true },
+              { "path": "bien_libre_moment_vente", "equals": true }
+            ]
+          },
           "showIf": {
             "all": [
               { "path": "bien_occupe", "equals": true },
@@ -81,6 +87,10 @@
             "Occupation temporaire"
           ],
           "placeholder": "Sélectionnez la nature de l'occupation",
+          "requiredIf": {
+            "path": "par_qui",
+            "equals": "Le propriétaire vendeur"
+          },
           "showIf": {
             "path": "par_qui",
             "equals": "Le propriétaire vendeur"
@@ -92,6 +102,10 @@
           "label": "Une procédure est-elle en cours ?",
           "name": "procedure_en_cours",
           "type": "checkbox",
+          "requiredIf": {
+            "path": "par_qui",
+            "equals": "Un squatteur"
+          },
           "showIf": {
             "path": "par_qui",
             "equals": "Un squatteur"
@@ -105,6 +119,10 @@
           "type": "select",
           "options": ["Habitation nue", "Meublé", "Autre"],
           "placeholder": "Sélectionnez le type de bail",
+          "requiredIf": {
+            "path": "par_qui",
+            "equals": "Un locataire"
+          },
           "showIf": {
             "path": "par_qui",
             "equals": "Un locataire"
