@@ -113,15 +113,6 @@ useHead({
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs?.length" :links="breadcrumbs" />
     <component v-if="sectionParam && currentComponent" :is="currentComponent" />
-    <NuxtLink
-      to="/outils/checklist-dossier-vente-notaire"
-      aria-label="Retourner aux rubriques"
-      style="margin-left: auto"
-    >
-      <UITertiaryButton icon="arrow_left" direction="row-reverse"
-        >Retourner aux rubriques</UITertiaryButton
-      ></NuxtLink
-    >
   </Container>
 
   <HotjarTracking />

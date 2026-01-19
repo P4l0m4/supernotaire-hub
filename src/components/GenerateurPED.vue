@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch, watchEffect } from "vue";
+import { reactive, watch, watchEffect, onMounted } from "vue";
 
 import achievement from "/achievement-45.svg?url";
 import checklist from "/checklist-71-blue.svg?url";
@@ -47,6 +47,8 @@ const formData = reactive({} as PreEtatDate);
 
 const showFirstAction = ref(true);
 const showLastAction = ref(false);
+const LOCAL_STORAGE_KEY = "sn-pre-etat-date";
+let persistTimer: ReturnType<typeof setTimeout> | null = null;
 
 // prevent undefined during render/validation
 formData.bien = formData.bien ?? {
@@ -195,6 +197,51 @@ watch(
         seen.delete(key); // clé vidée → oubli
       }
     }
+  },
+  { deep: true }
+);
+
+const hydrateFromStorage = () => {
+  if (!process.client) return;
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    Object.assign(formData, parsed);
+  } catch (e) {
+    console.warn("[GenerateurPED] unable to hydrate from storage", e);
+  }
+};
+
+const persistSnapshot = () => {
+  if (!process.client) return;
+  try {
+    const payload = {
+      ...formData,
+      adresse_bien: formData.bien?.adresse || undefined,
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.warn("[GenerateurPED] unable to persist data", e);
+  }
+};
+
+const schedulePersist = () => {
+  if (persistTimer) clearTimeout(persistTimer);
+  persistTimer = setTimeout(() => {
+    persistSnapshot();
+    persistTimer = null;
+  }, 300);
+};
+
+onMounted(() => {
+  hydrateFromStorage();
+});
+
+watch(
+  formData,
+  () => {
+    schedulePersist();
   },
   { deep: true }
 );

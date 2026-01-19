@@ -7,7 +7,7 @@ import { buildDocDefinition as buildPrealablesDocDefinition } from "@/utils/docD
 <template>
   <RubriqueBase
     sectionId="prealables"
-    title="Informations préalables"
+    title="Informations prǸalables"
     storageKey="sn-checklist-prealables"
     pdfPrefix="informations-prealables"
     :formDefinition="prealablesFormDefinition"

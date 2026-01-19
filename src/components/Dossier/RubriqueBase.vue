@@ -22,6 +22,7 @@ const props = defineProps<{
     occupantPath?: string;
     occupantValue?: string;
   };
+  suggestions?: Array<{ key: string; value: unknown }>;
 }>();
 
 const { $pdfMake } = useNuxtApp();
@@ -105,8 +106,14 @@ const hydrateFromStorage = () => {
           return null;
         }
       };
-      const propertyAddress = readAddress(cfg.propertyStorageKey, cfg.propertyPath);
-      const currentAddress = readAddress(cfg.currentStorageKey, cfg.currentPath);
+      const propertyAddress = readAddress(
+        cfg.propertyStorageKey,
+        cfg.propertyPath,
+      );
+      const currentAddress = readAddress(
+        cfg.currentStorageKey,
+        cfg.currentPath,
+      );
       if (propertyAddress && currentAddress) {
         const propertyNorm = normalizeAddress(propertyAddress);
         const currentNorm = normalizeAddress(currentAddress);
@@ -118,10 +125,14 @@ const hydrateFromStorage = () => {
           if (cfg.occupantPath && cfg.occupantValue) {
             const currentOccupant = getByPath(
               formData,
-              cfg.occupantPath.split(".")
+              cfg.occupantPath.split("."),
             );
             if (!currentOccupant) {
-              setByPath(formData, cfg.occupantPath.split("."), cfg.occupantValue);
+              setByPath(
+                formData,
+                cfg.occupantPath.split("."),
+                cfg.occupantValue,
+              );
             }
           }
           persistSnapshot(formData);
@@ -210,15 +221,16 @@ const downloadPdf = async () => {
       </p>
     </div>
 
-    <FormElementsDynamicForm
-      :formDefinition="formDefinition"
-      v-model="formData"
-      :suggestions="[]"
-      @complete="onComplete"
-      @valid-state="onValidState"
-    />
-
     <div class="rubrique__actions">
+      <NuxtLink
+        to="/outils/checklist-dossier-vente-notaire"
+        aria-label="Retourner aux rubriques"
+        style="margin-left: auto; margin-top: 1rem"
+      >
+        <UITertiaryButton icon="arrow_left" direction="row-reverse"
+          >Retourner aux rubriques</UITertiaryButton
+        ></NuxtLink
+      >
       <UITertiaryButton
         v-if="showLastAction"
         variant="accent-color"
@@ -228,26 +240,56 @@ const downloadPdf = async () => {
         Télécharger le récapitulatif
       </UITertiaryButton>
     </div>
+    <div class="rubrique__form">
+      <FormElementsDynamicForm
+        :formDefinition="formDefinition"
+        v-model="formData"
+        :suggestions="suggestions || []"
+        @complete="onComplete"
+        @valid-state="onValidState"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .rubrique {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   width: 100%;
+
+  @media (min-width: $laptop-screen) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
 
   &__header {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    text-wrap: balance;
   }
 
   &__actions {
     display: flex;
     justify-content: flex-start;
     margin-top: 1rem;
+    grid-row: 3;
+
+    @media (min-width: $laptop-screen) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  &__form {
+    grid-column: 1 / -1;
+
+    @media (min-width: $laptop-screen) {
+      grid-column: 2;
+      grid-row: 1 / -1;
+    }
   }
 }
 </style>
