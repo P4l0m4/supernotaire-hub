@@ -12,7 +12,7 @@
           "name": "statut_partie",
           "type": "select",
           "options": ["Personne physique", "Personne morale"],
-          "placeholder": "électionnez un statut",
+          "placeholder": "Sélectionnez un statut",
           "required": true
         },
         {

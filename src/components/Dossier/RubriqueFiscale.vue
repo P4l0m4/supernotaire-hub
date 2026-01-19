@@ -21,6 +21,18 @@ onMounted(() => {
       return null;
     }
   };
+  const readValue = (storageKey: string, path: string) => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return path
+        .split(".")
+        .reduce((acc: any, k: string) => (acc ? acc[k] : undefined), parsed);
+    } catch {
+      return null;
+    }
+  };
 
   const isAdresse = (val: unknown) => {
     if (!val || typeof val !== "object") return false;
@@ -46,6 +58,31 @@ onMounted(() => {
     suggestions.value = [{ key: "suggestion_lieu_imposition", value: chosen }];
     prefillEntries.value = [
       { path: "situation_fiscale.lieu_imposition", value: chosen },
+    ];
+  }
+
+  const statutPartie = readValue("sn-checklist-capacite", "statut_partie");
+  if (statutPartie) {
+    prefillEntries.value = [
+      ...prefillEntries.value,
+      {
+        path: "situation_fiscale.type_proprietaire",
+        value: statutPartie,
+      },
+    ];
+  }
+
+  const typeEntite = readValue(
+    "sn-checklist-capacite",
+    "type_entite_personne_morale",
+  );
+  if (typeEntite) {
+    prefillEntries.value = [
+      ...prefillEntries.value,
+      {
+        path: "situation_fiscale.type_entite",
+        value: typeEntite,
+      },
     ];
   }
 });
