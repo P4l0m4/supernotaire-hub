@@ -94,6 +94,23 @@ useHead({
       content:
         "Créez un Pré-état daté conforme à la réglementation en quelques minutes grâce à notre générateur gratuit en ligne.",
     },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:title",
+      content: "Générateur de Pré-état daté gratuit",
+    },
+    {
+      property: "og:url",
+      content: `${baseUrl}/outils/pre-etat-date`,
+    },
+    {
+      property: "og:description",
+      content:
+        "Créez facilement un Pré-état daté conforme, prêt à être transmis à votre notaire.",
+    },
   ],
 });
 </script>

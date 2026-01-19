@@ -128,6 +128,23 @@ useHead({
       content:
         "Répondez à quelques questions et trouvez en quelques minutes quelles informations et documents fournir à votre notaire en fonction de votre situation.",
     },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:title",
+      content: "Préparez facilement votre dossier de vente immobilière",
+    },
+    {
+      property: "og:url",
+      content: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+    },
+    {
+      property: "og:description",
+      content:
+        "Répondez à quelques questions rapides pour connaître les informations et documents à fournir à votre notaire en fonction de votre situation.",
+    },
   ],
 });
 
