@@ -225,7 +225,6 @@ const downloadPdf = async () => {
       <NuxtLink
         to="/outils/checklist-dossier-vente-notaire"
         aria-label="Retourner aux rubriques"
-        style="margin-left: auto; margin-top: 1rem"
       >
         <UITertiaryButton icon="arrow_left" direction="row-reverse"
           >Retourner aux rubriques</UITertiaryButton
@@ -273,13 +272,19 @@ const downloadPdf = async () => {
 
   &__actions {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: end;
+    height: fit-content;
+    gap: 1rem;
     margin-top: 1rem;
     grid-row: 3;
 
     @media (min-width: $laptop-screen) {
       grid-column: 1;
       grid-row: 2;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: start;
     }
   }
 
