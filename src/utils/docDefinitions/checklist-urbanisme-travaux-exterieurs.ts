@@ -1,6 +1,10 @@
 import type { ChecklistUrbanismeTravauxExterieurs } from "@/types/checklist-urbanisme-travaux-exterieurs";
 import { formatChecklistValue as val } from "./formatters";
-import { buildChecklistPdfStructure } from "./pdfStructure";
+import {
+  buildChecklistPdfStructure,
+  buildKeyValueSubTable,
+} from "./pdfStructure";
+import type { TableCell } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistUrbanismeTravauxExterieurs,
@@ -8,7 +12,7 @@ export function buildDocDefinition(
 ) {
   if (!data) return;
 
-  const infoRows: Array<[string, string]> = [];
+  const infoRows: TableCell[][] = [];
   const docsSet = new Set<string>();
 
   const addInfo = (label: string, value: unknown, when = true) => {
@@ -23,7 +27,7 @@ export function buildDocDefinition(
 
   const travaux = data.travaux ?? {};
   addInfo(
-    "Travaux avec impact extérieur / urbanistique",
+    "Travaux avec impact exterieur / urbanistique",
     travaux.impactExterieur === true ? "Oui" : "Non"
   );
 
@@ -32,62 +36,62 @@ export function buildDocDefinition(
     const label = `Travaux ${idx + 1}`;
     const arreteState =
       t.arreteExiste === false
-        ? "Oui (arrêté existant)"
+        ? "Oui (arrete existant)"
         : t.arreteExiste === true
-        ? "Non (aucun arrêté)"
+        ? "Non (aucun arrete)"
         : "-";
-    addInfo(`${label} - Arrêté d'urbanisme`, arreteState);
-    addInfo(
-      `${label} - Type d'autorisation`,
-      t.arreteType,
-      t.arreteExiste === false
-    );
-    addInfo(`${label} - Type de travaux`, t.typeTravaux);
     const travauxEtat =
       t.travauxAcheves == null
         ? "-"
         : t.travauxAcheves
-        ? "Travaux non-achevés"
-        : "Travaux terminés";
-    addInfo(`${label} - Etat`, travauxEtat);
-    addInfo(
-      `${label} - Date d'achèvement prévue`,
-      t.dateAchevement,
-      t.travauxAcheves === true
-    );
-    addInfo(
-      `${label} - Travaux non conformes`,
-      t.travauxNonConformes,
-      t.travauxNonConformes !== undefined
-    );
+        ? "Travaux non-acheves"
+        : "Travaux termines";
     const plansEtat =
       t.plansDisponibles == null
         ? "-"
         : t.plansDisponibles
-        ? "Plans approuvés non disponibles"
-        : "Plans approuvés disponibles";
-    addInfo(`${label} - Plans approuvés`, plansEtat, t.arreteExiste === false);
-    addInfo(`${label} - Travaux achevés`, travauxEtat, t.arreteExiste === false);
-    addInfo(
-      `${label} - Date de dépôt DAACT`,
+        ? "Plans approuves non disponibles"
+        : "Plans approuves disponibles";
+
+    const rows: Array<[string, TableCell]> = [];
+    const addRow = (rowLabel: string, value: unknown, when = true) => {
+      if (!when) return;
+      rows.push([rowLabel, val(value)]);
+    };
+
+    rows.push(["Arrete d'urbanisme", arreteState]);
+    addRow("Type d'autorisation", t.arreteType, t.arreteExiste === false);
+    addRow("Type de travaux", t.typeTravaux);
+    rows.push(["Etat", travauxEtat]);
+    addRow("Date d'achevement prevue", t.dateAchevement, t.travauxAcheves === true);
+    addRow(
+      "Travaux non conformes",
+      t.travauxNonConformes,
+      t.travauxNonConformes !== undefined
+    );
+    addRow("Plans approuves", plansEtat, t.arreteExiste === false);
+    addRow("Travaux acheves", travauxEtat, t.arreteExiste === false);
+    addRow(
+      "Date de depot DAACT",
       t.dateDepotDaact,
       t.arreteExiste === false &&
         t.travauxNonConformes === false &&
         t.travauxAcheves !== true
     );
-    addInfo(
-      `${label} - Plans approuvés disponibles`,
+    addRow(
+      "Plans approuves disponibles",
       t.plansDisponibles,
       t.arreteExiste === false
     );
-    addInfo(
-      `${label} - Motif absence arrêté`,
+    addRow(
+      "Motif absence arrete",
       t.motifAbsenceArrete,
       t.arreteExiste === true
     );
+    infoRows.push([label, buildKeyValueSubTable(rows)]);
 
     addDoc(
-      "Arrêté de permis de construire ou arrêté de non-opposition à déclaration préalable",
+      "Arrete de permis de construire ou arrete de non-opposition a declaration prealable",
       t.arreteExiste === false
     );
     addDoc(
@@ -95,19 +99,19 @@ export function buildDocDefinition(
       t.arreteExiste === false && Boolean(t.arreteType)
     );
     addDoc(
-      "Accusé de réception ou preuve de dépôt de la DAACT",
+      "Accuse de reception ou preuve de depot de la DAACT",
       t.arreteExiste === false &&
         t.travauxNonConformes === false &&
         t.travauxAcheves !== true
     );
     addDoc(
-      "DAACT (déclaration attestant l'achèvement et la conformité des travaux)",
+      "DAACT (declaration attestant l'achevement et la conformite des travaux)",
       t.arreteExiste === false &&
         t.travauxNonConformes === false &&
         t.travauxAcheves !== true
     );
     addDoc(
-      "Plans approuvés",
+      "Plans approuves",
       t.arreteExiste === false && t.plansDisponibles === false
     );
   });
@@ -127,7 +131,7 @@ export function buildDocDefinition(
   const servitudeTypes: string[] = Array.isArray(servitudes.types)
     ? servitudes.types
     : [];
-  addInfo("Le bien est grevé de servitudes connues", servitudes.existent);
+  addInfo("Le bien est greve de servitudes connues", servitudes.existent);
   addInfo(
     "Type(s) de servitudes",
     servitudeTypes,
@@ -135,7 +139,7 @@ export function buildDocDefinition(
   );
   const zonage = data.zonage ?? {};
   addInfo(
-    "Le bien est situé dans une zone réglementée par un document d'urbanisme",
+    "Le bien est situe dans une zone reglementee par un document d'urbanisme",
     zonage.reglemente
   );
   addInfo(
@@ -150,7 +154,7 @@ export function buildDocDefinition(
     data.contentieux?.enCours === true
   );
   addInfo(
-    "Précisions sur le contentieux",
+    "Precisions sur le contentieux",
     data.contentieux?.autreDetail,
     Array.isArray(data.contentieux?.types) &&
       data.contentieux?.types?.includes("autre")
@@ -162,24 +166,24 @@ export function buildDocDefinition(
 
   const docs = Array.from(docsSet);
   const infoBody = [
-    ["Questions", "Réponses"],
+    ["Questions", "Reponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   const docsTitle =
     docs.length === 0
-      ? "Aucun document à joindre pour cette rubrique"
-      : "Transmettez ces documents à votre notaire";
+      ? "Aucun document a joindre pour cette rubrique"
+      : "Transmettez ces documents a votre notaire";
 
   return buildChecklistPdfStructure({
-    title: "Urbanisme & travaux extérieurs",
-    subtitle: "Autorisation d'urbanisme et travaux extérieurs",
+    title: "Urbanisme & travaux exterieurs",
+    subtitle: "Autorisation d'urbanisme et travaux exterieurs",
     infoTitle: "Informations fournies",
     docsTitle,
     metadataTitle: "",
-    generatedOnLabel: "Généré le",
+    generatedOnLabel: "Genere le",
     emptyDocsText: "",
-    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
+    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
     infoBody,
     docs,
     logoBase64,

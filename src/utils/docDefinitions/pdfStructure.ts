@@ -1,4 +1,4 @@
-﻿type TableCell =
+export type TableCell =
   | string
   | {
       text: string;
@@ -37,6 +37,21 @@ export const checklistHeaderCellStyle = {
   bold: true,
 };
 
+export const buildKeyValueSubTable = (rows: Array<[string, TableCell]>) => ({
+  table: {
+    widths: ["auto", "*"],
+    body: [
+      [
+        { text: "Questions", ...checklistHeaderCellStyle },
+        { text: "R\u00e9ponses", ...checklistHeaderCellStyle },
+      ],
+      ...rows.map(([label, value]) => [{ text: label }, value]),
+    ],
+  },
+  layout: checklistTableLayout,
+  margin: [0, 4, 0, 4],
+});
+
 export const buildChecklistPdfStructure = ({
   title,
   subtitle,
@@ -65,7 +80,7 @@ export const buildChecklistPdfStructure = ({
         [
           { text: "", ...checklistHeaderCellStyle },
           {
-            text: "Documents à joindre",
+            text: "Documents \u00e0 joindre",
             ...checklistHeaderCellStyle,
           },
           { text: "Observations", ...checklistHeaderCellStyle },
@@ -76,7 +91,7 @@ export const buildChecklistPdfStructure = ({
         [
           { text: "", ...checklistHeaderCellStyle },
           {
-            text: "Documents à joindre",
+            text: "Documents \u00e0 joindre",
             ...checklistHeaderCellStyle,
           },
           { text: "Observations", ...checklistHeaderCellStyle },
@@ -158,7 +173,7 @@ export const buildChecklistPdfStructure = ({
             margin: [0, 2, 10, 0],
           },
           {
-            text: "Créé en quelques secondes sur easycase.fr, conçu pour les notaires débordés et les vendeurs pressés.",
+            text: "Cr\u00e9\u00e9 en quelques secondes sur easycase.fr, con\u00e7u pour les notaires d\u00e9bord\u00e9s et les vendeurs press\u00e9s.",
             alignment: "left",
             margin: [0, 0, 0, 0],
             fontSize: 10,

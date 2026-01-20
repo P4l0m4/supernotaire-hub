@@ -1,6 +1,10 @@
 ﻿import type { ChecklistChargesTaxes } from "@/types/checklist-charges-taxes";
 import { formatChecklistValue as val } from "./formatters";
-import { buildChecklistPdfStructure } from "./pdfStructure";
+import {
+  buildChecklistPdfStructure,
+  buildKeyValueSubTable,
+} from "./pdfStructure";
+import type { TableCell } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistChargesTaxes,
@@ -8,7 +12,7 @@ export function buildDocDefinition(
 ) {
   if (!data) return;
 
-  const infoRows: Array<[string, string]> = [];
+  const infoRows: TableCell[][] = [];
   const docsSet = new Set<string>();
 
   const addInfo = (label: string, value: unknown, when = true) => {
@@ -69,17 +73,17 @@ export function buildDocDefinition(
 
   coordonnees.forEach((beneficiaire, index) => {
     const label = `Beneficiaire ${index + 1}`;
-    addInfo(`${label} - Role`, beneficiaire.role_beneficiaire);
-    addInfo(
-      `${label} - Percoit une commission`,
-      beneficiaire.beneficiaire_percoit_commission,
-      beneficiaire.beneficiaire_percoit_commission !== undefined
-    );
-    addInfo(
-      `${label} - Montant de la commission`,
-      beneficiaire.montant_commission,
-      beneficiaire.beneficiaire_percoit_commission === "Oui"
-    );
+    const rows: Array<[string, TableCell]> = [
+      ["Role", val(beneficiaire.role_beneficiaire)],
+      [
+        "Percoit une commission",
+        val(beneficiaire.beneficiaire_percoit_commission),
+      ],
+    ];
+    if (beneficiaire.beneficiaire_percoit_commission === "Oui") {
+      rows.push(["Montant de la commission", val(beneficiaire.montant_commission)]);
+    }
+    infoRows.push([label, buildKeyValueSubTable(rows)]);
     addDoc(`RIB du beneficiaire ${index + 1}`);
   });
 
