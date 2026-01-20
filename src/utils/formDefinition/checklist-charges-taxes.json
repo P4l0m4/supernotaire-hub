@@ -42,6 +42,10 @@
           "showIf": {
             "path": "type_chauffage",
             "equals": "Autre"
+          },
+          "requiredIf": {
+            "path": "type_chauffage",
+            "equals": "Autre"
           }
         },
         {
@@ -52,7 +56,8 @@
           "type": "date",
           "mode": "date-picker",
           "placeholder": "jj/mm/aaaa",
-          "maxDate": "today"
+          "maxDate": "today",
+          "required": true
         },
         {
           "path": "date_ramonage",
@@ -62,7 +67,8 @@
           "type": "date",
           "mode": "date-picker",
           "placeholder": "jj/mm/aaaa",
-          "maxDate": "today"
+          "maxDate": "today",
+          "required": true
         },
         {
           "path": "mode_assainissement",
@@ -93,8 +99,9 @@
           "id": "charges-taxes-montant-taxe-fonciere",
           "label": "Montant annuel de la taxe foncière",
           "name": "montant_taxe_fonciere",
-          "type": "text",
-          "placeholder": "Ex : 1200 €"
+          "type": "number",
+          "placeholder": "0 si null",
+          "required": true
         },
         {
           "path": "presence_teom",
@@ -109,7 +116,10 @@
           "id": "charges-taxes-soumis-taxe-habitation",
           "label": "Le bien est soumis à la taxe d'habitation",
           "name": "bien_soumis_taxe_habitation",
-          "type": "checkbox"
+          "type": "select",
+          "placeholder": "Sélectionnez une option",
+          "options": ["Oui", "Non"],
+          "required": true
         },
         {
           "path": "montant_derniere_taxe_habitation",
@@ -117,7 +127,138 @@
           "label": "Montant annuel de la dernière taxe d’habitation",
           "name": "montant_derniere_taxe_habitation",
           "type": "text",
-          "placeholder": "Ex : 650 €"
+          "placeholder": "650",
+          "requiredIf": {
+            "path": "bien_soumis_taxe_habitation",
+            "equals": "Oui"
+          },
+          "showIf": {
+            "path": "bien_soumis_taxe_habitation",
+            "equals": "Oui"
+          }
+        },
+        {
+          "label": "Existe t’il un prêt immobilier en cours sur le bien ?",
+          "path": "pret_immobilier_en_cours",
+          "id": "charges-taxes-pret-immobilier-en-cours",
+          "name": "pret_immobilier_en_cours",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
+        },
+        {
+          "label": "Nom de la banque",
+          "path": "nom_banque",
+          "id": "charges-taxes-nom-banque",
+          "name": "nom_banque",
+          "type": "text",
+          "placeholder": "Crédit Agricole, BNP Paribas...",
+          "showIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          }
+        },
+        {
+          "label": "Numéro du prêt",
+          "path": "numero_pret",
+          "id": "charges-taxes-numero-pret",
+          "name": "numero_pret",
+          "type": "text",
+          "placeholder": "1234567890",
+          "showIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          }
+        },
+        {
+          "label": "Date de la dernière échéance",
+          "path": "date_derniere_echeance",
+          "id": "charges-taxes-date-derniere-echeance",
+          "name": "date_derniere_echeance",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "jj/mm/aaaa",
+          "maxDate": "today",
+          "startDate": "today",
+          "showIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "pret_immobilier_en_cours",
+            "equals": "Oui"
+          }
+        },
+        {
+          "label": "Coordonnées bancaires des bénéficiaires de la vente",
+          "type": "array",
+          "path": "coordonnees_bancaires_beneficiaires",
+          "id": "charges-taxes-coordonnees-bancaires-beneficiaires",
+          "name": "coordonnees_bancaires_beneficiaires",
+          "required": true,
+          "itemLabel": "Bénéficiaire {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "label": "Rôle du bénéficiaire",
+                "path": "role_beneficiaire",
+                "id": "charges-taxes-role-beneficiaire-{{index}}",
+                "name": "role_beneficiaire",
+                "type": "select",
+                "options": [
+                  "Propriétaire du bien (personne physique ou morale)",
+                  "Banque prêteuse (si prêt sur le bien)",
+                  "Mandataire (agence, etc)",
+                  "Syndic (si impayés en copropriété)",
+                  "Autre"
+                ],
+                "placeholder": "Sélectionnez un rôle",
+                "required": true
+              },
+              {
+                "label": "Ce bénéficiaire perçoit-il une commission sur la vente ?",
+                "path": "beneficiaire_percoit_commission",
+                "id": "charges-taxes-beneficiaire-percoit-commission-{{index}}",
+                "name": "beneficiaire_percoit_commission",
+                "type": "select",
+                "options": ["Oui", "Non"],
+                "placeholder": "Sélectionnez une option",
+                "requiredIf": {
+                  "path": "role_beneficiaire",
+                  "equals": "Mandataire (agence, etc)"
+                },
+                "showIf": {
+                  "path": "role_beneficiaire",
+                  "equals": "Mandataire (agence, etc)"
+                }
+              },
+              {
+                "label": "Montant de la commission (pourcentage ou montant fixe)",
+                "path": "montant_commission",
+                "id": "charges-taxes-montant-commission-{{index}}",
+                "name": "montant_commission",
+                "type": "text",
+                "placeholder": "5%, 1500 €...",
+                "requiredIf": {
+                  "path": "beneficiaire_percoit_commission",
+                  "equals": "Oui"
+                },
+                "showIf": {
+                  "path": "beneficiaire_percoit_commission",
+                  "equals": "Oui"
+                }
+              }
+            ]
+          }
         }
       ]
     }

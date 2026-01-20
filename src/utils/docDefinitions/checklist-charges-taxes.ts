@@ -50,6 +50,38 @@ export function buildDocDefinition(
     data.bien_soumis_taxe_habitation,
     data.bien_soumis_taxe_habitation !== undefined
   );
+  addInfo(
+    "Pret immobilier en cours sur le bien",
+    data.pret_immobilier_en_cours,
+    data.pret_immobilier_en_cours !== undefined
+  );
+  addInfo("Nom de la banque", data.nom_banque, data.pret_immobilier_en_cours === "Oui");
+  addInfo("Numero du pret", data.numero_pret, data.pret_immobilier_en_cours === "Oui");
+  addInfo(
+    "Date de la derniere echeance",
+    data.date_derniere_echeance,
+    data.pret_immobilier_en_cours === "Oui"
+  );
+
+  const coordonnees = Array.isArray(data.coordonnees_bancaires_beneficiaires)
+    ? data.coordonnees_bancaires_beneficiaires
+    : [];
+
+  coordonnees.forEach((beneficiaire, index) => {
+    const label = `Beneficiaire ${index + 1}`;
+    addInfo(`${label} - Role`, beneficiaire.role_beneficiaire);
+    addInfo(
+      `${label} - Percoit une commission`,
+      beneficiaire.beneficiaire_percoit_commission,
+      beneficiaire.beneficiaire_percoit_commission !== undefined
+    );
+    addInfo(
+      `${label} - Montant de la commission`,
+      beneficiaire.montant_commission,
+      beneficiaire.beneficiaire_percoit_commission === "Oui"
+    );
+    addDoc(`RIB du beneficiaire ${index + 1}`);
+  });
 
   // Documents
   addDoc(
@@ -68,6 +100,10 @@ export function buildDocDefinition(
   addDoc(
     "Montant annuel de la derniere taxe d'habitation (si applicable)",
     data.bien_soumis_taxe_habitation === false
+  );
+  addDoc(
+    "Decompte de pret",
+    data.pret_immobilier_en_cours === "Oui"
   );
 
   const infoBody = [
