@@ -56,34 +56,50 @@
           }
         },
         {
-          "path": "copro-fond-travaux",
-          "label": "La copropriété dispose d'un fond de travaux",
-          "type": "checkbox",
+          "path": "copro_fond_travaux",
+          "label": "La copropriété dispose t'elle d'un fond de travaux ?",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
           "id": "copro-fond-travaux",
           "name": "copro_fond_travaux",
+          "requiredIf": {
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
+          },
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D'une copropriété"
           }
         },
         {
-          "path": "copro-quote-part-lot",
+          "path": "copro_quote_part_lot",
           "id": "copro-quote-part-lot",
           "label": "Montant de la quote-part attachée au lot",
           "name": "copro_quote_part_lot",
           "placeholder": "1000",
           "type": "number",
           "showIf": {
-            "path": "copro-fond-travaux",
-            "equals": true
+            "path": "copro_fond_travaux",
+            "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "copro_fond_travaux",
+            "equals": "Oui"
           }
         },
         {
-          "path": "copro-charges-a-jour",
+          "path": "copro_charges_a_jour",
           "id": "copro-charges-a-jour",
-          "label": "Le vendeur n'est pas à jour de ses charges de copropriété",
+          "label": "Le vendeur est-il à jour de ses charges de copropriété ?",
           "name": "copro_charges_a_jour",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
+          },
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D'une copropriété"
@@ -97,8 +113,8 @@
           "placeholder": "500",
           "type": "number",
           "showIf": {
-            "path": "copro-charges-a-jour",
-            "equals": true
+            "path": "copro_charges_a_jour",
+            "equals": "Oui"
           }
         },
         {
@@ -170,8 +186,11 @@
             "Syndic coopératif",
             "Aucun syndic"
           ],
-          "required": true,
-          "placeholder": "Sélectionnez",
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "type_structure_collective",
+            "equals": "D'une copropriété"
+          },
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D'une copropriété"
@@ -184,14 +203,11 @@
           "name": "email_syndic",
           "type": "email",
           "placeholder": "syndic@example.com",
-          "required": true,
+          "requiredIf": {
+            "not": { "path": "gestion_copropriete", "equals": "Aucun syndic" }
+          },
           "showIf": {
-            "path": "gestion_copropriete",
-            "in": [
-              "Syndic professionnel",
-              "Syndic bénévole",
-              "Syndic coopératif"
-            ]
+            "not": { "path": "gestion_copropriete", "equals": "Aucun syndic" }
           }
         },
         {
@@ -221,7 +237,7 @@
             "AFUL (Association Foncière Urbaine Libre)",
             "Autre"
           ],
-          "placeholder": "Sélectionnez le type",
+          "placeholder": "Sélectionnez une option",
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D’une association syndicale (ASL / AFUL…)"
@@ -243,9 +259,12 @@
           "id": "copro-email-asl",
           "label": "Email du gestionnaire",
           "name": "email_asl",
-          "type": "text",
-          "required": true,
+          "type": "email",
           "placeholder": "gestionnaire@example.com",
+          "requiredIf": {
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
+          },
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D’une association syndicale (ASL / AFUL…)"

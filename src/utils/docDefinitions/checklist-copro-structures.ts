@@ -1,4 +1,4 @@
-﻿import type { ChecklistCoproStructures } from "@/types/checklist-copro-structures";
+import type { ChecklistCoproStructures } from "@/types/checklist-copro-structures";
 import { formatChecklistValue as val } from "./formatters";
 import { buildChecklistPdfStructure } from "./pdfStructure";
 
@@ -36,13 +36,13 @@ export function buildDocDefinition(
   addInfo(
     "Quote-part attachée au lot",
     data.copro_quote_part_lot,
-    data.copro_fond_travaux === true
+    data.copro_fond_travaux === "Oui"
   );
   addInfo("Charges à jour", data.copro_charges_a_jour, isCopro);
   addInfo(
     "Montant des sommes dues",
     data.montant_sommes_dues,
-    data.copro_charges_a_jour === true
+    data.copro_charges_a_jour === "Oui"
   );
   addInfo(
     "Lots inclus dans la vente",
@@ -61,7 +61,11 @@ export function buildDocDefinition(
   addInfo("Type de structure (ASL/AFUL)", data.type_association_syndicale, isAsl);
   addInfo("Cotisations à jour", data.asl_cotisations_a_jour, isAsl);
   addInfo("Email du gestionnaire", data.email_asl, Boolean(data.email_asl));
-  addInfo("Téléphone du gestionnaire", data.telephone_asl, Boolean(data.telephone_asl));
+  addInfo(
+    "Téléphone du gestionnaire",
+    data.telephone_asl,
+    Boolean(data.telephone_asl)
+  );
   addInfo(
     "Précision type de structure",
     data.precision_type_structure,
