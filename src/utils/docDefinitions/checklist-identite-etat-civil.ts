@@ -12,7 +12,7 @@ const LIEU_NAISSANCE_ETRANGER: LieuNaissanceType = "Pays étranger";
 
 export function buildDocDefinition(
   data: ChecklistIdentiteEtatCivil,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -35,55 +35,55 @@ export function buildDocDefinition(
 
   addInfo("Date de naissance", identite.date_naissance);
   addInfo("Nom", identite.nom);
-  addInfo("Prenom(s)", identite.prenoms);
+  addInfo("Prénom(s)", identite.prenoms);
   addInfo("Adresse actuelle", identite.adresse_actuelle?.properties?.label);
   addInfo("Lieu de naissance", lieu.type);
-  addInfo("Departement de naissance", lieu.departement, lieu.type === "France");
+  addInfo("Département de naissance", lieu.departement, lieu.type === "France");
   addInfo(
     "Ville de naissance",
     lieu.ville,
-    lieu.type === LIEU_NAISSANCE_ETRANGER
+    lieu.type === LIEU_NAISSANCE_ETRANGER,
   );
   addInfo(
     "Pays de naissance",
     lieu.pays,
-    lieu.type === LIEU_NAISSANCE_ETRANGER
+    lieu.type === LIEU_NAISSANCE_ETRANGER,
   );
 
   addInfo(
-    "Changement d'etat civil",
-    etatCivil.changement_etat_civil ? "Oui" : "Non"
+    "Changement d'état civil",
+    etatCivil.changement_etat_civil ? "Oui" : "Non",
   );
   addInfo(
     "Type de changement",
     etatCivil.type_changement,
-    etatCivil.changement_etat_civil === true
+    etatCivil.changement_etat_civil === true,
   );
 
   if (etatCivil.type_changement === TYPE_CHANGEMENT_NOM_DECRET) {
     const cn = etatCivil.changement_nom ?? {};
     addInfo(
-      "A deja signe des documents avec un ancien etat civil",
-      cn.a_signe_ancien_etat_civil
+      "A déjà signé des documents avec un ancien état civil",
+      cn.a_signe_ancien_etat_civil,
     );
     addInfo(
       "Ancien nom",
       cn.ancien_nom,
-      cn.a_signe_ancien_etat_civil === false
+      cn.a_signe_ancien_etat_civil === false,
     );
     addInfo(
-      "Date du decret ou jugement",
+      "Date du décret ou jugement",
       cn.date_decret_jugement,
-      cn.a_signe_ancien_etat_civil === false
+      cn.a_signe_ancien_etat_civil === false,
     );
     addDoc(
       "Ancien passeport / CNI ou titre de sejour portant l'ancien nom",
-      cn.a_signe_ancien_etat_civil === true
+      cn.a_signe_ancien_etat_civil === true,
     );
-    addDoc("Decret / jugement", cn.a_signe_ancien_etat_civil === false);
+    addDoc("Décret / jugement", cn.a_signe_ancien_etat_civil === false);
     addDoc(
       "Publication au J.O ou attestation mairie",
-      cn.a_signe_ancien_etat_civil === false
+      cn.a_signe_ancien_etat_civil === false,
     );
   }
 
@@ -92,7 +92,7 @@ export function buildDocDefinition(
     addInfo("Lieu du mariage", mariage.lieu);
     addInfo("Date du mariage", mariage.date);
     addInfo("Nom du conjoint", mariage.nom_conjoint);
-    addInfo("Prenom du conjoint", mariage.prenom_conjoint);
+    addInfo("Prénom du conjoint", mariage.prenom_conjoint);
     addInfo("Choix d'usage", mariage.choix_usage);
     addDoc("Copie integrale de l'acte de mariage < 3 mois");
   }
@@ -105,22 +105,22 @@ export function buildDocDefinition(
     const divorce = etatCivil.divorce ?? {};
     addInfo(
       "Date du jugement ou dissolution",
-      divorce.date_jugement_ou_dissolution
+      divorce.date_jugement_ou_dissolution,
     );
     addInfo("Nom de l'ex-conjoint / partenaire", divorce.nom_ex_conjoint);
     addDoc(
-      "Jugement de divorce (ou acte de dissolution PACS si partenariat contractuel)"
+      "Jugement de divorce (ou acte de dissolution PACS si partenariat contractuel)",
     );
-    addDoc("Extrait d'acte de naissance mis a jour");
+    addDoc("Extrait d'acte de naissance mis à jour");
     addDoc("Copie du livret de famille");
   }
 
   if (etatCivil.type_changement === "Veuvage") {
     const veuvage = etatCivil.veuvage ?? {};
-    addInfo("Date du deces du conjoint", veuvage.date_deces_conjoint);
-    addInfo("Lieu du deces du conjoint", veuvage.lieu_deces_conjoint);
-    addDoc("Acte de deces du conjoint");
-    addDoc("Extrait d'acte de mariage portant mention du deces");
+    addInfo("Date du décès du conjoint", veuvage.date_deces_conjoint);
+    addInfo("Lieu du décès du conjoint", veuvage.lieu_deces_conjoint);
+    addDoc("Acte de décès du conjoint");
+    addDoc("Extrait d'acte de mariage portant mention du décès");
   }
 
   if (etatCivil.type_changement === "Rectification de genre") {
@@ -129,17 +129,18 @@ export function buildDocDefinition(
     addInfo("Tribunal de la decision", rectif.tribunal_decision);
     addInfo(
       "A deja signe des documents avec un ancien etat civil",
-      rectif.a_signe_ancien_etat_civil
+      rectif.a_signe_ancien_etat_civil,
     );
     addDoc("Jugement");
     addDoc(
       "Ancien passeport / CNI ou titre de sejour portant l'ancien nom",
-      rectif.a_signe_ancien_etat_civil === true
+      rectif.a_signe_ancien_etat_civil === true,
     );
   }
 
-  addDoc("Piece d'identite (CNI, titre de sejour ou passeport)");
-  addDoc("Acte de naissance integral < 3 mois");
+  addDoc("Pièce d'identité (CNI, titre de séjour ou passeport)");
+  addDoc("Acte de naissance intégral < 3 mois");
+  addDoc("Justificatif de domicile < 3 mois");
 
   const docs = Array.from(docsSet);
   const infoBody = [
