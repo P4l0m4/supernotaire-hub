@@ -4,7 +4,7 @@ import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistCapaciteRepresentation,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -25,132 +25,111 @@ export function buildDocDefinition(
   if (data.statut_partie === "Personne physique") {
     addInfo("Vente en nom propre", data.bien_vendu_en_nom_propre);
 
-    if (data.bien_vendu_en_nom_propre) {
+    if (data.bien_vendu_en_nom_propre === "Non") {
       addInfo(
         "Sous protection juridique",
-        data.sous_protection_personne_physique
+        data.sous_protection_personne_physique,
       );
       addInfo(
         "Type de protection",
         data.type_protection_personne_physique,
-        data.sous_protection_personne_physique
+        data.sous_protection_personne_physique === "Oui",
       );
 
-      if (data.sous_protection_personne_physique) {
+      if (data.sous_protection_personne_physique === "Oui") {
         if (data.type_protection_personne_physique === "Curatelle") {
-          addDoc("Accord ecrit du curateur (lettre datee et signee)");
+          addDoc("Accord écrit du curateur (lettre datée et signée)");
           addDoc("Jugement de mise sous curatelle");
-          addDoc("Piece d’identite du curateur");
+          addDoc("Pièce d'identité du curateur");
         }
         if (data.type_protection_personne_physique === "Tutelle") {
           addDoc("Autorisation du juge des tutelles pour la vente");
-          addDoc("Piece d’identite du tuteur");
+          addDoc("Pièce d'identité du tuteur");
           addDoc("Jugement de mise sous tutelle");
         }
         if (
           data.type_protection_personne_physique ===
           "Mandat de protection future ou autre"
         ) {
-          addDoc("Mandat de protection future ou procuration notarisee");
-          addDoc("Piece d’identite du mandataire");
+          addDoc("Mandat de protection future ou procuration notarisée");
+          addDoc("Pièce d'identité du mandataire");
         }
       }
     }
 
-    if (data.bien_vendu_en_nom_propre === false) {
+    if (data.bien_vendu_en_nom_propre === "Oui") {
       addInfo(
-        "Type de representation",
-        data.type_representation_personne_physique
+        "Type de représentation",
+        data.type_representation_personne_physique,
       );
 
       if (
         data.type_representation_personne_physique ===
-        "Mandat simple (procuration sous seing prive)"
+        "Mandat simple (procuration sous seing privé)"
       ) {
-        addDoc("Procuration signee par le vendeur");
-        addDoc("Piece d’identite du mandataire");
+        addDoc("Procuration signée par le vendeur");
+        addDoc("Pièce d'identité du mandataire");
       }
 
       if (
         data.type_representation_personne_physique ===
-        "Representation d’un majeur protege"
+        "Représentation d’un majeur protégé"
       ) {
         addInfo(
-          "Type de protection pour la representation",
-          data.type_protection_representation
+          "Type de protection pour la représentation",
+          data.type_protection_representation,
         );
         if (data.type_protection_representation === "Tutelle") {
           addDoc("Autorisation du juge des tutelles pour la vente");
-          addDoc("Piece d’identite du tuteur");
+          addDoc("Pièce d'identité du tuteur");
           addDoc("Jugement de mise sous tutelle");
         }
         if (data.type_protection_representation === "Curatelle") {
           addDoc("Jugement de mise sous curatelle");
-          addDoc("Accord ecrit du curateur");
-          addDoc("Piece d’identite du curateur");
+          addDoc("Accord écrit du curateur");
+          addDoc("Pièce d'identité du curateur");
         }
-        if (data.type_protection_representation === "Mandataire special") {
-          addDoc("Procuration notarisee ou sous seing prive");
-          addDoc("Piece d’identite du mandataire");
+        if (data.type_protection_representation === "Mandataire spécial") {
+          addDoc("Procuration notarisée ou sous seing privé");
+          addDoc("Pièce d'identité du mandataire");
         }
         if (data.type_protection_representation === "Habilitation familiale") {
-          addDoc("Acte constitutif de l’habilitation familiale");
-          addDoc("Piece d’identite de l’habilitant");
+          addDoc("Acte constitutif de l'habilitation familiale");
+          addDoc("Pièce d'identité de l'habilitant");
         }
-      }
-
-      if (
-        data.type_representation_personne_physique ===
-        "Mandataire special (procuration ponctuelle ou generale)"
-      ) {
-        addDoc("Procuration notarisee ou sous seing prive");
-        addDoc("Piece d’identite du mandataire");
-      }
-
-      if (
-        data.type_representation_personne_physique === "Habilitation familiale"
-      ) {
-        addDoc("Acte constitutif de l’habilitation familiale");
-        addDoc("Piece d’identite de l’habilitant");
       }
     }
   }
 
   if (data.statut_partie === "Personne morale") {
-    addInfo("Type d’entite", data.type_entite_personne_morale);
+    addInfo("Type d'entité", data.type_entite_personne_morale);
     addInfo(
-      "Entite representee par un mandataire",
-      data.entite_representee_par_mandataire
+      "Entité représentée par un mandataire",
+      data.entite_representee_par_mandataire,
     );
 
-    if (data.type_entite_personne_morale === "Societe") {
+    if (data.type_entite_personne_morale === "Société (SARL, SAS, SCI, etc.)") {
       addDoc("Extrait Kbis de moins de 3 mois");
       addDoc(
-        "Statuts a jour de la societe (si pouvoirs non precises dans le Kbis)"
+        "Statuts à jour de la société (si pouvoirs non précisés dans le Kbis)",
       );
-      addDoc("Piece d’identite du representant legal");
+      addDoc("Pièce d'identité du représentant légal");
       addDoc(
-        "Proces-verbal d’assemblee autorisant la vente (si requis par les statuts)"
+        "Procès-verbal d'assemblée autorisant la vente (si requis par les statuts)",
       );
     }
 
     if (data.type_entite_personne_morale === "Association") {
-      addDoc("Statuts de l’association");
-      addDoc("Proces-verbal de nomination du president ou representant");
-      addDoc("Proces-verbal autorisant la vente du bien immobilier");
-      addDoc("Piece d’identite du representant legal");
+      addDoc("Statuts de l'association");
+      addDoc("Procès-verbal de nomination du président ou représentant légal");
+      addDoc("Procès-verbal autorisant la vente du bien immobilier");
+      addDoc("Pièce d'identité du représentant légal");
     }
 
-    if (data.entite_representee_par_mandataire) {
-      addDoc("Piece d’identite du mandataire");
-      addDoc("Mandat ecrit / procuration du mandataire");
+    if (data.entite_representee_par_mandataire === "Oui") {
+      addDoc("Pièce d'identité du mandataire");
+      addDoc("Mandat écrit / procuration du mandataire");
     }
-  }
-
-  if (data.statut_partie === "Indivision") {
-    addDoc("Titre d'indivision (acte ou convention)");
-    addDoc("Identite et parts de chaque indivisaire");
-    addDoc("Proces-verbal ou accord des indivisaires autorisant la vente");
   }
 
   const infoBody = [

@@ -18,22 +18,24 @@
         {
           "path": "bien_vendu_en_nom_propre",
           "id": "capacite-bien-nom-propre",
-          "label": "Le bien n'est pas vendu en nom propre",
+          "label": "Le bien est-il vendu en son nom propre ?",
           "name": "bien_vendu_en_nom_propre",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
           "showIf": { "path": "statut_partie", "equals": "Personne physique" }
         },
         {
           "path": "sous_protection_personne_physique",
           "id": "capacite-sous-protection-physique",
-          "label": "Le vendeur est sous protection juridique",
+          "label": "Le vendeur est-il sous protection juridique ?",
           "name": "sous_protection_personne_physique",
           "tooltip": "Tutelle, curatelle, habilitation, mandat de protection future...",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
           "showIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
-              { "path": "bien_vendu_en_nom_propre", "equals": false }
+              { "path": "bien_vendu_en_nom_propre", "equals": "Non" }
             ]
           }
         },
@@ -51,7 +53,7 @@
           "placeholder": "Selectionnez le type",
           "showIf": {
             "path": "sous_protection_personne_physique",
-            "equals": true
+            "equals": "Oui"
           }
         },
         {
@@ -68,7 +70,7 @@
           "showIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
-              { "path": "bien_vendu_en_nom_propre", "equals": true }
+              { "path": "bien_vendu_en_nom_propre", "equals": "Oui" }
             ]
           }
         },
@@ -98,14 +100,24 @@
           "type": "select",
           "options": ["Société (SARL, SAS, SCI, etc.)", "Association"],
           "placeholder": "Sélectionnez le type",
+          "requiredIf": {
+            "path": "statut_partie",
+            "equals": "Personne morale"
+          },
           "showIf": { "path": "statut_partie", "equals": "Personne morale" }
         },
         {
           "path": "entite_representee_par_mandataire",
           "id": "capacite-entite-mandataire",
-          "label": "L'entité est représentée par un mandataire",
+          "label": "L'entité est-elle représentée par un mandataire ?",
           "name": "entite_representee_par_mandataire",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "statut_partie",
+            "equals": "Personne morale"
+          },
           "showIf": { "path": "statut_partie", "equals": "Personne morale" }
         }
       ]
