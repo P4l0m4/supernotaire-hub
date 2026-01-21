@@ -26,9 +26,15 @@
         {
           "path": "maison.vendue_avec_terrain",
           "id": "prealables-maison-vendue-avec-terrain",
-          "label": "La maison est vendue avec un terrain",
+          "label": "La maison est-elle vendue avec un terrain ?",
           "name": "maison_vendue_avec_terrain",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "type_bien",
+            "equals": "Maison"
+          },
           "showIf": {
             "path": "type_bien",
             "equals": "Maison"
@@ -37,9 +43,15 @@
         {
           "path": "maison.edifiee_domaine_public",
           "id": "prealables-maison-domaine-public",
-          "label": "La maison est édifiée sur le domaine public avec droit d'occupation",
+          "label": "La maison est-elle édifiée sur le domaine public ?",
           "name": "maison_edifiee_domaine_public",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "type_bien",
+            "equals": "Maison"
+          },
           "showIf": {
             "path": "type_bien",
             "equals": "Maison"
@@ -60,11 +72,11 @@
           "placeholder": "Sélectionnez la nature du terrain",
           "requiredIf": {
             "path": "maison.vendue_avec_terrain",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "maison.vendue_avec_terrain",
-            "equals": true
+            "equals": "Oui"
           }
         }
       ]

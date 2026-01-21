@@ -1,3 +1,5 @@
+export type OuiNon = "Oui" | "Non";
+
 export type TravauxNature =
   | "structure_gros_oeuvre"
   | "distribution_interieure"
@@ -16,15 +18,15 @@ export interface ChecklistDiagnostics {
   dateConstruction?: string;
   dateCrepPlomb?: string;
   dateAmiante?: string;
-  installationGaz15Ans?: boolean;
+  installationGaz15Ans?: OuiNon;
   dateDiagnosticGaz?: string;
-  installationElec15Ans?: boolean;
+  installationElec15Ans?: OuiNon;
   dateDiagnosticElectricite?: string;
   dateDpe?: string;
 }
 
 export interface ChecklistTravauxInterieurs {
-  realises?: boolean;
+  realises?: OuiNon;
   nature?: TravauxNature[];
   realisesPar?: "Un professionnel" | "Le vendeur lui-même";
 }

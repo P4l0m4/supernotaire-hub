@@ -246,9 +246,15 @@
         {
           "path": "asl_cotisations_a_jour",
           "id": "copro-asl-cotisations-a-jour",
-          "label": "Le vendeur n'est pas à jour de ses cotisations",
+          "label": "Le vendeur est-il à jour de ses cotisations ?",
           "name": "asl_cotisations_a_jour",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
+          },
           "showIf": {
             "path": "type_structure_collective",
             "equals": "D’une association syndicale (ASL / AFUL…)"

@@ -1,3 +1,5 @@
+export type OuiNon = "Oui" | "Non";
+
 export type OccupationParQui =
   | "Un locataire"
   | "Un occupant à titre gratuit"
@@ -13,16 +15,16 @@ export type NatureOccupationProprietaire =
 export type TypeBail = "Habitation nue" | "Meublé" | "Autre";
 
 export interface ChecklistOccupationActuelle {
-  bien_occupe?: boolean;
+  bien_occupe?: OuiNon;
   par_qui?: OccupationParQui;
-  bien_libre_moment_vente?: boolean;
+  bien_libre_moment_vente?: OuiNon;
   date_liberation?: string;
 
   occupant_gratuit_nom?: string;
 
   nature_occupation?: NatureOccupationProprietaire;
 
-  procedure_en_cours?: boolean;
+  procedure_en_cours?: OuiNon;
 
   type_bail?: TypeBail;
 

@@ -1,5 +1,7 @@
 import type { Adresse } from "@/types/adresse";
 
+export type OuiNon = "Oui" | "Non";
+
 export type TypeChangementEtatCivil =
   | "Changement de nom par décret"
   | "Mariage"
@@ -26,10 +28,10 @@ export interface ChecklistIdentiteEtatCivil {
     };
   };
   etat_civil: {
-    changement_etat_civil?: boolean;
+    changement_etat_civil?: OuiNon;
     type_changement?: TypeChangementEtatCivil;
     changement_nom?: {
-      a_signe_ancien_etat_civil?: boolean;
+      a_signe_ancien_etat_civil?: OuiNon;
       ancien_nom?: string;
       date_decret_jugement?: string;
     };
@@ -51,9 +53,7 @@ export interface ChecklistIdentiteEtatCivil {
     rectification_genre?: {
       date_decision?: string;
       tribunal_decision?: string;
-      a_signe_ancien_etat_civil?: boolean;
+      a_signe_ancien_etat_civil?: OuiNon;
     };
   };
 }
-
-

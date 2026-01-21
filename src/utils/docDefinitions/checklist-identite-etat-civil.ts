@@ -50,14 +50,11 @@ export function buildDocDefinition(
     lieu.type === LIEU_NAISSANCE_ETRANGER,
   );
 
-  addInfo(
-    "Changement d'état civil",
-    etatCivil.changement_etat_civil ? "Oui" : "Non",
-  );
+  addInfo("Changement d'état civil", etatCivil.changement_etat_civil);
   addInfo(
     "Type de changement",
     etatCivil.type_changement,
-    etatCivil.changement_etat_civil === true,
+    etatCivil.changement_etat_civil === "Oui",
   );
 
   if (etatCivil.type_changement === TYPE_CHANGEMENT_NOM_DECRET) {
@@ -69,21 +66,21 @@ export function buildDocDefinition(
     addInfo(
       "Ancien nom",
       cn.ancien_nom,
-      cn.a_signe_ancien_etat_civil === false,
+      cn.a_signe_ancien_etat_civil === "Non",
     );
     addInfo(
       "Date du décret ou jugement",
       cn.date_decret_jugement,
-      cn.a_signe_ancien_etat_civil === false,
+      cn.a_signe_ancien_etat_civil === "Non",
     );
     addDoc(
-      "Ancien passeport / CNI ou titre de sejour portant l'ancien nom",
-      cn.a_signe_ancien_etat_civil === true,
+      "Ancien passeport / CNI ou titre de séjour portant l'ancien nom",
+      cn.a_signe_ancien_etat_civil === "Oui",
     );
-    addDoc("Décret / jugement", cn.a_signe_ancien_etat_civil === false);
+    addDoc("Décret / jugement", cn.a_signe_ancien_etat_civil === "Non");
     addDoc(
-      "Publication au J.O ou attestation mairie",
-      cn.a_signe_ancien_etat_civil === false,
+      "Publication au Journal Officiel ou attestation mairie",
+      cn.a_signe_ancien_etat_civil === "Non",
     );
   }
 
@@ -94,7 +91,7 @@ export function buildDocDefinition(
     addInfo("Nom du conjoint", mariage.nom_conjoint);
     addInfo("Prénom du conjoint", mariage.prenom_conjoint);
     addInfo("Choix d'usage", mariage.choix_usage);
-    addDoc("Copie integrale de l'acte de mariage < 3 mois");
+    addDoc("Copie intégrale de l'acte de mariage < 3 mois");
   }
 
   if (etatCivil.type_changement === "Pacs") {
@@ -125,16 +122,16 @@ export function buildDocDefinition(
 
   if (etatCivil.type_changement === "Rectification de genre") {
     const rectif = etatCivil.rectification_genre ?? {};
-    addInfo("Date de la decision", rectif.date_decision);
-    addInfo("Tribunal de la decision", rectif.tribunal_decision);
+    addInfo("Date de la décision", rectif.date_decision);
+    addInfo("Tribunal de la décision", rectif.tribunal_decision);
     addInfo(
-      "A deja signe des documents avec un ancien etat civil",
+      "A déjà signé des documents avec un ancien état civil",
       rectif.a_signe_ancien_etat_civil,
     );
     addDoc("Jugement");
     addDoc(
-      "Ancien passeport / CNI ou titre de sejour portant l'ancien nom",
-      rectif.a_signe_ancien_etat_civil === true,
+      "Ancien passeport / CNI ou titre de séjour portant l'ancien nom",
+      rectif.a_signe_ancien_etat_civil === "Oui",
     );
   }
 

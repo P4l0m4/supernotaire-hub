@@ -8,19 +8,28 @@
         {
           "path": "bien_occupe",
           "id": "occupation-bien-occupe",
-          "label": "Le bien est actuellement occupé",
+          "label": "Le bien est-il actuellement occupé ?",
           "name": "bien_occupe",
-          "type": "checkbox"
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "bien_libre_moment_vente",
           "id": "occupation-bien-libre-vente",
-          "label": "Le bien ne sera pas libre au moment de la vente",
+          "label": "Le bien sera-t-il libre au moment de la vente ?",
           "name": "bien_libre_moment_vente",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "bien_occupe",
+            "equals": "Oui"
+          },
           "showIf": {
             "path": "bien_occupe",
-            "equals": true
+            "equals": "Oui"
           }
         },
         {
@@ -33,14 +42,14 @@
           "placeholder": "jj/mm/aaaa",
           "requiredIf": {
             "all": [
-              { "path": "bien_occupe", "equals": true },
-              { "path": "bien_libre_moment_vente", "equals": true }
+              { "path": "bien_occupe", "equals": "Oui" },
+              { "path": "bien_libre_moment_vente", "equals": "Oui" }
             ]
           },
           "showIf": {
             "all": [
-              { "path": "bien_occupe", "equals": true },
-              { "path": "bien_libre_moment_vente", "equals": true }
+              { "path": "bien_occupe", "equals": "Oui" },
+              { "path": "bien_libre_moment_vente", "equals": "Oui" }
             ]
           }
         },
@@ -58,9 +67,13 @@
             "Un squatteur"
           ],
           "placeholder": "Sélectionnez l'occupant",
+          "requiredIf": {
+            "path": "bien_occupe",
+            "equals": "Oui"
+          },
           "showIf": {
             "path": "bien_occupe",
-            "equals": true
+            "equals": "Oui"
           }
         },
         {
@@ -72,7 +85,7 @@
           "placeholder": "Nom complet",
           "showIf": {
             "path": "par_qui",
-            "equals": "Occupant gratuit"
+            "equals": "Un occupant à titre gratuit"
           }
         },
         {
@@ -101,7 +114,9 @@
           "id": "occupation-procedure",
           "label": "Une procédure est-elle en cours ?",
           "name": "procedure_en_cours",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
           "requiredIf": {
             "path": "par_qui",
             "equals": "Un squatteur"

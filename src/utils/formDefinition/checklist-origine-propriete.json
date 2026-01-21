@@ -6,38 +6,95 @@
       "label": "Origine de propriété",
       "fields": [
         {
-          "path": "origine_propriete",
-          "id": "origine-propriete-origine",
-          "label": "Origine de propriété",
-          "name": "origine_propriete",
+          "label": "Date d'acquisition du bien",
+          "path": "date_acquisition",
+          "id": "origine-propriete-date-acquisition",
+          "name": "date_acquisition",
+          "type": "date",
+          "required": true
+        },
+        {
+          "path": "type_proprietaire",
+          "id": "origine-propriete-type-proprietaire",
+          "label": "Le propriétaire du bien est une :",
+          "name": "type_proprietaire",
+          "type": "select",
+          "options": ["Personne physique", "Personne morale"],
+          "placeholder": "Sélectionner une option",
+          "required": true
+        },
+        {
+          "label": "Mode d'acquisition",
+          "path": "mode_acquisition_personne_physique",
+          "id": "origine-propriete-mode-acquisition-personne-physique",
+          "name": "mode_acquisition",
           "type": "select",
           "options": [
             "Achat classique",
             "Succession / Testament",
-            "Achat en VEFA (vente sur plan / programme neuf)",
+            "Achat en VEFA (Vente sur plan / programme neuf)",
             "Donation entre vifs",
+            "Cession de nue-propriété / usufruit",
             "Partage / Licitation",
             "Échange",
-            "Apport en société",
             "Adjudication / Vente aux enchères",
-            "Dation en paiement",
-            "Vente à terme / paiement différé",
-            "Cession de nue-propriété / usufruit"
+            "Dation en paiement (d'une dette)",
+            "Vente à terme / paiement différé"
           ],
-          "placeholder": "Sélectionnez l'origine de propriété",
-          "required": true
+          "requiredIf": {
+            "field": "type_proprietaire",
+            "value": "Personne physique"
+          },
+          "showIf": {
+            "field": "type_proprietaire",
+            "value": "Personne physique"
+          }
         },
         {
-          "path": "sous_type_succession",
-          "id": "origine-propriete-sous-type-succession",
-          "label": "Type de succession / testament",
-          "name": "sous_type_succession",
+          "label": "Mode d'acquisition",
+          "path": "mode_acquisition_personne_morale",
+          "id": "origine-propriete-mode-acquisition-personne-morale",
+          "name": "mode_acquisition",
           "type": "select",
-          "options": ["Succession / Héritage", "Legs particulier (testament)"],
-          "placeholder": "Sélectionnez le type",
+          "options": [
+            "Achat classique",
+            "Apport en société",
+            "Apport partiel d’actif (scission, fusion, TUP)",
+            "Achat en VEFA (Vente sur plan / programme neuf)",
+            "Donation entre vifs",
+            "Cession de nue-propriété / usufruit",
+            "Partage / Licitation",
+            "Échange",
+            "Adjudication / Vente aux enchères",
+            "Dation en paiement (d'une dette)",
+            "Vente à terme / paiement différé"
+          ],
+          "requiredIf": {
+            "field": "type_proprietaire",
+            "value": "Personne morale"
+          },
           "showIf": {
-            "path": "origine_propriete",
-            "equals": "Succession / Testament"
+            "field": "type_proprietaire",
+            "value": "Personne morale"
+          }
+        },
+        {
+          "label": "Mode de transmission",
+          "path": "mode_transmission",
+          "id": "origine-propriete-mode-transmission",
+          "name": "mode_transmission",
+          "type": "select",
+          "options": [
+            "Succession (pas de bien précis attribué)",
+            "Legs particulier (attribution d’un bien précis par testament)"
+          ],
+          "requiredIf": {
+            "field": "mode_acquisition_personne_physique",
+            "value": ["Succession / Testament"]
+          },
+          "showIf": {
+            "field": "mode_acquisition_personne_physique",
+            "value": ["Succession / Testament"]
           }
         }
       ]

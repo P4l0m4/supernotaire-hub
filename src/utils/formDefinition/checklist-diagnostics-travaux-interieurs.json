@@ -133,9 +133,17 @@
         {
           "path": "diagnostics.installationGaz15Ans",
           "id": "diagnostics_installation_gaz_15ans",
-          "label": "Le logement est équipé d’une installation gaz de plus de 15 ans",
+          "label": "Le logement est-il équipé d’une installation gaz de plus de 15 ans ?",
           "name": "installationGaz15Ans",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-2008"
+            }
+          },
           "showIf": {
             "path": "diagnostics.dateConstruction",
             "is": {
@@ -152,20 +160,28 @@
           "mode": "date-picker",
           "showIf": {
             "path": "diagnostics.installationGaz15Ans",
-            "equals": true
+            "equals": "Oui"
           },
           "requiredIf": {
             "path": "diagnostics.installationGaz15Ans",
-            "equals": true
+            "equals": "Oui"
           },
           "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.installationElec15Ans",
           "id": "diagnostics_installation_elec_15ans",
-          "label": "Le logement est équipé d’une installation électrique de plus de 15 ans",
+          "label": "Le logement est-il équipé d’une installation électrique de plus de 15 ans ?",
           "name": "installationElec15Ans",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "requiredIf": {
+            "path": "diagnostics.dateConstruction",
+            "is": {
+              "before": "01-01-2008"
+            }
+          },
           "showIf": {
             "path": "diagnostics.dateConstruction",
             "is": {
@@ -182,11 +198,11 @@
           "mode": "date-picker",
           "showIf": {
             "path": "diagnostics.installationElec15Ans",
-            "equals": true
+            "equals": "Oui"
           },
           "requiredIf": {
             "path": "diagnostics.installationElec15Ans",
-            "equals": true
+            "equals": "Oui"
           },
           "placeholder": "jj/mm/aaaa"
         },
@@ -209,9 +225,11 @@
         {
           "path": "travaux.realises",
           "id": "travaux_realises",
-          "label": "Des travaux ont été réalisés dans le bien",
+          "label": "Des travaux ont-ils été réalisés dans le bien ?",
           "name": "realises",
-          "type": "checkbox"
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option"
         },
         {
           "path": "travaux.nature",
@@ -221,11 +239,11 @@
           "type": "checkbox-group",
           "requiredIf": {
             "path": "travaux.realises",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "travaux.realises",
-            "equals": true
+            "equals": "Oui"
           },
           "options": [
             {

@@ -4,7 +4,7 @@ import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistOccupationActuelle,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -20,19 +20,19 @@ export function buildDocDefinition(
     docsSet.add(label);
   };
 
-  const isOccupied = data.bien_occupe === true;
-  const notFreeAtSale = data.bien_libre_moment_vente === true;
+  const isOccupied = data.bien_occupe === "Oui";
+  const freeAtSale = data.bien_libre_moment_vente === "Oui";
 
   addInfo("Bien occupé actuellement", data.bien_occupe);
   addInfo(
     "Bien occupé au moment de la vente",
     data.bien_libre_moment_vente,
-    isOccupied
+    isOccupied,
   );
   addInfo(
     "Date estimée de libération",
     data.date_liberation,
-    isOccupied && notFreeAtSale
+    isOccupied && freeAtSale,
   );
 
   addInfo("Occupé par", data.par_qui, isOccupied);
@@ -40,48 +40,48 @@ export function buildDocDefinition(
   addInfo(
     "Nom complet de l'occupant",
     data.occupant_gratuit_nom,
-    data.par_qui === "Un occupant à titre gratuit"
+    data.par_qui === "Un occupant à titre gratuit",
   );
   addDoc(
     "Convention d'occupation à titre gratuit ou attestation sur l'honneur du vendeur",
-    data.par_qui === "Un occupant à titre gratuit"
+    data.par_qui === "Un occupant à titre gratuit",
   );
 
   addInfo(
     "Nature de l'occupation",
     data.nature_occupation,
-    data.par_qui === "Le propriétaire vendeur"
+    data.par_qui === "Le propriétaire vendeur",
   );
 
   addDoc(
     "Convention d'indivision ou accord écrit",
-    data.par_qui === "Un indivisaire (plusieurs propriétaires)"
+    data.par_qui === "Un indivisaire (plusieurs propriétaires)",
   );
 
   addInfo(
     "Procédure en cours (occupation sans droit ni titre)",
     data.procedure_en_cours,
-    data.par_qui === "Un squatteur"
+    data.par_qui === "Un squatteur",
   );
   addDoc(
     "Document de procédure déjà émis (si disponible)",
-    data.par_qui === "Un squatteur" && data.procedure_en_cours === true
+    data.par_qui === "Un squatteur" && data.procedure_en_cours === "Oui",
   );
 
   addInfo("Type de bail", data.type_bail, data.par_qui === "Un locataire");
   addInfo(
     "Précisions bail",
     data.bail_autre_precisions,
-    data.par_qui === "Un locataire" && data.type_bail === "Autre"
+    data.par_qui === "Un locataire" && data.type_bail === "Autre",
   );
   addDoc("Copie du bail", data.par_qui === "Un locataire");
   addDoc(
     "Dernier avis d'échéance ou quittance de loyer",
-    data.par_qui === "Un locataire"
+    data.par_qui === "Un locataire",
   );
   addDoc(
-    "Etat des lieux d'entrée (si disponible)",
-    data.par_qui === "Un locataire"
+    "État des lieux d'entrée (si disponible)",
+    data.par_qui === "Un locataire",
   );
 
   const infoBody = [

@@ -4,7 +4,7 @@ import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistOriginePropriete,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -19,32 +19,53 @@ export function buildDocDefinition(
     if (!when) return;
     docsSet.add(label);
   };
-
-  addInfo("Origine de propriété", data.origine_propriete);
+  addInfo("Date d'acquisition", data.date_acquisition);
+  addInfo("Type de propriétaire", data.type_proprietaire);
   addInfo(
-    "Type de succession / testament",
-    data.sous_type_succession,
-    data.origine_propriete === "Succession / Testament"
+    "Mode d'acquisition",
+    data.mode_acquisition_personne_physique,
+    data.type_proprietaire === "Personne physique",
+  );
+  addInfo(
+    "Mode d'acquisition",
+    data.mode_acquisition_personne_morale,
+    data.type_proprietaire === "Personne morale",
+  );
+  addInfo(
+    "Mode de transmission",
+    data.mode_transmission,
+    data.mode_acquisition_personne_physique === "Succession / Testament",
   );
 
-  switch (data.origine_propriete) {
+  const modePhys = data.mode_acquisition_personne_physique;
+  const modeMorale = data.mode_acquisition_personne_morale;
+  const mode = modePhys || modeMorale;
+
+  switch (mode) {
     case "Achat classique":
-      addDoc("Attestation ou titre de propriété");
+      addDoc("Attestation ou Titre de propriété");
       break;
     case "Succession / Testament":
-      if (data.sous_type_succession === "Succession / Héritage") {
+      addDoc("Attestation immobilière de propriété");
+      addDoc("Copie authentique du testament (s’il existe)");
+      if (
+        data.mode_transmission === "Succession (pas de bien précis attribué)"
+      ) {
         addDoc("Attestation immobilière de succession");
         addDoc("Déclaration de succession (cerfa 2705)");
       }
-      if (data.sous_type_succession === "Legs particulier (testament)") {
+      if (
+        data.mode_transmission ===
+        "Legs particulier (attribution d’un bien précis par testament)"
+      ) {
         addDoc("Expédition du testament");
         addDoc("Procès-verbal d'ouverture/dépôt");
         addDoc("Certificat d'hérédité ou acte de notoriété");
         addDoc("Attestation immobilière publiée");
       }
       break;
-    case "Achat en VEFA (vente sur plan / programme neuf)":
-      addDoc("Acte d'achat avec annexes");
+    case "Achat en VEFA (Vente sur plan / programme neuf)":
+      addDoc("Acte d’achat avec annexes");
       break;
     case "Donation entre vifs":
       addDoc("Acte de donation");
@@ -53,28 +74,39 @@ export function buildDocDefinition(
       addDoc("Acte de partage/licitation");
       break;
     case "Échange":
-      addDoc("Acte d'échange");
+      addDoc("Acte d’échange");
       break;
     case "Apport en société":
-      addDoc("Acte d'apport");
+      addDoc("Titre de propriété");
       addDoc("Statuts mis à jour");
+      addDoc("Acte d’évaluation / rapport du commissaire aux apports");
+      addDoc("Décision sociale autorisant la vente (PV d’AG, etc)");
+      addDoc("Kbis (ou équivalent)");
+      break;
+    case "Apport partiel d’actif (scission, fusion, TUP)":
+      addDoc("Titre de propriété");
+      addDoc("Traité d’apport / fusion / scission");
+      addDoc("Statuts mis à jour");
+      addDoc("Acte d’évaluation / rapport du commissaire aux apports");
+      addDoc("Décision sociale autorisant la vente (PV d’AG, etc)");
+      addDoc("Kbis (ou équivalent)");
+      addDoc("Attestations de parution (BODACC, JAL)");
       break;
     case "Adjudication / Vente aux enchères":
-      addDoc("Procès-verbal d'adjudication");
+      addDoc("Procès-verbal d’adjudication");
       break;
-    case "Dation en paiement":
-      addDoc("Acte notarié de transfert");
-      addDoc("Convention de dation acceptée par le créancier");
-      addDoc("Quitus de la dette");
+    case "Dation en paiement (d'une dette)":
+      addDoc("Acte notarié de dation en paiement");
       break;
     case "Vente à terme / paiement différé":
-      addDoc("Acte de vente à terme");
+      addDoc("Titre de propriété");
       addDoc("Quitus ou attestation de paiement intégral");
       break;
     case "Cession de nue-propriété / usufruit":
       addDoc("Acte de démembrement");
-      addDoc("Convention d'usufruit");
-      addDoc("Attestation d'absence d'hypothèque");
+      addDoc(
+        "Acte notarié définissant le démembrement (si le démembrement ne naît pas du même acte que la cession)",
+      );
       break;
     default:
       break;

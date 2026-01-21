@@ -42,7 +42,7 @@ export interface ChecklistCoproStructures {
   email_syndic?: string;
   tel_syndic?: string;
   type_association_syndicale?: TypeAssociationSyndicale;
-  asl_cotisations_a_jour?: boolean;
+  asl_cotisations_a_jour?: OuiNon;
   email_asl?: string;
   telephone_asl?: string;
   precision_type_structure?: string;

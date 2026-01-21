@@ -34,7 +34,7 @@ export function buildDocDefinition(
   addInfo(
     "Nature du terrain",
     data.maison?.nature_terrain,
-    data.type_bien === "Maison" && data.maison?.vendue_avec_terrain === true
+    data.type_bien === "Maison" && data.maison?.vendue_avec_terrain === "Oui"
   );
   addInfo(
     "Maison sur domaine public avec titre d'occupation",
@@ -43,7 +43,7 @@ export function buildDocDefinition(
   );
   addDoc(
     "Titre d'occupation du domaine public",
-    data.type_bien === "Maison" && data.maison?.edifiee_domaine_public === true
+    data.type_bien === "Maison" && data.maison?.edifiee_domaine_public === "Oui"
   );
 
   const infoBody = [

@@ -61,6 +61,7 @@
           "name": "lieu_naissance_departement",
           "type": "text",
           "placeholder": "75000",
+          "pattern": "^[0-9]{2,3}$",
           "requiredIf": {
             "path": "identite.lieu_naissance.type",
             "equals": "France"
@@ -111,10 +112,13 @@
         {
           "path": "etat_civil.changement_etat_civil",
           "id": "etat-civil-changement",
-          "label": "J'ai changé d'état civil",
+          "label": "Avez-vous changé d'état civil ?",
+          "tooltip": "À l'occasion d'un changement de nom, mariage, etc.",
           "name": "changement_etat_civil",
-          "type": "checkbox",
-          "required": false
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "etat_civil.type_changement",
@@ -133,19 +137,21 @@
           "placeholder": "Sélectionner une option",
           "requiredIf": {
             "path": "etat_civil.changement_etat_civil",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "etat_civil.changement_etat_civil",
-            "equals": true
+            "equals": "Oui"
           }
         },
         {
           "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
           "id": "etat-civil-changement-nom-signe",
-          "label": "J'ai déjà signé des documents avec mon ancien état civil",
+          "label": "Avez-vous déjà signé des documents avec votre ancien état civil ?",
           "name": "changement_nom_signe",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
           "requiredIf": {
             "path": "etat_civil.type_changement",
             "equals": "Changement de nom par décret"
@@ -170,7 +176,7 @@
               },
               {
                 "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
-                "equals": false
+                "equals": "Non"
               }
             ]
           },
@@ -182,7 +188,7 @@
               },
               {
                 "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
-                "equals": false
+                "equals": "Non"
               }
             ]
           }
@@ -203,7 +209,7 @@
               },
               {
                 "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
-                "equals": false
+                "equals": "Non"
               }
             ]
           },
@@ -215,7 +221,7 @@
               },
               {
                 "path": "etat_civil.changement_nom.a_signe_ancien_etat_civil",
-                "equals": false
+                "equals": "Non"
               }
             ]
           }
@@ -404,9 +410,11 @@
         {
           "path": "etat_civil.rectification_genre.a_signe_ancien_etat_civil",
           "id": "etat-civil-rectification-signe",
-          "label": "J'ai déjà signé des documents avec mon ancien état civil",
+          "label": "Avez-vous déjà signé des documents avec votre ancien état civil ?",
           "name": "rectification_signe",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
           "requiredIf": {
             "path": "etat_civil.type_changement",
             "equals": "Rectification de genre"
