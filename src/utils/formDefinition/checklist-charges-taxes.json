@@ -2,8 +2,8 @@
   "title": "Charges & Taxes",
   "sections": [
     {
-      "id": "charges-taxes",
-      "label": "Charges & Taxes",
+      "id": "bien",
+      "label": "Bien",
       "fields": [
         {
           "path": "type_bien",
@@ -14,7 +14,13 @@
           "options": ["Appartement", "Maison"],
           "placeholder": "Sélectionnez le type de bien",
           "required": true
-        },
+        }
+      ]
+    },
+    {
+      "id": "chauffage",
+      "label": "Chauffage",
+      "fields": [
         {
           "path": "type_chauffage",
           "id": "charges-taxes-type-chauffage",
@@ -69,7 +75,13 @@
           "placeholder": "jj/mm/aaaa",
           "maxDate": "today",
           "required": true
-        },
+        }
+      ]
+    },
+    {
+      "id": "assainissement",
+      "label": "Assainissement",
+      "fields": [
         {
           "path": "mode_assainissement",
           "id": "charges-taxes-mode-assainissement",
@@ -79,7 +91,13 @@
           "options": ["Collectif", "Individuel"],
           "placeholder": "Sélectionnez le mode d'assainissement",
           "required": true
-        },
+        }
+      ]
+    },
+    {
+      "id": "fiscalite",
+      "label": "Fiscalité",
+      "fields": [
         {
           "path": "situation_fiscale",
           "id": "charges-taxes-situation-fiscale",
@@ -100,21 +118,24 @@
           "label": "Montant annuel de la taxe foncière",
           "name": "montant_taxe_fonciere",
           "type": "number",
-          "placeholder": "0 si null",
+          "placeholder": "0 si nul",
           "required": true
         },
         {
           "path": "presence_teom",
           "id": "charges-taxes-presence-teom",
-          "label": "Présence d'une TEOM",
+          "label": "Présence d'une TEOM ? (Taxe d'enlèvement des ordures ménagères)",
           "name": "presence_teom",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true,
           "tooltip": "Taxe d'enlèvement des ordures ménagères"
         },
         {
           "path": "bien_soumis_taxe_habitation",
           "id": "charges-taxes-soumis-taxe-habitation",
-          "label": "Le bien est soumis à la taxe d'habitation",
+          "label": "Le bien est-il soumis à la taxe d'habitation ?",
           "name": "bien_soumis_taxe_habitation",
           "type": "select",
           "placeholder": "Sélectionnez une option",
@@ -124,7 +145,7 @@
         {
           "path": "montant_derniere_taxe_habitation",
           "id": "charges-taxes-montant-derniere-taxe-habitation",
-          "label": "Montant annuel de la dernière taxe d’habitation",
+          "label": "Montant annuel de la dernière taxe d'habitation",
           "name": "montant_derniere_taxe_habitation",
           "type": "text",
           "placeholder": "650",
@@ -136,9 +157,15 @@
             "path": "bien_soumis_taxe_habitation",
             "equals": "Oui"
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": "pret",
+      "label": "Prêt",
+      "fields": [
         {
-          "label": "Existe t’il un prêt immobilier en cours sur le bien ?",
+          "label": "Existe t-il un prêt immobilier en cours sur le bien ?",
           "path": "pret_immobilier_en_cours",
           "id": "charges-taxes-pret-immobilier-en-cours",
           "name": "pret_immobilier_en_cours",
@@ -197,7 +224,13 @@
             "path": "pret_immobilier_en_cours",
             "equals": "Oui"
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": "beneficiaires",
+      "label": "Bénéficiaires",
+      "fields": [
         {
           "label": "Coordonnées bancaires des bénéficiaires de la vente",
           "type": "array",

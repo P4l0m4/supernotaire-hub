@@ -1,32 +1,34 @@
 export type TypeBienCharges = "Appartement" | "Maison";
 
 export type TypeChauffage =
-  | "Pompe Çÿ chaleur"
+  | "Pompe à chaleur"
   | "Gaz"
   | "Fioul"
   | "Bois"
-  | "Ç%lectrique"
+  | "Électrique"
   | "Autre";
 
 export type ModeAssainissement = "Collectif" | "Individuel";
 
 export type SituationOccupationFiscale =
-  | "RÇ¸sidence principale"
-  | "RÇ¸sidence secondaire"
+  | "Résidence principale"
+  | "Résidence secondaire"
   | "Bien vacant";
 
-export type PretImmobilierEnCours = "Oui" | "Non";
+export type OuiNon = "Oui" | "Non";
+
+export type PretImmobilierEnCours = OuiNon;
 
 export type RoleBeneficiaire =
-  | "PropriÇ¸taire du bien (personne physique ou morale)"
-  | "Banque prÇ¦teuse (si prÇ¦t sur le bien)"
+  | "Propriétaire du bien (personne physique ou morale)"
+  | "Banque prêteuse (si prêt sur le bien)"
   | "Mandataire (agence, etc)"
-  | "Syndic (si impayÇ¸s en copropriÇ¸tÇ¸)"
+  | "Syndic (si impayés en copropriété)"
   | "Autre";
 
 export interface BeneficiaireCoordonneesBancaires {
   role_beneficiaire?: RoleBeneficiaire;
-  beneficiaire_percoit_commission?: "Oui" | "Non";
+  beneficiaire_percoit_commission?: OuiNon;
   montant_commission?: string;
 }
 
@@ -38,10 +40,10 @@ export interface ChecklistChargesTaxes {
   date_ramonage?: string;
   mode_assainissement?: ModeAssainissement;
   situation_fiscale?: SituationOccupationFiscale;
-  montant_taxe_fonciere?: string;
+  montant_taxe_fonciere?: number | null;
+  presence_teom?: OuiNon;
+  bien_soumis_taxe_habitation?: OuiNon;
   montant_derniere_taxe_habitation?: string;
-  presence_teom?: boolean;
-  bien_soumis_taxe_habitation?: boolean;
   pret_immobilier_en_cours?: PretImmobilierEnCours;
   nom_banque?: string;
   numero_pret?: string;

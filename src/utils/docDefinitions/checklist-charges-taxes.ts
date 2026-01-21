@@ -99,11 +99,11 @@ export function buildDocDefinition(
   addDoc("Dernier avis de taxe fonciere");
   addDoc(
     "Dernier avis de taxe d'habitation",
-    data.bien_soumis_taxe_habitation === true
+    data.bien_soumis_taxe_habitation === "Oui"
   );
   addDoc(
     "Montant annuel de la derniere taxe d'habitation (si applicable)",
-    data.bien_soumis_taxe_habitation === false
+    data.bien_soumis_taxe_habitation === "Non"
   );
   addDoc(
     "Decompte de pret",
