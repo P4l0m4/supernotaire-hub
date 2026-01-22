@@ -47,11 +47,11 @@
           ],
           "requiredIf": {
             "path": "type_proprietaire",
-            "value": "Personne physique"
+            "equals": "Personne physique"
           },
           "showIf": {
             "path": "type_proprietaire",
-            "value": "Personne physique"
+            "equals": "Personne physique"
           }
         },
         {
@@ -74,12 +74,12 @@
             "Vente à terme / paiement différé"
           ],
           "requiredIf": {
-            "field": "type_proprietaire",
-            "value": "Personne morale"
+            "path": "type_proprietaire",
+            "equals": "Personne morale"
           },
           "showIf": {
-            "field": "type_proprietaire",
-            "value": "Personne morale"
+            "path": "type_proprietaire",
+            "equals": "Personne morale"
           }
         },
         {
@@ -94,12 +94,12 @@
             "Legs particulier (attribution d’un bien précis par testament)"
           ],
           "requiredIf": {
-            "field": "mode_acquisition_personne_physique",
-            "value": ["Succession / Testament"]
+            "path": "mode_acquisition_personne_physique",
+            "equals": ["Succession / Testament"]
           },
           "showIf": {
-            "field": "mode_acquisition_personne_physique",
-            "value": ["Succession / Testament"]
+            "path": "mode_acquisition_personne_physique",
+            "equals": ["Succession / Testament"]
           }
         }
       ]

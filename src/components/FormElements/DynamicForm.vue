@@ -286,6 +286,46 @@ function isFieldVisible(field: any): boolean {
   }
 }
 
+const clearValueAtPath = (path: string, fieldType: string) => {
+  const segs = path.split(".");
+  if (!segs.length) return;
+  let cur: any = model.value;
+  for (let i = 0; i < segs.length - 1; i++) {
+    const next = cur?.[segs[i]];
+    if (next == null || typeof next !== "object") return;
+    cur = next;
+  }
+  const key = segs.at(-1)!;
+  if (!Object.prototype.hasOwnProperty.call(cur, key)) return;
+
+  const shouldSetArrayEmpty =
+    fieldType === "array" || fieldType === "checkbox-group";
+
+  if (shouldSetArrayEmpty) {
+    if (Array.isArray(cur[key]) && cur[key].length === 0) return;
+    cur[key] = [];
+    return;
+  }
+
+  if (cur[key] === undefined) return;
+  cur[key] = undefined;
+  if (Array.isArray(cur)) return;
+  try {
+    delete cur[key];
+  } catch {
+    /* no-op: delete can fail on non-configurable props */
+  }
+};
+
+const clearHiddenFields = () => {
+  const allFields = sections.value.flatMap((s) => s.fields);
+  allFields.forEach((f) => {
+    if (!isFieldVisible(f)) {
+      clearValueAtPath(f.path, f.type);
+    }
+  });
+};
+
 async function validateCurrentSection() {
   await nextTick();
   const s = sections.value[currentSection.value];
@@ -513,6 +553,7 @@ const emitValidState = () => {
 watch(
   model,
   () => {
+    clearHiddenFields();
     emitValidState();
   },
   { deep: true, immediate: true },
