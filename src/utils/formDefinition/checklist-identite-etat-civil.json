@@ -57,10 +57,10 @@
         {
           "path": "identite.lieu_naissance.departement",
           "id": "identite-lieu-naissance-departement",
-          "label": "Département de naissance",
+          "label": "Département de naissance (2 ou 3 chiffres)",
           "name": "lieu_naissance_departement",
           "type": "text",
-          "placeholder": "75000",
+          "placeholder": "75",
           "pattern": "^[0-9]{2,3}$",
           "requiredIf": {
             "path": "identite.lieu_naissance.type",

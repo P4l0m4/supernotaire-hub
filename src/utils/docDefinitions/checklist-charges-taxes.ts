@@ -65,11 +65,6 @@ export function buildDocDefinition(
     data.pret_immobilier_en_cours === "Oui",
   );
   addInfo(
-    "Numéro du prêt",
-    data.numero_pret,
-    data.pret_immobilier_en_cours === "Oui",
-  );
-  addInfo(
     "Date de la dernière échéance",
     data.date_derniere_echeance,
     data.pret_immobilier_en_cours === "Oui",
@@ -84,7 +79,7 @@ export function buildDocDefinition(
     const rows: Array<[string, TableCell]> = [
       ["Rôle", val(beneficiaire.role_beneficiaire)],
       [
-        "Percoit une commission",
+        "Perçoit une commission",
         val(beneficiaire.beneficiaire_percoit_commission),
       ],
     ];

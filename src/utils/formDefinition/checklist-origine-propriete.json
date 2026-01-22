@@ -95,11 +95,11 @@
           ],
           "requiredIf": {
             "path": "mode_acquisition_personne_physique",
-            "equals": ["Succession / Testament"]
+            "equals": "Succession / Testament"
           },
           "showIf": {
             "path": "mode_acquisition_personne_physique",
-            "equals": ["Succession / Testament"]
+            "equals": "Succession / Testament"
           }
         }
       ]

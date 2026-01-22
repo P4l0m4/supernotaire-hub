@@ -26,31 +26,32 @@ export function buildDocDefinition(
   };
 
   const procedure = data.procedure ?? {};
-  addInfo("ProcÇ¸dure administrative en cours", procedure.enCours);
-  addInfo(
-    "Type(s) de procÇ¸dure",
-    procedure.types,
-    procedure.enCours === "Oui",
-  );
+  addInfo("Procédure administrative en cours", procedure.enCours);
+  addInfo("Type(s) de procédure", procedure.types, procedure.enCours === "Oui");
 
   const contentieux = data.contentieux ?? {};
   addInfo("Un contentieux est en cours", contentieux.enCours);
-  addInfo("Type(s) de contentieux", contentieux.types, contentieux.enCours === "Oui");
   addInfo(
-    "PrÇ¸cisions sur le contentieux",
+    "Type(s) de contentieux",
+    contentieux.types,
+    contentieux.enCours === "Oui",
+  );
+  addInfo(
+    "Précisions sur le contentieux",
     contentieux.autreDetail,
     Array.isArray(contentieux.types) && contentieux.types.includes("autre"),
   );
 
   const servitudes = data.servitudes ?? {};
-  addInfo("Le bien est grevÇ¸ de servitudes connues", servitudes.existent);
-  addInfo("Type(s) de servitudes", servitudes.types, servitudes.existent === "Oui");
+  addInfo("Le bien est grevé de servitudes connues", servitudes.existent);
+  addInfo(
+    "Type(s) de servitudes",
+    servitudes.types,
+    servitudes.existent === "Oui",
+  );
 
   const zonage = data.zonage ?? {};
-  addInfo(
-    "Le bien est situÇ¸ dans une zone rÇ¸glementÇ¸e",
-    zonage.reglemente,
-  );
+  addInfo("Le bien est situé dans une zone réglementée", zonage.reglemente);
   addInfo(
     "Type de document d'urbanisme",
     zonage.type === "Autre" ? zonage.typeAutre : zonage.type,
@@ -59,7 +60,7 @@ export function buildDocDefinition(
 
   const travaux = data.travaux ?? {};
   addInfo(
-    "Travaux avec impact extÇ¸rieur / urbanistique",
+    "Travaux avec impact extérieur / urbanistique",
     travaux.impactExterieur,
   );
 
@@ -72,86 +73,100 @@ export function buildDocDefinition(
       rows.push([rowLabel, val(value)]);
     };
 
-    addRow("ArrÇ¦tÇ¸ d'urbanisme", t.arreteExiste);
+    addRow("Arrêté d'urbanisme", t.arreteExiste);
     addRow("Type d'autorisation", t.arreteType, t.arreteExiste === "Oui");
     addRow(
-      "Motif de l'absence d'arrÇ¦tÇ¸",
+      "Motif de l'absence d'arrêté",
       t.motifAbsenceArrete,
       t.arreteExiste === "Non",
     );
     addRow("Type de travaux", t.typeTravaux);
-    addRow("Travaux achevÇ¸s ?", t.travauxAcheves);
+    addRow("Travaux achevés", t.travauxAcheves);
     addRow(
-      "Date d'achÇ¦vement prÇ¸vue",
+      "Date d'achèvement prévue",
       t.dateAchevement,
       t.travauxAcheves === "Non",
     );
-    addRow("Travaux conformes ?", t.travauxNonConformes, t.travauxAcheves === "Oui");
     addRow(
-      "Date de dÇ¸p™t de la DAACT",
+      "Travaux conformes",
+      t.travauxNonConformes,
+      t.travauxAcheves === "Oui",
+    );
+    addRow(
+      "Date de dépôt de la DAACT",
       t.dateDepotDaact,
       t.arreteExiste === "Oui" &&
         t.travauxNonConformes === "Oui" &&
         t.travauxAcheves !== "Oui",
     );
-    addRow("Plans approuvÇ¸s disponibles", t.plansDisponibles, t.arreteExiste === "Oui");
+    addRow(
+      "Plans approuvés disponibles",
+      t.plansDisponibles,
+      t.arreteExiste === "Oui",
+    );
 
     infoRows.push([label, buildKeyValueSubTable(rows)]);
 
     addDoc(
-      "ArrÇ¦tÇ¸ de permis de construire ou arrÇ¦tÇ¸ de non-opposition Çÿ dÇ¸claration prÇ¸alable",
+      "Arrêté de permis de construire ou arrêté de non-opposition à déclaration préalable",
       t.arreteExiste === "Oui",
     );
-    addDoc(t.arreteType ?? "", t.arreteExiste === "Oui" && Boolean(t.arreteType));
     addDoc(
-      "AccusÇ¸ de rÇ¸ception ou preuve de dÇ¸p™t de la DAACT",
+      t.arreteType ?? "",
+      t.arreteExiste === "Oui" && Boolean(t.arreteType),
+    );
+    addDoc(
+      "Accusé de réception ou preuve de dépôt de la DAACT",
       t.arreteExiste === "Oui" &&
         t.travauxNonConformes === "Oui" &&
         t.travauxAcheves !== "Oui",
     );
     addDoc(
-      "DAACT (dÇ¸claration attestant l'achÇ¦vement et la conformitÇ¸ des travaux)",
+      "DAACT (déclaration attestant l'achèvement et la conformité des travaux)",
       t.arreteExiste === "Oui" &&
         t.travauxNonConformes === "Oui" &&
         t.travauxAcheves !== "Oui",
     );
     addDoc(
-      "Plans approuvÇ¸s",
+      "Plans approuvés",
       t.arreteExiste === "Oui" && t.plansDisponibles === false,
     );
   });
 
   const cadastre = data.cadastre ?? {};
   addInfo("Section cadastrale", cadastre.section);
-  addInfo("NumÇ¸ro de parcelle", cadastre.parcelle);
-  addInfo("Superficie cadastrale (mý)", cadastre.superficie);
+  addInfo("Numéro de parcelle", cadastre.parcelle);
+  addInfo("Superficie cadastrale (m²)", cadastre.superficie);
   addInfo("Plan cadastral disponible", cadastre.planDisponible);
 
-  addDoc("Extrait ou plan cadastral du bien", cadastre.planDisponible === "Oui");
+  addDoc(
+    "Extrait ou plan cadastral du bien",
+    cadastre.planDisponible === "Oui",
+  );
   if (Array.isArray(servitudes.types) && servitudes.types.length) {
     addDoc("Justificatif ou plan disponible");
   }
 
   const docs = Array.from(docsSet);
   const infoBody = [
-    ["Questions", "RÇ¸ponses"],
+    ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
   const docsTitle =
     docs.length === 0
-      ? "Aucun document Çÿ joindre pour cette rubrique"
-      : "Transmettez ces documents Çÿ votre notaire";
+      ? "Aucun document à joindre pour cette rubrique"
+      : "Transmettez ces documents à votre notaire";
 
   return buildChecklistPdfStructure({
-    title: "Urbanisme & travaux extÇ¸rieurs",
-    subtitle: "Autorisation d'urbanisme et travaux extÇ¸rieurs",
+    title: "Urbanisme & travaux extérieurs",
+    subtitle: "Autorisation d'urbanisme et travaux extérieurs",
     infoTitle: "Informations fournies",
     docsTitle,
     metadataTitle: "",
-    generatedOnLabel: "GÇ¸nÇ¸rÇ¸ le",
+    generatedOnLabel: "Généré le",
     emptyDocsText: "",
-    note: "Checklist indicative, sous rÇ¸serve de demandes spÇ¸cifiques du notaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs,
     logoBase64,

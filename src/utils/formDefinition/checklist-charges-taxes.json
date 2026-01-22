@@ -191,22 +191,6 @@
           }
         },
         {
-          "label": "Numéro du prêt",
-          "path": "numero_pret",
-          "id": "charges-taxes-numero-pret",
-          "name": "numero_pret",
-          "type": "text",
-          "placeholder": "1234567890",
-          "showIf": {
-            "path": "pret_immobilier_en_cours",
-            "equals": "Oui"
-          },
-          "requiredIf": {
-            "path": "pret_immobilier_en_cours",
-            "equals": "Oui"
-          }
-        },
-        {
           "label": "Date de la dernière échéance",
           "path": "date_derniere_echeance",
           "id": "charges-taxes-date-derniere-echeance",

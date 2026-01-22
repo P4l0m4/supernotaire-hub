@@ -114,7 +114,7 @@
           "type": "number",
           "showIf": {
             "path": "copro_charges_a_jour",
-            "equals": "Oui"
+            "equals": "Non"
           }
         },
         {

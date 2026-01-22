@@ -46,7 +46,6 @@ export interface ChecklistChargesTaxes {
   montant_derniere_taxe_habitation?: string;
   pret_immobilier_en_cours?: PretImmobilierEnCours;
   nom_banque?: string;
-  numero_pret?: string;
   date_derniere_echeance?: string;
   coordonnees_bancaires_beneficiaires?: BeneficiaireCoordonneesBancaires[];
 }

@@ -9,11 +9,11 @@ export type TravauxNature =
   | "entretien_embellissement";
 
 export interface ChecklistDiagnostics {
-  raccordToutALegout?: boolean;
+  raccordToutALegout?: OuiNon;
   dateDiagAssainissement?: string;
-  zoneTermites?: boolean;
+  zoneTermites?: OuiNon;
   dateDiagTermites?: string;
-  zoneRisques?: boolean;
+  zoneRisques?: OuiNon;
   dateErp?: string;
   dateConstruction?: string;
   dateCrepPlomb?: string;

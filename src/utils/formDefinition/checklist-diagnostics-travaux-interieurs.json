@@ -10,31 +10,39 @@
           "id": "diagnostics_raccord_tout_a_legout",
           "label": "Le bien est-il raccordé au tout-à-l’égout ?",
           "name": "raccordToutALegout",
-          "type": "checkbox"
+          "type": "select",
+          "tooltip": "Raccordé au réseau public de collecte des eaux usées ?",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "diagnostics.dateDiagAssainissement",
           "id": "diagnostics_date_diag_assainissement",
-          "label": "Date du diagnostic (assainissement)",
+          "label": "Date du dernier diagnostic assainissement",
           "name": "dateDiagAssainissement",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.raccordToutALegout",
-            "equals": true
+            "equals": "Non"
           },
           "requiredIf": {
             "path": "diagnostics.raccordToutALegout",
-            "equals": true
+            "equals": "Non"
           },
           "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.zoneTermites",
           "id": "diagnostics_zone_termites",
-          "label": "Le bien est situé dans une zone délimitée par un arrêté préfectoral termites",
+          "label": "Le bien est-il situé dans une zone délimitée par un arrêté préfectoral termites ?",
           "name": "zoneTermites",
-          "type": "checkbox"
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "diagnostics.dateDiagTermites",
@@ -45,21 +53,24 @@
           "mode": "date-picker",
           "showIf": {
             "path": "diagnostics.zoneTermites",
-            "equals": true
+            "equals": "Oui"
           },
           "requiredIf": {
             "path": "diagnostics.zoneTermites",
-            "equals": true
+            "equals": "Oui"
           },
           "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.zoneRisques",
           "id": "diagnostics_zone_risques",
-          "label": "Le bien situé dans une zone à risques",
+          "label": "Le bien est-il situé dans une zone à risques ?",
           "tooltip": "naturels, miniers, technologiques, radon…",
           "name": "zoneRisques",
-          "type": "checkbox"
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "diagnostics.dateErp",
@@ -68,20 +79,21 @@
           "name": "dateErp",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.zoneRisques",
-            "equals": true
+            "equals": "Oui"
           },
           "requiredIf": {
             "path": "diagnostics.zoneRisques",
-            "equals": true
+            "equals": "Oui"
           },
           "placeholder": "jj/mm/aaaa"
         },
         {
           "path": "diagnostics.dateConstruction",
           "id": "diagnostics_date_construction",
-          "label": "Date de construction",
+          "label": "Date de construction du bien",
           "name": "dateConstruction",
           "type": "date",
           "mode": "date-picker",
@@ -95,6 +107,7 @@
           "name": "dateCrepPlomb",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.dateConstruction",
             "is": {
@@ -116,6 +129,7 @@
           "name": "dateAmiante",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.dateConstruction",
             "is": {
@@ -158,6 +172,7 @@
           "name": "dateDiagnosticGaz",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.installationGaz15Ans",
             "equals": "Oui"
@@ -196,6 +211,7 @@
           "name": "dateDiagnosticElectricite",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "showIf": {
             "path": "diagnostics.installationElec15Ans",
             "equals": "Oui"
@@ -213,6 +229,7 @@
           "name": "dateDpe",
           "type": "date",
           "mode": "date-picker",
+          "maxDate": "today",
           "required": true,
           "placeholder": "jj/mm/aaaa"
         }
@@ -229,7 +246,8 @@
           "name": "realises",
           "type": "select",
           "options": ["Oui", "Non"],
-          "placeholder": "Sélectionnez une option"
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "travaux.nature",

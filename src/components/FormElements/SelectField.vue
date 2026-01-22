@@ -20,6 +20,8 @@ const props = defineProps({
   placeholder: { type: String, default: "" },
   icon: { type: String, default: "" },
   error: { type: String, default: "" },
+  tooltip: { type: String, default: "" },
+  tooltipLink: { type: String, default: "" },
 });
 
 const isSelectOpen = ref(false);
@@ -32,11 +34,11 @@ watch(
   () => modelValue.value,
   (v) => {
     optionSelected.value = v ?? "";
-  }
+  },
 );
 
 const displayText = computed(() =>
-  optionSelected.value?.length ? optionSelected.value : props.placeholder
+  optionSelected.value?.length ? optionSelected.value : props.placeholder,
 );
 
 function toggleSelect() {
@@ -74,6 +76,7 @@ function selectOption(option: string) {
         :color="colors['text-color-faded']"
       />
       <span class="select-field__selected__placeholder">{{ displayText }}</span>
+
       <span style="opacity: 0.8; margin-left: auto">
         <UIIconComponent
           :icon="isSelectOpen ? 'caret_up_bold' : 'caret_down_bold'"
@@ -81,6 +84,29 @@ function selectOption(option: string) {
           :color="colors['text-color-faded']"
         />
       </span>
+    </span>
+    <span v-if="tooltip?.length" class="select-field__tooltip">
+      <UIIconComponent
+        v-if="tooltip && !tooltipLink"
+        icon="info"
+        size="1.2rem"
+        :color="colors['text-color-faded']"
+        v-tooltip="tooltip"
+        :aria-label="tooltip"
+      />
+      <NuxtLink
+        v-else-if="tooltip && tooltipLink"
+        :to="tooltipLink"
+        v-tooltip="tooltip"
+        :aria-label="tooltip"
+        class="select-field__tooltip__link"
+      >
+        <UIIconComponent
+          icon="info"
+          size="1.2rem"
+          :color="colors['text-color-faded']"
+        />
+      </NuxtLink>
     </span>
 
     <div class="select-field__content" v-if="isSelectOpen">
@@ -108,7 +134,7 @@ function selectOption(option: string) {
 .select-field {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.5rem;
   position: relative;
 
@@ -143,6 +169,20 @@ function selectOption(option: string) {
     }
   }
 
+  &__tooltip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -150,7 +190,7 @@ function selectOption(option: string) {
     top: 3.4rem;
     background-color: $primary-color;
     border-radius: 0 0 calc($radius/2) calc($radius/2);
-    width: 100%;
+    width: calc(100% - 1.75rem);
     overflow-y: scroll;
     max-height: 240px;
     border: 1px solid $accent-color-faded;

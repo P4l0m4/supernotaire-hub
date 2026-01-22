@@ -1,12 +1,12 @@
 export type SituationMatrimonialeType =
-  | "CÇ¸libataire / Concubin(e) / Union libre"
-  | "MariÇ¸(e) (communautÇ¸)"
-  | "MariÇ¸(e) (contrat spÇ¸cifique)"
-  | "PacsÇ¸(e)"
-  | "DivorcÇ¸(e) (non remariÇ¸(e))"
+  | "Célibataire / Concubin(e) / Union libre"
+  | "Marié(e) (communauté)"
+  | "Marié(e) (contrat spécifique)"
+  | "Pacsé(e)"
+  | "Divorcé(e) (non remarié(e))"
   | "Dissolution PACS"
   | "Veuf / Veuve"
-  | "SÇ¸parÇ¸ de corps (mariÇ¸s mais autorisÇ¸s Çÿ vivre sÇ¸parÇ¸ment)";
+  | "Séparé de corps (mariés mais autorisés à vivre séparément)";
 
 export type OuiNon = "Oui" | "Non";
 

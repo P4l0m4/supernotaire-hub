@@ -41,27 +41,27 @@ export function buildDocDefinition(
   addInfo(
     "Date du diagnostic assainissement",
     diagnostics.dateDiagAssainissement,
-    diagnostics.raccordToutALegout === true,
+    diagnostics.raccordToutALegout === "Oui",
   );
-  addDoc("Diagnostic assainissement", diagnostics.raccordToutALegout === true);
+  addDoc("Diagnostic assainissement", diagnostics.raccordToutALegout === "Oui");
 
   addInfo("En zone termites", diagnostics.zoneTermites);
   addInfo(
     "Date du diagnostic termites",
     diagnostics.dateDiagTermites,
-    diagnostics.zoneTermites === true,
+    diagnostics.zoneTermites === "Oui",
   );
-  addDoc("Diagnostic termites", diagnostics.zoneTermites === true);
+  addDoc("Diagnostic termites", diagnostics.zoneTermites === "Oui");
 
   addInfo("En zone à risques (ERP)", diagnostics.zoneRisques);
   addInfo(
     "Date du diagnostic ERP",
     diagnostics.dateErp,
-    diagnostics.zoneRisques === true,
+    diagnostics.zoneRisques === "Oui",
   );
   addDoc(
     "ERP - État des Risques et Pollutions",
-    diagnostics.zoneRisques === true,
+    diagnostics.zoneRisques === "Oui",
   );
 
   addInfo("Date de construction", diagnostics.dateConstruction);
@@ -98,7 +98,7 @@ export function buildDocDefinition(
     before2008,
   );
   addInfo(
-    "Date du diagnostic électricité",
+    "Date du dernier diagnostic électricité",
     diagnostics.dateDiagnosticElectricite,
     diagnostics.installationElec15Ans === "Oui",
   );
@@ -107,6 +107,18 @@ export function buildDocDefinition(
   addDoc("DPE - Diagnostic de performance énergétique", true);
 
   const travaux = data.travaux ?? {};
+  const natureLabels: Record<string, string> = {
+    structure_gros_oeuvre:
+      "La structure ou le gros œuvre (toiture, murs porteurs, planchers, etc.)",
+    distribution_interieure:
+      "La distribution intérieure (cloisons non porteuses, nombre de pièces)",
+    reseaux_techniques:
+      "Les réseaux techniques (électricité, chauffage, gaz, VMC, plomberie, etc.)",
+    locaux_techniques: "Les locaux techniques (salle de bain, cuisine, etc.)",
+    confort_equipement:
+      "Le confort et/ou l’équipement (climatisation, cheminée, domotique, rangements intégrés, etc.)",
+    entretien_embellissement: "Entretien et/ou embellissement",
+  };
   const natureTravaux = travaux.nature || [];
   const hasStructureLike =
     Array.isArray(natureTravaux) &&
@@ -120,10 +132,14 @@ export function buildDocDefinition(
       ].includes(v),
     );
 
-  addInfo("Travaux realises dans le bien", travaux.realises);
-  addInfo("Nature des travaux", natureTravaux, travaux.realises === "Oui");
+  addInfo("Travaux réalisés dans le bien", travaux.realises);
   addInfo(
-    "Travaux realises par",
+    "Nature des travaux",
+    natureTravaux.map((v: any) => natureLabels[v as string] || v),
+    travaux.realises === "Oui",
+  );
+  addInfo(
+    "Travaux réalisés par",
     travaux.realisesPar,
     travaux.realises === "Oui" && hasStructureLike,
   );
@@ -133,13 +149,13 @@ export function buildDocDefinition(
     travaux.realisesPar === "Un professionnel",
   );
   addDoc(
-    "Assurance decennale (si disponible)",
+    "Assurance décennale (si disponible)",
     travaux.realisesPar === "Un professionnel",
   );
 
   const docs = Array.from(docsSet);
   const infoBody = [
-    ["Questions", "Reponses"],
+    ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
   const docsTitle =
