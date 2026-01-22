@@ -72,6 +72,20 @@ onMounted(() => {
     ];
   }
 
+  const typeProprietaireOrigine = readValue(
+    "sn-checklist-origine",
+    "type_proprietaire",
+  );
+  if (typeProprietaireOrigine) {
+    prefillEntries.value = [
+      ...prefillEntries.value,
+      {
+        path: "situation_fiscale.type_proprietaire",
+        value: typeProprietaireOrigine,
+      },
+    ];
+  }
+
   const typeEntite = readValue(
     "sn-checklist-capacite",
     "type_entite_personne_morale",

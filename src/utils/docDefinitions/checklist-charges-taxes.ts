@@ -8,7 +8,7 @@ import type { TableCell } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistChargesTaxes,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -27,44 +27,52 @@ export function buildDocDefinition(
   addInfo("Type de bien", data.type_bien);
   addInfo("Type de chauffage", data.type_chauffage);
   addInfo(
-    "Precision chauffage",
+    "Précision chauffage",
     data.type_chauffage_autre,
-    data.type_chauffage === "Autre"
+    data.type_chauffage === "Autre",
   );
   addInfo(
     "Date du dernier entretien du chauffage",
-    data.date_entretien_chauffage
+    data.date_entretien_chauffage,
   );
   addInfo("Date du dernier ramonage", data.date_ramonage);
 
   addInfo("Mode d'assainissement", data.mode_assainissement);
   addInfo("Situation d'occupation fiscale", data.situation_fiscale);
-  addInfo("Montant annuel de la taxe fonciere", data.montant_taxe_fonciere);
+  addInfo("Montant annuel de la taxe foncière", data.montant_taxe_fonciere);
   addInfo(
-    "Montant annuel de la derniere taxe d'habitation",
-    data.montant_derniere_taxe_habitation
+    "Montant annuel de la dernière taxe d'habitation",
+    data.montant_derniere_taxe_habitation,
   );
   addInfo(
-    "Presence d'une TEOM",
+    "Présence d'une TEOM",
     data.presence_teom,
-    data.presence_teom !== undefined
+    data.presence_teom !== undefined,
   );
   addInfo(
-    "Bien soumis a la taxe d'habitation",
+    "Bien soumis à la taxe d'habitation",
     data.bien_soumis_taxe_habitation,
-    data.bien_soumis_taxe_habitation !== undefined
+    data.bien_soumis_taxe_habitation !== undefined,
   );
   addInfo(
-    "Pret immobilier en cours sur le bien",
+    "Prêt immobilier en cours sur le bien",
     data.pret_immobilier_en_cours,
-    data.pret_immobilier_en_cours !== undefined
+    data.pret_immobilier_en_cours !== undefined,
   );
-  addInfo("Nom de la banque", data.nom_banque, data.pret_immobilier_en_cours === "Oui");
-  addInfo("Numero du pret", data.numero_pret, data.pret_immobilier_en_cours === "Oui");
   addInfo(
-    "Date de la derniere echeance",
+    "Nom de la banque",
+    data.nom_banque,
+    data.pret_immobilier_en_cours === "Oui",
+  );
+  addInfo(
+    "Numéro du prêt",
+    data.numero_pret,
+    data.pret_immobilier_en_cours === "Oui",
+  );
+  addInfo(
+    "Date de la dernière échéance",
     data.date_derniere_echeance,
-    data.pret_immobilier_en_cours === "Oui"
+    data.pret_immobilier_en_cours === "Oui",
   );
 
   const coordonnees = Array.isArray(data.coordonnees_bancaires_beneficiaires)
@@ -74,14 +82,17 @@ export function buildDocDefinition(
   coordonnees.forEach((beneficiaire, index) => {
     const label = `Beneficiaire ${index + 1}`;
     const rows: Array<[string, TableCell]> = [
-      ["Role", val(beneficiaire.role_beneficiaire)],
+      ["Rôle", val(beneficiaire.role_beneficiaire)],
       [
         "Percoit une commission",
         val(beneficiaire.beneficiaire_percoit_commission),
       ],
     ];
     if (beneficiaire.beneficiaire_percoit_commission === "Oui") {
-      rows.push(["Montant de la commission", val(beneficiaire.montant_commission)]);
+      rows.push([
+        "Montant de la commission",
+        val(beneficiaire.montant_commission),
+      ]);
     }
     infoRows.push([label, buildKeyValueSubTable(rows)]);
     addDoc(`RIB du beneficiaire ${index + 1}`);
@@ -89,29 +100,26 @@ export function buildDocDefinition(
 
   // Documents
   addDoc(
-    "Derniere attestation d'entretien du chauffage",
-    Boolean(data.type_chauffage)
+    "Dernière attestation d'entretien du chauffage",
+    Boolean(data.type_chauffage),
   );
   addDoc(
-    "Rapport de diagnostic assainissement non collectif (en cours de validite)",
-    data.mode_assainissement === "Individuel"
+    "Rapport de diagnostic assainissement non collectif (en cours de validité)",
+    data.mode_assainissement === "Individuel",
   );
-  addDoc("Dernier avis de taxe fonciere");
+  addDoc("Dernier avis de taxe foncière");
   addDoc(
     "Dernier avis de taxe d'habitation",
-    data.bien_soumis_taxe_habitation === "Oui"
+    data.bien_soumis_taxe_habitation === "Oui",
   );
   addDoc(
-    "Montant annuel de la derniere taxe d'habitation (si applicable)",
-    data.bien_soumis_taxe_habitation === "Non"
+    "Montant annuel de la dernière taxe d'habitation (si applicable)",
+    data.bien_soumis_taxe_habitation === "Non",
   );
-  addDoc(
-    "Decompte de pret",
-    data.pret_immobilier_en_cours === "Oui"
-  );
+  addDoc("Décompte de prêt", data.pret_immobilier_en_cours === "Oui");
 
   const infoBody = [
-    ["Questions", "Reponses"],
+    ["Questions", "Réponses"],
     ...(infoRows.length ? infoRows : [["Questions", "-"]]),
   ];
 
@@ -127,9 +135,9 @@ export function buildDocDefinition(
     infoTitle: "Informations fournies",
     docsTitle,
     metadataTitle: "",
-    generatedOnLabel: "Genere le",
+    generatedOnLabel: "Généré le",
     emptyDocsText: "",
-    note: "Checklist indicative, sous reserve de demandes specifiques du notaire.",
+    note: "Checklist indicative, sous réserve de demandes spécifiques du notaire.",
     infoBody,
     docs,
     logoBase64,

@@ -282,12 +282,28 @@
                 "type": "text",
                 "placeholder": "5%, 1500 €...",
                 "requiredIf": {
-                  "path": "beneficiaire_percoit_commission",
-                  "equals": "Oui"
+                  "all": [
+                    {
+                      "path": "role_beneficiaire",
+                      "equals": "Mandataire (agence, etc)"
+                    },
+                    {
+                      "path": "beneficiaire_percoit_commission",
+                      "equals": "Oui"
+                    }
+                  ]
                 },
                 "showIf": {
-                  "path": "beneficiaire_percoit_commission",
-                  "equals": "Oui"
+                  "all": [
+                    {
+                      "path": "role_beneficiaire",
+                      "equals": "Mandataire (agence, etc)"
+                    },
+                    {
+                      "path": "beneficiaire_percoit_commission",
+                      "equals": "Oui"
+                    }
+                  ]
                 }
               }
             ]

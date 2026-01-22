@@ -295,15 +295,15 @@
           "label": "Pays de résidence fiscale",
           "name": "residence_fiscale_pays",
           "type": "text",
-          "placeholder": "Suisse"
-        },
-        {
-          "path": "situation_fiscale.residence_fiscale.nif_etranger",
-          "id": "situation-fiscale-nif-etranger",
-          "label": "NIF étranger (Tax Identification Number)",
-          "name": "nif_etranger",
-          "type": "text",
-          "placeholder": "NIF"
+          "placeholder": "Suisse",
+          "showIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l'étranger"
+          },
+          "requiredIf": {
+            "path": "situation_fiscale.residence_fiscale_personne_physique.statut",
+            "equals": "A l'étranger"
+          }
         },
         {
           "path": "situation_fiscale.numero_fiscal",
