@@ -6,6 +6,7 @@ import {
   buildPartialDocDefinition,
   buildFullDocDefinition,
   wipeAllStorageData,
+  allRubriques,
 } from "@/utils/rubriquesDossier";
 import { useExportAccess } from "@/composables/useExportAccess";
 
@@ -25,6 +26,21 @@ const wipeError = ref(false);
 const wipeSuccess = ref(false);
 
 const { access: exportUnlocked, refresh: refreshAccess } = useExportAccess();
+
+const isRubriqueCompleted = (storageKey: string) => {
+  if (!process.client) return false;
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    return parsed?.__completed === true;
+  } catch {
+    return false;
+  }
+};
+
+const hasIncompleteRubriques = () =>
+  allRubriques.some((config) => !isRubriqueCompleted(config.storageKey));
 
 const closeModal = () => {
   if (partialLoading.value || fullLoading.value) return;
@@ -75,6 +91,12 @@ const downloadFullExport = async () => {
   fullLoading.value = true;
   fullError.value = null;
   try {
+    if (hasIncompleteRubriques()) {
+      notifyColor.value = colors["warning-color"];
+      notifyMessage.value =
+        "Certaines rubriques ne sont pas complétées; le PDF sera incomplet.";
+      notifyVisible.value = true;
+    }
     const docDefinition = await buildFullDocDefinition();
     if (!docDefinition) {
       fullError.value =
