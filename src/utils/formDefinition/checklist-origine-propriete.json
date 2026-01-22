@@ -11,6 +11,9 @@
           "id": "origine-propriete-date-acquisition",
           "name": "date_acquisition",
           "type": "date",
+          "mode": "date-picker",
+          "maxDate": "today",
+          "placeholder": "jj/mm/aaaa",
           "required": true
         },
         {
@@ -27,8 +30,9 @@
           "label": "Mode d'acquisition",
           "path": "mode_acquisition_personne_physique",
           "id": "origine-propriete-mode-acquisition-personne-physique",
-          "name": "mode_acquisition",
+          "name": "mode_acquisition_personne_physique",
           "type": "select",
+          "placeholder": "Sélectionner une option",
           "options": [
             "Achat classique",
             "Succession / Testament",
@@ -42,11 +46,11 @@
             "Vente à terme / paiement différé"
           ],
           "requiredIf": {
-            "field": "type_proprietaire",
+            "path": "type_proprietaire",
             "value": "Personne physique"
           },
           "showIf": {
-            "field": "type_proprietaire",
+            "path": "type_proprietaire",
             "value": "Personne physique"
           }
         },
@@ -54,14 +58,14 @@
           "label": "Mode d'acquisition",
           "path": "mode_acquisition_personne_morale",
           "id": "origine-propriete-mode-acquisition-personne-morale",
-          "name": "mode_acquisition",
+          "name": "mode_acquisition_personne_morale",
           "type": "select",
+          "placeholder": "Sélectionner une option",
           "options": [
             "Achat classique",
             "Apport en société",
             "Apport partiel d’actif (scission, fusion, TUP)",
             "Achat en VEFA (Vente sur plan / programme neuf)",
-            "Donation entre vifs",
             "Cession de nue-propriété / usufruit",
             "Partage / Licitation",
             "Échange",
@@ -84,6 +88,7 @@
           "id": "origine-propriete-mode-transmission",
           "name": "mode_transmission",
           "type": "select",
+          "placeholder": "Sélectionner une option",
           "options": [
             "Succession (pas de bien précis attribué)",
             "Legs particulier (attribution d’un bien précis par testament)"
