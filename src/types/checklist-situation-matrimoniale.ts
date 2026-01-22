@@ -1,21 +1,23 @@
 export type SituationMatrimonialeType =
-  | "Célibataire / Concubin(e) / Union libre"
-  | "Marié(e) (communauté)"
-  | "Marié(e) (contrat spécifique)"
-  | "Pacsé"
-  | "Divorcé(e) (non remarié(e))"
+  | "CÇ¸libataire / Concubin(e) / Union libre"
+  | "MariÇ¸(e) (communautÇ¸)"
+  | "MariÇ¸(e) (contrat spÇ¸cifique)"
+  | "PacsÇ¸(e)"
+  | "DivorcÇ¸(e) (non remariÇ¸(e))"
   | "Dissolution PACS"
   | "Veuf / Veuve"
-  | "Séparé de corps";
+  | "SÇ¸parÇ¸ de corps (mariÇ¸s mais autorisÇ¸s Çÿ vivre sÇ¸parÇ¸ment)";
+
+export type OuiNon = "Oui" | "Non";
 
 export interface ChecklistSituationMatrimoniale {
   situation_matrimoniale: {
     statut?: SituationMatrimonialeType;
     celibataire?: {
-      etranger?: boolean;
+      etranger?: OuiNon;
     };
     separe_de_corps?: {
-      contrat_mariage?: boolean;
+      contrat_mariage?: OuiNon;
     };
   };
 }

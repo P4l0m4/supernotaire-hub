@@ -8,24 +8,27 @@
         {
           "path": "procedure.enCours",
           "id": "procedure_en_cours",
-          "label": "Une procédure administrative est en cours",
+          "label": "Une procédure administrative est-elle en cours ?",
           "tooltip": "Exemples : refus de permis, obligation de démolition…",
-          "name": "enCours",
-          "type": "checkbox"
+          "name": "procedure.enCours",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "procedure.types",
           "id": "types_procedure",
-          "label": "Sélectionner le(s) type(s) de procédure(s)",
-          "name": "types",
+          "label": "Sélectionnez le(s) type(s) de procédure(s)",
+          "name": "procedure.types",
           "type": "checkbox-group",
           "requiredIf": {
             "path": "procedure.enCours",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "procedure.enCours",
-            "equals": true
+            "equals": "Oui"
           },
           "options": [
             {
@@ -81,24 +84,27 @@
         {
           "path": "contentieux.enCours",
           "id": "contentieux_en_cours",
-          "label": "Un contentieux est en cours",
+          "label": "Un contentieux est-il en cours ?",
           "tooltip": "Exemples : litige avec la mairie, recours…",
-          "name": "enCours",
-          "type": "checkbox"
+          "name": "contentieux.enCours",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "contentieux.types",
           "id": "types_contentieux",
-          "label": "Sélectionner le(s) type(s) de contentieux",
-          "name": "types",
+          "label": "Sélectionnez le(s) type(s) de contentieux",
+          "name": "contentieux.types",
           "type": "checkbox-group",
           "requiredIf": {
             "path": "contentieux.enCours",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "contentieux.enCours",
-            "equals": true
+            "equals": "Oui"
           },
           "options": [
             {
@@ -135,8 +141,8 @@
           "path": "contentieux.autreDetail",
           "id": "contentieux_autre",
           "label": "Merci de préciser",
-          "name": "autreDetail",
-          "type": "textarea",
+          "name": "contentieux.autreDetail",
+          "type": "text",
           "requiredIf": {
             "path": "contentieux.types",
             "in": ["autre"]
@@ -156,23 +162,27 @@
         {
           "path": "servitudes.existent",
           "id": "servitudes_existantes",
-          "label": "Le bien est grevé de servitudes connues",
-          "name": "existent",
-          "type": "checkbox"
+          "label": "Le bien est-il grevé de servitudes ? (droit de passage, etc)",
+          "name": "servitudes.existent",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "tooltip": "Des tiers sont autorisés à utiliser une partie du bien ou à en restreindre l’usage (ex : droit de passage)",
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "servitudes.types",
           "id": "types_servitudes",
-          "label": "Sélectionner le(s) type(s) de servitude(s)",
-          "name": "types",
+          "label": "Sélectionnez le(s) type(s) de servitude(s)",
+          "name": "servitudes.types",
           "type": "checkbox-group",
           "requiredIf": {
             "path": "servitudes.existent",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "servitudes.existent",
-            "equals": true
+            "equals": "Oui"
           },
           "options": [
             {
@@ -202,23 +212,26 @@
         {
           "path": "zonage.reglemente",
           "id": "zonage_reglemente",
-          "label": "Le bien est situé dans une zone réglementée par un document d\u0027urbanisme",
-          "name": "reglemente",
-          "type": "checkbox"
+          "label": "Le bien est-il situé dans une zone réglementée par un document d\u0027urbanisme ?",
+          "name": "zonage.reglemente",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         },
         {
           "path": "zonage.type",
           "id": "type_zonage",
           "label": "Type de document",
-          "name": "type",
+          "name": "zonage.type",
           "type": "select",
           "requiredIf": {
             "path": "zonage.reglemente",
-            "equals": true
+            "equals": "Oui"
           },
           "showIf": {
             "path": "zonage.reglemente",
-            "equals": true
+            "equals": "Oui"
           },
           "options": [
             "Plan local d\u0027urbanisme (PLU)",
@@ -226,13 +239,13 @@
             "Zone d\u0027aménagement (ZAC, secteur sauvegardé, etc.)",
             "Autre"
           ],
-          "placeholder": "Sélectionner un document"
+          "placeholder": "Sélectionnez un document"
         },
         {
           "path": "zonage.typeAutre",
           "id": "type_zonage_autre",
           "label": "Précisez le document d’urbanisme",
-          "name": "typeAutre",
+          "name": "zonage.typeAutre",
           "type": "text",
           "requiredIf": {
             "path": "zonage.type",
@@ -253,11 +266,12 @@
         {
           "path": "travaux.impactExterieur",
           "id": "impact_exterieur",
-          "label": "Des travaux à impact extérieur ou urbanistique ont été réalisés",
+          "label": "Des travaux à impact extérieur ou urbanistique ont-ils été réalisés ?",
           "name": "impactExterieur",
-          "type": "checkbox",
+          "type": "select",
           "required": true,
-          "options": null
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option"
         },
         {
           "path": "travaux.details",
@@ -265,8 +279,12 @@
           "label": "Liste des travaux",
           "name": "travauxDetails",
           "type": "array",
+          "requiredIf": {
+            "equals": "Oui",
+            "path": "travaux.impactExterieur"
+          },
           "showIf": {
-            "equals": true,
+            "equals": "Oui",
             "path": "travaux.impactExterieur"
           },
           "itemLabel": "Travaux {{index}}",
@@ -275,12 +293,13 @@
               {
                 "path": "arreteExiste",
                 "id": "arrete_existe",
-                "label": "Il n\u0027existe pas d\u0027arrêté d\u0027autorisation d\u0027urbanisme pour ces travaux",
+                "label": "Existe-t-il un arrêté d\u0027autorisation d\u0027urbanisme pour ces travaux ?",
                 "tooltip": "Permis de construire / déclaration préalable / permis d’aménager. Ne cochez pas cette case si le document existe mais que vous ne l\u0027avez pas en votre possession.",
                 "name": "arreteExiste",
-                "type": "checkbox",
+                "type": "select",
+                "placeholder": "Sélectionnez une option",
                 "required": true,
-                "options": null
+                "options": ["Oui", "Non"]
               },
               {
                 "path": "arreteType",
@@ -293,13 +312,13 @@
                   "Déclaration préalable",
                   "Permis d’aménager"
                 ],
-                "placeholder": "Sélectionner",
+                "placeholder": "Sélectionnez une option",
                 "requiredIf": {
-                  "equals": false,
+                  "equals": "Oui",
                   "path": "arreteExiste"
                 },
                 "showIf": {
-                  "equals": false,
+                  "equals": "Oui",
                   "path": "arreteExiste"
                 }
               },
@@ -311,18 +330,18 @@
                 "type": "select",
                 "tooltip": "Pour quelles raisons n\u0027y a-t-il pas de document d\u0027autorisation officielle pour ces travaux ?",
                 "requiredIf": {
-                  "equals": true,
-                  "path": "arreteExiste"
+                  "path": "arreteExiste",
+                  "equals": "Non"
                 },
                 "showIf": {
-                  "equals": true,
-                  "path": "arreteExiste"
+                  "path": "arreteExiste",
+                  "equals": "Non"
                 },
                 "options": [
                   "Autorisation requise mais non obtenue",
                   "Autorisation non requise par le droit de l’urbanisme"
                 ],
-                "placeholder": "Sélectionner un motif"
+                "placeholder": "Sélectionnez un motif"
               },
               {
                 "path": "typeTravaux",
@@ -373,13 +392,12 @@
               {
                 "path": "travauxAcheves",
                 "id": "travaux_acheves",
-                "label": "Les travaux ne sont pas achevés",
+                "label": "Les travaux sont-ils achevés ?",
                 "name": "travauxAcheves",
-                "type": "checkbox",
-                "showIf": {
-                  "equals": false,
-                  "path": "arreteExiste"
-                }
+                "type": "select",
+                "options": ["Oui", "Non"],
+                "placeholder": "Sélectionnez une option",
+                "required": true
               },
               {
                 "path": "dateAchevement",
@@ -388,41 +406,31 @@
                 "name": "dateAchevement",
                 "type": "date",
                 "mode": "date-picker",
-                "placeholder": "JJ/MM/AAAA",
+                "placeholder": "jj/mm/aaaa",
                 "showIf": {
-                  "all": [
-                    {
-                      "equals": false,
-                      "path": "arreteExiste"
-                    },
-                    {
-                      "equals": true,
-                      "path": "travauxAcheves"
-                    }
-                  ]
+                  "path": "travauxAcheves",
+                  "equals": "Non"
                 },
                 "requiredIf": {
-                  "all": [
-                    {
-                      "equals": false,
-                      "path": "arreteExiste"
-                    },
-                    {
-                      "equals": true,
-                      "path": "travauxAcheves"
-                    }
-                  ]
+                  "path": "travauxAcheves",
+                  "equals": "Non"
                 }
               },
               {
                 "path": "travauxNonConformes",
                 "id": "travaux_non_conformes",
-                "label": "Les travaux ne sont pas conformes",
+                "label": "Les travaux sont-ils conformes ?",
                 "name": "travauxNonConformes",
-                "type": "checkbox",
+                "type": "select",
+                "options": ["Oui", "Non"],
+                "placeholder": "Sélectionnez une option",
+                "requiredIf": {
+                  "path": "travauxAcheves",
+                  "equals": "Oui"
+                },
                 "showIf": {
-                  "equals": false,
-                  "path": "arreteExiste"
+                  "path": "travauxAcheves",
+                  "equals": "Oui"
                 }
               },
               {
@@ -435,16 +443,16 @@
                 "requiredIf": {
                   "all": [
                     {
-                      "equals": false,
+                      "equals": "Oui",
                       "path": "arreteExiste"
                     },
                     {
-                      "equals": false,
+                      "equals": "Oui",
                       "path": "travauxNonConformes"
                     },
                     {
                       "not": {
-                        "equals": true,
+                        "equals": "Oui",
                         "path": "travauxAcheves"
                       }
                     }
@@ -453,32 +461,38 @@
                 "showIf": {
                   "all": [
                     {
-                      "equals": false,
+                      "equals": "Oui",
                       "path": "arreteExiste"
                     },
                     {
-                      "equals": false,
+                      "equals": "Oui",
                       "path": "travauxNonConformes"
                     },
                     {
                       "not": {
-                        "equals": true,
+                        "equals": "Oui",
                         "path": "travauxAcheves"
                       }
                     }
                   ]
                 },
-                "placeholder": "JJ/MM/AAAA"
+                "placeholder": "jj/mm/aaaa"
               },
               {
                 "path": "plansDisponibles",
                 "id": "plans_disponibles",
-                "label": "Plans approuvés non disponibles",
+                "label": "Des plans approuvés sont-ils disponibles ?",
                 "name": "plansDisponibles",
-                "type": "checkbox",
+                "type": "select",
+                "placeholder": "Sélectionnez une option",
+                "options": ["Oui", "Non"],
+                "requiredIf": {
+                  "path": "arreteExiste",
+                  "equals": "Oui"
+                },
                 "showIf": {
-                  "equals": false,
-                  "path": "arreteExiste"
+                  "path": "arreteExiste",
+                  "equals": "Oui"
                 }
               }
             ]
@@ -514,15 +528,18 @@
           "label": "Superficie cadastrale (en m²)",
           "name": "superficie",
           "type": "number",
-          "required": false,
+          "required": true,
           "placeholder": "Ex: 250"
         },
         {
           "path": "cadastre.planDisponible",
           "id": "plan_cadastral_disponible",
-          "label": "Je possède un extrait ou plan cadastral du bien",
+          "label": "Possédez-vous un extrait ou plan cadastral du bien ?",
           "name": "planDisponible",
-          "type": "checkbox"
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
+          "required": true
         }
       ]
     }

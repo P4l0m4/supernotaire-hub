@@ -29,7 +29,13 @@
           "id": "situation-matrimoniale-celibataire-etranger",
           "label": "Je suis de nationalité étrangère",
           "name": "celibataire_etranger",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
+          "placeholder": "Sélectionner une option",
+          "requiredIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Célibataire / Concubin(e) / Union libre"
+          },
           "showIf": {
             "path": "situation_matrimoniale.statut",
             "equals": "Célibataire / Concubin(e) / Union libre"
@@ -38,10 +44,16 @@
         {
           "path": "situation_matrimoniale.separe_de_corps.contrat_mariage",
           "id": "situation-matrimoniale-separe-contrat",
-          "label": "J'ai un contrat de mariage",
+          "label": "Avez-vous un contrat de mariage ?",
           "name": "separe_contrat",
-          "type": "checkbox",
+          "type": "select",
+          "options": ["Oui", "Non"],
           "tooltip": "Séparation des biens, participation aux acquêts, etc.",
+          "placeholder": "Sélectionner une option",
+          "requiredIf": {
+            "path": "situation_matrimoniale.statut",
+            "equals": "Séparé de corps (mariés mais autorisés à vivre séparément)"
+          },
           "showIf": {
             "path": "situation_matrimoniale.statut",
             "equals": "Séparé de corps (mariés mais autorisés à vivre séparément)"

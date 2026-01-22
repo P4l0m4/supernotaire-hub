@@ -1,14 +1,4 @@
-﻿export type OuiNon = "Oui" | "Non";
-
-export type TypeAutorisation =
-  | "Permis de construire"
-  | "Déclaration préalable de travaux";
-
-export type TypeTravaux =
-  | "Changement de destination"
-  | "Occupation ou aménagement du sol"
-  | "Modification de l'aspect extérieur"
-  | "Création de surface ou de volume";
+export type OuiNon = "Oui" | "Non";
 
 export type ProcedureType =
   | "preemption"
@@ -52,51 +42,58 @@ export type MotifAbsenceArrete =
 export type TypeArreteAutorisation =
   | "Permis de construire"
   | "Déclaration préalable"
-  | "Permis d’aménager";
+  | "Permis d'aménager";
+
+export type TypeTravaux =
+  | "Un changement de destination (usage du bien ou d'une pièce)"
+  | "L'occupation ou l'aménagement du sol (terrasse, piscine, abri, etc)"
+  | "L'aspect extérieur (toiture, matériaux visibles)"
+  | "Les surfaces ou volumes (agrandissement, extension)"
+  | "Une surélévation (niveau supplémentaire par le haut)"
+  | "Les façades (murs extérieurs)"
+  | "Les structures porteuses avec impact extérieur (murs porteurs)"
+  | "Les ouvertures (fenêtres, baie, etc)"
+  | "La division intérieure (logements supplémentaires)";
 
 export interface TravauxItem {
-  arreteExiste?: boolean; // true = aucun arrêté, false = arrêté existant
+  arreteExiste?: OuiNon;
   arreteType?: TypeArreteAutorisation;
-  typeTravaux?: TypeTravaux[];
-  travauxAcheves?: boolean; // true = non-achevés, false = terminés
-  dateAchevement?: string;
-  travauxNonConformes?: boolean;
-  dateDepotDaact?: string;
-  preuveDaact?: File;
-  daactDeposee?: boolean;
-  plansDisponibles?: boolean; // true = non disponibles, false = disponibles
-  plansApprouves?: File;
-  arreteDocument?: File;
   motifAbsenceArrete?: MotifAbsenceArrete;
+  typeTravaux?: TypeTravaux[];
+  travauxAcheves?: OuiNon;
+  dateAchevement?: string;
+  travauxNonConformes?: OuiNon;
+  dateDepotDaact?: string;
+  plansDisponibles?: boolean;
 }
 
 export interface ChecklistUrbanismeTravauxExterieurs {
-  travaux: {
-    impactExterieur?: boolean;
-    details?: TravauxItem[];
-  };
   procedure: {
-    enCours?: boolean;
+    enCours?: OuiNon;
     types?: ProcedureType[];
   };
   contentieux: {
-    enCours?: boolean;
+    enCours?: OuiNon;
     types?: ContentieuxType[];
     autreDetail?: string;
   };
   servitudes: {
-    existent?: boolean;
+    existent?: OuiNon;
     types?: ServitudeType[];
   };
   zonage: {
-    reglemente?: boolean;
+    reglemente?: OuiNon;
     type?: TypeZonageDocument;
     typeAutre?: string;
+  };
+  travaux: {
+    impactExterieur?: OuiNon;
+    details?: TravauxItem[];
   };
   cadastre: {
     section?: string;
     parcelle?: string;
     superficie?: number | null;
-    planDisponible?: boolean; // true = possède un extrait ou plan
+    planDisponible?: OuiNon;
   };
 }
