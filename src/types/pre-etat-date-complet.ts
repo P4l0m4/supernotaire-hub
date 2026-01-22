@@ -19,6 +19,7 @@ export interface Documents {
   dernier_pv_ag?: File;
   fiche_synthetique_copropriete?: File;
   attestation_de_propriete?: File;
+  acte_de_propriete?: File;
   liste_coproprietaires_debiteurs_crediteurs?: File;
 }
 
@@ -37,7 +38,8 @@ export interface Bien {
 
 export interface Copropriete {
   arrete_au: ISODate;
-  fonds_travaux: { existance: boolean; montant: Euro };
+  fonds_travaux_existance?: boolean;
+  fonds_travaux?: { existance?: boolean; montant?: Euro };
   impayes: { total: Euro };
   dettes_syndic_fournisseurs: number;
   existance_emprunts: boolean;
@@ -78,17 +80,19 @@ export interface FinancierLotSommesDuesCedant {
     budget_previsionnel: Euro;
     hors_budget: Euro;
   };
-  charges_impayees_anterieures: Euro;
-  du_fait_de_la_future_vente: Euro;
-  avances_exigibles_reserve: Euro;
-  avances_exigibles_provisions_speciales: Euro;
-  avances_exigibles_emprunt: Euro;
-  cotisations_fonds_travaux_exigibles: Euro;
-  autres_sommes_exigibles: {
-    pret_quote_part_vendeur: Euro;
-    condamnations: Euro;
+  avances_exigibles?: {
+    avances_exigibles_reserve?: Euro;
+    avances_exigibles_provisions_speciales?: Euro;
+    avances_exigibles_emprunt?: Euro;
   };
-  a_des_tiers_emprunts_geres_par_syndic: Euro;
+  autres_sommes_exigibles?: {
+    charges_impayees_anterieures?: Euro;
+    du_fait_de_la_future_vente?: Euro;
+    cotisations_fonds_travaux_exigibles?: Euro;
+    pret_quote_part_vendeur?: Euro;
+    condamnations?: Euro;
+    a_des_tiers_emprunts_geres_par_syndic?: Euro;
+  };
 }
 
 export interface FinancierLotSommesDebiteurSyndic {

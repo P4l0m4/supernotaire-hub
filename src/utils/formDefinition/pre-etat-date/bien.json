@@ -1,0 +1,142 @@
+{
+  "title": "Description du bien",
+  "sections": [
+    {
+      "id": "bien",
+      "label": "Description",
+      "fields": [
+        {
+          "path": "bien.adresse",
+          "id": "bien-adresse",
+          "suggestionRef": "adresse_du_bien",
+          "label": "Adresse",
+          "name": "adresse",
+          "type": "text",
+          "required": true,
+          "placeholder": "12 Rue Exemple, 75000 Paris",
+          "icon": "map_pin_fill"
+        },
+        {
+          "path": "bien.identification.batiment",
+          "id": "bien-identification-batiment",
+          "suggestionRef": "identification_du_batiment",
+          "label": "Identifiant du bâtiment",
+          "name": "batiment",
+          "type": "text",
+          "placeholder": "A, B1, etc.",
+          "required": true,
+          "icon": "buildings_fill"
+        },
+        {
+          "path": "bien.identification.escalier",
+          "id": "bien-identification-escalier",
+          "suggestionRef": "bien_identification_escalier",
+          "label": "Entrée / cage (escalier)",
+          "name": "escalier",
+          "type": "text",
+          "placeholder": "1, B, etc.",
+          "required": false,
+          "icon": "stairs_fill"
+        },
+        {
+          "path": "bien.identification.etage",
+          "id": "bien-identification-etage",
+          "suggestionRef": "bien_identification_etage",
+          "label": "Étage",
+          "name": "etage",
+          "type": "text",
+          "placeholder": "3e, RDC...",
+          "required": true,
+          "icon": "escalator_up_fill"
+        },
+        {
+          "path": "bien.identification.complements",
+          "id": "bien-identification-complements",
+          "suggestionRef": "bien_identification_complements",
+          "label": "Compléments",
+          "name": "complements",
+          "required": false,
+          "type": "text",
+          "placeholder": "Porte 12"
+        },
+        {
+          "path": "bien.total_tantiemes_vendeur",
+          "id": "bien-total-tantiemes-vendeur",
+          "label": "Total de vos tantièmes",
+          "name": "total_tantiemes_vendeur",
+          "type": "number",
+          "placeholder": "300",
+          "required": true
+        },
+        {
+          "path": "bien.total_tantiemes_copropriete",
+          "id": "bien-total-tantiemes-copropriete",
+          "label": "Total des tantièmes de la copropriété",
+          "name": "total_tantiemes_copropriete",
+          "type": "number",
+          "placeholder": "0",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "lots",
+      "label": "Lots",
+      "fields": [
+        {
+          "path": "bien.lots",
+          "id": "bien-lots",
+          "label": "Liste des lots",
+          "name": "lots",
+          "suggestionRef": "bien_lots",
+          "type": "array",
+          "minItems": 1,
+          "required": true,
+          "itemLabel": "Lot {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "designation",
+                "suggestionRef": "bien_lots_designation",
+                "label": "Désignation",
+                "name": "designation",
+                "type": "text",
+                "required": true,
+                "placeholder": "cave 754, parking 12, appartement T3, etc",
+                "icon": "hash_fill"
+              },
+              {
+                "path": "numero",
+                "suggestionRef": "bien_lots_numero",
+                "label": "Numéro",
+                "name": "numero",
+                "type": "text",
+                "required": true,
+                "placeholder": "56",
+                "icon": "hash_fill"
+              },
+
+              {
+                "path": "usage",
+                "suggestionRef": "bien_lots_usage",
+                "label": "Usage",
+                "name": "usage",
+                "type": "select",
+                "options": [
+                  "Habitation",
+                  "Commercial",
+                  "Exploitation agricole et forestière",
+                  "Intérêt collectif et services publics",
+                  "Autre"
+                ],
+                "placeholder": "Sélectionner un usage",
+                "icon": "gear_six_fill",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "title": "Copropriété",
+  "sections": [
+    {
+      "id": "copropriete",
+      "label": "Copropriété",
+      "fields": [
+        {
+          "path": "copropriete.arrete_au",
+          "id": "copropriete-arrete-au",
+          "suggestionRef": "copropriete_arrete_au",
+          "label": "Date de clôture de l’exercice",
+          "name": "arrete_au",
+          "type": "date",
+          "mode": "date-picker",
+          "placeholder": "jj-mm-aaaa",
+          "required": true,
+          "icon": "calendar_dots_fill",
+          "tooltip": "Date de clôture de l’exercice comptable de la copropriété."
+        },
+        {
+          "path": "copropriete.fonds_travaux.existance",
+          "id": "copropriete-fonds_travaux_existance",
+          "suggestionRef": "copropriete_fonds_travaux_existance",
+          "label": "Existe-t-il un fonds travaux ALUR ?",
+          "name": "fonds_travaux_existance",
+          "type": "checkbox",
+          "required": false
+        },
+        {
+          "path": "copropriete.fonds_travaux.montant",
+          "suggestionRef": "copropriete_montant_du_fonds_travaux",
+          "id": "copropriete-fonds-travaux-montant",
+          "label": "Montant total fonds travaux",
+          "name": "fonds_travaux_montant",
+          "showIf": {
+            "path": "copropriete.fonds_travaux.existance",
+            "equals": true
+          },
+          "requiredIf": {
+            "path": "copropriete.fonds_travaux.existance",
+            "equals": true
+          },
+          "placeholder": "0 si pas de fonds travaux",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "tooltip": "Montant total du fonds travaux à la date de clôture de l’exercice."
+        },
+        {
+          "path": "copropriete.impayes.total",
+          "suggestionRef": "copropriete_impayes_total",
+          "id": "copropriete-impayes-total",
+          "label": "Impayés total",
+          "name": "impayes_total",
+          "type": "number",
+          "placeholder": "0 si aucun",
+          "min": 0,
+          "max": 100000000,
+          "step": 0.01,
+          "required": true,
+          "tooltip": "Montant total des charges impayées par l’ensemble des copropriétaires à la date de clôture de l’exercice."
+        },
+        {
+          "path": "copropriete.dettes_syndic_fournisseurs",
+          "suggestionRef": "copropriete_dettes_syndic_fournisseurs",
+          "id": "copropriete-dettes-syndic-fournisseurs",
+          "label": "Dettes vis-à-vis des fournisseurs à la dernière clôture",
+          "name": "dettes_syndic_fournisseurs",
+          "type": "number",
+          "min": 0,
+          "step": 1,
+          "placeholder": "1000",
+          "required": true
+        },
+        {
+          "path": "copropriete.existance_emprunts",
+          "id": "copropriete-existance-emprunts",
+          "label": "La copro a-t-elle des emprunts en cours ?",
+          "name": "copropriete_existance_emprunts",
+          "type": "checkbox"
+        },
+        {
+          "path": "copropriete.emprunts",
+          "suggestionRef": "copropriete_emprunts",
+          "id": "copropriete-emprunts",
+          "label": "Emprunts éventuels",
+          "name": "emprunts-eventuels",
+          "requiredIf": {
+            "path": "copropriete.existance_emprunts",
+            "equals": true
+          },
+          "showIf": {
+            "path": "copropriete.existance_emprunts",
+            "equals": true
+          },
+          "type": "array",
+          "itemLabel": "Emprunt {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "objet",
+                "suggestionRef": "objet",
+                "label": "Objet",
+                "type": "text",
+                "placeholder": "Rénovation toiture"
+              },
+              {
+                "path": "capital_restant_du",
+                "suggestionRef": "capital_restant_du",
+                "label": "Capital restant dû",
+                "type": "number",
+                "placeholder": "10000",
+                "min": 0,
+                "step": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

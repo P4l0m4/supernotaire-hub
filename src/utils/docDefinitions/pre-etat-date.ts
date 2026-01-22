@@ -21,6 +21,9 @@ const annexes = [
 export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const FL = d.financier_lot;
   const SDC = d.financier_lot_sommes_dues_cedant;
+  const SDC_PROV = SDC?.provisions_exigibles;
+  const SDC_AV = SDC?.avances_exigibles;
+  const SDC_AUT = SDC?.autres_sommes_exigibles;
   const SDS = d.financier_lot_sommes_debiteur_syndic;
   const AUT = d.financier_lot_autres;
   const ACQ = d.financier_lot_sommes_a_la_charge_acquereur_post_vente;
@@ -60,7 +63,9 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const quotePartVendeur =
     d.bien?.total_tantiemes_vendeur / d.bien?.total_tantiemes_copropriete;
 
-  console.log({ quotePartVendeur });
+  const fondsTravauxExists =
+    (d.copropriete?.fonds_travaux?.existance ??
+      d.copropriete?.fonds_travaux_existance) === true;
 
   const emprunts = (d.copropriete?.emprunts ?? []).map((e) => [
     e.objet ?? "-",
@@ -198,7 +203,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           body: [
             [
               "Existe-t-il un fonds travaux ALUR ?",
-              fmtEur(d.copropriete?.fonds_travaux?.existance) ? "Oui" : "Non",
+              fondsTravauxExists ? "Oui" : "Non",
             ],
             [
               "Montant du fonds travaux",
@@ -388,11 +393,11 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           body: [
             [
               "- Dans le budget prévisionnel (D. art. 5. 1° a)",
-              fmtEur(SDC?.provisions_exigibles?.budget_previsionnel),
+              fmtEur(SDC_PROV?.budget_previsionnel),
             ],
             [
               "- Hors budget prévisionnel (D. art. 5. 1° b)",
-              fmtEur(SDC?.provisions_exigibles?.hors_budget),
+              fmtEur(SDC_PROV?.hors_budget),
             ],
           ],
         },
@@ -406,7 +411,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         table: {
           widths: ["*", "auto"],
-          body: [["", fmtEur(SDC?.charges_impayees_anterieures)]],
+          body: [["", fmtEur(SDC_AUT?.charges_impayees_anterieures)]],
         },
         layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
@@ -418,7 +423,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         table: {
           widths: ["*", "auto"],
-          body: [["", fmtEur(SDC?.du_fait_de_la_future_vente)]],
+          body: [["", fmtEur(SDC_AUT?.du_fait_de_la_future_vente)]],
         },
         layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
@@ -433,15 +438,15 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
           body: [
             [
               "- Avance constituant la réserve (D. art. 35, 1°)",
-              fmtEur(SDC?.avances_exigibles_reserve),
+              fmtEur(SDC_AV?.avances_exigibles_reserve),
             ],
             [
               "- Avances nommées provisions (provisions spéciales)  (L. art. 18 alinéa 6 D. art. 35. 4° 5°)",
-              fmtEur(SDC?.avances_exigibles_provisions_speciales),
+              fmtEur(SDC_AV?.avances_exigibles_provisions_speciales),
             ],
             [
               "- Avances représentant un emprunt (D. art. 45-1 alinéa 4) (emprunt du syndic auprès des copropriétaires ou certains d’entre eux)",
-              fmtEur(SDC?.avances_exigibles_emprunt),
+              fmtEur(SDC_AV?.avances_exigibles_emprunt),
             ],
           ],
         },
@@ -455,14 +460,14 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         table: {
           widths: ["*", "auto"],
-          body: [["", fmtEur(SDC?.cotisations_fonds_travaux_exigibles)]],
+          body: [["", fmtEur(SDC_AUT?.cotisations_fonds_travaux_exigibles)]],
         },
         layout: checklistTableLayout,
         margin: [0, 0, 0, 8],
       },
       // Sous-détail “Autres sommes exigibles” si présent
       (() => {
-        const a = SDC?.autres_sommes_exigibles;
+        const a = SDC_AUT;
         const rows = [
           [
             "- Prêt (quote-part vendeur devenue exigible)",
@@ -495,7 +500,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
       {
         table: {
           widths: ["*", "auto"],
-          body: [["", fmtEur(SDC?.a_des_tiers_emprunts_geres_par_syndic)]],
+          body: [["", fmtEur(SDC_AUT?.a_des_tiers_emprunts_geres_par_syndic)]],
         },
         layout: checklistTableLayout,
         margin: [0, 0, 0, 16],

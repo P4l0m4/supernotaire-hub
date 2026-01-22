@@ -1,0 +1,153 @@
+{
+  "title": "Sommes à la charge de l'acquéreur",
+  "sections": [
+    {
+      "id": "financier_lot_sommes_a_la_charge_acquereur_post_vente",
+      "label": "Sommes à la charge acquéreur",
+      "fields": [
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.reserve",
+          "id": "acq-reconstitution-reserve",
+          "label": "Avances constituant la Réserve",
+          "name": "acq_reconstitution_reserve",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-constituant-la-reserve"
+        },
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.provisions_speciales",
+          "id": "acq-reconstitution-provisions-speciales",
+          "label": "Avances au titre des Provisions spéciales",
+          "name": "acq_reconstitution_provisions_speciales",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "500",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
+        },
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.reconstitution_avances.avances_emprunts",
+          "id": "acq-reconstitution-avances-emprunts",
+          "label": "Avances au titre des Emprunts",
+          "name": "acq_reconstitution_avances_emprunts",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "placeholder": "500",
+          "required": true,
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#avances-au-titre-des-provisions-speciales-et-emprunts"
+        },
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.budget_previsionnel",
+          "id": "acq-pnee-bp",
+          "label": "Provisions non encore exigibles — Budget prévisionnel",
+          "name": "acq_pnee_bp",
+          "type": "array",
+          "required": false,
+          "itemLabel": "Échéance BP {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date d’exigibilité",
+                "type": "date",
+                "mode": "date-picker",
+                "required": true,
+                "icon": "calendar_dots_fill",
+                "placeholder": "jj-mm-aaaa"
+              },
+              {
+                "path": "montant",
+                "label": "Montant",
+                "type": "number",
+                "min": 0,
+                "step": 0.01,
+                "required": true,
+                "placeholder": "300",
+                "icon": "hand_coins_fill",
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#au-titre-du-budget-previsionnel"
+              }
+            ]
+          }
+        },
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.provisions_non_encore_exigibles.hors_budget",
+          "id": "acq-pnee-hb",
+          "suggestionRef": "provisions_non_encore_exigibles_hors_budget",
+          "label": "Provisions non encore exigibles — Hors budget",
+          "name": "acq_pnee_hb",
+          "type": "array",
+          "required": false,
+          "itemLabel": "Échéance HB {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date d’exigibilité",
+                "type": "date",
+                "mode": "date-picker",
+                "placeholder": "jj-mm-aaaa",
+                "required": true,
+                "icon": "calendar_dots_fill"
+              },
+              {
+                "path": "montant",
+                "label": "Montant",
+                "type": "number",
+                "min": 0,
+                "step": 0.01,
+                "required": true,
+                "placeholder": "400",
+                "icon": "hand_coins_fill",
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-sommes-a-la-charge-acquereur-post-vente#hors-budget-previsionnel"
+              }
+            ]
+          }
+        },
+        {
+          "path": "financier_lot_sommes_a_la_charge_acquereur_post_vente.fonds_travaux_non_encore_exigibles",
+          "id": "acq-fonds-travaux-non-encore-exigibles",
+          "label": "Fonds de travaux — Provisions non encore exigibles",
+          "name": "acq_fonds_travaux_non_encore_exigibles",
+          "type": "array",
+          "required": false,
+          "itemLabel": "Échéance fonds travaux {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date d’exigibilité",
+                "type": "date",
+                "mode": "date-picker",
+                "required": true,
+                "placeholder": "jj-mm-aaaa",
+                "icon": "calendar_dots_fill"
+              },
+              {
+                "path": "montant",
+                "label": "Montant",
+                "type": "number",
+                "min": 0,
+                "step": 0.01,
+                "required": true,
+                "placeholder": "400",
+                "icon": "hand_coins_fill",
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "/tutoriels/pre-etat-date-fonds-travaux-alur-quote-part"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

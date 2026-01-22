@@ -1,7 +1,15 @@
 ﻿<script setup lang="ts">
 import { reactive, watch, watchEffect, onMounted, computed, ref } from "vue";
 
-import formDefinition from "@/utils/formDefinition/pre-etat-date.json";
+import justificatifsDefinition from "@/utils/formDefinition/pre-etat-date/justificatifs.json";
+import bienDefinition from "@/utils/formDefinition/pre-etat-date/bien.json";
+import coproprieteDefinition from "@/utils/formDefinition/pre-etat-date/copropriete.json";
+import syndicDefinition from "@/utils/formDefinition/pre-etat-date/syndic.json";
+import situationFinanciereLotDefinition from "@/utils/formDefinition/pre-etat-date/situation-financiere-lot.json";
+import sommesDuesCedantDefinition from "@/utils/formDefinition/pre-etat-date/sommes-dues-cedant.json";
+import sommesDuesSyndicDefinition from "@/utils/formDefinition/pre-etat-date/sommes-dues-syndic.json";
+import sommesChargeAcquereurDefinition from "@/utils/formDefinition/pre-etat-date/sommes-charge-acquereur.json";
+import autresSommesDefinition from "@/utils/formDefinition/pre-etat-date/autres-sommes.json";
 import { processDocument } from "@/utils/textFromDocument";
 
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
@@ -20,15 +28,47 @@ const props = defineProps<{
   sectionId?: string;
 }>();
 
-const fullFormDefinition = formDefinition as FormDefinition;
+const sectionDefinitions: FormDefinition[] = [
+  justificatifsDefinition as FormDefinition,
+  bienDefinition as FormDefinition,
+  coproprieteDefinition as FormDefinition,
+  syndicDefinition as FormDefinition,
+  situationFinanciereLotDefinition as FormDefinition,
+  sommesDuesCedantDefinition as FormDefinition,
+  sommesDuesSyndicDefinition as FormDefinition,
+  sommesChargeAcquereurDefinition as FormDefinition,
+  autresSommesDefinition as FormDefinition,
+];
+
+const sectionGroups: Record<string, FormDefinition> = {
+  documents: justificatifsDefinition as FormDefinition,
+  bien: bienDefinition as FormDefinition,
+  copropriete: coproprieteDefinition as FormDefinition,
+  syndic: syndicDefinition as FormDefinition,
+  financier_lot: situationFinanciereLotDefinition as FormDefinition,
+  financier_lot_sommes_dues_cedant: sommesDuesCedantDefinition as FormDefinition,
+  financier_lot_sommes_debiteur_syndic: sommesDuesSyndicDefinition as FormDefinition,
+  financier_lot_sommes_a_la_charge_acquereur_post_vente:
+    sommesChargeAcquereurDefinition as FormDefinition,
+  financier_lot_autres: autresSommesDefinition as FormDefinition,
+};
+
+const fullFormDefinition: FormDefinition = {
+  title: "Pré-état daté",
+  sections: sectionDefinitions.flatMap((def) => def.sections || []),
+};
 
 const activeFormDefinition = computed<FormDefinition>(() => {
   if (!props.sectionId) return fullFormDefinition;
-  const section = fullFormDefinition.sections.find(
-    (s) => s.id === props.sectionId,
-  );
-  if (!section) return fullFormDefinition;
-  return { ...fullFormDefinition, sections: [section] };
+  const group = sectionGroups[props.sectionId];
+  if (!group?.sections?.length) {
+    console.error(
+      "[GenerateurPED] unknown sectionId, no definition found:",
+      props.sectionId,
+    );
+    return { title: "Section inconnue", sections: [] };
+  }
+  return { ...group, sections: group.sections };
 });
 
 const formData = reactive({} as PreEtatDate);

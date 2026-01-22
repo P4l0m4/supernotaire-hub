@@ -1,0 +1,123 @@
+{
+  "title": "Autres sommes",
+  "sections": [
+    {
+      "id": "financier_lot_autres",
+      "label": "Autres sommes",
+      "fields": [
+        {
+          "path": "financier_lot_autres.charges.N_1.bp_appelee",
+          "suggestionRef": "charges_N_1_quote_part_bp_appelee",
+          "id": "financier_lot_autres-charges-N_1-bp_appelee",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_1_quote_part_bp_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.bp_reelle",
+          "suggestionRef": "charges_N_1_quote_part_bp_reelle",
+          "id": "financier_lot_autres-charges-N_1-bp_reelle",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_1_quote_part_bp_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.hb_appelee",
+          "suggestionRef": "charges_N_1_quote_part_hb_appelee",
+          "id": "financier_lot_autres-charges-N_1-hb_appelee",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_1_quote_part_hb_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_1.hb_reelle",
+          "suggestionRef": "charges_N_1_quote_part_hb_reelle",
+          "id": "financier_lot_autres-charges-N_1-hb_reelle",
+          "label": "Charges N-1 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_1_quote_part_hb_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.bp_appelee",
+          "suggestionRef": "charges_N_2_quote_part_bp_appelee",
+          "id": "financier_lot_autres-charges-N_2-bp_appelee",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_2_quote_part_bp_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.bp_reelle",
+          "suggestionRef": "charges_N_2_quote_part_bp_reelle",
+          "id": "financier_lot_autres-charges-N_2-bp_reelle",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_2_quote_part_bp_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#au-titre-du-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.hb_appelee",
+          "suggestionRef": "charges_N_2_quote_part_hb_appelee",
+          "id": "financier_lot_autres-charges-N_2-hb_appelee",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel appelée",
+          "name": "financier_lot_autres_charges_N_2_quote_part_hb_appelee",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        },
+        {
+          "path": "financier_lot_autres.charges.N_2.hb_reelle",
+          "suggestionRef": "charges_N_2_quote_part_hb_reelle",
+          "id": "financier_lot_autres-charges-N_2-hb_reelle",
+          "label": "Charges N-2 - quote-part Budget Prévisionnel réelle",
+          "name": "financier_lot_autres_charges_N_2_quote_part_hb_reelle",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dont-le-syndicat-pourrait-etre-debiteur#hors-budget-previsionnel"
+        }
+      ]
+    }
+  ]
+}

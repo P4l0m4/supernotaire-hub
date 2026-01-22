@@ -1,0 +1,105 @@
+{
+  "title": "Situation financière du lot",
+  "sections": [
+    {
+      "id": "financier_lot",
+      "label": "Situation financière du lot",
+      "fields": [
+        {
+          "path": "financier_lot.arrete_au",
+          "suggestionRef": "date_arret_soldes_coproprietaires",
+          "id": "financier_lot-arrete-au",
+          "label": "Date de l'arrêt des comptes",
+          "name": "financier_lot_arrete_au",
+          "placeholder": "jj-mm-aaaa",
+          "type": "date",
+          "mode": "date-picker",
+          "required": true,
+          "icon": "calendar_dots_fill",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#date-darret-des-comptes"
+        },
+        {
+          "path": "financier_lot.solde_compte",
+          "suggestionRef": "solde_compte",
+          "id": "financier_lot-solde-compte",
+          "label": "Solde du compte du copropriétaire",
+          "name": "financier_lot_solde_compte",
+          "type": "number",
+          "placeholder": "10000",
+          "min": -100000000,
+          "max": 100000000,
+          "step": 0.01,
+          "required": true,
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-du-compte-du-coproprietaire"
+        },
+        {
+          "path": "financier_lot.solde_crediteur_exercice_anterieur",
+          "suggestionRef": "solde_crediteur_exercice_anterieur",
+          "id": "solde-crediteur-exercice-anterieur",
+          "label": "Solde créditeur exercice antérieur",
+          "name": "solde_crediteur_exercice_anterieur",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "100",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#solde-crediteur-exercice-anterieur-non-impute"
+        },
+        {
+          "path": "financier_lot.appels_echus_non_payes",
+          "suggestionRef": "appels_echus_non_payes",
+          "id": "financier_lot-appels-echus-non-payes",
+          "label": "Appels échus non payés",
+          "name": "financier_lot_appels_echus_non_payes",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#appels-echus-non-payes"
+        },
+        {
+          "path": "financier_lot.echeances_a_venir",
+          "suggestionRef": "echeances_a_venir",
+          "id": "financier_lot-echeances-a-venir",
+          "label": "Échéances à venir",
+          "name": "financier_lot_echeances_a_venir",
+          "minItems": 0,
+          "maxItems": 100,
+          "type": "array",
+          "required": false,
+          "itemLabel": "Échéance {{index}}",
+          "itemSchema": {
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date",
+                "type": "date",
+                "placeholder": "jj-mm-aaaa",
+                "required": true,
+                "mode": "date-picker",
+                "icon": "calendar_dots_fill"
+              },
+              {
+                "path": "montant",
+                "label": "Montant",
+                "type": "number",
+                "placeholder": "1000",
+                "min": 0,
+                "step": 0.01,
+                "required": true,
+                "icon": "hand_coins_fill",
+                "tooltip": "Cliquer pour savoir où trouver cette information.",
+                "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-relatives-a-la-situation-financiere-du-lot#budget-previsionnel-vote-date-et-proportion-des-appels"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

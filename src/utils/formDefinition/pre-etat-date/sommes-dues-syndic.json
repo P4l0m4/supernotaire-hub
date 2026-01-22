@@ -1,0 +1,83 @@
+{
+  "title": "Sommes dues par le syndic",
+  "sections": [
+    {
+      "id": "financier_lot_sommes_debiteur_syndic",
+      "label": "Sommes dues par le Syndic",
+      "fields": [
+        {
+          "path": "financier_lot_sommes_debiteur_syndic.sommes_dont_syndicat_pourrait_etre_debiteur.provisions_posterieures_rendues_exigibles",
+          "suggestionRef": "provisions_posterieures_rendues_exigibles",
+          "id": "provisions-posterieures-rendues-exigibles",
+          "label": "Provisions postérieures rendues exigibles",
+          "name": "provisions_posterieures_rendues_exigibles",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "placeholder": "1000",
+          "tooltip": "Provisions encaissées pour des périodes postérieures et rendues exigibles (art. 19-2 loi du 10/07/1965)."
+        },
+        {
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+          "suggestionRef": "financier_lot_sommes_debiteur_syndic_avances_provisions_generale",
+          "id": "financier_lot_sommes_debiteur_syndic-avances_provisions-generale",
+          "label": "Total avance générale pour la copro",
+          "name": "financier_lot_autres_avances_provisions_generale",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "required": true,
+          "tooltip": "Avance de trésorerie / fonds de roulement versée antérieurement par le vendeur. Montant crédité sur son compte, non consommé à la date de la vente."
+        },
+        {
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
+          "suggestionRef": "avances_provisions_travaux",
+          "id": "financier_lot_sommes_debiteur_syndic-avances_provisions-travaux",
+          "label": "Total provisions travaux pour la copro",
+          "name": "financier_lot_sommes_debiteur_syndic_avances_provisions_travaux",
+          "type": "number",
+          "placeholder": "1000",
+          "min": 0,
+          "step": 0.01,
+          "required": true
+        },
+        {
+          "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.modalites_remboursement",
+          "suggestionRef": "modalites_remboursement_sommes_dues_par_syndic",
+          "label": "Modalités de remboursement",
+          "name": "financier_lot_sommes_debiteur_syndic_modalites_remboursement",
+          "type": "select",
+          "options": ["Transfert à l’acquéreur", "Remboursement au cédant"],
+          "placeholder": "Sélectionner si applicable",
+          "icon": "gear_six_fill",
+          "showIf": {
+            "any": [
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+                "greaterThan": 0
+              },
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
+                "greaterThan": 0
+              }
+            ]
+          },
+          "requiredIf": {
+            "or": [
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.generale",
+                "greaterThan": 0
+              },
+              {
+                "path": "financier_lot_sommes_debiteur_syndic.avances_provisions.travaux",
+                "greaterThan": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

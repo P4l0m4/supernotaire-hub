@@ -1,0 +1,86 @@
+{
+  "title": "Justificatifs",
+  "sections": [
+    {
+      "id": "documents",
+      "label": "Documents",
+      "fields": [
+        {
+          "path": "documents.vendeur_nom",
+          "id": "vendeur-nom",
+          "label": "Nom du copropriétaire vendeur",
+          "name": "vendeur_nom",
+          "placeholder": "Jeanne Dupont",
+          "type": "text",
+          "required": true
+        },
+        {
+          "path": "documents.etat_des_soldes_coproprietaires",
+          "id": "etat-soldes-coproprietaires",
+          "label": "Etat des soldes copropriétaires",
+          "name": "etat_des_soldes_coproprietaires",
+          "type": "file",
+          "showIf": {
+            "path": "documents.vendeur_nom"
+          },
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_EtatDesSoldesCopropriétaires"
+        },
+        {
+          "path": "documents.dernier_pv_ag",
+          "id": "dernier-pv-ag",
+          "label": "Dernier PV d'AG",
+          "name": "dernier_pv_ag",
+          "type": "file",
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_ExtractionPVAG"
+        },
+        {
+          "path": "documents.fiche_synthetique_copropriete",
+          "id": "fiche-synthetique-copropriete",
+          "label": "Fiche synthétique de la copropriété",
+          "name": "fiche_synthetique_copropriete",
+          "type": "file",
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_FicheSynthétiqueCopropriété"
+        },
+        {
+          "path": "documents.acte_de_propriete",
+          "id": "acte-de-propriete",
+          "label": "Attestation de propriété",
+          "name": "acte_de_propriete",
+          "type": "file",
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_AttestationDePropriété"
+        },
+        {
+          "path": "documents.liste_coproprietaires_debiteurs_crediteurs",
+          "id": "liste-coproprietaires-debiteurs-crediteurs",
+          "label": "Liste des copropriétaires débiteurs / créditeurs",
+          "name": "liste_coproprietaires_debiteurs_crediteurs",
+          "type": "file",
+          "showIf": {
+            "path": "documents.vendeur_nom"
+          },
+          "required": false,
+          "icon": "plus_circle",
+          "accept": [".pdf", ".png", ".jpg", ".jpeg"],
+          "multiple": false,
+          "TS_TYPE": "TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs"
+        }
+      ]
+    }
+  ]
+}

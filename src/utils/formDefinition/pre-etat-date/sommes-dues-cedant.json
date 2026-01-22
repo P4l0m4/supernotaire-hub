@@ -1,0 +1,171 @@
+{
+  "title": "Sommes dues par le copropriétaire cédant",
+  "sections": [
+    {
+      "id": "provisions_exigibles",
+      "label": "Provisions exigibles",
+      "fields": [
+        {
+          "path": "financier_lot_sommes_dues_cedant.provisions_exigibles.budget_previsionnel",
+          "suggestionRef": "cedant_provisions_budget_previsionnel_exigibles",
+          "id": "cedant-provisions-bp-exigibles",
+          "label": "Provisions du budget prévisionnel exigibles",
+          "name": "cedant_provisions_exigibles_bp",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#au-titre-du-budget-previsionnel"
+        },
+
+        {
+          "path": "financier_lot_sommes_dues_cedant.provisions_exigibles.hors_budget",
+          "suggestionRef": "cedant_provisions_hb_exigibles",
+          "id": "cedant-provisions-hb-exigibles",
+          "label": "Provisions hors budget exigibles",
+          "name": "cedant_provisions_exigibles_hb",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#hors-budget-previsionnel"
+        }
+      ]
+    },
+    {
+      "id": "avances_exigibles",
+      "label": "Avances exigibles",
+      "fields": [
+        {
+          "path": "financier_lot_sommes_dues_cedant.avances_exigibles.avances_exigibles_reserve",
+          "suggestionRef": "avances_exigibles_reserve_dues_par_le_cedant",
+          "id": "cedant-avances-exigibles-reserve",
+          "label": "Avances exigibles - Réserve",
+          "name": "cedant_avances_exigibles_reserve",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-constituant-la-reserve"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.avances_exigibles.avances_exigibles_provisions_speciales",
+          "suggestionRef": "avances_exigibles_provisions_speciales_dues_par_le_cedant",
+          "id": "cedant-avances-exigibles-provisions-speciales",
+          "label": "Avances exigibles - Provisions spéciales",
+          "name": "cedant_avances_exigibles_provisions_speciales",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-au-titre-de-provisions-speciales"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.avances_exigibles.avances_exigibles_emprunt",
+          "suggestionRef": "avances_exigibles_representant_un_emprunt_dues_par_le_cedant",
+          "id": "cedant-avances-exigibles-representant_un_emprunt",
+          "label": "Avances exigibles - Représentant un emprunt",
+          "name": "cedant_avances_exigibles_representant_un_emprunt",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#avances-representant-un-emprunt"
+        }
+      ]
+    },
+    {
+      "id": "autres_sommes_exigibles",
+      "label": "Autres sommes dues",
+      "fields": [
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.charges_impayees_anterieures",
+          "suggestionRef": "charges_impayees_anterieures_dues_par_le_cedant",
+          "id": "cedant-charges-impayees-anterieures",
+          "label": "Charges impayées antérieures",
+          "name": "cedant_charges_impayees_anterieures",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#charges-impayees-anterieures"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.du_fait_de_la_future_vente",
+          "suggestionRef": "du_fait_de_la_future_vente_dues_par_le_cedant",
+          "id": "cedant-du-fait-de-la-future-vente",
+          "label": "Sommes exigibles du fait de la vente",
+          "name": "cedant_du_fait_de_la_future_vente",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cliquer pour savoir où trouver cette information.",
+          "tooltipLink": "https://www.easycase.fr/tutoriels/pre-etat-date-sommes-dues-par-le-coproprietaire-cedant#verifiez-si-vous-etes-concerne-par-des-sommes-exigibles-du-fait-de-la-future-vente"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.cotisations_fonds_travaux_exigibles",
+          "suggestionRef": "cedant_cotisations_fonds_travaux_exigibles",
+          "id": "cedant-cotisations-fonds-travaux-exigibles",
+          "label": "Cotisations au fonds de travaux exigibles",
+          "name": "cedant_cotisations_fonds_travaux_exigibles",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000",
+          "tooltip": "Cotisations au fonds de travaux arrivées à échéance à la date de la vente et dues par le vendeur si non réglées."
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.pret_quote_part_vendeur",
+          "suggestionRef": "cedant_autres_sommes_exigibles_pret_quote_part_vendeur",
+          "id": "cedant-autres-exigibles-pret-quote-part-vendeur",
+          "label": "Autres sommes exigibles — Prêt (quote-part vendeur)",
+          "name": "cedant_autres_exigibles_pret_quote_part_vendeur",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "200"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.condamnations",
+          "suggestionRef": "cedant_autres_sommes_exigibles_condamnations",
+          "id": "cedant-autres-exigibles-condamnations",
+          "label": "Autres sommes exigibles — Condamnations",
+          "name": "cedant_autres_exigibles_condamnations",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "200"
+        },
+        {
+          "path": "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.a_des_tiers_emprunts_geres_par_syndic",
+          "suggestionRef": "sommes_exigibles_dues_par_cedant_a_des_tiers_emprunts_geres_par_syndic",
+          "id": "cedant-autres-exigibles-a-des-tiers-emprunts-geres-par-syndic",
+          "label": "Autres sommes exigibles — À des tiers (emprunts gérés par le syndic)",
+          "name": "cedant_autres_exigibles_a_des_tiers_emprunts_geres_par_syndic",
+          "type": "number",
+          "min": 0,
+          "step": 0.01,
+          "required": false,
+          "placeholder": "1000"
+        }
+      ]
+    }
+  ]
+}
