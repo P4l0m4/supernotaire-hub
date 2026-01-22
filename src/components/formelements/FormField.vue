@@ -256,6 +256,8 @@ const isAnyHighlight = computed(
       :placeholder="formField.placeholder || ''"
       :icon="formField.icon || ''"
       :error="errorMessage"
+      :tooltip="formField.tooltip || ''"
+      :tooltipLink="formField.tooltipLink || ''"
     />
     <FormElementsSegmentedControl
       v-else-if="formField.type === 'segmented-control'"
