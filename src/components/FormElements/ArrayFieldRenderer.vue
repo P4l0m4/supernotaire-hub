@@ -6,6 +6,7 @@ import { getByPath, clone, labelFor, genId, setDeep } from "@/utils/arrayField";
 import { fr } from "@/utils/validators-fr";
 import useVuelidate from "@vuelidate/core";
 import { numeric, helpers } from "@vuelidate/validators";
+import { evaluateShowIf } from "@/utils/showIf";
 
 import type { ArrayField } from "@/types/forms";
 
@@ -57,9 +58,14 @@ const stepValidator = (step?: number | null) =>
         return Math.abs(r - Math.round(r)) < 1e-9;
       });
 
-const rulesForScalar = (f: any) => {
+const rulesForScalar = (f: any, idx: number) => {
   const r: any = {};
   if (f.required) r.required = fr.required;
+  if (f.requiredIf) {
+    r.requiredIf = fr.requiredIf(() =>
+      evaluateShowIf(f.requiredIf, model.value[idx]),
+    );
+  }
   if (f.type === "number") {
     r.numeric = numeric;
     if (f.min != null) r.minValue = fr.minValue(f.min);
@@ -80,18 +86,16 @@ const rulesForScalar = (f: any) => {
 
 const itemFields = computed<any[]>(() => props.field.itemSchema?.fields ?? []);
 
-const itemRuleShape = computed(() => {
-  const r: any = {};
-  for (const f of itemFields.value) {
-    const leaf = rulesForScalar(f);
-    if (leaf) setDeep(r, f.path.split("."), leaf);
-  }
-  return r;
-});
-
 const arrayItemRules = computed(() => {
   const out: any = {};
-  for (let i = 0; i < model.value.length; i++) out[i] = itemRuleShape.value;
+  for (let i = 0; i < model.value.length; i++) {
+    const shape: any = {};
+    for (const f of itemFields.value) {
+      const leaf = rulesForScalar(f, i);
+      if (leaf) setDeep(shape, f.path.split("."), leaf);
+    }
+    out[i] = shape;
+  }
   return out;
 });
 
@@ -162,6 +166,25 @@ function makeEmptyItem(): ArrayItem {
     setByPath(obj, f.path, defaultForType(f.type));
   return obj;
 }
+
+const isSubFieldVisible = (item: any, f: any): boolean => {
+  try {
+    return evaluateShowIf(f?.showIf, item);
+  } catch (e) {
+    console.warn("[ArrayField] showIf evaluation failed for", f?.path, e);
+    return true;
+  }
+};
+
+const isSubFieldRequired = (item: any, f: any): boolean => {
+  if (f.required) return true;
+  if (!f.requiredIf) return false;
+  try {
+    return evaluateShowIf(f.requiredIf, item);
+  } catch {
+    return false;
+  }
+};
 
 async function addItem() {
   const next = [...model.value];
@@ -328,13 +351,13 @@ async function applyAllSuggestions() {
         v-show="!isCollapsed(item.__id || String(idx))"
       >
         <template v-for="(f, index) in itemFields" :key="index">
-          <label class="fi">
+          <label class="fi" v-if="isSubFieldVisible(item, f)">
             <span
               v-if="f.type !== 'checkbox' && f.type !== 'checkbox-group'"
               class="fi__label"
               >{{ f.label
               }}<UIIconComponent
-                v-if="f.required"
+                v-if="isSubFieldRequired(item, f)"
                 icon="asterisk"
                 size="0.75rem"
                 :color="colors['error-color']"
