@@ -6,6 +6,18 @@ import {
 
 import type { PreEtatDate, Provision } from "@/types/pre-etat-date-complet";
 
+const annexes = [
+  "Dernier procès-verbal d’assemblée générale approuvé.",
+  "État daté des impayés du copropriétaire vendeur et des dettes envers le Syndic.",
+  "Montant du fonds travaux (ALUR) et arrêté correspondant.",
+  "Carnet d’entretien de l’immeuble.",
+  "Diagnostic technique global (DTG) s’il existe.",
+  "Budget prévisionnel voté et les comptes des deux derniers exercices.",
+  "État des procédures en cours contre la copropriété.",
+  "Copie du règlement de copropriété et état descriptif de division, à jour.",
+  "Attestation d’assurance de l’immeuble.",
+];
+
 export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
   const FL = d.financier_lot;
   const SDC = d.financier_lot_sommes_dues_cedant;
@@ -627,6 +639,17 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
             : { text: "Aucune", margin: [0, 0, 0, 24] },
         ];
       })(),
+
+      {
+        text: "Documents à joindre en annexe",
+        style: "h2",
+        pageBreak: "before",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        ul: annexes,
+        margin: [0, 0, 0, 16],
+      },
 
       // Meta / Sources
       { text: "Métadonnées", style: "h2" },

@@ -614,7 +614,7 @@
       ]
     },
     {
-      "id": "financier_lot_autres",
+      "id": "financier_lot_sommes_debiteur_syndic",
       "label": "Sommes dues par le Syndic",
       "fields": [
         {

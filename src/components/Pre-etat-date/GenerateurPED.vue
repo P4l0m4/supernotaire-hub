@@ -1,11 +1,6 @@
-<script setup lang="ts">
-import { reactive, watch, watchEffect, onMounted } from "vue";
+﻿<script setup lang="ts">
+import { reactive, watch, watchEffect, onMounted, computed, ref } from "vue";
 
-import achievement from "/achievement-45.svg?url";
-import checklist from "/checklist-71-blue.svg?url";
-import filesAndFolder from "/files-and-folder-78.svg?url";
-
-import { buildDocDefinition } from "~/utils/docDefinitions/pre-etat-date";
 import formDefinition from "@/utils/formDefinition/pre-etat-date.json";
 import { processDocument } from "@/utils/textFromDocument";
 
@@ -21,32 +16,23 @@ import type { PreEtatDate } from "@/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/types/forms";
 import type { ISODate } from "@/types/pre-etat-date-complet";
 
-const annexes = [
-  "Dernier procès-verbal d’assemblée générale approuvé.",
-  "État daté des impayés du copropriétaire vendeur et des dettes envers le Syndic.",
-  "Montant du fonds travaux (ALUR) et arrêté correspondant.",
-  "Carnet d’entretien de l’immeuble.",
-  "Diagnostic technique global (DTG) s’il existe.",
-  "Budget prévisionnel voté et les comptes des deux derniers exercices.",
-  "État des procédures en cours contre la copropriété.",
-  "Copie du règlement de copropriété et état descriptif de division, à jour.",
-  "Attestation d’assurance de l’immeuble.",
-];
+const props = defineProps<{
+  sectionId?: string;
+}>();
 
-const documents = [
-  "Dernier procès-verbal d’assemblée générale",
-  "Fiche synthétique de la copropriété",
-  "Attestation de propriété",
-  "État des soldes des copropriétaires",
-  "Grand Livre des comptes",
-  "Avant dernier et avant-avant dernier compte de gestion pour travaux et opérations exceptionnelles",
-  "Dernier et avant dernier compte de gestion pour opérations courantes et budget prévisionnel",
-];
+const fullFormDefinition = formDefinition as FormDefinition;
+
+const activeFormDefinition = computed<FormDefinition>(() => {
+  if (!props.sectionId) return fullFormDefinition;
+  const section = fullFormDefinition.sections.find(
+    (s) => s.id === props.sectionId,
+  );
+  if (!section) return fullFormDefinition;
+  return { ...fullFormDefinition, sections: [section] };
+});
 
 const formData = reactive({} as PreEtatDate);
 
-const showFirstAction = ref(true);
-const showLastAction = ref(false);
 const LOCAL_STORAGE_KEY = "sn-pre-etat-date";
 let persistTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -103,18 +89,6 @@ formData.financier_lot ?? {
   },
 };
 
-const { $pdfMake } = useNuxtApp();
-const ready = useState<boolean>("pdfmake-ready");
-
-async function generatePdf() {
-  //@ts-ignore
-  if (!process.client || !$pdfMake?.createPdf) return;
-  const logo = await loadLogo();
-  const doc = buildDocDefinition(formData, logo);
-  //@ts-ignore
-  $pdfMake.createPdf(doc).download("pre-etat-date.pdf");
-}
-
 const TS_TYPES: Record<string, string> = {
   TS_TYPE_ExtractionPVAG,
   TS_TYPE_FicheSynthétiqueCopropriété,
@@ -125,7 +99,7 @@ const TS_TYPES: Record<string, string> = {
 
 type AnyField = { path?: string; name?: string; TS_TYPE?: string };
 const FIELD_BY_DOC_KEY: Record<string, AnyField> = {};
-for (const sec of (formDefinition as any).sections ?? []) {
+for (const sec of (fullFormDefinition as any).sections ?? []) {
   for (const f of (sec.fields ?? []) as AnyField[]) {
     if (typeof f.path === "string" && f.path.startsWith("documents.")) {
       const k = f.path.split(".")[1]; // ex: "dernier_pv_ag"
@@ -165,7 +139,7 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
   const nomVendeur = formData.documents?.vendeur_nom || "";
 
   const clues = [`Le nom du vendeur est : ${nomVendeur}.`].filter(
-    (c) => c.trim().length > 0
+    (c) => c.trim().length > 0,
   );
 
   const filledModel = await extractDataFromResults(
@@ -173,7 +147,7 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
     results,
     key,
     TS_TYPE,
-    clues
+    clues,
   );
 
   upsertSuggestions(toRows(filledModel || {}));
@@ -190,15 +164,15 @@ watch(
       if (val instanceof File) {
         const sig = fileSig(val);
         if (seen.get(key) !== sig) {
-          seen.set(key, sig); // nouvelle version → traite
+          seen.set(key, sig); // nouvelle version â†’ traite
           handleDocumentInfoExtraction(key, val);
         }
       } else if (val == null) {
-        seen.delete(key); // clé vidée → oubli
+        seen.delete(key); // clé vidée â†’ oubli
       }
     }
   },
-  { deep: true }
+  { deep: true },
 );
 
 const hydrateFromStorage = () => {
@@ -243,7 +217,7 @@ watch(
   () => {
     schedulePersist();
   },
-  { deep: true }
+  { deep: true },
 );
 
 function getSuggestion<T = any>(k: string): T | undefined {
@@ -282,104 +256,15 @@ watchEffect(() => {
 
   recomputeEcheances();
 });
+const onComplete = () => {
+  navigateTo("/outils/pre-etat-date");
+};
 </script>
 <template>
-  <div class="action" v-if="showFirstAction">
-    <div class="action__illustration">
-      <img
-        class="action__illustration__image"
-        :src="checklist"
-        alt="Avant de commencer"
-      />
-    </div>
-
-    <ol class="action__list">
-      <span class="action__list__title">Avant de commencer...</span>
-      <span class="action__list__subtitle"
-        >Munissez-vous des documents (digitalisés) suivants:
-      </span>
-      <li
-        v-for="(document, i) in documents"
-        :key="document"
-        class="action__list__item"
-      >
-        <span class="action__list__item__number">{{ i + 1 }}</span>
-        {{ document }}
-      </li>
-      <div class="action__list__buttons">
-        <UIPrimaryButton
-          icon="arrow_right"
-          variant="accent-color"
-          @click="showFirstAction = false"
-          >Commencer</UIPrimaryButton
-        >
-      </div>
-    </ol>
-  </div>
-
   <FormElementsDynamicForm
-    v-if="!showFirstAction && !showLastAction"
-    :formDefinition="formDefinition as FormDefinition"
+    :formDefinition="activeFormDefinition as FormDefinition"
     :suggestions="suggestions"
     v-model="formData"
-    @complete="showLastAction = true"
+    @complete="onComplete"
   />
-  <div class="action" v-if="showLastAction">
-    <div class="action__illustration">
-      <img
-        class="action__illustration__image"
-        :src="achievement"
-        alt="Avant de partir"
-      />
-    </div>
-    <ul class="action__list">
-      <span class="action__list__title">C'est prêt !</span>
-      <span class="action__list__subtitle">
-        Votre Pré-état daté est prêt à être téléchargé.
-      </span>
-      <TrustPilot style="margin-top: auto" />
-      <div class="action__list__buttons">
-        <UISecondaryButton
-          variant="accent-color"
-          icon="arrow_left"
-          :reverse="true"
-          @click="showLastAction = false"
-          @keydown.enter="showLastAction = false"
-          @keydown.space="showLastAction = false"
-        >
-          Revenir au formulaire
-        </UISecondaryButton>
-        <ClientOnly>
-          <UIPrimaryButton
-            @click="generatePdf()"
-            :disabled="!ready"
-            variant="accent-color"
-            icon="download"
-            >Télécharger le Pré-état daté</UIPrimaryButton
-          ></ClientOnly
-        >
-      </div>
-    </ul>
-  </div>
-  <div class="action" v-if="showLastAction">
-    <div class="action__illustration">
-      <img
-        class="action__illustration__image"
-        :src="filesAndFolder"
-        alt="Avant de commencer"
-      />
-    </div>
-    <ul class="action__list">
-      <span class="action__list__title"> Avant de partir...</span>
-      <span class="action__list__subtitle">
-        Documents à joindre en annexe de votre pré-état daté
-      </span>
-      <li class="action__list__item" v-for="annexe in annexes" :key="annexe">
-        {{ annexe }}
-      </li>
-    </ul>
-  </div>
 </template>
-<style lang="scss" scoped>
-@import "@/styles/action.scss";
-</style>
