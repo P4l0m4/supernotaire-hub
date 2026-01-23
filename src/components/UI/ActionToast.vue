@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
       backgroundColor: `${props.color}10`,
       flexDirection: props.direction,
     }"
+    @click.stop="actionLabel && actionLabel.length ? props.onAction() : null"
   >
     <UIWrappedIcon :icon="icon" :color="color" size="big" />
     <div class="action-text" :class="direction">
@@ -30,7 +31,6 @@ const props = withDefaults(defineProps<Props>(), {
       v-if="actionLabel && actionLabel.length"
       class="action-label"
       :class="direction"
-      @click.stop="props.onAction()"
       >{{ actionLabel }}</span
     >
   </button>
