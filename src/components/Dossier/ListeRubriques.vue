@@ -1,6 +1,13 @@
 ﻿<script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import { colors } from "@/utils/colors";
+import {
+  calculateSectionProgress,
+  computeOverallProgress,
+  countCompleted,
+  createDebouncedRefresh,
+  sortCardsByCompletion,
+} from "@/utils/rubriquesProgress";
 import { useExportAccess } from "@/composables/useExportAccess";
 import { useDriver } from "#imports";
 
@@ -107,20 +114,8 @@ const storageKeys: Record<RubriqueId, string> = {
 };
 
 const completedCards = computed(() => {
-  return Object.values(progressByRubrique.value).filter((p) => p === 100)
-    .length;
+  return countCompleted(progressByRubrique.value);
 });
-
-const hasValue = (val: unknown): boolean => {
-  if (val == null) return false;
-  if (typeof val === "boolean") return val === true;
-  if (typeof val === "number") return true;
-  if (typeof val === "string") return val.trim().length > 0;
-  if (Array.isArray(val)) return val.length > 0;
-  if (typeof val === "object")
-    return Object.values(val).some((v) => hasValue(v));
-  return false;
-};
 
 const initialProgress: Record<RubriqueId, number> = {
   prealables: 0,
@@ -140,18 +135,10 @@ const progressByRubrique = ref<Record<RubriqueId, number>>({
   ...initialProgress,
 });
 
+const rubriqueIds = Object.keys(initialProgress) as RubriqueId[];
+
 const sortedCards = computed(() => {
-  const completed: RubriqueCard[] = [];
-  const others: RubriqueCard[] = [];
-  cards.forEach((card) => {
-    const progress = progressByRubrique.value[card.id] ?? 0;
-    if (progress === 100) {
-      completed.push(card);
-    } else {
-      others.push(card);
-    }
-  });
-  return [...others, ...completed];
+  return sortCardsByCompletion(cards, progressByRubrique.value);
 });
 
 const {
@@ -166,30 +153,21 @@ const TOUR_DONE_FLAG = "checklist-tour-done";
 const overallProgress = ref(0);
 
 const calculateOverallProgress = () => {
-  const totalRubriques = cards.length;
-  const totalProgress = Object.values(progressByRubrique.value).reduce(
-    (acc, val) => acc + val,
-    0,
+  overallProgress.value = computeOverallProgress(
+    progressByRubrique.value,
+    cards.length,
   );
-  overallProgress.value = Math.round(totalProgress / totalRubriques);
 };
 
 function calculateResult() {
-  const newProgress: Record<RubriqueId, number> = { ...initialProgress };
-  for (const id of Object.keys(storageKeys) as RubriqueId[]) {
+  progressByRubrique.value = calculateSectionProgress(rubriqueIds, (id) => {
     try {
       const raw = process.client ? localStorage.getItem(storageKeys[id]) : null;
-      if (!raw) {
-        newProgress[id] = 0;
-        continue;
-      }
-      const parsed = JSON.parse(raw);
-      newProgress[id] = parsed?.__completed ? 100 : hasValue(parsed) ? 50 : 0;
+      return raw ? JSON.parse(raw) : null;
     } catch {
-      newProgress[id] = 0;
+      return null;
     }
-  }
-  progressByRubrique.value = newProgress;
+  });
 }
 
 const refreshProgress = () => {
@@ -197,16 +175,7 @@ const refreshProgress = () => {
   calculateOverallProgress();
 };
 
-const refreshProgressWithDelay = (() => {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  return () => {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      refreshProgress();
-      timer = null;
-    }, 1000);
-  };
-})();
+const refreshProgressWithDelay = createDebouncedRefresh(refreshProgress, 1000);
 
 const handleStorageChange = (event: StorageEvent) => {
   if (!event?.key || !event.key.startsWith("sn-checklist-")) return;

@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
+import {
+  calculateSectionProgress,
+  computeOverallProgress,
+  countCompleted,
+  createDebouncedRefresh,
+  sortCardsByCompletion,
+} from "@/utils/rubriquesProgress";
 import PreEtatDateExportMenu from "@/components/Pre-etat-date/ExportMenu.vue";
 import { useDriver } from "#imports";
 
@@ -73,17 +80,6 @@ const cards: SectionCard[] = [
   },
 ];
 
-const hasValue = (val: unknown): boolean => {
-  if (val == null) return false;
-  if (typeof val === "boolean") return val === true;
-  if (typeof val === "number") return true;
-  if (typeof val === "string") return val.trim().length > 0;
-  if (Array.isArray(val)) return val.length > 0;
-  if (typeof val === "object")
-    return Object.values(val).some((v) => hasValue(v));
-  return false;
-};
-
 const initialProgress: Record<SectionId, number> = {
   documents: 0,
   bien: 0,
@@ -100,23 +96,22 @@ const progressBySection = ref<Record<SectionId, number>>({
   ...initialProgress,
 });
 
+const sectionIds = Object.keys(initialProgress) as SectionId[];
+
 const completedCards = computed(() => {
-  return Object.values(progressBySection.value).filter((p) => p === 100).length;
+  return countCompleted(progressBySection.value);
 });
 
 const overallProgress = ref(0);
 
 const calculateOverallProgress = () => {
-  const total = cards.length;
-  const sum = Object.values(progressBySection.value).reduce(
-    (acc, val) => acc + val,
-    0,
+  overallProgress.value = computeOverallProgress(
+    progressBySection.value,
+    cards.length,
   );
-  overallProgress.value = Math.round(sum / total);
 };
 
 function calculateResult() {
-  const newProgress: Record<SectionId, number> = { ...initialProgress };
   let parsed: Record<string, any> = {};
   if (process.client) {
     try {
@@ -126,11 +121,9 @@ function calculateResult() {
       parsed = {};
     }
   }
-  for (const id of Object.keys(initialProgress) as SectionId[]) {
-    const value = parsed?.[id];
-    newProgress[id] = value?.__completed ? 100 : hasValue(value) ? 50 : 0;
-  }
-  progressBySection.value = newProgress;
+  progressBySection.value = calculateSectionProgress(sectionIds, (id) => {
+    return parsed?.[id];
+  });
 }
 
 const refreshProgress = () => {
@@ -138,16 +131,7 @@ const refreshProgress = () => {
   calculateOverallProgress();
 };
 
-const refreshProgressWithDelay = (() => {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  return () => {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      refreshProgress();
-      timer = null;
-    }, 800);
-  };
-})();
+const refreshProgressWithDelay = createDebouncedRefresh(refreshProgress, 800);
 
 const handleStorageChange = (event: StorageEvent) => {
   if (!event?.key || !event.key.startsWith(STORAGE_KEY)) return;
@@ -167,16 +151,9 @@ onBeforeUnmount(() => {
   }
 });
 
-const sortedCards = computed(() => {
-  const completed: SectionCard[] = [];
-  const others: SectionCard[] = [];
-  cards.forEach((card) => {
-    const progress = progressBySection.value[card.id] ?? 0;
-    if (progress === 100) completed.push(card);
-    else others.push(card);
-  });
-  return [...others, ...completed];
-});
+const sortedCards = computed(() =>
+  sortCardsByCompletion(cards, progressBySection.value),
+);
 
 const startTour = () => {
   if (!process.client) return;
