@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
 import PreEtatDateExportMenu from "@/components/Pre-etat-date/ExportMenu.vue";
+import { useDriver } from "#imports";
 
 type SectionId =
   | "documents"
@@ -21,6 +22,8 @@ type SectionCard = {
 };
 
 const STORAGE_KEY = "sn-pre-etat-date";
+const TOUR_FLAG = "ped-tour-documents";
+const TOUR_DONE_FLAG = "ped-tour-done";
 
 const cards: SectionCard[] = [
   {
@@ -50,7 +53,7 @@ const cards: SectionCard[] = [
   },
   {
     id: "financier_lot_sommes_dues_cedant",
-    title: "Sommes dues par le cédant",
+    title: "Sommes dues par le vendeur",
     subtitle: "Montants et avances à régulariser côté vendeur.",
   },
   {
@@ -76,7 +79,8 @@ const hasValue = (val: unknown): boolean => {
   if (typeof val === "number") return true;
   if (typeof val === "string") return val.trim().length > 0;
   if (Array.isArray(val)) return val.length > 0;
-  if (typeof val === "object") return Object.values(val).some((v) => hasValue(v));
+  if (typeof val === "object")
+    return Object.values(val).some((v) => hasValue(v));
   return false;
 };
 
@@ -173,6 +177,44 @@ const sortedCards = computed(() => {
   });
   return [...others, ...completed];
 });
+
+const startTour = () => {
+  if (!process.client) return;
+  localStorage.setItem(TOUR_FLAG, "documents");
+  const tour = useDriver({
+    overlayOpacity: 0.45,
+    allowClose: true,
+    showProgress: true,
+    nextBtnText: "Suivant",
+    prevBtnText: "Précédent",
+    doneBtnText: "Terminer",
+    steps: [
+      {
+        element: "#ped-tour-documents-card",
+        popover: {
+          title: "Commencez par les justificatifs",
+          description:
+            "Commencez par cette rubrique. Vous y déposerez vos documents de copropriété pour bénéficier de suggestions intelligentes qui vous aideront à compléter les autres rubriques.",
+          side: "bottom",
+          align: "start",
+        },
+      },
+    ],
+  });
+  tour.drive();
+};
+
+const maybeStartTourOnFirstVisit = () => {
+  if (!process.client) return;
+  const alreadyDone = localStorage.getItem(TOUR_DONE_FLAG);
+  if (alreadyDone) return;
+  localStorage.setItem(TOUR_DONE_FLAG, "1");
+  startTour();
+};
+
+onMounted(() => {
+  maybeStartTourOnFirstVisit();
+});
 </script>
 
 <template>
@@ -191,6 +233,7 @@ const sortedCards = computed(() => {
         :legend="`${completedCards} / ${cards.length} rubriques complétées`"
       />
       <PreEtatDateExportMenu />
+
       <AnimationsConfetti
         :active="overallProgress === 100"
         :count="20"
@@ -204,6 +247,7 @@ const sortedCards = computed(() => {
         v-for="card in sortedCards"
         :key="card.id"
         class="liste-rubriques__card"
+        :id="card.id === 'documents' ? 'ped-tour-documents-card' : undefined"
         :to="`/outils/pre-etat-date/${card.id}`"
         v-tooltip="card.subtitle"
       >
@@ -237,106 +281,20 @@ const sortedCards = computed(() => {
       </NuxtLink>
     </TransitionGroup>
   </div>
+  <UIActionToast
+    :color="colors['purple-color']"
+    icon="help_circle"
+    direction="column"
+    action-label="Lancer le tutoriel"
+    style="margin-left: auto"
+    :onAction="startTour"
+    >Besoin d'aide pour démarrer ?
+    <template #secondaryMessage>
+      Cliquez ici pour lancer le tutoriel rapide.
+    </template>
+  </UIActionToast>
 </template>
 
-<style scoped lang="scss">
-.liste-rubriques {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-  gap: 1.5rem;
-
-  &__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-    position: relative;
-
-    @media (min-width: $laptop-screen) {
-      flex-direction: row;
-      align-items: stretch;
-      gap: 2rem;
-      justify-content: space-between;
-    }
-  }
-
-  &__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-
-    @media (min-width: $big-tablet-screen) {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-      padding-right: 1.5rem;
-      overflow-y: scroll;
-      min-width: 70%;
-    }
-  }
-
-  &__card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: calc($radius / 2);
-    border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
-    height: fit-content;
-    align-items: end;
-    transition:
-      box-shadow 0.2s linear,
-      background-color 0.2s linear,
-      border 0.2s linear;
-
-    @media (min-width: $big-tablet-screen) {
-      padding: 1.5rem;
-      gap: 1.5rem;
-
-      &:hover {
-        background-color: $primary-color;
-        box-shadow: $shadow-black;
-        border: 1px solid $primary-color;
-        cursor: pointer;
-      }
-    }
-
-    &__header {
-      width: 100%;
-      display: flex;
-      gap: 1rem;
-      justify-content: space-between;
-
-      &__title {
-        width: calc(100% - 6rem);
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-size: 1.25rem;
-        font-weight: $semi-bold;
-      }
-    }
-  }
-}
-
-.rubriques-enter-active,
-.rubriques-leave-active {
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.rubriques-enter-from,
-.rubriques-leave-to {
-  opacity: 0;
-  transform: scale(0.98);
-}
-
-.rubriques-move {
-  transition: transform 1s ease;
-}
+<style lang="scss" scoped>
+@import "@/styles/rubriques.scss";
 </style>

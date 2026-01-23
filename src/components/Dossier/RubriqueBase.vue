@@ -3,6 +3,7 @@ import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
 import { loadLogo } from "@/utils/otherFunctions";
 import { useExportAccess } from "@/composables/useExportAccess";
 import type { FormDefinition } from "@/types/forms";
+import { useDriver } from "#imports";
 
 const props = defineProps<{
   sectionId: string;
@@ -43,6 +44,7 @@ const {
 } = useExportAccess();
 const cloneData = (data: Record<string, any>) =>
   JSON.parse(JSON.stringify(data ?? {}));
+const TOUR_FLAG = "checklist-tour";
 
 const getByPath = (obj: any, path: string[]) =>
   path.reduce((acc, key) => (acc ? acc[key] : undefined), obj);
@@ -190,9 +192,63 @@ const tryApplyPrefillEntries = () => {
   });
 };
 
+const runChecklistTour = () => {
+  if (!process.client) return;
+  if (props.sectionId !== "identite") return;
+  const flag = localStorage.getItem(TOUR_FLAG);
+  if (flag !== "identite") return;
+
+  try {
+    const tour = useDriver({
+      overlayOpacity: 0.45,
+      allowClose: true,
+      showProgress: false,
+      nextBtnText: "Suivant",
+      prevBtnText: "Précédent",
+      doneBtnText: "Terminer",
+      steps: [
+        {
+          element: "#checklist-tour-form",
+          popover: {
+            title: "Complétez les champs de la rubrique",
+            description:
+              "Nous utilisons ces informations pour générer votre Pré-état daté. Nous les sauvegardons au fur et à mesure pour que vous puissiez reprendre plus tard si besoin.",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: "[data-tour='tooltip-icon']",
+          popover: {
+            title: "Besoin d'un coup de main ?",
+            description:
+              "Cette icône vous aidera à trouver l'information attendue, avec une explication courte ou un tutoriel simple.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+        {
+          element: "[data-tour='complete-button']",
+          popover: {
+            title: "Enregistrer la rubrique",
+            description:
+              "Une fois le formulaire complété, cliquez sur ce bouton pour sauvegarder vos réponses.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+      ],
+    });
+    tour.drive();
+  } finally {
+    localStorage.removeItem(TOUR_FLAG);
+  }
+};
+
 onMounted(() => {
   hydrateFromStorage();
   tryApplyPrefillEntries();
+  runChecklistTour();
 });
 
 watch(
@@ -285,7 +341,10 @@ onBeforeUnmount(() => {
         Télécharger le récapitulatif
       </UITertiaryButton>
     </div>
-    <div class="rubrique__form">
+    <div
+      class="rubrique__form"
+      :id="sectionId === 'identite' ? 'checklist-tour-form' : undefined"
+    >
       <FormElementsDynamicForm
         :formDefinition="formDefinition"
         v-model="formData"

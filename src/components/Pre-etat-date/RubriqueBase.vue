@@ -21,6 +21,7 @@ import { TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs } from "@/utils/extr
 import type { PreEtatDate } from "@/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/types/forms";
 import type { ISODate } from "@/types/pre-etat-date-complet";
+import { useDriver } from "#imports";
 
 type SectionId =
   | "documents"
@@ -47,6 +48,7 @@ const subtitle = computed(
 );
 
 const STORAGE_KEY = "sn-pre-etat-date";
+const TOUR_FLAG = "ped-tour-documents";
 const formData = reactive({} as PreEtatDate);
 const lastValidSnapshot = ref<PreEtatDate | null>(null);
 const isHydrated = ref(false);
@@ -248,8 +250,73 @@ const schedulePersist = () => {
   }, 300);
 };
 
+const runDocumentsTour = () => {
+  if (!process.client) return;
+  if (props.sectionId !== "documents") return;
+  const flag = localStorage.getItem(TOUR_FLAG);
+  if (flag !== "documents") return;
+
+  try {
+    const tour = useDriver({
+      overlayOpacity: 0.45,
+      allowClose: true,
+      showProgress: true,
+      nextBtnText: "Suivant",
+      prevBtnText: "Précédent",
+      doneBtnText: "Terminer",
+      steps: [
+        {
+          element: "#ped-tour-documents-form",
+          popover: {
+            title: "Complétez les champs de la rubrique",
+            description:
+              "Nous utilisons ces informations pour générer votre Pré-état daté. Nous les sauvegardons au fur et à mesure pour que vous puissiez reprendre plus tard si besoin.",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: "[data-tour='tooltip-icon']",
+          popover: {
+            title: "Besoin d'un coup de main ?",
+            description:
+              "Cette icône vous aidera à trouver l'information attendue, avec une explication courte ou un tutoriel simple.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+        {
+          element: "[data-tour='file-upload']",
+          popover: {
+            title: "Déposez vos fichiers",
+            description:
+              "Utilisez ces champs pour déposer les documents demandés pour que nous puissions vous aider à trouver les bonnes informations. Ce n'est pas obligatoire, mais vous irez beaucoup plus vite.",
+            side: "top",
+            align: "start",
+          },
+        },
+
+        {
+          element: "[data-tour='complete-button']",
+          popover: {
+            title: "Enregistrer la rubrique",
+            description:
+              "Une fois le formulaire complété, cliquez sur ce bouton pour sauvegarder vos réponses.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+      ],
+    });
+    tour.drive();
+  } finally {
+    localStorage.removeItem(TOUR_FLAG);
+  }
+};
+
 onMounted(() => {
   hydrateFromStorage();
+  runDocumentsTour();
 });
 
 watch(
@@ -341,7 +408,10 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
         </UITertiaryButton>
       </NuxtLink>
     </div>
-    <div class="rubrique__form">
+    <div
+      class="rubrique__form"
+      :id="sectionId === 'documents' ? 'ped-tour-documents-form' : undefined"
+    >
       <FormElementsDynamicForm
         :formDefinition="formDefinition"
         :suggestions="suggestions"

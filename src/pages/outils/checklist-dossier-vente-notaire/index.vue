@@ -230,18 +230,18 @@ const questions = [
 <template>
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
-    <div id="checklist-dossier-vente-notaire" class="checklist-tool">
-      <div class="checklist-tool__headlines">
-        <h1 class="checklist-tool__headlines__title titles">
+    <div id="checklist-dossier-vente-notaire" class="tool">
+      <div class="tool__headlines">
+        <h1 class="tool__headlines__title titles">
           Préparez votre dossier de vente immobilière
         </h1>
-        <span class="checklist-tool__headlines__subtitle subtitles">
+        <span class="tool__headlines__subtitle subtitles">
           Ne perdez plus de temps sur la vente, vous saurez exactement quels
           documents fournir à votre notaire en quelques minutes.
         </span>
       </div>
 
-      <div class="checklist-tool__content">
+      <div class="tool__content">
         <DossierListeRubriques />
       </div>
     </div>
@@ -293,33 +293,6 @@ const questions = [
   <HotjarTracking />
 </template>
 
-<style scoped lang="scss">
-.checklist-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-
-  @media (min-width: $big-tablet-screen) {
-    gap: 3rem;
-  }
-
-  &__headlines {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-
-    @media (min-width: $desktop-screen) {
-      flex-direction: row;
-      max-height: calc(100vh - 17rem);
-      overflow-y: hidden;
-    }
-  }
-}
+<style lang="scss" scoped>
+@import "@/styles/rubriques.scss";
 </style>

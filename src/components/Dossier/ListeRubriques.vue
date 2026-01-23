@@ -2,6 +2,7 @@
 import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import { colors } from "@/utils/colors";
 import { useExportAccess } from "@/composables/useExportAccess";
+import { useDriver } from "#imports";
 
 type RubriqueId =
   | "prealables"
@@ -159,6 +160,9 @@ const {
   refresh: refreshAccess,
 } = useExportAccess();
 
+const TOUR_FLAG = "checklist-tour";
+const TOUR_DONE_FLAG = "checklist-tour-done";
+
 const overallProgress = ref(0);
 
 const calculateOverallProgress = () => {
@@ -209,6 +213,40 @@ const handleStorageChange = (event: StorageEvent) => {
   refreshProgressWithDelay();
 };
 
+const startTour = () => {
+  if (!process.client) return;
+  localStorage.setItem(TOUR_FLAG, "identite");
+  const tour = useDriver({
+    overlayOpacity: 0.45,
+    allowClose: true,
+    showProgress: false,
+    nextBtnText: "Suivant",
+    prevBtnText: "Précédent",
+    doneBtnText: "Terminer",
+    steps: [
+      {
+        element: "#checklist-tour-identite",
+        popover: {
+          title: "Choisissez une rubrique pour commencer",
+          description:
+            "Vous pouvez commencer par n'importe quelle rubrique, dans l'ordre que vous souhaitez.",
+          side: "bottom",
+          align: "start",
+        },
+      },
+    ],
+  });
+  tour.drive();
+};
+
+const maybeStartTourOnFirstVisit = () => {
+  if (!process.client) return;
+  const alreadyDone = localStorage.getItem(TOUR_DONE_FLAG);
+  if (alreadyDone) return;
+  localStorage.setItem(TOUR_DONE_FLAG, "1");
+  startTour();
+};
+
 onMounted(() => {
   refreshProgressWithDelay();
   if (process.client) {
@@ -217,6 +255,7 @@ onMounted(() => {
   if (!accessChecked.value) {
     refreshAccess();
   }
+  maybeStartTourOnFirstVisit();
 });
 
 onBeforeUnmount(() => {
@@ -242,6 +281,7 @@ onBeforeUnmount(() => {
         :legend="`${completedCards} / ${cards.length} rubriques complétées`"
       />
       <DossierExportMenu />
+
       <AnimationsConfetti
         :active="overallProgress === 100"
         :count="20"
@@ -255,6 +295,7 @@ onBeforeUnmount(() => {
         v-for="card in sortedCards"
         :key="card.id"
         class="liste-rubriques__card"
+        :id="card.id === 'identite' ? 'checklist-tour-identite' : undefined"
         :to="`/outils/checklist-dossier-vente-notaire/${card.id}`"
         v-tooltip="card.subtitle"
         ><div class="liste-rubriques__card__header">
@@ -295,106 +336,20 @@ onBeforeUnmount(() => {
       /></NuxtLink>
     </TransitionGroup>
   </div>
+  <UIActionToast
+    :color="colors['purple-color']"
+    icon="help_circle"
+    direction="column"
+    action-label="Lancer le tutoriel"
+    style="margin-left: auto"
+    :onAction="startTour"
+    >Besoin d'aide pour démarrer ?
+    <template #secondaryMessage>
+      Cliquez ici pour lancer le tutoriel rapide.
+    </template>
+  </UIActionToast>
 </template>
 
 <style lang="scss" scoped>
-.liste-rubriques {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-  gap: 1.5rem;
-
-  &__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-    position: relative;
-
-    @media (min-width: $laptop-screen) {
-      flex-direction: row;
-      align-items: stretch;
-      gap: 2rem;
-      justify-content: space-between;
-    }
-  }
-
-  &__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-
-    @media (min-width: $big-tablet-screen) {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-      padding-right: 1.5rem;
-      overflow-y: scroll;
-      min-width: 70%;
-    }
-  }
-
-  &__card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: calc($radius / 2);
-    border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
-    height: fit-content;
-    align-items: end;
-    transition:
-      box-shadow 0.2s linear,
-      background-color 0.2s linear,
-      border 0.2s linear;
-
-    @media (min-width: $big-tablet-screen) {
-      padding: 1.5rem;
-      gap: 1.5rem;
-
-      &:hover {
-        background-color: $primary-color;
-        box-shadow: $shadow-black;
-        border: 1px solid $primary-color;
-        cursor: pointer;
-      }
-    }
-
-    &__header {
-      width: 100%;
-      display: flex;
-      gap: 1rem;
-      justify-content: space-between;
-
-      &__title {
-        width: calc(100% - 6rem);
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        font-size: 1.25rem;
-        font-weight: $semi-bold;
-      }
-    }
-  }
-}
-
-.rubriques-enter-active,
-.rubriques-leave-active {
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.rubriques-enter-from,
-.rubriques-leave-to {
-  opacity: 0;
-  transform: scale(0.98);
-}
-
-.rubriques-move {
-  transition: transform 1s ease;
-}
+@import "@/styles/rubriques.scss";
 </style>

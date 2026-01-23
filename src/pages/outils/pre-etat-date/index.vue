@@ -127,15 +127,20 @@ useHead({
 <template>
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
-    <div class="page-headlines">
-      <h1 class="titles">Générateur de Pré-état daté gratuit</h1>
-      <p class="subtitles">
-        Remplissez chaque rubrique pour créer rapidement un Pré-état daté prêt à
-        partager à votre notaire.
-      </p>
+    <div id="pre-etat-date" class="tool">
+      <div class="tool__headlines">
+        <h1 class="tool__headlines__title titles">
+          Générateur de Pré-état daté gratuit
+        </h1>
+        <p class="tool__headlines__subtitle subtitles">
+          Remplissez chaque rubrique pour créer rapidement un Pré-état daté prêt
+          à partager à votre notaire.
+        </p>
+      </div>
+      <div class="tool__content">
+        <PreEtatDateListeRubriques />
+      </div>
     </div>
-
-    <PreEtatDateListeRubriques />
   </Container>
 
   <Container>
@@ -176,35 +181,5 @@ useHead({
 </template>
 
 <style scoped lang="scss">
-.page-headlines {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  margin-bottom: 1rem;
-  text-wrap: balance;
-
-  @media (min-width: $laptop-screen) {
-    margin-bottom: 1.5rem;
-  }
-}
-
-.faq {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  width: 100%;
-  margin-top: 2rem;
-
-  @media (min-width: $laptop-screen) {
-    grid-template-columns: 1fr;
-  }
-
-  &__headlines {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-wrap: balance;
-  }
-}
+@import "@/styles/rubriques.scss";
 </style>
