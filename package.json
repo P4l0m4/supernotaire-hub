@@ -26,6 +26,7 @@
     "echarts": "^6.0.0",
     "floating-vue": "^5.2.2",
     "nuxt": "^3.17.6",
+    "nuxt-driver.js": "^0.0.24",
     "nuxt-jsonld": "^2.2.1",
     "pdfmake": "^0.2.20",
     "sass": "^1.58.0",

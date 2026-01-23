@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
     "nuxt-jsonld",
-
+    "nuxt-driver.js",
     [
       "@storyblok/nuxt",
       {
