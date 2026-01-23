@@ -70,8 +70,8 @@ const breadcrumbs = ref([
   { name: "Accueil", url: "/" },
   { name: "Outils", url: "/outils" },
   {
-    name: "Rubriques",
-    url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+    name: "Pré-état daté",
+    url: `${baseUrl}/outils/pre-etat-date`,
   },
 ]);
 
@@ -125,8 +125,8 @@ useHead({
 </script>
 
 <template>
-  <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
   <Container>
+    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div class="page-headlines">
       <h1 class="titles">Générateur de Pré-état daté gratuit</h1>
       <p class="subtitles">
