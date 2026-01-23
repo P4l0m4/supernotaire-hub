@@ -11,6 +11,7 @@
           "label": "Nom du copropriétaire vendeur",
           "name": "vendeur_nom",
           "placeholder": "Jeanne Dupont",
+          "tooltip": "Tel qu'il apparaît dans les documents de copropriété.",
           "type": "text",
           "required": true
         },

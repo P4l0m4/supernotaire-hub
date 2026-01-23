@@ -23,6 +23,7 @@
           "label": "Nom",
           "name": "nom",
           "type": "text",
+          "tooltip": "Tel que mentionné sur vos papiers d'identité.",
           "placeholder": "Dupont",
           "required": true
         },
@@ -32,6 +33,7 @@
           "label": "Prénom(s)",
           "name": "prenoms",
           "type": "text",
+          "tooltip": "Tel que mentionné sur vos papiers d'identité.",
           "placeholder": "Marie Claire",
           "required": true
         },
@@ -61,6 +63,7 @@
           "name": "lieu_naissance_departement",
           "type": "text",
           "placeholder": "75",
+          "tooltip": "73, 101, etc.",
           "pattern": "^[0-9]{2,3}$",
           "requiredIf": {
             "path": "identite.lieu_naissance.type",
@@ -72,12 +75,12 @@
           }
         },
         {
-          "path": "identite.lieu_naissance.ville",
-          "id": "identite-lieu-naissance-ville",
-          "label": "Ville de naissance",
-          "name": "lieu_naissance_ville",
+          "path": "identite.lieu_naissance.pays",
+          "id": "identite-lieu-naissance-pays",
+          "label": "Pays de naissance",
+          "name": "lieu_naissance_pays",
           "type": "text",
-          "placeholder": "Dakar",
+          "placeholder": "Sénégal",
           "requiredIf": {
             "path": "identite.lieu_naissance.type",
             "equals": "Pays étranger"
@@ -88,12 +91,12 @@
           }
         },
         {
-          "path": "identite.lieu_naissance.pays",
-          "id": "identite-lieu-naissance-pays",
-          "label": "Pays de naissance",
-          "name": "lieu_naissance_pays",
+          "path": "identite.lieu_naissance.ville",
+          "id": "identite-lieu-naissance-ville",
+          "label": "Ville de naissance",
+          "name": "lieu_naissance_ville",
           "type": "text",
-          "placeholder": "Sénégal",
+          "placeholder": "Dakar",
           "requiredIf": {
             "path": "identite.lieu_naissance.type",
             "equals": "Pays étranger"
