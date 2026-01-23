@@ -1,4 +1,7 @@
+import type { Adresse } from "./adresse";
+
 export type ISODate = `${number}-${number}-${number}`;
+
 type Euro = number;
 
 export interface PreEtatDate {
@@ -24,7 +27,7 @@ export interface Documents {
 }
 
 export interface Bien {
-  adresse: string;
+  adresse: Adresse;
   identification: {
     batiment: string;
     escalier: string;

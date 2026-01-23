@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch, watchEffect, onMounted, computed, ref } from "vue";
-
+import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
 import justificatifsDefinition from "@/utils/formDefinition/pre-etat-date/justificatifs.json";
 import bienDefinition from "@/utils/formDefinition/pre-etat-date/bien.json";
 import coproprieteDefinition from "@/utils/formDefinition/pre-etat-date/copropriete.json";
@@ -11,6 +10,7 @@ import sommesDuesSyndicDefinition from "@/utils/formDefinition/pre-etat-date/som
 import sommesChargeAcquereurDefinition from "@/utils/formDefinition/pre-etat-date/sommes-charge-acquereur.json";
 import autresSommesDefinition from "@/utils/formDefinition/pre-etat-date/autres-sommes.json";
 import { processDocument } from "@/utils/textFromDocument";
+import { extractDataFromResults } from "@/utils/AIExtraction";
 
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
@@ -18,18 +18,47 @@ import { TS_TYPE_AttestationDePropriété } from "@/utils/extractionModels/attes
 import { TS_TYPE_EtatDesSoldesCopropriétaires } from "@/utils/extractionModels/etat-soldes-copro";
 import { TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs } from "@/utils/extractionModels/liste-coproprietaires-debiteurs-crediteurs";
 
-import { extractDataFromResults } from "@/utils/AIExtraction";
-
 import type { PreEtatDate } from "@/types/pre-etat-date-complet";
 import type { FormDefinition } from "@/types/forms";
 import type { ISODate } from "@/types/pre-etat-date-complet";
 
+type SectionId =
+  | "documents"
+  | "bien"
+  | "copropriete"
+  | "syndic"
+  | "financier_lot"
+  | "financier_lot_sommes_dues_cedant"
+  | "financier_lot_sommes_debiteur_syndic"
+  | "financier_lot_sommes_a_la_charge_acquereur_post_vente"
+  | "financier_lot_autres";
+
 const props = defineProps<{
-  sectionId?: string;
+  sectionId: SectionId;
+  title: string;
+  subtitle?: string;
+  formDefinition: FormDefinition;
 }>();
 
-const cloneData = <T = any>(data: T): T =>
-  JSON.parse(JSON.stringify(data ?? {}));
+const subtitle = computed(
+  () =>
+    props.subtitle ||
+    "Complétez les informations de cette rubrique. Vos données restent stockées localement.",
+);
+
+const STORAGE_KEY = "sn-pre-etat-date";
+const formData = reactive({} as PreEtatDate);
+const lastValidSnapshot = ref<PreEtatDate | null>(null);
+const isHydrated = ref(false);
+const suggestions = ref<Array<{ key: string; value: unknown }>>([]);
+
+const TS_TYPES: Record<string, string> = {
+  TS_TYPE_ExtractionPVAG,
+  TS_TYPE_FicheSynthétiqueCopropriété,
+  TS_TYPE_AttestationDePropriété,
+  TS_TYPE_EtatDesSoldesCopropriétaires,
+  TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs,
+};
 
 const sectionDefinitions: FormDefinition[] = [
   justificatifsDefinition as FormDefinition,
@@ -43,43 +72,33 @@ const sectionDefinitions: FormDefinition[] = [
   autresSommesDefinition as FormDefinition,
 ];
 
-const sectionGroups: Record<string, FormDefinition> = {
-  documents: justificatifsDefinition as FormDefinition,
-  bien: bienDefinition as FormDefinition,
-  copropriete: coproprieteDefinition as FormDefinition,
-  syndic: syndicDefinition as FormDefinition,
-  financier_lot: situationFinanciereLotDefinition as FormDefinition,
-  financier_lot_sommes_dues_cedant: sommesDuesCedantDefinition as FormDefinition,
-  financier_lot_sommes_debiteur_syndic: sommesDuesSyndicDefinition as FormDefinition,
-  financier_lot_sommes_a_la_charge_acquereur_post_vente:
-    sommesChargeAcquereurDefinition as FormDefinition,
-  financier_lot_autres: autresSommesDefinition as FormDefinition,
-};
-
 const fullFormDefinition: FormDefinition = {
   title: "Pré-état daté",
   sections: sectionDefinitions.flatMap((def) => def.sections || []),
 };
 
-const activeFormDefinition = computed<FormDefinition>(() => {
-  if (!props.sectionId) return fullFormDefinition;
-  const group = sectionGroups[props.sectionId];
-  if (!group?.sections?.length) {
-    console.error(
-      "[GenerateurPED] unknown sectionId, no definition found:",
-      props.sectionId,
-    );
-    return { title: "Section inconnue", sections: [] };
+type AnyField = { path?: string; name?: string; TS_TYPE?: string };
+const FIELD_BY_DOC_KEY: Record<string, AnyField> = {};
+for (const sec of (fullFormDefinition as any).sections ?? []) {
+  for (const f of (sec.fields ?? []) as AnyField[]) {
+    if (typeof f.path === "string" && f.path.startsWith("documents.")) {
+      const k = f.path.split(".")[1];
+      FIELD_BY_DOC_KEY[k] = f;
+    }
   }
-  return { ...group, sections: group.sections };
-});
+}
 
-const formData = reactive({} as PreEtatDate);
-const lastValidSnapshot = ref<PreEtatDate | null>(null);
-const isHydrated = ref(false);
+const seen = new Map<string, string>();
+const fileSig = (f: File) => `${f.name}|${f.size}|${f.lastModified}`;
 
-const LOCAL_STORAGE_KEY = "sn-pre-etat-date";
-let persistTimer: ReturnType<typeof setTimeout> | null = null;
+const cloneData = <T = any,>(data: T): T =>
+  JSON.parse(JSON.stringify(data ?? {}));
+
+const ensureSectionContainer = () => {
+  const target = (formData as any)[props.sectionId] ?? {};
+  (formData as any)[props.sectionId] = target;
+  return target as Record<string, any>;
+};
 
 // prevent undefined during render/validation
 formData.bien = formData.bien ?? {
@@ -90,7 +109,6 @@ formData.bien = formData.bien ?? {
 formData.bien.lots = Array.isArray(formData.bien.lots)
   ? formData.bien.lots
   : [];
-
 formData.financier_lot ?? {
   arrete_au: "",
   solde_compte: 0,
@@ -134,25 +152,6 @@ formData.financier_lot ?? {
   },
 };
 
-const TS_TYPES: Record<string, string> = {
-  TS_TYPE_ExtractionPVAG,
-  TS_TYPE_FicheSynthétiqueCopropriété,
-  TS_TYPE_AttestationDePropriété,
-  TS_TYPE_EtatDesSoldesCopropriétaires,
-  TS_TYPE_Liste_Coproprietaires_Debiteurs_Crediteurs,
-};
-
-type AnyField = { path?: string; name?: string; TS_TYPE?: string };
-const FIELD_BY_DOC_KEY: Record<string, AnyField> = {};
-for (const sec of (fullFormDefinition as any).sections ?? []) {
-  for (const f of (sec.fields ?? []) as AnyField[]) {
-    if (typeof f.path === "string" && f.path.startsWith("documents.")) {
-      const k = f.path.split(".")[1]; // ex: "dernier_pv_ag"
-      FIELD_BY_DOC_KEY[k] = f;
-    }
-  }
-}
-
 function resolveTsTypeFor(key: string): string | null {
   const f = FIELD_BY_DOC_KEY[key];
   if (!f || !f.TS_TYPE) return null;
@@ -161,16 +160,13 @@ function resolveTsTypeFor(key: string): string | null {
   );
 }
 
-type Row = { key: string; value: unknown };
-const suggestions = ref<Row[]>([]);
-
-function toRows(o: Record<string, any>): Row[] {
+function toRows(o: Record<string, any>) {
   return Object.entries(o).map(([key, value]) => ({ key, value }));
 }
 
-function upsertSuggestions(rows: Row[]) {
+function upsertSuggestions(rows: Array<{ key: string; value: unknown }>) {
   const map = new Map(suggestions.value.map((r) => [r.key, r.value]));
-  for (const r of rows) map.set(r.key, r.value); // remplace par clé
+  for (const r of rows) map.set(r.key, r.value);
   suggestions.value = Array.from(map, ([key, value]) => ({ key, value }));
 }
 
@@ -179,9 +175,7 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
   const TS_TYPE = resolveTsTypeFor(key);
   if (!TS_TYPE) return;
 
-  // clues to help the AI focus on relevant info inside a document
   const nomVendeur = formData.documents?.vendeur_nom || "";
-
   const clues = [`Le nom du vendeur est : ${nomVendeur}.`].filter(
     (c) => c.trim().length > 0,
   );
@@ -197,9 +191,6 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
   upsertSuggestions(toRows(filledModel || {}));
 }
 
-const seen = new Map<string, string>();
-const fileSig = (f: File) => `${f.name}|${f.size}|${f.lastModified}`;
-
 watch(
   () => (formData as any).documents,
   (docs) => {
@@ -208,11 +199,11 @@ watch(
       if (val instanceof File) {
         const sig = fileSig(val);
         if (seen.get(key) !== sig) {
-          seen.set(key, sig); // nouvelle version à traiter
+          seen.set(key, sig);
           handleDocumentInfoExtraction(key, val);
         }
       } else if (val == null) {
-        seen.delete(key); // clé vidée à oublier
+        seen.delete(key);
       }
     }
   },
@@ -222,14 +213,14 @@ watch(
 const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       Object.assign(formData, parsed);
       lastValidSnapshot.value = cloneData(parsed);
     }
   } catch (e) {
-    console.warn("[GenerateurPED] unable to hydrate from storage", e);
+    console.warn("[RubriqueBase] unable to hydrate from storage", e);
   } finally {
     isHydrated.value = true;
   }
@@ -242,12 +233,13 @@ const persistSnapshot = (data: PreEtatDate = formData) => {
       ...data,
       adresse_bien: data.bien?.adresse || undefined,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(payload));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch (e) {
-    console.warn("[GenerateurPED] unable to persist data", e);
+    console.warn("[RubriqueBase] unable to persist data", e);
   }
 };
 
+let persistTimer: ReturnType<typeof setTimeout> | null = null;
 const schedulePersist = () => {
   if (persistTimer) clearTimeout(persistTimer);
   persistTimer = setTimeout(() => {
@@ -273,13 +265,6 @@ function getSuggestion<T = any>(k: string): T | undefined {
   return row?.value as T | undefined;
 }
 
-const ensureSectionContainer = () => {
-  if (!props.sectionId) return formData;
-  const target = (formData as any)[props.sectionId] ?? {};
-  (formData as any)[props.sectionId] = target;
-  return target as Record<string, any>;
-};
-
 function recomputeEcheances() {
   const bpVote = getSuggestion<number>("montant_dernier_bp_vote");
   const dates = getSuggestion<ISODate[]>("dates_echeances_a_venir");
@@ -292,10 +277,10 @@ function recomputeEcheances() {
   if (!tantiemesVendeur || !totalTantiemes) return;
 
   const annuelLot = bpVote * (tantiemesVendeur / totalTantiemes);
-  const parEcheance = annuelLot / 4; // trimestriel
+  const parEcheance = annuelLot / 4;
 
   const echeances = dates.map((d) => ({
-    date: d, // "jj-mm-aaaa"
+    date: d,
     montant: Number(parEcheance.toFixed(2)),
   }));
 
@@ -305,10 +290,8 @@ function recomputeEcheances() {
   formData.financier_lot.echeances_a_venir = echeances;
 }
 
-// recalcul automatique dès que suggestions OU formData (tantièmes...) change
 watchEffect(() => {
   void suggestions.value.length;
-
   recomputeEcheances();
 });
 
@@ -343,12 +326,33 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
   persistSnapshot(snapshot);
 };
 </script>
+
 <template>
-  <FormElementsDynamicForm
-    :formDefinition="activeFormDefinition as FormDefinition"
-    :suggestions="suggestions"
-    v-model="formData"
-    @complete="onComplete"
-    @valid-state="onValidState"
-  />
+  <div class="rubrique">
+    <div class="rubrique__header">
+      <h1 class="titles">{{ title }}</h1>
+      <p class="subtitles">{{ subtitle }}</p>
+    </div>
+
+    <div class="rubrique__actions">
+      <NuxtLink to="/outils/pre-etat-date" aria-label="Retour aux rubriques">
+        <UITertiaryButton icon="arrow_left" direction="row-reverse">
+          Retour aux rubriques
+        </UITertiaryButton>
+      </NuxtLink>
+    </div>
+    <div class="rubrique__form">
+      <FormElementsDynamicForm
+        :formDefinition="formDefinition"
+        :suggestions="suggestions"
+        v-model="formData"
+        @complete="onComplete"
+        @valid-state="onValidState"
+      />
+    </div>
+  </div>
 </template>
+
+<style scoped lang="scss">
+@import "@/styles/rubriques.scss";
+</style>

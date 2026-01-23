@@ -10,7 +10,7 @@ const typePath = "src/types/pre-etat-date-complet.ts";
 const typeName = "PreEtatDate";
 const docDefPath = "src/utils/docDefinitions/pre-etat-date.ts";
 const formDefinitionsDir = "src/utils/formDefinition/pre-etat-date";
-const generatorPath = "src/components/Pre-etat-date/GenerateurPED.vue";
+const generatorPath = "src/components/Pre-etat-date/ListeRubriques.vue";
 const routeSectionsPath = "src/pages/outils/pre-etat-date/[section].vue";
 
 type PathSet = Set<string>;
@@ -106,14 +106,14 @@ const loadMergedFormDefinition = () => {
 
 const parseSectionGroupKeys = (): string[] => {
   const content = fs.readFileSync(path.resolve(generatorPath), "utf8");
-  const match = content.match(/const sectionGroups[^=]*=\s*{([\s\S]*?)};/);
+  const match = content.match(/const cards[^=]*=\s*\[([\s\S]*?)\];/);
   if (!match) return [];
   const body = match[1];
-  const keys: string[] = [];
-  for (const m of body.matchAll(/(\w+)\s*:/g)) {
-    if (m[1]) keys.push(m[1]);
+  const ids: string[] = [];
+  for (const m of body.matchAll(/id:\s*"([^"]+)"/g)) {
+    if (m[1]) ids.push(m[1]);
   }
-  return keys;
+  return ids;
 };
 
 const parseValidSectionsFromRoute = (): string[] => {
@@ -137,6 +137,25 @@ describe("Pre-etat date concordance across form/type/docDefinition", () => {
     "copropriete.fonds_travaux_existance": "copropriete.fonds_travaux.existance",
     "financier_lot_sommes_dues_cedant.a_des_tiers_emprunts_geres_par_syndic":
       "financier_lot_sommes_dues_cedant.autres_sommes_exigibles.a_des_tiers_emprunts_geres_par_syndic",
+    "bien.adresse.geometry": "bien.adresse",
+    "bien.adresse.geometry.coordinates": "bien.adresse",
+    "bien.adresse.geometry.type": "bien.adresse",
+    "bien.adresse.properties": "bien.adresse",
+    "bien.adresse.properties._type": "bien.adresse",
+    "bien.adresse.properties.banId": "bien.adresse",
+    "bien.adresse.properties.city": "bien.adresse",
+    "bien.adresse.properties.citycode": "bien.adresse",
+    "bien.adresse.properties.context": "bien.adresse",
+    "bien.adresse.properties.housenumber": "bien.adresse",
+    "bien.adresse.properties.id": "bien.adresse",
+    "bien.adresse.properties.importance": "bien.adresse",
+    "bien.adresse.properties.label": "bien.adresse",
+    "bien.adresse.properties.postcode": "bien.adresse",
+    "bien.adresse.properties.score": "bien.adresse",
+    "bien.adresse.properties.street": "bien.adresse",
+    "bien.adresse.properties.x": "bien.adresse",
+    "bien.adresse.properties.y": "bien.adresse",
+    "bien.adresse.type": "bien.adresse",
   };
 
   it("types -> form paths", () => {

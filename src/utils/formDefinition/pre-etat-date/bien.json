@@ -9,9 +9,9 @@
           "path": "bien.adresse",
           "id": "bien-adresse",
           "suggestionRef": "adresse_du_bien",
-          "label": "Adresse",
+          "label": "Adresse du bien à vendre",
           "name": "adresse",
-          "type": "text",
+          "type": "location",
           "required": true,
           "placeholder": "12 Rue Exemple, 75000 Paris",
           "icon": "map_pin_fill"

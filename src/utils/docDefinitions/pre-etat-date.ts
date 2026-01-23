@@ -155,7 +155,7 @@ export function buildDocDefinition(d: PreEtatDate, logoBase64: string) {
               table: {
                 widths: ["*", "*"],
                 body: [
-                  ["Adresse", d.bien?.adresse || "-"],
+                  ["Adresse", d.bien?.adresse.properties?.label || "-"],
                   ["Bâtiment", d.bien?.identification?.batiment ?? "-"],
                   [
                     "Entrée / Cage escalier",
