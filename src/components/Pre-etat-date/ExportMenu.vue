@@ -28,11 +28,26 @@ const notifyVisible = ref(false);
 const notifyMessage = ref<string | null>(null);
 const notifyColor = ref(colors["warning-color"]);
 const hydrated = ref(false);
+const wipeLoading = ref(false);
+const wipeError = ref(false);
+const wipeSuccess = ref(false);
 
 const icon = computed(() => (loading.value ? "circle_notch" : "download"));
 const downloadDisabled = computed(
   () => !hydrated.value || loading.value || !ready.value,
 );
+const wipeStatusIcon = computed(() => {
+  if (wipeLoading.value) return "circle_notch";
+  if (wipeError.value) return "x_circle";
+  if (wipeSuccess.value) return "check_circle";
+  return "trash";
+});
+
+const wipeStatusVariant = computed(() => {
+  if (wipeSuccess.value) return "success-color";
+  if (wipeError.value) return "error-color";
+  return "text-color-faded";
+});
 
 onMounted(() => {
   hydrated.value = true;
@@ -85,6 +100,38 @@ const download = async () => {
     loading.value = false;
   }
 };
+
+const wipeAll = async () => {
+  if (!process.client) return;
+  wipeLoading.value = true;
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    window.dispatchEvent(
+      new StorageEvent("storage", {
+        key: STORAGE_KEY,
+        storageArea: localStorage,
+      }),
+    );
+    notifyColor.value = colors["success-color"];
+    notifyMessage.value = "Toutes les données locales ont été supprimées.";
+    notifyVisible.value = true;
+    wipeSuccess.value = true;
+  } catch (e) {
+    console.error("[PED ExportMenu] wipe all failed", e);
+    notifyColor.value = colors["error-color"];
+    notifyMessage.value =
+      "Impossible de supprimer les données locales. Réessayez.";
+    notifyVisible.value = true;
+    wipeError.value = true;
+  } finally {
+    wipeLoading.value = false;
+    setTimeout(() => {
+      wipeLoading.value = false;
+      wipeSuccess.value = false;
+      wipeError.value = false;
+    }, 2000);
+  }
+};
 </script>
 
 <template>
@@ -100,7 +147,15 @@ const download = async () => {
     >
       Télécharger le Pré-état daté
     </UISecondaryButton>
-    <p v-if="error" class="export-menu__error">{{ error }}</p>
+    <UITertiaryButton
+      :variant="wipeStatusVariant"
+      :icon="wipeStatusIcon"
+      @click="wipeAll"
+      style="margin: 0"
+    >
+      Supprimer les données
+    </UITertiaryButton>
+
     <UINotificationModal
       v-if="notifyVisible && notifyMessage"
       :progress-color="notifyColor"
@@ -117,16 +172,21 @@ const download = async () => {
 .export-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  align-items: flex-end;
-  justify-content: center;
-  min-width: fit-content;
+  align-items: end;
+  gap: 1rem;
+  width: 100%;
+  height: fit-content;
 
-  &__error {
-    color: $error-color;
-    font-size: 0.9rem;
-    max-width: 22rem;
-    text-align: right;
+  @media (min-width: $big-tablet-screen) {
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+  }
+
+  @media (min-width: $laptop-screen) {
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
   }
 }
 </style>

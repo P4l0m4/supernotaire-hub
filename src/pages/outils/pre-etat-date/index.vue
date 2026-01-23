@@ -66,6 +66,15 @@ const questions = [
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
+const breadcrumbs = ref([
+  { name: "Accueil", url: "/" },
+  { name: "Outils", url: "/outils" },
+  {
+    name: "Rubriques",
+    url: `${baseUrl}/outils/checklist-dossier-vente-notaire`,
+  },
+]);
+
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -116,12 +125,13 @@ useHead({
 </script>
 
 <template>
+  <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
   <Container>
     <div class="page-headlines">
       <h1 class="titles">Générateur de Pré-état daté gratuit</h1>
       <p class="subtitles">
-        Remplissez chaque rubrique pour créer rapidement un Pré-état daté
-        conforme, prêt à partager.
+        Remplissez chaque rubrique pour créer rapidement un Pré-état daté prêt à
+        partager à votre notaire.
       </p>
     </div>
 

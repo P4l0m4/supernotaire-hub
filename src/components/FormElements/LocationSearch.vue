@@ -43,13 +43,13 @@ async function fetchLocationsList() {
   loading.value = true;
   const res = await fetch(
     `https://api-adresse.data.gouv.fr/search?q=${encodeURIComponent(
-      query.value
-    )}&limit=3`
+      query.value,
+    )}&limit=3`,
   );
   const data = await res.json();
 
   list.value = (data.features ?? []).filter(
-    (f: any) => f.properties.label !== query.value
+    (f: any) => f.properties.label !== query.value,
   );
 
   loading.value = false;
@@ -86,7 +86,7 @@ watch(
       showError.value = !!query.value;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(query, (newVal) => {
@@ -181,10 +181,13 @@ onMounted(async () => {
     left: 0;
     list-style: none;
     background-color: $primary-color;
-    border: 1px solid color-mix(in srgb, $text-color) 10%, transparent;
+    border:
+      1px solid color-mix(in srgb, $text-color) 10%,
+      transparent;
     position: absolute;
     overflow: hidden;
     border-radius: calc($radius / 2);
+    z-index: 1;
 
     &__address {
       height: fit-content;
