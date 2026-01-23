@@ -5,7 +5,10 @@
   width: 100%;
 
   @media (min-width: $big-tablet-screen) {
+    max-height: 80vh;
+    overflow-y: scroll;
     gap: 3rem;
+    padding-right: 1.5rem;
   }
 
   &__headlines {
@@ -40,6 +43,13 @@
     width: 100%;
     gap: 1rem;
     position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 1rem;
+    border-radius: calc($radius / 2);
+    border: 1px solid color-mix(in srgb, $text-color 10%, transparent);
+    background-color: $base-color;
 
     @media (min-width: $laptop-screen) {
       flex-direction: row;
@@ -58,9 +68,6 @@
     @media (min-width: $big-tablet-screen) {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-      padding-right: 1.5rem;
-      overflow-y: scroll;
-      min-width: 70%;
     }
   }
 
@@ -153,6 +160,13 @@
       grid-row: 1 / -1;
     }
   }
+}
+
+.side-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: fit-content;
 }
 
 .rubriques-enter-active,

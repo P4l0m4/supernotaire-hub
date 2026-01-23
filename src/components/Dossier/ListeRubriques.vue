@@ -336,18 +336,20 @@ onBeforeUnmount(() => {
       /></NuxtLink>
     </TransitionGroup>
   </div>
-  <UIActionToast
-    :color="colors['purple-color']"
-    icon="help_circle"
-    direction="column"
-    action-label="Lancer le tutoriel"
-    style="margin-left: auto"
-    :onAction="startTour"
-    >Besoin d'aide pour démarrer ?
-    <template #secondaryMessage>
-      Cliquez ici pour lancer le tutoriel rapide.
-    </template>
-  </UIActionToast>
+  <aside class="side-menu">
+    <UIActionToast
+      :color="colors['purple-color']"
+      icon="help_circle"
+      direction="column"
+      action-label="Lancer le tutoriel"
+      style="margin-left: auto"
+      :onAction="startTour"
+      >Besoin d'aide pour démarrer ?
+      <template #secondaryMessage>
+        Cliquez ici pour lancer le tutoriel rapide.
+      </template>
+    </UIActionToast>
+  </aside>
 </template>
 
 <style lang="scss" scoped>
