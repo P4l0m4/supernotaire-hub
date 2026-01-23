@@ -82,9 +82,11 @@ const download = async () => {
     return;
   }
   if (hasIncompleteSections(data)) {
+    notifyColor.value = colors["error-color"];
     notifyMessage.value =
-      "Certaines rubriques ne sont pas complétées; le PDF sera incomplet.";
+      "Toutes les rubriques doivent être complétées pour créer le Pré-état daté.";
     notifyVisible.value = true;
+    return;
   }
   loading.value = true;
   try {
@@ -100,7 +102,6 @@ const download = async () => {
     loading.value = false;
   }
 };
-
 const wipeAll = async () => {
   if (!process.client) return;
   wipeLoading.value = true;
