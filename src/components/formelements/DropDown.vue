@@ -57,6 +57,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
         class="dropdown__tooltip"
         :color="colors['text-color-faded']"
         size="1.15rem"
+        data-tour="tooltip-icon"
         v-tooltip="tooltip"
         tabindex="0"
       />
@@ -73,6 +74,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
           icon="question"
           :color="colors['text-color-faded']"
           size="1.15rem"
+          data-tour="tooltip-icon"
         />
       </NuxtLink>
       <UIIconComponent

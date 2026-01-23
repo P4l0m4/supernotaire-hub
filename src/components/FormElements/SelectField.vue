@@ -91,6 +91,7 @@ function selectOption(option: string) {
         icon="info"
         size="1.2rem"
         :color="colors['text-color-faded']"
+        data-tour="tooltip-icon"
         v-tooltip="tooltip"
         :aria-label="tooltip"
       />
@@ -105,6 +106,7 @@ function selectOption(option: string) {
           icon="info"
           size="1.2rem"
           :color="colors['text-color-faded']"
+          data-tour="tooltip-icon"
         />
       </NuxtLink>
     </span>

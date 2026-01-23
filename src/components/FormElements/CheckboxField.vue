@@ -45,6 +45,7 @@ const model = defineModel<boolean>({
         class="checkbox__icon"
         :color="colors['text-color-faded']"
         size="1.2rem"
+        data-tour="tooltip-icon"
         v-tooltip="tooltip"
         tabindex="0"
       />
@@ -61,6 +62,7 @@ const model = defineModel<boolean>({
           icon="question"
           :color="colors['text-color-faded']"
           size="1.2rem"
+          data-tour="tooltip-icon"
         />
       </NuxtLink>
     </span>

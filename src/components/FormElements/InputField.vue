@@ -114,6 +114,7 @@ function toggleShowPassword() {
       v-if="tooltip?.length && !tooltipLink?.length"
       icon="question"
       class="input-field__icon"
+      data-tour="tooltip-icon"
       style="cursor: pointer"
       :color="colors['text-color-faded']"
       size="1.5rem"
@@ -130,6 +131,7 @@ function toggleShowPassword() {
       ><UIIconComponent
         icon="question"
         class="input-field__icon"
+        data-tour="tooltip-icon"
         :color="colors['text-color-faded']"
         size="1.5rem"
     /></NuxtLink>

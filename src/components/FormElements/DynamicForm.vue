@@ -602,6 +602,7 @@ watch(
         :variant="primaryVariant"
         :icon="primaryIcon"
         :class="{ shake: showErrorState }"
+        data-tour="complete-button"
         @click="next"
         @keydown.enter="next"
         @keydown.space="next"

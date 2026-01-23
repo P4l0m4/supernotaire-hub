@@ -31,6 +31,7 @@ const simulateClick = () => {
   <div
     class="file-field"
     :class="{ shake: error, 'file-field--has-error': error }"
+    data-tour="file-upload"
     @click="simulateClick"
   >
     <UIIconComponent
