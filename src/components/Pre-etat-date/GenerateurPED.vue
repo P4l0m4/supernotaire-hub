@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { reactive, watch, watchEffect, onMounted, computed, ref } from "vue";
 
 import justificatifsDefinition from "@/utils/formDefinition/pre-etat-date/justificatifs.json";
@@ -27,6 +27,9 @@ import type { ISODate } from "@/types/pre-etat-date-complet";
 const props = defineProps<{
   sectionId?: string;
 }>();
+
+const cloneData = <T = any>(data: T): T =>
+  JSON.parse(JSON.stringify(data ?? {}));
 
 const sectionDefinitions: FormDefinition[] = [
   justificatifsDefinition as FormDefinition,
@@ -72,6 +75,8 @@ const activeFormDefinition = computed<FormDefinition>(() => {
 });
 
 const formData = reactive({} as PreEtatDate);
+const lastValidSnapshot = ref<PreEtatDate | null>(null);
+const isHydrated = ref(false);
 
 const LOCAL_STORAGE_KEY = "sn-pre-etat-date";
 let persistTimer: ReturnType<typeof setTimeout> | null = null;
@@ -175,7 +180,6 @@ async function handleDocumentInfoExtraction(key: string, file: File) {
   if (!TS_TYPE) return;
 
   // clues to help the AI focus on relevant info inside a document
-
   const nomVendeur = formData.documents?.vendeur_nom || "";
 
   const clues = [`Le nom du vendeur est : ${nomVendeur}.`].filter(
@@ -204,11 +208,11 @@ watch(
       if (val instanceof File) {
         const sig = fileSig(val);
         if (seen.get(key) !== sig) {
-          seen.set(key, sig); // nouvelle version â†’ traite
+          seen.set(key, sig); // nouvelle version à traiter
           handleDocumentInfoExtraction(key, val);
         }
       } else if (val == null) {
-        seen.delete(key); // clé vidée â†’ oubli
+        seen.delete(key); // clé vidée à oublier
       }
     }
   },
@@ -219,20 +223,24 @@ const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (!raw) return;
-    const parsed = JSON.parse(raw);
-    Object.assign(formData, parsed);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      Object.assign(formData, parsed);
+      lastValidSnapshot.value = cloneData(parsed);
+    }
   } catch (e) {
     console.warn("[GenerateurPED] unable to hydrate from storage", e);
+  } finally {
+    isHydrated.value = true;
   }
 };
 
-const persistSnapshot = () => {
+const persistSnapshot = (data: PreEtatDate = formData) => {
   if (!process.client) return;
   try {
     const payload = {
-      ...formData,
-      adresse_bien: formData.bien?.adresse || undefined,
+      ...data,
+      adresse_bien: data.bien?.adresse || undefined,
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(payload));
   } catch (e) {
@@ -265,6 +273,13 @@ function getSuggestion<T = any>(k: string): T | undefined {
   return row?.value as T | undefined;
 }
 
+const ensureSectionContainer = () => {
+  if (!props.sectionId) return formData;
+  const target = (formData as any)[props.sectionId] ?? {};
+  (formData as any)[props.sectionId] = target;
+  return target as Record<string, any>;
+};
+
 function recomputeEcheances() {
   const bpVote = getSuggestion<number>("montant_dernier_bp_vote");
   const dates = getSuggestion<ISODate[]>("dates_echeances_a_venir");
@@ -296,8 +311,36 @@ watchEffect(() => {
 
   recomputeEcheances();
 });
+
 const onComplete = () => {
+  const target = ensureSectionContainer();
+  target.__completed = true;
+  const snapshot = cloneData(formData);
+  lastValidSnapshot.value = snapshot;
+  persistSnapshot(snapshot);
   navigateTo("/outils/pre-etat-date");
+};
+
+const onValidState = (payload: { isValid: boolean; model: any }) => {
+  if (!isHydrated.value) return;
+  const target = ensureSectionContainer();
+  if (!payload?.isValid) {
+    if (target.__completed) {
+      target.__completed = false;
+    }
+    persistSnapshot(cloneData(formData));
+    return;
+  }
+  const currentCompleted = target.__completed === true;
+  const snapshot = cloneData(payload.model || {});
+  if (currentCompleted) {
+    const nextTarget = props.sectionId
+      ? ((snapshot as any)[props.sectionId] ??= {})
+      : (snapshot as any);
+    nextTarget.__completed = true;
+  }
+  lastValidSnapshot.value = snapshot;
+  persistSnapshot(snapshot);
 };
 </script>
 <template>
@@ -306,5 +349,6 @@ const onComplete = () => {
     :suggestions="suggestions"
     v-model="formData"
     @complete="onComplete"
+    @valid-state="onValidState"
   />
 </template>
