@@ -5,7 +5,7 @@ function buildPrompt(
   documentName: string,
   TS_TYPE: string,
   textBlob: string,
-  clues: string[]
+  clues: string[],
 ) {
   const instr = `Réponds UNIQUEMENT par un JSON parsable qui satisfait exactement ce type TS (aucune clé en plus).
 Si une information est manquante, met null. Aucun texte hors JSON. Pas de note. N'invente pas d'informations, si tu n'est pas sûr, met null. Commence par { et termine par }.
@@ -15,7 +15,7 @@ ${TS_TYPE}.
 ${
   clues.length
     ? `Voici des indices pour t'aider à trouver les informations: ${clues.join(
-        "; "
+        "; ",
       )}`
     : ""
 }`;
@@ -84,7 +84,7 @@ export async function AIExtractInfoFromText(
   textBlob: string,
   documentName: string,
   TS_TYPE: string,
-  clues: string[]
+  clues: string[],
 ): Promise<{}> {
   if (!import.meta.client) throw new Error("client_only");
 
@@ -97,12 +97,12 @@ export async function AIExtractInfoFromText(
       const context = top
         .map((t, i) => `[[CTX_${i} score=${t.score.toFixed(3)}]]\n${t.text}`)
         .join("\n\n");
-      console.log(`RAG selected ${top.length} chunks for extraction.`);
+
       return await extractWithGeminiClient(
         context,
         documentName,
         TS_TYPE,
-        clues
+        clues,
       );
     }
   } catch (e) {
@@ -114,16 +114,13 @@ export async function AIExtractInfoFromText(
   if (!parts.length) throw new Error("empty_text");
 
   const concurrency = Math.min(4, (navigator as any)?.hardwareConcurrency || 2);
-  console.log(
-    `Chunking text into ${parts.length} parts for extraction (fallback).`
-  );
 
   if (parts.length === 1) {
     return await extractWithGeminiClient(
       parts[0],
       documentName,
       TS_TYPE,
-      clues
+      clues,
     );
   }
 
@@ -135,8 +132,8 @@ export async function AIExtractInfoFromText(
         extractWithGeminiClient(p, documentName, TS_TYPE, clues).catch((e) => {
           console.warn("chunk_failed", e);
           return null;
-        })
-      )
+        }),
+      ),
     );
     for (const piece of results) {
       if (!piece) continue;
@@ -152,7 +149,7 @@ export async function AIExtractInfoFromText(
   }
   if (!acc) throw new Error("extraction_failed_all_chunks");
   console.log(
-    `Merged ${parts.length} parts into one extraction result (fallback).`
+    `Merged ${parts.length} parts into one extraction result (fallback).`,
   );
   return acc;
 }
@@ -162,7 +159,7 @@ export async function extractDataFromResults(
   resultsFromTextExtraction: any,
   documentName: string,
   TS_TYPE: string,
-  clues: string[] = []
+  clues: string[] = [],
 ) {
   let textFromRelevantPages;
   if (!resultsFromTextExtraction || !resultsFromTextExtraction.result)
@@ -175,12 +172,11 @@ export async function extractDataFromResults(
     textFromRelevantPages = relevantPages
       .map((pageNumber) => {
         const page = resultsFromTextExtraction.result.summary.find(
-          (p: { pageNumber: number }) => p.pageNumber === pageNumber
+          (p: { pageNumber: number }) => p.pageNumber === pageNumber,
         );
         return page ? page.pageText : "";
       })
       .join("\n");
-    console.log(`Using relevant pages`);
   }
 
   let AIExtractionResult;
@@ -190,13 +186,12 @@ export async function extractDataFromResults(
       textFromRelevantPages,
       documentName,
       TS_TYPE,
-      clues
+      clues,
     );
-    console.log("Extraction result:", AIExtractionResult);
   } catch (e: any) {
     console.error("Extraction error:", e);
   }
-  console.log("Extraction finished:", AIExtractionResult);
+
   return AIExtractionResult;
 }
 
@@ -204,7 +199,7 @@ async function extractWithGeminiClient(
   textBlob: string,
   documentName: string,
   TS_TYPE: string,
-  clues: string[]
+  clues: string[],
 ): Promise<{}> {
   const key = useRuntimeConfig().public.GEMINI_KEY;
   if (!key) throw new Error("gemini_key_missing");
@@ -229,7 +224,7 @@ async function extractWithGeminiClient(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
       signal: ctl.signal,
-    }
+    },
   )
     .catch((e) => {
       throw new Error(`gemini_fetch_failed:${String(e)}`);

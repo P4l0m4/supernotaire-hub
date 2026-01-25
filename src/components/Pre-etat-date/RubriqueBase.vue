@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, watchEffect } from "vue";
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
 import justificatifsDefinition from "@/utils/formDefinition/pre-etat-date/justificatifs.json";
 import bienDefinition from "@/utils/formDefinition/pre-etat-date/bien.json";
 import coproprieteDefinition from "@/utils/formDefinition/pre-etat-date/copropriete.json";
@@ -9,8 +17,7 @@ import sommesDuesCedantDefinition from "@/utils/formDefinition/pre-etat-date/som
 import sommesDuesSyndicDefinition from "@/utils/formDefinition/pre-etat-date/sommes-dues-syndic.json";
 import sommesChargeAcquereurDefinition from "@/utils/formDefinition/pre-etat-date/sommes-charge-acquereur.json";
 import autresSommesDefinition from "@/utils/formDefinition/pre-etat-date/autres-sommes.json";
-import { processDocument } from "@/utils/textFromDocument";
-import { extractDataFromResults } from "@/utils/AIExtraction";
+import { processingQueue } from "@/utils/processingQueue";
 
 import { TS_TYPE_ExtractionPVAG } from "@/utils/extractionModels/pv-ag";
 import { TS_TYPE_FicheSynthétiqueCopropriété } from "@/utils/extractionModels/fiche-synthetique-copropriete";
@@ -48,11 +55,14 @@ const subtitle = computed(
 );
 
 const STORAGE_KEY = "sn-pre-etat-date";
+const SUGGESTIONS_KEY = `${STORAGE_KEY}-suggestions`;
 const TOUR_FLAG = "ped-tour-documents";
 const formData = reactive({} as PreEtatDate);
 const lastValidSnapshot = ref<PreEtatDate | null>(null);
 const isHydrated = ref(false);
 const suggestions = ref<Array<{ key: string; value: unknown }>>([]);
+const queueStatus = ref(processingQueue.getQueueStatus());
+let queueInterval: ReturnType<typeof setInterval> | null = null;
 
 const TS_TYPES: Record<string, string> = {
   TS_TYPE_ExtractionPVAG,
@@ -170,27 +180,40 @@ function upsertSuggestions(rows: Array<{ key: string; value: unknown }>) {
   const map = new Map(suggestions.value.map((r) => [r.key, r.value]));
   for (const r of rows) map.set(r.key, r.value);
   suggestions.value = Array.from(map, ([key, value]) => ({ key, value }));
+  if (process.client) {
+    try {
+      localStorage.setItem(SUGGESTIONS_KEY, JSON.stringify(suggestions.value));
+    } catch (e) {
+      console.warn("[RubriqueBase] unable to persist suggestions", e);
+    }
+  }
 }
 
+processingQueue.setDependencies({
+  resolveTsTypeFor,
+  getFormData: () => formData,
+});
+
+const queueProgress = computed(() => {
+  const { queued, maxConcurrent } = queueStatus.value;
+  if (maxConcurrent <= 0) return 0;
+  const available = Math.max(maxConcurrent - queued, 0);
+  return Math.min(100, (available / maxConcurrent) * 100);
+});
+
 async function handleDocumentInfoExtraction(key: string, file: File) {
-  const { results } = await processDocument(file);
-  const TS_TYPE = resolveTsTypeFor(key);
-  if (!TS_TYPE) return;
-
-  const nomVendeur = formData.documents?.vendeur_nom || "";
-  const clues = [`Le nom du vendeur est : ${nomVendeur}.`].filter(
-    (c) => c.trim().length > 0,
-  );
-
-  const filledModel = await extractDataFromResults(
-    [],
-    results,
-    key,
-    TS_TYPE,
-    clues,
-  );
-
-  upsertSuggestions(toRows(filledModel || {}));
+  try {
+    const filledModel = await processingQueue.addToQueue(key, file);
+    if (filledModel) {
+      const rows = toRows(filledModel || {});
+      upsertSuggestions(rows);
+    }
+  } catch (error) {
+    console.error(
+      `[RubriqueBase] erreur lors du traitement du fichier ${key}`,
+      error,
+    );
+  }
 }
 
 watch(
@@ -216,10 +239,17 @@ const hydrateFromStorage = () => {
   if (!process.client) return;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
+    const rawSuggestions = localStorage.getItem(SUGGESTIONS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       Object.assign(formData, parsed);
       lastValidSnapshot.value = cloneData(parsed);
+    }
+    if (rawSuggestions) {
+      const parsedSuggestions = JSON.parse(rawSuggestions);
+      if (Array.isArray(parsedSuggestions)) {
+        suggestions.value = parsedSuggestions;
+      }
     }
   } catch (e) {
     console.warn("[RubriqueBase] unable to hydrate from storage", e);
@@ -317,6 +347,14 @@ const runDocumentsTour = () => {
 onMounted(() => {
   hydrateFromStorage();
   runDocumentsTour();
+
+  queueInterval = setInterval(() => {
+    queueStatus.value = processingQueue.getQueueStatus();
+  }, 500);
+});
+
+onBeforeUnmount(() => {
+  if (queueInterval) clearInterval(queueInterval);
 });
 
 watch(
@@ -409,6 +447,24 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
       </NuxtLink>
     </div>
     <div
+      v-if="queueStatus.queued > 0 || queueStatus.processing > 0"
+      class="queue-status"
+    >
+      <div class="queue-status__info">
+        <UIIconComponent icon="clock" size="1rem" />
+        <span>
+          {{ queueStatus.queued }} fichier(s) en attente,
+          {{ queueStatus.processing }} en cours de traitement
+        </span>
+      </div>
+      <div class="queue-status__progress">
+        <div
+          class="queue-status__bar"
+          :style="{ width: `${queueProgress}%` }"
+        ></div>
+      </div>
+    </div>
+    <div
       class="rubrique__form"
       :id="sectionId === 'documents' ? 'ped-tour-documents-form' : undefined"
     >
@@ -425,4 +481,37 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
 
 <style scoped lang="scss">
 @import "@/styles/rubriques.scss";
+
+.queue-status {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.queue-status__info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.queue-status__progress {
+  width: 100%;
+  height: 0.5rem;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.queue-status__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  transition: width 0.2s ease;
+}
 </style>

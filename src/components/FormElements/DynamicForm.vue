@@ -351,7 +351,7 @@ async function validateCurrentSection() {
   );
 
   if (!results.every(Boolean) && v$.value.$errors.length > 0) {
-    console.log("[DynamicForm] validation errors", v$.value.$errors);
+    console.warn("[DynamicForm] validation errors", v$.value.$errors);
   }
 
   return results.every(Boolean);
@@ -406,7 +406,6 @@ function prev() {
 
   if (formRef.value) {
     formRef.value.scrollIntoView({ behavior: "smooth", block: "start" });
-    console.log("Scrolled to top of form");
   }
 }
 
