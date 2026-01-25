@@ -1,3 +1,36 @@
+type ProcessResult = {
+  status: string;
+  progress: number;
+  error: string;
+  results: any;
+};
+
+const TTL_MS = 30 * 60 * 1000; // 30 minutes
+const cache = new Map<string, { value: ProcessResult; expiresAt: number }>();
+const inflight = new Map<string, Promise<ProcessResult>>();
+
+const fileSig = (file: File) => `${file.name}|${file.size}|${file.lastModified}`;
+
+const readCached = (sig: string): ProcessResult | null => {
+  const entry = cache.get(sig);
+  if (!entry) return null;
+  if (entry.expiresAt < Date.now()) {
+    cache.delete(sig);
+    return null;
+  }
+  // shallow clone to avoid external mutation of cached object
+  return { ...entry.value, results: entry.value.results };
+};
+
+const writeCache = (sig: string, value: ProcessResult) => {
+  cache.set(sig, { value, expiresAt: Date.now() + TTL_MS });
+};
+
+export const clearDocumentCache = () => {
+  cache.clear();
+  inflight.clear();
+};
+
 const uploadDocument = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
@@ -47,48 +80,65 @@ const getResults = async (taskId: string) => {
 };
 
 export const processDocument = async (file: File) => {
-  let status = "not started";
-  let progress = 0;
-  let error = "";
-  let results = null;
+  const sig = fileSig(file);
+  const cached = readCached(sig);
+  if (cached) return cached;
 
-  try {
-    const taskId = await uploadDocument(file);
+  const pending = inflight.get(sig);
+  if (pending) return pending;
 
-    let attempts = 0;
-    const maxAttempts = 30;
-    progress = 10;
+  const run = (async () => {
+    let status = "not started";
+    let progress = 0;
+    let error = "";
+    let results = null;
 
-    while (attempts < maxAttempts) {
-      // console.log(`Polling attempt ${attempts + 1}/${maxAttempts}`);
-      progress++;
+    try {
+      const taskId = await uploadDocument(file);
 
-      const statusResponse = await checkStatus(taskId);
-      status = statusResponse.status;
+      let attempts = 0;
+      const maxAttempts = 30;
+      progress = 10;
 
-      if (status === "completed") {
-        results = await getResults(taskId);
-        progress = 100;
+      while (attempts < maxAttempts) {
+        progress++;
 
-        break;
-      } else if (status === "failed") {
-        error = statusResponse.error || "Processing failed";
-        console.error("Processing failed:", error);
-        break;
+        const statusResponse = await checkStatus(taskId);
+        status = statusResponse.status;
+
+        if (status === "completed") {
+          results = await getResults(taskId);
+          progress = 100;
+
+          break;
+        } else if (status === "failed") {
+          error = statusResponse.error || "Processing failed";
+          console.error("Processing failed:", error);
+          break;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        attempts++;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      attempts++;
+      if (attempts >= maxAttempts && status !== "completed") {
+        error = "Processing timeout - please try again";
+        console.warn("Processing timeout");
+      }
+    } catch (e) {
+      error = "Une erreur est survenue lors du traitement.";
+      console.error("Error:", e);
     }
 
-    if (attempts >= maxAttempts && status !== "completed") {
-      error = "Processing timeout - please try again";
-      console.warn("Processing timeout");
-    }
-  } catch (e) {
-    error = "Une erreur est survenue lors du traitement.";
-    console.error("Error:", e);
+    const payload: ProcessResult = { status, progress, error, results };
+    writeCache(sig, payload);
+    return payload;
+  })();
+
+  inflight.set(sig, run);
+  try {
+    return await run;
   } finally {
-    return { status, progress, error, results };
+    inflight.delete(sig);
   }
 };

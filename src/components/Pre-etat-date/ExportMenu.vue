@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import { colors } from "@/utils/colors";
 import { loadLogo } from "@/utils/otherFunctions";
 import { buildDocDefinition } from "@/utils/docDefinitions/pre-etat-date";
+import { clearDocumentCache } from "@/utils/textFromDocument";
 import type { PreEtatDate } from "@/types/pre-etat-date-complet";
 
 const STORAGE_KEY = "sn-pre-etat-date";
@@ -107,6 +108,7 @@ const wipeAll = async () => {
   wipeLoading.value = true;
   try {
     localStorage.removeItem(STORAGE_KEY);
+    clearDocumentCache();
     window.dispatchEvent(
       new StorageEvent("storage", {
         key: STORAGE_KEY,
