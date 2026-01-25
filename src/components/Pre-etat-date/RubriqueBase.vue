@@ -194,13 +194,6 @@ processingQueue.setDependencies({
   getFormData: () => formData,
 });
 
-const queueProgress = computed(() => {
-  const { queued, maxConcurrent } = queueStatus.value;
-  if (maxConcurrent <= 0) return 0;
-  const available = Math.max(maxConcurrent - queued, 0);
-  return Math.min(100, (available / maxConcurrent) * 100);
-});
-
 async function handleDocumentInfoExtraction(key: string, file: File) {
   try {
     const filledModel = await processingQueue.addToQueue(key, file);
@@ -446,24 +439,7 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
         </UITertiaryButton>
       </NuxtLink>
     </div>
-    <div
-      v-if="queueStatus.queued > 0 || queueStatus.processing > 0"
-      class="queue-status"
-    >
-      <div class="queue-status__info">
-        <UIIconComponent icon="clock" size="1rem" />
-        <span>
-          {{ queueStatus.queued }} fichier(s) en attente,
-          {{ queueStatus.processing }} en cours de traitement
-        </span>
-      </div>
-      <div class="queue-status__progress">
-        <div
-          class="queue-status__bar"
-          :style="{ width: `${queueProgress}%` }"
-        ></div>
-      </div>
-    </div>
+
     <div
       class="rubrique__form"
       :id="sectionId === 'documents' ? 'ped-tour-documents-form' : undefined"
@@ -481,37 +457,4 @@ const onValidState = (payload: { isValid: boolean; model: any }) => {
 
 <style scoped lang="scss">
 @import "@/styles/rubriques.scss";
-
-.queue-status {
-  margin: 1rem 0;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.75rem;
-  background: #f8fafc;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.queue-status__info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-.queue-status__progress {
-  width: 100%;
-  height: 0.5rem;
-  background: #e5e7eb;
-  border-radius: 9999px;
-  overflow: hidden;
-}
-
-.queue-status__bar {
-  height: 100%;
-  background: linear-gradient(90deg, #0ea5e9, #6366f1);
-  transition: width 0.2s ease;
-}
 </style>
