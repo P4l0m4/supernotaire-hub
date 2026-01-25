@@ -201,38 +201,21 @@ async function extractWithGeminiClient(
   TS_TYPE: string,
   clues: string[],
 ): Promise<{}> {
-  const key = useRuntimeConfig().public.GEMINI_KEY;
-  if (!key) throw new Error("gemini_key_missing");
-
   const user = buildPrompt(documentName, TS_TYPE, textBlob, clues)[0].content;
-
-  const body: any = {
-    contents: [{ role: "user", parts: [{ text: user }] }],
-    generationConfig: {
-      temperature: 0,
-      responseMimeType: "application/json", // force JSON
-    },
-  };
 
   const ctl = new AbortController();
   const to = setTimeout(() => ctl.abort(), 20000);
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      signal: ctl.signal,
-    },
-  )
+  const res = await $fetch<{ text?: string }>("/api/gemini/generate", {
+    method: "POST",
+    body: { prompt: user },
+    signal: ctl.signal,
+  })
     .catch((e) => {
       throw new Error(`gemini_fetch_failed:${String(e)}`);
     })
     .finally(() => clearTimeout(to));
 
-  if (!res.ok) throw new Error(`gemini_http_${res.status}`);
-  const data = await res.json();
-  const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}"; // JSON en texte
+  const raw = res?.text ?? "{}"; // JSON en texte
   return extractJson(raw);
 }

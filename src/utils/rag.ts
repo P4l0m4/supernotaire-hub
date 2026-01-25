@@ -1,5 +1,4 @@
-// Lightweight client-side RAG helpers using Gemini embeddings when available.
-// Auto-activated if a public GEMINI_KEY exists; otherwise callers should gracefully fallback.
+// Lightweight client-side RAG helpers using Gemini embeddings via server proxy when available.
 
 function cosineSimilarity(a: number[], b: number[]) {
   if (a.length !== b.length || a.length === 0) return 0;
@@ -17,28 +16,17 @@ function cosineSimilarity(a: number[], b: number[]) {
   return dot / (Math.sqrt(na) * Math.sqrt(nb));
 }
 
-async function embedOneGemini(text: string, key: string): Promise<number[]> {
+async function embedOneGemini(text: string): Promise<number[]> {
   const ctl = new AbortController();
   const to = setTimeout(() => ctl.abort(), 15000);
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${key}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: { parts: [{ text }] },
-          // taskType helps the model; safe default
-          taskType: "RETRIEVAL_DOCUMENT",
-        }),
-        signal: ctl.signal,
-      }
-    );
-    if (!res.ok) throw new Error(`gemini_embed_http_${res.status}`);
-    const data = await res.json();
-    const emb = data?.embedding?.values || data?.data?.[0]?.embedding || [];
-    if (!Array.isArray(emb) || emb.length === 0)
-      throw new Error("gemini_embed_empty");
+    const res = await $fetch<{ embedding?: number[] }>("/api/gemini/embed", {
+      method: "POST",
+      body: { text },
+      signal: ctl.signal,
+    });
+    const emb = res?.embedding || [];
+    if (!Array.isArray(emb) || emb.length === 0) throw new Error("gemini_embed_empty");
     return emb.map((v: any) => Number(v) || 0);
   } finally {
     clearTimeout(to);
@@ -57,8 +45,6 @@ export async function selectTopKRelevantChunks(
   try {
     // Only runs on client; keep behavior server-safe by returning null.
     if (!import.meta.client) return null;
-    const key = useRuntimeConfig().public.GEMINI_KEY;
-    if (!key) return null;
 
     // simple token-to-char heuristic (≈4 chars/token)
     const charsPerTok = 4;
@@ -71,10 +57,10 @@ export async function selectTopKRelevantChunks(
     if (chunks.length === 0) return null;
 
     // embed query and chunks sequentially to avoid aggressive rate limits
-    const qEmb = await embedOneGemini(query, key);
+    const qEmb = await embedOneGemini(query);
     const scored: RagSelection = [];
     for (let i = 0; i < chunks.length; i++) {
-      const emb = await embedOneGemini(chunks[i], key);
+      const emb = await embedOneGemini(chunks[i]);
       const score = cosineSimilarity(qEmb, emb);
       scored.push({ text: chunks[i], index: i, score });
     }
@@ -85,4 +71,3 @@ export async function selectTopKRelevantChunks(
     return null;
   }
 }
-
