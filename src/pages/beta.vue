@@ -281,7 +281,15 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
   </Container>
 
   <Container><FounderPromo /></Container>
-
+  <Container
+    ><div class="headlines">
+      <h2 class="headlines__title">Témoignages</h2>
+      <h3 class="headlines__subtitle paragraphs">
+        Leurs avis valent mieux que tous nos arguments
+      </h3>
+    </div>
+    <ReviewsCarousel :reviews
+  /></Container>
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
     <FAQComponent :questions />
