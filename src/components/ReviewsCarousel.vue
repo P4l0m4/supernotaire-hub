@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { colors } from "@/utils/colors";
 import type { Review } from "@/utils/reviews";
 
@@ -7,7 +7,6 @@ const props = defineProps<{
   reviews: Review[];
 }>();
 
-//filter reviews with text only
 const filteredReviews = computed(() =>
   props.reviews.filter((review) => review.text && review.text.length > 0),
 );
@@ -15,6 +14,60 @@ const filteredReviews = computed(() =>
 const loopedReviews = computed(() => {
   const base = filteredReviews.value;
   return base.length ? [...base, ...base] : [];
+});
+
+const toIsoDate = (date: string) => {
+  const [day, month, year] = date.split("-");
+  if (!day || !month || !year) return date;
+  const iso = new Date(`${year}-${month}-${day}`);
+  return Number.isNaN(iso.getTime()) ? date : iso.toISOString().split("T")[0];
+};
+
+const averageScore = computed(() => {
+  if (!filteredReviews.value.length) return null;
+  const total = filteredReviews.value.reduce(
+    (sum, review) => sum + (review.score || 0),
+    0,
+  );
+  return Number((total / filteredReviews.value.length).toFixed(1));
+});
+
+const jsonLdReviews = computed(() =>
+  filteredReviews.value.slice(0, 20).map((review) => ({
+    "@type": "Review",
+    reviewBody: review.text,
+    author: { "@type": "Person", name: review.name },
+    datePublished: toIsoDate(review.date),
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: review.score,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  })),
+);
+
+const jsonLd = computed(() => {
+  if (!filteredReviews.value.length || !averageScore.value) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "EasyCase",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: averageScore.value,
+      reviewCount: filteredReviews.value.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: jsonLdReviews.value,
+  } as const;
+});
+
+watchEffect(() => {
+  if (jsonLd.value) {
+    useJsonld(jsonLd.value as any);
+  }
 });
 </script>
 <template>
