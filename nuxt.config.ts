@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "nuxt-jsonld",
     "nuxt-driver.js",
+    "@zadigetvoltaire/nuxt-gtm",
     [
       "@storyblok/nuxt",
       {
@@ -28,7 +29,9 @@ export default defineNuxtConfig({
       },
     ],
   ],
-
+  gtm: {
+    id: "GTM-TZXGHJDZ",
+  },
   build: {
     transpile: ["pdfmake", "@vuepic/vue-datepicker", "vue-echarts", "echarts"],
   },

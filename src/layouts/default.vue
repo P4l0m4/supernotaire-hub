@@ -24,7 +24,9 @@ main {
 
 .expand-enter-active,
 .expand-leave-active {
-  transition: transform 0.4s ease, border-radius 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    border-radius 0.4s ease;
 }
 
 .expand-enter-from,

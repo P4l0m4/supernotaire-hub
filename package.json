@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@types/pdfmake": "^0.2.11",
+    "@zadigetvoltaire/nuxt-gtm": "^0.0.13",
     "ajv": "^8.17.1",
     "jsdom": "^27.4.0",
     "netlify-cli": "^22.2.2",
