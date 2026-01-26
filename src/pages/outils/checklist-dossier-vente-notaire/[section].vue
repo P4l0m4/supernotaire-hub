@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
 import { ref, computed } from "vue";
+import { preEtatDateSections } from "@/utils/preEtatDateSections";
 import RubriquePrealables from "@/components/Dossier/RubriquePrealables.vue";
 import RubriqueIdentite from "@/components/Dossier/RubriqueIdentite.vue";
 import RubriqueSituation from "@/components/Dossier/RubriqueSituation.vue";
@@ -16,25 +17,11 @@ const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "";
 const route = useRoute();
 
-const validSections = [
-  "prealables",
-  "identite",
-  "situation",
-  "charges-taxes",
-  "copro",
-  "occupation",
-  "origine",
-  "capacite",
-  "fiscale",
-  "urbanisme",
-  "diagnostics-travaux-interieurs",
-] as const;
-
-type SectionParam = (typeof validSections)[number];
+type SectionParam = (typeof preEtatDateSections)[number];
 
 const sectionParam = computed<SectionParam | null>(() => {
   const raw = String(route.params.section || "");
-  return validSections.includes(raw as SectionParam)
+  return preEtatDateSections.includes(raw as SectionParam)
     ? (raw as SectionParam)
     : null;
 });

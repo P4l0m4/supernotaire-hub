@@ -1,6 +1,7 @@
 import { stringToSlug } from "./slugify";
 import { notariesPages } from "./notariesPages";
 import { allRubriques } from "./rubriquesDossier";
+import { preEtatDateSections } from "./preEtatDateSections";
 
 import StoryblokClient from "storyblok-js-client";
 
@@ -36,5 +37,13 @@ export async function getRubriquesPages() {
     loc: `/outils/checklist-dossier-vente-notaire/${stringToSlug(r.id)}`,
     changefreq: "monthly",
     priority: 0.6,
+  }));
+}
+
+export async function getPreEtatDatePages() {
+  return preEtatDateSections.map((section) => ({
+    loc: `/outils/pre-etat-date/${section}`,
+    changefreq: "monthly",
+    priority: 0.5,
   }));
 }
