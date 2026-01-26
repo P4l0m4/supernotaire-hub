@@ -225,6 +225,7 @@ onMounted(() => {
         <UIPrimaryButton
           variant="accent-color"
           icon="download"
+          id="btn-checkout-dossier"
           :disabled="fullLoading"
           @click="exportUnlocked ? downloadFullExport() : startCheckout()"
         >
