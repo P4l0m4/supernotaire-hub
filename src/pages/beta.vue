@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { reviews } from "@/utils/reviews";
+
 import logo from "/favicon-96x96.png";
 
 import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
@@ -179,6 +181,7 @@ useJsonld(() => ({
   <Container>
     <div class="centered-hero">
       <div class="centered-hero__text">
+        <ReviewScore :reviews />
         <h1 class="centered-hero__text__title">
           Les jeunes notaires n’ont pas besoin de travailler plus. Ils ont
           besoin de meilleurs outils.

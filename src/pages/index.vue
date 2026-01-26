@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { stringToSlug } from "@/utils/slugify";
+import { reviews } from "@/utils/reviews";
 import { useStoryblokApi } from "@storyblok/vue";
 
 import notary from "@/assets/images/accountant-54.svg";
@@ -120,7 +121,7 @@ onMounted(async () => {
   <Container>
     <div class="centered-hero">
       <div class="centered-hero__text">
-        <ReviewScore />
+        <ReviewScore :reviews />
         <h1 class="centered-hero__text__title">
           Gagnez des semaines sur vos ventes immobilières
           <svg
@@ -188,6 +189,15 @@ onMounted(async () => {
       />
     </div>
   </Container>
+  <Container
+    ><div class="headlines">
+      <h2 class="headlines__title">Témoignages</h2>
+      <h3 class="headlines__subtitle paragraphs">
+        Leurs avis valent mieux que tous nos arguments
+      </h3>
+    </div>
+    <ReviewsCarousel :reviews
+  /></Container>
   <Container><UIRoadmap /></Container>
   <Container>
     <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
