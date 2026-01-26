@@ -127,7 +127,7 @@ watchEffect(() => {
     padding: 0;
     margin: 0;
     width: max-content;
-    animation: reviews-marquee 90s linear infinite;
+    animation: reviews-marquee 120s linear infinite;
     will-change: transform;
 
     &:hover {
