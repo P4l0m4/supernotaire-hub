@@ -120,6 +120,7 @@ onMounted(async () => {
   <Container>
     <div class="centered-hero">
       <div class="centered-hero__text">
+        <ReviewScore />
         <h1 class="centered-hero__text__title">
           Gagnez des semaines sur vos ventes immobilières
           <svg
@@ -141,6 +142,23 @@ onMounted(async () => {
           EasyCase fait avancer la paperasse des vendeurs pressés et des
           notaires débordés.
         </p>
+        <div class="centered-hero__text__info">
+          <NuxtLink
+            to="/outils/pre-etat-date"
+            class="centered-hero__text__info__item"
+            ><UIIconComponent icon="file_text" size="0.85rem" />Pré-état daté
+            gratuit</NuxtLink
+          >
+          <NuxtLink
+            to="/outils/checklist-dossier-vente-notaire"
+            class="centered-hero__text__info__item"
+            ><UIIconComponent icon="clock" size="0.85rem" />Dossier de vente
+            rapide</NuxtLink
+          >
+          <span class="centered-hero__text__info__item"
+            ><UIIconComponent icon="lock" size="0.85rem" />Conforme RGPD</span
+          >
+        </div>
         <div class="centered-hero__text__link">
           <NuxtLink
             to="/inscription"
@@ -371,6 +389,31 @@ onMounted(async () => {
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
         max-width: 40rem;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      @media (min-width: $big-tablet-screen) {
+        font-size: 1rem;
+        flex-direction: row;
+      }
+
+      &__item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: $text-color-faded;
+        font-size: 0.85rem;
+        font-weight: $regular;
+
+        @media (min-width: $big-tablet-screen) {
+          font-size: 1rem;
+        }
       }
     }
 
