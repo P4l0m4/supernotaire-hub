@@ -189,6 +189,7 @@ onMounted(async () => {
       />
     </div>
   </Container>
+  <Container><ImageBanner /></Container>
   <Container
     ><div class="headlines">
       <h2 class="headlines__title">Témoignages</h2>

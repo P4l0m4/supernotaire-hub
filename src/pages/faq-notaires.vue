@@ -132,4 +132,5 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
+  <Container><ImageBanner /></Container>
 </template>

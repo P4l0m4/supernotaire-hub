@@ -117,5 +117,22 @@ useJsonld(() => ({
 
     <UIFeaturesList :features="features" />
   </Container>
+  <Container><ImageBanner /></Container>
+  <Container>
+    <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
+      <template #text>
+        Nous avons conçu des outils intuitifs et en accès libre pour vous aider
+        à avancer dans vos démarches immobilières: création de pré-état daté,
+        estimation de valeur foncière, etc. Aucune inscription n'est requise.
+      </template>
+      <template #cta>
+        <NuxtLink to="/outils" aria-label="Découvrir nos outils">
+          <UIPrimaryButton variant="accent-color"
+            >Découvrir nos outils</UIPrimaryButton
+          >
+        </NuxtLink>
+      </template>
+    </UIDidYouKnow>
+  </Container>
   <HotjarTracking />
 </template>

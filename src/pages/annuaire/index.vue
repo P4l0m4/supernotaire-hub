@@ -72,7 +72,7 @@ const showEmptyState = computed(
     !pending.value &&
     !errorMessage.value &&
     notaries.value.length === 0 &&
-    query.value.trim().length > 0
+    query.value.trim().length > 0,
 );
 
 const { $supabase } = useNuxtApp();
@@ -174,8 +174,8 @@ async function fetchNotaries(raw: string, forcedLabel?: string) {
         if (c.codesPostaux?.length) {
           const results = await Promise.all(
             c.codesPostaux.map((cp) =>
-              getNotariesByPostalCode(supabaseClient, cp)
-            )
+              getNotariesByPostalCode(supabaseClient, cp),
+            ),
           );
           data = mergeBySiret(results);
           locationLabel.value = `${c.nom} (${c.codeDepartement})`;
@@ -307,7 +307,7 @@ async function getNearbyLocation() {
               message: "Erreur de géolocalisation inconnue.",
             });
         }
-      }
+      },
     );
   });
 }
@@ -491,6 +491,7 @@ onMounted(() => {
       </ul>
     </div>
   </Container>
+  <Container><ImageBanner /></Container>
   <HotjarTracking />
 </template>
 
@@ -520,7 +521,9 @@ onMounted(() => {
       left: 0;
       list-style: none;
       background-color: $primary-color;
-      border: 1px solid color-mix(in srgb, $text-color) 10%, transparent;
+      border:
+        1px solid color-mix(in srgb, $text-color) 10%,
+        transparent;
       position: absolute;
       overflow: hidden;
       border-radius: calc($radius / 2);
