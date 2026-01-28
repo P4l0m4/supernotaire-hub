@@ -7,6 +7,8 @@ import { useStoryblokApi } from "@storyblok/vue";
 import notary from "@/assets/images/accountant-54.svg";
 import seller from "@/assets/images/real-estate-agent-76.svg";
 
+import ogimage from "@/assets/images/opengraph-banner.webp";
+
 import logo from "/favicon-96x96.png";
 
 import type { Decoration } from "~/components/UI/Profile.vue";
@@ -59,8 +61,7 @@ useHead({
     },
     {
       property: "og:image",
-      content:
-        "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
+      content: ogimage,
     },
     {
       property: "og:description",
@@ -92,8 +93,7 @@ useJsonld(() => ({
   },
   url: `${baseUrl}/`,
   logo: `https://www.easycase.fr/${logo}`,
-  image:
-    "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
+  image: ogimage,
   description:
     "EasyCase est une plateforme en ligne qui fait gagner du temps aux notaires, mais aussi aux vendeurs et acheteurs de biens immobiliers: constitution autonome des dossiers, formalités immobilières faciles, pré-rédaction des documents, RDV rapide en ligne, etc.",
   publisher: {

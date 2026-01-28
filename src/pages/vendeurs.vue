@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 import annuaire from "@/assets/images/time-39.svg";
 import dossier from "@/assets/images/files-and-folder-78.svg";
 import progress from "@/assets/images/checklist-71.svg";
 import hero from "@/assets/images/pool.svg";
 import dots from "@/assets/images/dots-big.svg";
+
+import ogimage from "@/assets/images/opengraph-banner.webp";
 
 import { colors } from "@/utils/colors";
 
@@ -34,8 +36,7 @@ useHead({
     },
     {
       property: "og:image",
-      content:
-        "https://opengraph.b-cdn.net/production/images/a20c3e90-cc8a-4e2d-9841-b0e973037764.png?token=94GB_JSm5iZfopHGGLQTr5sxi1J4xl9L2EXPVPwg3hE&height=651&width=1200&expires=33287987916",
+      content: ogimage,
     },
     {
       property: "og:description",
