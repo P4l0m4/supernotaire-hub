@@ -28,7 +28,7 @@ useHead({
     <nav class="header__nav">
       <ul class="header__nav__ul">
         <li class="header__nav__ul__li">
-          <NuxtLink to="/"
+          <NuxtLink to="/" class="first"
             ><img
               class="logo"
               src="@/assets/images/logo-dark.svg"
@@ -194,6 +194,15 @@ useHead({
         gap: 0.25rem;
         color: $text-color;
         font-size: 1rem;
+
+        &.first {
+          position: relative;
+
+          .svg-underline {
+            visibility: visible;
+            stroke-dashoffset: 0;
+          }
+        }
       }
 
       &--dark {
