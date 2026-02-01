@@ -116,25 +116,15 @@
     </div>
 
     <div class="footer__bottom-links">
-      <NuxtLink
-        to="https://docs.google.com/document/d/e/2PACX-1vQW80YJ6C8B_FY9LEPW6j4pEz3IfThZ-StWlcqUTakTnIUuAxn7CcheVopddu5dpgjlal_Amibhh2GF/pub"
-        target="_blank"
-        >CGV</NuxtLink
-      ><NuxtLink
-        to="https://docs.google.com/document/d/e/2PACX-1vTOGTdv866qLzIX4H8alMu0WlN-CeYjKNgtsEIJiimH1npT3ypGF3KCcu3eN0h9zmYpVWgK8wzcQqyi/pub"
-        target="_blank"
-        >CGU</NuxtLink
-      ><NuxtLink
-        to="https://docs.google.com/document/d/e/2PACX-1vRl0b5T5OmciZCyENe13NQgpoZH2g7YlzJUzgwiQwjbwLoOAvtbgrQDE-xVRqncwj8pHzeM8XxDEvMF/pub"
-        target="_blank"
-        >RGPD</NuxtLink
+      <NuxtLink to="/EasyCase - CGSU - Version 1.pdf" target="_blank"
+        >CGSU Particuliers</NuxtLink
       >
-      <NuxtLink to="https://tekilawebfactory.com" target="_blank"
+      <NuxtLink
+        to="/EasyCase - Mentions Légales - Version 1.pdf"
+        target="_blank"
         >Mentions légales</NuxtLink
       >
-      <NuxtLink to="https://tekilawebfactory.com" target="_blank"
-        >©EasyCase 2025</NuxtLink
-      >
+      <NuxtLink to="/" target="_blank">©EasyCase 2025</NuxtLink>
     </div>
   </footer>
 </template>
