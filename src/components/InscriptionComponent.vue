@@ -85,7 +85,7 @@ async function submitForm() {
     "service_am6r8vv",
     "template_v8vtsgd",
     templateParams.value,
-    "ZGkiwrxxdhrgjjnRC"
+    "ZGkiwrxxdhrgjjnRC",
   );
 
   confirmSubmission();
@@ -147,7 +147,7 @@ async function validContactState() {
       exclusive limitée aux 100 premiers adoptants.
       <template #button>
         <NuxtLink
-          to="https://buy.stripe.com/4gMfZa5vb5MO7IigHeeQM02"
+          to="https://buy.stripe.com/dRm00k7vu51N6jBgKobV600"
           target="_blank"
           style="width: 100%"
           ><UIPrimaryButton variant="accent-color" icon="hand_heart_fill"
