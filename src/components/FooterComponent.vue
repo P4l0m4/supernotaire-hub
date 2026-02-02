@@ -116,13 +116,11 @@
     </div>
 
     <div class="footer__bottom-links">
-      <NuxtLink to="/EasyCase - CGSU - Version 1.pdf" target="_blank"
-        >CGSU Particuliers</NuxtLink
+      <a href="/EasyCase - CGSU - Version 1.pdf" target="_blank"
+        >CGSU Particuliers</a
       >
-      <NuxtLink
-        to="/EasyCase - Mentions Légales - Version 1.pdf"
-        target="_blank"
-        >Mentions légales</NuxtLink
+      <a href="/EasyCase - Mentions Légales - Version 1.pdf" target="_blank"
+        >Mentions légales</a
       >
       <NuxtLink to="/" target="_blank">©EasyCase 2025</NuxtLink>
     </div>
