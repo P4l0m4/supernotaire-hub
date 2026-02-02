@@ -33,6 +33,15 @@ const getStoredSessionId = () => {
   return sessionStorage.getItem(LAST_SESSION_KEY) || undefined;
 };
 
+const CONVERSION_SESSION_KEY = "sn_conversion_session_id";
+const pushGoogleAdsConversion = (sessionId?: string) => {
+  if (!process.client || !sessionId) return;
+  const lastSent = sessionStorage.getItem(CONVERSION_SESSION_KEY);
+  if (lastSent === sessionId) return;
+  window.dataLayer?.push({ event: "google_ads_conversion" });
+  sessionStorage.setItem(CONVERSION_SESSION_KEY, sessionId);
+};
+
 const showToast = (message: string, color: string) => {
   notifyMessage.value = message;
   notifyColor.value = color;
@@ -66,6 +75,7 @@ const handlePaymentStatus = async () => {
 
     if (isUnlocked) {
       showToast("Paiement validé, export débloqué.", colors["success-color"]);
+      pushGoogleAdsConversion(sessionId);
     } else if (!wasUnlocked && !result) {
       showToast(
         "Impossible de valider le paiement. Réessayez ou contactez le support.",
@@ -91,6 +101,7 @@ watch(
     const result = await refreshAccess(sessionId);
     if (exportUnlocked.value) {
       showToast("Paiement validé, export débloqué.", colors["success-color"]);
+      pushGoogleAdsConversion(sessionId);
     } else if (!wasUnlocked && !result) {
       showToast(
         "Impossible de valider le paiement. Réessayez ou contactez le support.",
