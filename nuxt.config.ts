@@ -9,12 +9,14 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
   ssr: true,
+
   nitro: {
     preset: "netlify",
   },
 
   srcDir: "src/",
   css: ["@/styles/global.scss"],
+
   modules: [
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
@@ -29,10 +31,13 @@ export default defineNuxtConfig({
         apiOptions: { region: "fr" },
       },
     ],
+    "@sentry/nuxt/module",
   ],
+
   gtm: {
     id: "GTM-TZXGHJDZ",
   },
+
   build: {
     transpile: ["pdfmake", "@vuepic/vue-datepicker", "vue-echarts", "echarts"],
   },
@@ -46,6 +51,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   app: {
     head: {
       htmlAttrs: { lang: "fr" },
@@ -69,16 +75,20 @@ export default defineNuxtConfig({
     STRIPE_PRICE_EXPORT: process.env.STRIPE_PRICE_EXPORT,
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
     GEMINI_KEY: process.env.GEMINI_KEY,
+    SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
     public: {
       STORYBLOK_KEY: process.env.STORYBLOK_KEY,
       SUPABASE_URL: process.env.NUXT_PUBLIC_SUPABASE_URL,
       SUPABASE_ANON_KEY: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
       STRIPE_PUBLIC_KEY: process.env.NUXT_PUBLIC_STRIPE_PUBLIC_KEY,
+      SENTRY_DSN: process.env.NUXT_PUBLIC_SENTRY_DSN,
     },
   },
+
   dayjs: {
     locales: ["fr"],
   },
+
   sitemap: {
     urls: async () => {
       const tutorialPages = await getTutorialPages();
@@ -94,8 +104,19 @@ export default defineNuxtConfig({
       ];
     },
   },
+
   site: {
     url: "https://easycase.fr",
     name: "EasyCase",
+  },
+
+  sentry: {
+    org: "tekila-web-factory",
+    project: "javascript-nuxt",
+    autoInjectServerSentry: "top-level-import",
+  },
+
+  sourcemap: {
+    client: "hidden",
   },
 });
