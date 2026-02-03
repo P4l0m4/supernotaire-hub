@@ -2,6 +2,7 @@ import {
   getNotariesPages,
   getTutorialPages,
   getRubriquesPages,
+  getPreEtatDatePages,
 } from "./src/utils/sitemap";
 
 export default defineNuxtConfig({
@@ -83,8 +84,14 @@ export default defineNuxtConfig({
       const tutorialPages = await getTutorialPages();
       const notariesPages = getNotariesPages();
       const rubriquePages = await getRubriquesPages();
+      const preEtatDatePages = await getPreEtatDatePages();
 
-      return [...tutorialPages, ...notariesPages, ...rubriquePages];
+      return [
+        ...tutorialPages,
+        ...notariesPages,
+        ...rubriquePages,
+        ...preEtatDatePages,
+      ];
     },
   },
   site: {
