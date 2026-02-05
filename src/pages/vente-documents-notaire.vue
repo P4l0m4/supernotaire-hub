@@ -8,6 +8,20 @@ import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
+const pushChecklistStart = (
+  ctaLocation: "hero" | "features" | "last_chance",
+) => {
+  if (!process.client) return;
+  if (window.location.hostname === "localhost") return;
+
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  (window as any).dataLayer.push({
+    event: "checklist_start",
+    page_type: "landing_vendeur_acheteur_trouve",
+    cta_location: ctaLocation,
+  });
+};
+
 const breadcrumbs = ref([
   {
     name: "Accueil",
@@ -173,6 +187,7 @@ useHead({
             to="/outils/checklist-dossier-vente-notaire"
             aria-label="Gagner des semaines sur ma vente"
             style="width: 100%"
+            @click="pushChecklistStart('hero')"
           >
             <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
               Gagner des semaines sur ma vente
@@ -199,6 +214,7 @@ useHead({
       <NuxtLink
         to="/outils/checklist-dossier-vente-notaire"
         class="feature-cards__link"
+        @click="pushChecklistStart('features')"
       >
         <UIPrimaryButton
           variant="accent-color"
@@ -260,6 +276,7 @@ useHead({
         <NuxtLink
           to="/outils/checklist-dossier-vente-notaire"
           class="last-chance__links__link"
+          @click="pushChecklistStart('last_chance')"
         >
           <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
             Obtenir mon récapitulatif en 5 minutes
