@@ -29,7 +29,7 @@ defineProps({
         v-if="linkPath && linkLabel"
         :to="linkPath"
         :aria-label="linkLabel"
-        ><UIPrimaryButton variant="accent-color">{{
+        ><UIPrimaryButton variant="accent-color" icon="arrow_right">{{
           linkLabel
         }}</UIPrimaryButton></NuxtLink
       >
