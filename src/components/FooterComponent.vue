@@ -65,6 +65,11 @@
           <NuxtLink to="/outils">Boîte à outils</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
+          <NuxtLink to="/vente-documents-notaire"
+            >Préparation de dossier</NuxtLink
+          >
+        </li>
+        <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
       </ul>
