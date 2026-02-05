@@ -191,9 +191,9 @@ onMounted(async () => {
   </Container>
   <Container><ImageBanner /></Container>
   <Container
-    ><div class="headlines">
-      <h2 class="headlines__title">Témoignages</h2>
-      <h3 class="headlines__subtitle paragraphs">
+    ><div class="secondary-headlines">
+      <h2 class="secondary-headlines__title">Témoignages</h2>
+      <h3 class="secondary-headlines__subtitle">
         Leurs avis valent mieux que tous nos arguments
       </h3>
     </div>
