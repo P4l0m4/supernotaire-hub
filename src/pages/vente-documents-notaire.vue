@@ -8,6 +8,17 @@ import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
+const breadcrumbs = ref([
+  {
+    name: "Accueil",
+    url: "/",
+  },
+  {
+    name: "Préparation de dossier",
+    url: "/vente-documents-notaire",
+  },
+]);
+
 const featureCards = [
   {
     icon: signature,
@@ -267,6 +278,7 @@ useHead({
     ><h3 id="faq" class="feature-cards__title">Questions fréquentes 🤔</h3>
     <FAQComponent :questions />
     <UILogosCarousel />
+    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
   </Container>
 
   <HotjarTracking />
