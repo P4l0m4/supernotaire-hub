@@ -9,6 +9,8 @@ import dots from "@/assets/images/dots-big.svg";
 
 import ogimage from "@/assets/images/opengraph-banner.webp";
 
+import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+
 import { colors } from "@/utils/colors";
 
 const runtimeConfig = useRuntimeConfig();
@@ -118,7 +120,28 @@ useJsonld(() => ({
 
     <UIFeaturesList :features="features" />
   </Container>
-  <Container><ImageBanner /></Container>
+  <Container>
+    <ImageBanner
+      title="Accélérez vos transactions immobilières"
+      subtitle="Simplifiez la collaboration notaires-clients et réduisez le délai de vente de plusieurs semaines."
+      link-path="/inscription"
+      link-label="Découvrir la solution"
+      :image-path="bannerImage"
+      :perks="[
+        {
+          title: 'Automatisations intelligentes',
+          icon: 'sparkle',
+        },
+        {
+          title: 'Dossiers complets et organisés',
+          icon: 'list_checks',
+        },
+        {
+          title: 'Gain de temps immédiat',
+          icon: 'clock_countdown',
+        },
+      ]"
+  /></Container>
   <Container>
     <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
       <template #text>

@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import { colors } from "@/utils/colors";
+
+interface Perk {
+  title: string;
+  icon: string;
+}
+
+defineProps({
+  linkPath: String,
+  linkLabel: String,
+  imagePath: String,
+  title: String,
+  subtitle: String,
+  perks: Array as () => Perk[],
+});
 </script>
 <template>
   <picture class="image-banner">
@@ -7,44 +21,28 @@ import { colors } from "@/utils/colors";
       srcset="@/assets/images/accompagnement-vente-immo.webp"
       media="(min-width: 1024px)"
     />
-    <img
-      src="@/assets/images/accompagnement-vente-immo-mobile.webp"
-      alt="Bannière image Accélérer les transactions immobilières"
-    />
+    <img :src="imagePath" :alt="`Bannière ${title}`" />
     <div class="image-banner__overlay">
-      <span class="image-banner__overlay__title"
-        >Accélérez vos transactions immobilières</span
-      >
-      <span class="subtitles"
-        >Simplifiez la collaboration notaires-clients et réduisez le délai de
-        vente de plusieurs semaines.</span
-      >
-      <NuxtLink to="/inscription"
-        ><UIPrimaryButton variant="accent-color"
-          >Découvrir la solution</UIPrimaryButton
-        ></NuxtLink
+      <span class="image-banner__overlay__title">{{ title }}</span>
+      <span class="subtitles">{{ subtitle }}</span>
+      <NuxtLink
+        v-if="linkPath && linkLabel"
+        :to="linkPath"
+        :aria-label="linkLabel"
+        ><UIPrimaryButton variant="accent-color">{{
+          linkLabel
+        }}</UIPrimaryButton></NuxtLink
       >
       <div class="image-banner__overlay__info">
-        <span class="image-banner__overlay__info__item"
+        <span
+          v-for="perk in perks"
+          :key="perk.title"
+          class="image-banner__overlay__info__item"
           ><UIIconComponent
-            icon="sparkle"
+            :icon="perk.icon"
             :color="colors['primary-color']"
             size="1rem"
-          />Automatisations intelligentes</span
-        >
-        <span class="image-banner__overlay__info__item"
-          ><UIIconComponent
-            icon="list_checks"
-            :color="colors['primary-color']"
-            size="1rem"
-          />Dossiers complets et organisés</span
-        >
-        <span class="image-banner__overlay__info__item"
-          ><UIIconComponent
-            icon="clock_countdown"
-            :color="colors['primary-color']"
-            size="1rem"
-          />Gain de temps immédiat</span
+          />{{ perk.title }}</span
         >
       </div>
     </div>
