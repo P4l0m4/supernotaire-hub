@@ -3,6 +3,8 @@ import { reviews } from "@/utils/reviews";
 
 import logo from "/favicon-96x96.png";
 
+import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+
 import lightning from "@/assets/animated-icons/lightning-animated.svg?raw";
 import clock from "@/assets/animated-icons/clock-animated.svg?raw";
 import lock from "@/assets/animated-icons/lock-animated.svg?raw";
@@ -23,7 +25,7 @@ const featureCards = [
   },
   {
     icon: clock,
-    title: "Tableau de bord intuitif",
+    title: "Collaboration fluide",
     description:
       "Suivez la progression de vos dossiers en temps réel, collaborez facilement avec vos clercs et soyez notifié lorsque votre intervention est nécessaire.",
   },
@@ -275,21 +277,38 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     />
   </Container>
 
-  <Container>
-    <h3 class="interface-title">Reprenez le contrôle de votre temps.</h3>
-    <ComparativeTimeChart :steps="steps" />
-  </Container>
-
-  <Container><FounderPromo /></Container>
   <Container
-    ><div class="headlines">
-      <h2 class="headlines__title">Témoignages</h2>
-      <h3 class="headlines__subtitle paragraphs">
+    ><ImageBanner
+      title="Reprenez le contrôle de votre temps 🧘"
+      subtitle="Réduisez intelligemment votre charge de travail, sans compromis sur l’accompagnement."
+      link-path="/inscription"
+      link-label="Découvrir la solution"
+      :image-path="bannerImage"
+      :perks="[
+        {
+          title: 'Automatisations intelligentes',
+          icon: 'sparkle',
+        },
+        {
+          title: 'Dossiers complets et organisés',
+          icon: 'list_checks',
+        },
+        {
+          title: 'Gain de temps immédiat',
+          icon: 'clock_countdown',
+        },
+      ]" /><ComparativeTimeChart :steps="steps"
+  /></Container>
+  <Container
+    ><div class="secondary-headlines">
+      <h2 class="secondary-headlines__title">Témoignages</h2>
+      <h3 class="secondary-headlines__subtitle">
         Leurs avis valent mieux que tous nos arguments
       </h3>
     </div>
     <ReviewsCarousel :reviews
   /></Container>
+  <Container><FounderPromo /></Container>
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
     <FAQComponent :questions />
