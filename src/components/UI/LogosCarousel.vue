@@ -25,7 +25,7 @@
       /></NuxtLink>
       <NuxtLink
         class="logos-carousel__elements__element"
-        to="https://startupandgo-auvergnerhonealpes.fr/"
+        to="https://startupandgo-auvergnerhonealpes.fr/a-propos/"
         target="_blank"
         ><img
           src="@/assets/images/logo-start-up-go.webp"

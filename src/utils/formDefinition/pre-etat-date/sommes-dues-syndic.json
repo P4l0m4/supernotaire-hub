@@ -50,7 +50,7 @@
           "name": "financier_lot_sommes_debiteur_syndic_modalites_remboursement",
           "type": "select",
           "options": ["Transfert à l’acquéreur", "Remboursement au cédant"],
-          "placeholder": "Sélectionner si applicable",
+          "placeholder": "Sélectionner une option",
           "icon": "gear_six_fill",
           "showIf": {
             "any": [
