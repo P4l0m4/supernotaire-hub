@@ -18,9 +18,10 @@ interface Props {
   step?: number;
   tooltip?: string;
   tooltipLink?: string;
+  maxLength?: number;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   type: "text",
   required: true,
   autofocus: false,
@@ -38,6 +39,24 @@ const showPassword = ref(false);
 function toggleShowPassword() {
   showPassword.value = !showPassword.value;
 }
+
+const onInput = (event: Event) => {
+  const el = event.target as HTMLInputElement;
+  let value = el.value ?? "";
+
+  if (props.type === "number") {
+    value = value.replace(/\D+/g, "");
+  }
+
+  if (props.maxLength && props.maxLength > 0 && value.length > props.maxLength) {
+    value = value.slice(0, props.maxLength);
+  }
+
+  if (value !== el.value) {
+    el.value = value;
+  }
+  model.value = value;
+};
 </script>
 <template>
   <div
@@ -67,6 +86,8 @@ function toggleShowPassword() {
       :aria-placeholder="placeholder"
       :name="name"
       :value="model"
+      :maxlength="maxLength"
+      @input="onInput"
     />
 
     <input
@@ -88,6 +109,8 @@ function toggleShowPassword() {
       :min="min ? min : undefined"
       :max="max ? max : undefined"
       :step="step ? step : undefined"
+      :maxlength="maxLength"
+      @input="onInput"
       @blur="$emit('blur')"
     />
 

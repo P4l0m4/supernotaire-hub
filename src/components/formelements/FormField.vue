@@ -226,6 +226,7 @@ const isAnyHighlight = computed(
       :error="errorMessage"
       :tooltip="formField.tooltip || ''"
       :tooltipLink="formField.tooltipLink || ''"
+      :maxLength="formField.maxLength"
     />
     <ClientOnly v-else-if="formField.type === 'date'">
       <FormElementsDateField

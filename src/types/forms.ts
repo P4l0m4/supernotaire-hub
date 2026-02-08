@@ -41,6 +41,7 @@ export interface BaseField {
   TS_TYPE?: string; // cle extraction AI
   tooltip?: string;
   tooltipLink?: string; // si tooltip renvoie vers une doc
+  maxLength?: number; // longueur max saisie (tronquée côté input si présente)
   pattern?: string; // validation par regex
   showIf?: ShowIf; // champ affiche si la condition est vraie
 }

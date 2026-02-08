@@ -310,9 +310,10 @@
           "id": "situation-fiscale-numero-fiscal",
           "label": "Numéro fiscal",
           "name": "numero_fiscal",
-          "type": "text",
+          "type": "number",
           "placeholder": "13 chiffres",
           "pattern": "^\\d{13}$",
+          "maxLength": 13,
           "showIf": {
             "path": "situation_fiscale.numero_fiscal_francais",
             "equals": "Oui"
