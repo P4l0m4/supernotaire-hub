@@ -204,10 +204,26 @@
           "type": "email",
           "placeholder": "syndic@example.com",
           "requiredIf": {
-            "not": { "path": "gestion_copropriete", "equals": "Aucun syndic" }
+            "all": [
+              { "path": "gestion_copropriete", "truthy": true },
+              {
+                "not": {
+                  "path": "gestion_copropriete",
+                  "equals": "Aucun syndic"
+                }
+              }
+            ]
           },
           "showIf": {
-            "not": { "path": "gestion_copropriete", "equals": "Aucun syndic" }
+            "all": [
+              { "path": "gestion_copropriete", "truthy": true },
+              {
+                "not": {
+                  "path": "gestion_copropriete",
+                  "equals": "Aucun syndic"
+                }
+              }
+            ]
           }
         },
         {
