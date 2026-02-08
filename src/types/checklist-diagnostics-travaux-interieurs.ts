@@ -28,7 +28,7 @@ export interface ChecklistDiagnostics {
 export interface ChecklistTravauxInterieurs {
   realises?: OuiNon;
   nature?: TravauxNature[];
-  realisesPar?: "Un professionnel" | "Le vendeur lui-même";
+  realisesPar?: ("professionnel" | "vendeur")[];
 }
 
 export interface ChecklistDiagnosticsTravauxInterieurs {

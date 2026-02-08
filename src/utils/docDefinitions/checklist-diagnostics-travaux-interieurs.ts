@@ -131,6 +131,13 @@ export function buildDocDefinition(
         "confort_equipement",
       ].includes(v),
     );
+  const realisesParValues = Array.isArray(travaux.realisesPar)
+    ? travaux.realisesPar
+    : [];
+  const realisesParLabels = realisesParValues.map((v) =>
+    v === "professionnel" ? "Un professionnel" : "Le vendeur lui-même",
+  );
+  const realisesParByPro = realisesParValues.includes("professionnel");
 
   addInfo("Travaux réalisés dans le bien", travaux.realises);
   addInfo(
@@ -140,17 +147,17 @@ export function buildDocDefinition(
   );
   addInfo(
     "Travaux réalisés par",
-    travaux.realisesPar,
+    realisesParLabels,
     travaux.realises === "Oui" && hasStructureLike,
   );
 
   addDoc(
     "Justificatifs (devis, factures, assurance, etc.)",
-    travaux.realisesPar === "Un professionnel",
+    realisesParByPro,
   );
   addDoc(
     "Assurance décennale (si disponible)",
-    travaux.realisesPar === "Un professionnel",
+    realisesParByPro,
   );
 
   const docs = Array.from(docsSet);

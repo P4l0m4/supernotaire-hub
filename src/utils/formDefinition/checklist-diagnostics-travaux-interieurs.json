@@ -295,9 +295,11 @@
           "id": "travaux_realises_par",
           "label": "Travaux réalisés par :",
           "name": "realisesPar",
-          "type": "select",
-          "options": ["Un professionnel", "Le vendeur lui-même"],
-          "placeholder": "Sélectionner",
+          "type": "checkbox-group",
+          "options": [
+            { "label": "Un professionnel", "value": "professionnel" },
+            { "label": "Le vendeur lui-même", "value": "vendeur" }
+          ],
           "requiredIf": {
             "any": [
               { "path": "travaux.nature", "contains": "structure_gros_oeuvre" },
