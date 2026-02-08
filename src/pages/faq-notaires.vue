@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+
 const questions = [
   {
     title: "Comment fonctionne EasyCase ?",
@@ -132,5 +134,26 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
-  <Container><ImageBanner /></Container>
+  <Container
+    ><ImageBanner
+      title="Reprenez le contrôle de votre temps 🧘"
+      subtitle="Réduisez intelligemment votre charge de travail, sans compromis sur l’accompagnement."
+      link-path="/inscription"
+      link-label="Découvrir la solution"
+      :image-path="bannerImage"
+      :perks="[
+        {
+          title: 'Automatisations intelligentes',
+          icon: 'sparkle',
+        },
+        {
+          title: 'Dossiers complets et organisés',
+          icon: 'list_checks',
+        },
+        {
+          title: 'Gain de temps immédiat',
+          icon: 'clock_countdown',
+        },
+      ]"
+  /></Container>
 </template>

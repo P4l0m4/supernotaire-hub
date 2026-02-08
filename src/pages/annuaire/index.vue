@@ -10,6 +10,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { colors } from "@/utils/colors";
 import { stringToSlug } from "@/utils/slugify";
 
+import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+
 type GeoCommune = {
   nom: string;
   code: string; // INSEE
@@ -491,7 +493,26 @@ onMounted(() => {
       </ul>
     </div>
   </Container>
-  <Container><ImageBanner /></Container>
+  <Container><ImageBanner
+      title="Reprenez le contrôle de votre temps 🧘"
+      subtitle="Réduisez intelligemment votre charge de travail, sans compromis sur l’accompagnement."
+      link-path="/inscription"
+      link-label="Découvrir la solution"
+      :image-path="bannerImage"
+      :perks="[
+        {
+          title: 'Automatisations intelligentes',
+          icon: 'sparkle',
+        },
+        {
+          title: 'Dossiers complets et organisés',
+          icon: 'list_checks',
+        },
+        {
+          title: 'Gain de temps immédiat',
+          icon: 'clock_countdown',
+        },
+      ]" /></Container>
   <HotjarTracking />
 </template>
 

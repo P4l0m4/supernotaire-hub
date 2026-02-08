@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+
 const questions = [
   {
     title: "Comment fonctionne EasyCase ?",
@@ -61,5 +63,26 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
-  <Container><ImageBanner /></Container>
+  <Container
+    ><ImageBanner
+      title="Besoin de vendre rapidement ?"
+      subtitle="Évitez les retards, les erreurs, et les allers retours qui font trainer la vente."
+      link-path="/outils/checklist-dossier-vente-notaire"
+      link-label="Je prépare mon dossier en quelques clics"
+      :image-path="bannerImage"
+      :perks="[
+        {
+          title: 'Rapide et facile à utiliser',
+          icon: 'sparkle',
+        },
+        {
+          title: 'Dossier complet et organisé',
+          icon: 'list_checks',
+        },
+        {
+          title: 'Gain de temps immédiat',
+          icon: 'clock_countdown',
+        },
+      ]"
+  /></Container>
 </template>
