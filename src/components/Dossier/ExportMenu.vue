@@ -74,7 +74,7 @@ const downloadPartialExport = async () => {
     $pdfMake
       // @ts-ignore
       .createPdf(docDefinition)
-      .download("checklist-rubriques-gratuites.pdf");
+      .download("checklist-documents-notaire-vente-partiel.pdf");
     closeModal();
   } catch (error) {
     console.error("[ExportMenu] partial export failed", error);
@@ -106,7 +106,7 @@ const downloadFullExport = async () => {
     $pdfMake
       // @ts-ignore
       .createPdf(docDefinition)
-      .download("checklist-rubriques-completes.pdf");
+      .download("checklist-documents-notaire-vente-complet.pdf");
     closeModal();
   } catch (error) {
     console.error("[ExportMenu] full export failed", error);
