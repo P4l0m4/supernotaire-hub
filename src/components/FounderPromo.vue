@@ -3,7 +3,7 @@ import { colors } from "@/utils/colors";
 
 const features = ref([
   {
-    text: "1 an de EasyCase Premium dès sa sortie",
+    text: "1 an d'EasyCase Premium dès sa sortie",
   },
   {
     text: "-30% à vie sur EasyCase Premium",
@@ -23,10 +23,8 @@ const features = ref([
         Devenez un Fondateur d'EasyCase
       </h2>
       <p class="founder-promo__text__subtitle">
-        Bénéficiez de notre offre exclusive limitée aux 100 premiers
-        adoptants.<br />
-        Profitez d'avantages uniques et contribuez à façonner l'avenir de la
-        profession notariale.
+        Bénéficiez de notre offre exclusive limitée aux 100 premiers adoptants
+        et contribuez à façonner l'avenir de la profession notariale.
       </p>
     </div>
     <ul class="founder-promo__list">
@@ -37,7 +35,7 @@ const features = ref([
       >
         <UIIconComponent
           icon="check_circle"
-          :color="colors['accent-color']"
+          :color="colors['primary-color']"
           size="1.21rem"
         />
         {{ feature.text }}
@@ -48,7 +46,7 @@ const features = ref([
       target="_blank"
       class="founder-promo__link"
     >
-      <UIPrimaryButton variant="accent-color" icon="hand_heart_fill">
+      <UIPrimaryButton variant="primary-color" icon="hand_heart_fill">
         Devenir Notaire Fondateur
       </UIPrimaryButton>
     </NuxtLink>
@@ -63,9 +61,10 @@ const features = ref([
   gap: 2rem;
   color: $text-color;
   width: 100%;
-  background-color: $primary-color;
-  border-radius: calc($radius/2);
+  background-color: $accent-color;
   padding: 2rem;
+  max-width: 2000px;
+  margin: 0 auto;
 
   @media (min-width: $big-tablet-screen) {
     padding: 4rem 2rem;
@@ -91,6 +90,7 @@ const features = ref([
       font-size: 1.5rem;
       font-weight: $semi-bold;
       text-wrap: balance;
+      color: $primary-color;
 
       @media (min-width: $big-tablet-screen) {
         font-size: 2.5rem;
@@ -102,6 +102,7 @@ const features = ref([
       line-height: 1.35;
       font-weight: $regular;
       color: rgba($text-color, 0.7);
+      color: $primary-color;
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
@@ -120,6 +121,7 @@ const features = ref([
       gap: 0.5rem;
       font-size: 1rem;
       font-weight: $regular;
+      color: $primary-color;
 
       &:nth-of-type(1) {
         font-weight: $semi-bold;

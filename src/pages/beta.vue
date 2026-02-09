@@ -285,7 +285,7 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     </div>
     <ReviewsCarousel :reviews
   /></Container>
-  <Container><FounderPromo /></Container>
+  <FounderPromo />
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
     <FAQComponent :questions />
