@@ -201,8 +201,11 @@ onMounted(() => {
     <UISecondaryButton
       variant="accent-color"
       icon="download"
+      direction="row-reverse"
       :disabled="fullLoading"
       @click="openModalOrDownload"
+      @keydown.enter="openModalOrDownload"
+      @keydown.space="openModalOrDownload"
     >
       Exporter le récapitulatif
     </UISecondaryButton>
@@ -210,6 +213,9 @@ onMounted(() => {
       :variant="wipeStatusVariant"
       :icon="wipeStatusIcon"
       @click="wipeAll"
+      @keydown.enter="wipeAll"
+      @keydown.space="wipeAll"
+      direction="row-reverse"
       style="margin-top: 0"
     >
       Supprimer les données
