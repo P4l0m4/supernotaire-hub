@@ -243,10 +243,10 @@ const questions = [
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div id="checklist-dossier-vente-notaire" class="tool">
       <div class="tool__headlines">
-        <h1 class="tool__headlines__title titles">
+        <h1 class="tool__headlines__title">
           Préparez votre dossier de vente immobilière
         </h1>
-        <span class="tool__headlines__subtitle subtitles">
+        <span class="tool__headlines__subtitle">
           Ne perdez plus de temps sur la vente, vous saurez exactement quels
           documents fournir à votre notaire en quelques minutes.
         </span>

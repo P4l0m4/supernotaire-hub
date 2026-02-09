@@ -129,10 +129,10 @@ useHead({
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div id="pre-etat-date" class="tool">
       <div class="tool__headlines">
-        <h1 class="tool__headlines__title titles">
+        <h1 class="tool__headlines__title">
           Générateur de Pré-état daté gratuit
         </h1>
-        <p class="tool__headlines__subtitle subtitles">
+        <p class="tool__headlines__subtitle">
           Remplissez chaque rubrique pour créer rapidement un Pré-état daté prêt
           à partager à votre notaire.
         </p>
