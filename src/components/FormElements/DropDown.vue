@@ -59,8 +59,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
         size="1.15rem"
         data-tour="tooltip-icon"
         v-tooltip="tooltip"
-        tabindex="0"
-      />
+        tabindex="0" />
       <NuxtLink
         v-else-if="tooltip?.length && tooltipLink?.length"
         :to="tooltipLink"
@@ -93,7 +92,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   width: 100%;
   border: 1px solid rgba($text-color, 0.1);
   border-radius: calc($radius/2);
