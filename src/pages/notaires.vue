@@ -121,6 +121,6 @@ useJsonld(() => ({
     <UIFeaturesList :features="features" />
     <!-- <Tarifs /> -->
   </Container>
-  <Container><FounderPromo /></Container>
+  <FounderPromo />
   <HotjarTracking />
 </template>

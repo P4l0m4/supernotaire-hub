@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useStoryblokApi } from "@storyblok/vue";
 
 import annuaire from "@/assets/images/time-39.svg";
 import dossier from "@/assets/images/files-and-folder-78.svg";
@@ -12,6 +13,9 @@ import ogimage from "@/assets/images/opengraph-banner.webp";
 import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
 
 import { colors } from "@/utils/colors";
+
+const tutorials = ref<any[]>([]);
+const carouselElements = ref<any[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
@@ -84,6 +88,20 @@ useJsonld(() => ({
     "Créez facilement votre dossier de vente immobilière et confiez-le rapidement à un notaire, où que vous soyez.",
   url: `${baseUrl}/vendeurs`,
 }));
+
+onMounted(async () => {
+  const storyblokApi = useStoryblokApi();
+  const { data } = await storyblokApi.get("cdn/stories", {
+    version: "published",
+  });
+  tutorials.value = data.stories[0].content.tutorials;
+
+  carouselElements.value = tutorials.value.map((tutorial: any) => ({
+    link: `/tutoriels/${stringToSlug(tutorial.title)}`,
+    image: tutorial.previewImage.filename,
+    label: tutorial.title,
+  }));
+});
 </script>
 <template>
   <Container>
@@ -157,6 +175,15 @@ useJsonld(() => ({
         </NuxtLink>
       </template>
     </UIDidYouKnow>
+  </Container>
+  <Container>
+    <div class="secondary-headlines">
+      <h2 class="secondary-headlines__title">Tutoriels faciles</h2>
+      <h3 class="secondary-headlines__subtitle">
+        Pour vous guider pas à pas dans vos démarches immobilières.
+      </h3>
+    </div>
+    <UICarouselComponent :carousel-elements="carouselElements" />
   </Container>
   <HotjarTracking />
 </template>

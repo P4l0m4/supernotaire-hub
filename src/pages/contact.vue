@@ -54,7 +54,7 @@ useHead({
           {{ option.text }}
           <UIIconComponent
             icon="copy"
-            :color="colors['text-color-faded']"
+            :color="`${colors['text-color']}70`"
             size="1rem"
             class="contact__options__option__copy-icon"
           />
@@ -75,6 +75,7 @@ useHead({
       </div>
     </div>
   </Container>
+  <Container><UIRoadmap /></Container>
 </template>
 <style lang="scss" scoped>
 .contact {
@@ -162,7 +163,9 @@ useHead({
 
       &__copy-icon {
         margin-left: auto;
-        transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        transition:
+          color 0.2s ease-in-out,
+          transform 0.2s ease-in-out;
       }
     }
   }

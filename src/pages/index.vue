@@ -222,7 +222,7 @@ onMounted(async () => {
     </div>
     <ReviewsCarousel :reviews
   /></Container>
-  <Container><UIRoadmap /></Container>
+
   <Container>
     <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
       <template #text>
@@ -240,9 +240,9 @@ onMounted(async () => {
     </UIDidYouKnow>
   </Container>
   <Container>
-    <div class="headlines">
-      <h2 class="headlines__title">Tutoriels faciles</h2>
-      <h3 class="headlines__subtitle paragraphs">
+    <div class="secondary-headlines">
+      <h2 class="secondary-headlines__title">Tutoriels faciles</h2>
+      <h3 class="secondary-headlines__subtitle">
         Pour vous guider pas à pas dans vos démarches immobilières.
       </h3>
     </div>
