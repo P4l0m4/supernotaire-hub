@@ -632,18 +632,11 @@ watch(
 .dynamic-form {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   gap: 2rem;
-  border-radius: $radius;
-  background-color: $primary-color;
   width: 100%;
   min-width: 280px;
   max-width: 43rem;
   scroll-margin-top: 4rem;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 1.5rem;
-  }
 
   &__title {
     color: $text-color;

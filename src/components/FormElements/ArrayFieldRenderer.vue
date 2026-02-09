@@ -299,172 +299,185 @@ async function applyAllSuggestions() {
         @keydown.space="applyAllSuggestions"
         style="margin-left: auto"
       />
-
-      <UISecondaryButton
-        variant="accent-color"
-        icon="plus_circle"
-        @click="addItem"
-        @keydown.enter="addItem"
-        @keydown.space="addItem"
-      >
-        Ajouter
-      </UISecondaryButton>
     </div>
-
-    <div
-      v-for="(item, idx) in model"
-      :key="item.__id || idx"
-      :ref="(el) => setItemRef(el as HTMLElement, idx)"
-      class="array-item"
-      :class="{
-        'array-item--children-have-errors': childrenErrors.includes(idx),
-      }"
-    >
+    <div class="array-field__items">
       <div
-        class="array-item__title"
-        @click="toggle(item.__id || String(idx))"
-        @keydown.enter="toggle(item.__id || String(idx))"
-        @keydown.space="toggle(item.__id || String(idx))"
-        role="button"
-        tabindex="0"
-        :aria-label="
-          isCollapsed(item.__id || String(idx)) ? 'Déplier' : 'Replier'
-        "
-        :aria-expanded="!isCollapsed(item.__id || String(idx))"
+        v-for="(item, idx) in model"
+        :key="item.__id || idx"
+        :ref="(el) => setItemRef(el as HTMLElement, idx)"
+        class="array-item"
+        :class="{
+          'array-item--children-have-errors': childrenErrors.includes(idx),
+        }"
       >
-        <span>{{ labelFor(idx, field.itemLabel) }}</span>
-
-        <UIIconComponent
-          :icon="
-            isCollapsed(item.__id || String(idx))
-              ? 'caret_down_bold'
-              : 'caret_up_bold'
+        <div
+          class="array-item__title"
+          @click="toggle(item.__id || String(idx))"
+          @keydown.enter="toggle(item.__id || String(idx))"
+          @keydown.space="toggle(item.__id || String(idx))"
+          role="button"
+          tabindex="0"
+          :aria-label="
+            isCollapsed(item.__id || String(idx)) ? 'Déplier' : 'Replier'
           "
-          size="1rem"
-          :color="colors['text-color-faded']"
-          style="opacity: 0.8; margin-left: auto"
-        />
-      </div>
+          :aria-expanded="!isCollapsed(item.__id || String(idx))"
+        >
+          <span>{{ labelFor(idx, field.itemLabel) }}</span>
 
-      <div
-        class="array-item__grid"
-        v-show="!isCollapsed(item.__id || String(idx))"
-      >
-        <template v-for="(f, index) in itemFields" :key="index">
-          <label class="fi" v-if="isSubFieldVisible(item, f)">
-            <span
-              v-if="f.type !== 'checkbox' && f.type !== 'checkbox-group'"
-              class="fi__label"
-              >{{ f.label
-              }}<UIIconComponent
-                v-if="isSubFieldRequired(item, f)"
-                icon="asterisk"
-                size="0.75rem"
-                :color="colors['error-color']"
-              />
-            </span>
+          <UIIconComponent
+            :icon="
+              isCollapsed(item.__id || String(idx))
+                ? 'caret_down_bold'
+                : 'caret_up_bold'
+            "
+            size="1rem"
+            :color="colors['text-color-faded']"
+            style="opacity: 0.8; margin-left: auto"
+          />
+        </div>
 
-            <FormElementsInputField
-              v-if="
-                f.type === 'text' || f.type === 'number' || f.type === 'email'
-              "
-              :id="f.label"
-              :label="f.label"
-              :placeholder="f.placeholder || ''"
-              :type="f.type"
-              :name="f.path"
-              :model-value="getByPath(item, f.path)"
-              @update:modelValue="
-                (val) => {
-                  updateItem(idx, f.path, val);
-                }
-              "
-              :required="f.required"
-              :icon="f.icon || ''"
-              :error="firstItemMsg(idx, f.path)"
-              :tooltip="f.tooltip"
-              :tooltipLink="f.tooltipLink"
-            />
+        <div
+          class="array-item__grid"
+          v-show="!isCollapsed(item.__id || String(idx))"
+        >
+          <template v-for="(f, index) in itemFields" :key="index">
+            <label class="fi" v-if="isSubFieldVisible(item, f)">
+              <span
+                v-if="f.type !== 'checkbox' && f.type !== 'checkbox-group'"
+                class="fi__label"
+                >{{ f.label
+                }}<UIIconComponent
+                  v-if="isSubFieldRequired(item, f)"
+                  icon="asterisk"
+                  size="0.75rem"
+                  :color="colors['error-color']"
+                />
+              </span>
 
-            <FormElementsSelectField
-              v-if="f.type === 'select'"
-              :options="f.options || []"
-              :model-value="getByPath(item, f.path)"
-              @option-selected="
-                (val) => updateItem(idx, f.path, val || defaultForType(f.type))
-              "
-              :placeholder="f.placeholder || ''"
-              :icon="f.icon || ''"
-              :error="firstItemMsg(idx, f.path)"
-            />
-            <FormElementsCheckboxField
-              v-else-if="f.type === 'checkbox'"
-              :label="f.label"
-              :id="`${f.id || f.path}-${idx}`"
-              :name="f.name || f.path"
-              :modelValue="Boolean(getByPath(item, f.path))"
-              @update:modelValue="
-                (val) => updateCheckbox(idx, f.path, Boolean(val))
-              "
-              :error="firstItemMsg(idx, f.path)"
-            />
-            <FormElementsDropDown
-              v-else-if="f.type === 'checkbox-group'"
-              :label="f.placeholder || f.label"
-              :icon="f.icon"
-              :error="firstItemMsg(idx, f.path)"
-              :required="Boolean(f.required)"
-            >
-              <FormElementsCheckboxField
-                v-for="(option, cIdx) in f.options"
-                :key="cIdx"
-                :id="`${f.id || f.path}-${idx}-${cIdx}`"
-                :name="f.name || f.path"
-                :label="option.label"
-                :modelValue="
-                  checkboxGroupValues(item, f.path).includes(option.value)
+              <FormElementsInputField
+                v-if="
+                  f.type === 'text' || f.type === 'number' || f.type === 'email'
                 "
-                @update:modelValue="
-                  (val) =>
-                    toggleCheckboxGroup(idx, f.path, option.value, Boolean(val))
-                "
-              />
-            </FormElementsDropDown>
-            <ClientOnly v-else-if="f.type === 'date'">
-              <FormElementsDateField
                 :id="f.label"
                 :label="f.label"
-                :model-value="getByPath(item, f.path)"
-                @update:modelValue="(val) => updateItem(idx, f.path, val)"
                 :placeholder="f.placeholder || ''"
-                :mode="f.mode"
+                :type="f.type"
+                :name="f.path"
+                :model-value="getByPath(item, f.path)"
+                @update:modelValue="
+                  (val) => {
+                    updateItem(idx, f.path, val);
+                  }
+                "
+                :required="f.required"
+                :icon="f.icon || ''"
+                :error="firstItemMsg(idx, f.path)"
+                :tooltip="f.tooltip"
+                :tooltipLink="f.tooltipLink"
+              />
+
+              <FormElementsSelectField
+                v-if="f.type === 'select'"
+                :options="f.options || []"
+                :model-value="getByPath(item, f.path)"
+                @option-selected="
+                  (val) =>
+                    updateItem(idx, f.path, val || defaultForType(f.type))
+                "
+                :placeholder="f.placeholder || ''"
+                :icon="f.icon || ''"
                 :error="firstItemMsg(idx, f.path)"
               />
-            </ClientOnly>
-            <UISmartSuggestion
-              v-if="
-                hasSuggestion(idx, f) &&
-                suggestionFor(idx, f) !== getByPath(item, f.path)
-              "
-              :suggestion="String(suggestionFor(idx, f))"
-              @click="
-                () => updateItem(idx, f.path, suggestionFor(idx, f) as any)
-              "
-            />
-          </label>
-        </template>
+              <FormElementsCheckboxField
+                v-else-if="f.type === 'checkbox'"
+                :label="f.label"
+                :id="`${f.id || f.path}-${idx}`"
+                :name="f.name || f.path"
+                :modelValue="Boolean(getByPath(item, f.path))"
+                @update:modelValue="
+                  (val) => updateCheckbox(idx, f.path, Boolean(val))
+                "
+                :error="firstItemMsg(idx, f.path)"
+              />
+              <FormElementsDropDown
+                v-else-if="f.type === 'checkbox-group'"
+                :label="f.placeholder || f.label"
+                :icon="f.icon"
+                :error="firstItemMsg(idx, f.path)"
+                :required="Boolean(f.required)"
+              >
+                <FormElementsCheckboxField
+                  v-for="(option, cIdx) in f.options"
+                  :key="cIdx"
+                  :id="`${f.id || f.path}-${idx}-${cIdx}`"
+                  :name="f.name || f.path"
+                  :label="option.label"
+                  :modelValue="
+                    checkboxGroupValues(item, f.path).includes(option.value)
+                  "
+                  @update:modelValue="
+                    (val) =>
+                      toggleCheckboxGroup(
+                        idx,
+                        f.path,
+                        option.value,
+                        Boolean(val),
+                      )
+                  "
+                />
+              </FormElementsDropDown>
+              <ClientOnly v-else-if="f.type === 'date'">
+                <FormElementsDateField
+                  :id="f.label"
+                  :label="f.label"
+                  :model-value="getByPath(item, f.path)"
+                  @update:modelValue="(val) => updateItem(idx, f.path, val)"
+                  :placeholder="f.placeholder || ''"
+                  :mode="f.mode"
+                  :error="firstItemMsg(idx, f.path)"
+                />
+              </ClientOnly>
+              <UISmartSuggestion
+                v-if="
+                  hasSuggestion(idx, f) &&
+                  suggestionFor(idx, f) !== getByPath(item, f.path)
+                "
+                :suggestion="String(suggestionFor(idx, f))"
+                @click="
+                  () => updateItem(idx, f.path, suggestionFor(idx, f) as any)
+                "
+              />
+            </label>
+          </template>
+        </div>
+        <UITertiaryButton
+          variant="error-color"
+          type="button"
+          @click="removeItem(idx)"
+          @keydown.enter="removeItem(idx)"
+          @keydown.space="removeItem(idx)"
+          style="margin-left: auto"
+        >
+          Supprimer
+        </UITertiaryButton>
       </div>
-      <UITertiaryButton
-        variant="error-color"
-        type="button"
-        @click="removeItem(idx)"
-        @keydown.enter="removeItem(idx)"
-        @keydown.space="removeItem(idx)"
-        style="margin-left: auto"
-      >
-        Supprimer
-      </UITertiaryButton>
     </div>
+    <span
+      class="add-button"
+      role="button"
+      tabindex="0"
+      @click="addItem"
+      @keydown.enter="addItem"
+      @keydown.space="addItem"
+    >
+      <UITertiaryButton
+        variant="accent-color"
+        icon="plus_circle"
+        direction="row-reverse"
+      >
+        Ajouter un élément
+      </UITertiaryButton></span
+    >
   </div>
 </template>
 
@@ -472,15 +485,13 @@ async function applyAllSuggestions() {
 .array-field {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba($text-color, 0.1);
-  border-radius: calc($radius / 2);
-  padding: 0.75rem;
   gap: 0.75rem;
   position: relative;
 
   &--has-error {
     border: 1px solid rgba($error-color, 0.1);
     background-color: rgba($error-color, 0.1);
+    border-radius: calc($radius/2);
   }
 
   &__error {
@@ -511,6 +522,16 @@ async function applyAllSuggestions() {
     color: $text-color;
     font-weight: $regular;
     display: flex;
+    width: 100%;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid rgba($text-color, 0.1);
+    border-radius: calc($radius/2);
+    padding: 1rem;
   }
 }
 
@@ -569,6 +590,20 @@ async function applyAllSuggestions() {
     font-size: 12px;
     color: $text-color;
     margin-bottom: 4px;
+  }
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  border: 2px dashed rgba($text-color, 0.2);
+  border-radius: calc($radius/2);
+  padding: 1.5rem 0.75rem;
+  transition: 0.3s border-color;
+
+  &:hover {
+    border-color: rgba($accent-color, 1);
+    cursor: pointer;
   }
 }
 </style>

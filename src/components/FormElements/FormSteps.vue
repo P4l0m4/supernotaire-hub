@@ -22,7 +22,7 @@ watch(
   () => props.stepsState.find((s) => s.isCurrentStep),
   () => {
     const stepElement = document.querySelector(
-      `.form-steps__item--active`
+      `.form-steps__item--active`,
     ) as HTMLElement;
     if (stepElement) {
       stepElement.scrollIntoView({
@@ -31,7 +31,7 @@ watch(
         inline: "center",
       });
     }
-  }
+  },
 );
 </script>
 <template>
@@ -123,16 +123,18 @@ watch(
     cursor: pointer;
     gap: 0.5rem;
     width: fit-content;
-    background-color: $primary-color;
+    background-color: $base-color;
     border-radius: $radius;
     color: $text-color-faded;
     z-index: 1;
-    transition: color linear 0.3s, background-color linear 0.3s,
+    transition:
+      color linear 0.3s,
+      background-color linear 0.3s,
       border linear 0.3s;
 
     &--active {
       color: $accent-color;
-      background-color: $primary-color;
+      background-color: $base-color;
       border: none;
 
       & > .form-steps__item__circle {
@@ -151,7 +153,7 @@ watch(
 
     &--completed {
       color: rgba($accent-color, 0.6);
-      background-color: $primary-color;
+      background-color: $base-color;
       border: none;
 
       & > .form-steps__item__circle {
@@ -162,7 +164,7 @@ watch(
 
     &--error {
       color: rgba($error-color, 0.6);
-      background-color: $primary-color;
+      background-color: $base-color;
       border: none;
 
       & > .form-steps__item__circle {
@@ -174,7 +176,7 @@ watch(
     @media (min-width: $desktop-screen) {
       flex-direction: row;
       border: none;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
 
       &:nth-of-type(1) {
         padding-left: 0;
@@ -190,24 +192,26 @@ watch(
       align-items: center;
       border-radius: 50%;
       background-color: rgba($accent-color, 0.1);
-      padding: 1rem;
-      height: 2.75rem;
-      min-height: 2.75rem;
-      width: 2.75rem;
-      min-width: 2.75rem;
-      transition: background-color linear 0.3s, border-color linear 0.3s,
+      padding: 0.5rem;
+      height: 2rem;
+      min-height: 2rem;
+      width: 2rem;
+      min-width: 2rem;
+      transition:
+        background-color linear 0.3s,
+        border-color linear 0.3s,
         color linear 0.3s;
 
       &__number {
         font-weight: $regular;
-        font-size: 1.25rem;
+        font-size: 1rem;
         display: flex;
         color: $accent-color;
       }
     }
 
     &__label {
-      font-size: 1.25rem;
+      font-size: 1rem;
       font-weight: $regular;
       white-space: nowrap;
       display: none;
