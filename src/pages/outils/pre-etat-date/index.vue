@@ -132,10 +132,6 @@ useHead({
         <h1 class="tool__headlines__title">
           Générateur de Pré-état daté gratuit
         </h1>
-        <p class="tool__headlines__subtitle">
-          Remplissez chaque rubrique pour créer rapidement un Pré-état daté prêt
-          à partager à votre notaire.
-        </p>
       </div>
       <div class="tool__content">
         <PreEtatDateListeRubriques />

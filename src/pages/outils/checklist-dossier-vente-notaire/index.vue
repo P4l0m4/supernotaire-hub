@@ -246,10 +246,6 @@ const questions = [
         <h1 class="tool__headlines__title">
           Préparez votre dossier de vente immobilière
         </h1>
-        <span class="tool__headlines__subtitle">
-          Ne perdez plus de temps sur la vente, vous saurez exactement quels
-          documents fournir à votre notaire en quelques minutes.
-        </span>
       </div>
 
       <div class="tool__content">
