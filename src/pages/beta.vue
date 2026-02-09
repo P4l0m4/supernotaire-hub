@@ -39,54 +39,29 @@ const featureCards = [
 
 const steps = [
   {
-    name: "Ouverture du dossier",
-    beforeHours: 1.5,
-    afterHours: 0.4,
-    description: "Création du dossier, saisie des informations client et bien",
-  },
-  {
-    name: "Collecte & vérifications",
-    beforeHours: 6.0,
-    afterHours: 1.9,
-    description:
-      "Collecte des pièces, vérifications juridiques et administratives",
-  },
-  {
-    name: "Rédaction des documents",
-    beforeHours: 3.5,
-    afterHours: 1.5,
-    description: "Avant-contrats, compromis, procurations, promesses, etc.",
+    name: "Collecte de pièces",
+    beforeHours: 4,
+    afterHours: 0.2,
   },
   {
     name: "Communication & relances",
     beforeHours: 2.5,
-    afterHours: 1.0,
-    description:
-      "Échanges avec clients & agences, relances, planification, etc.",
+    afterHours: 0.5,
   },
   {
     name: "Simulation & calculs notariés",
     beforeHours: 2.0,
     afterHours: 0.5,
-    description: "Calculs, frais, plus-values, droits d’enregistrement, etc.",
   },
   {
-    name: "Préparation de l’acte",
-    beforeHours: 2.5,
-    afterHours: 1.1,
-    description: "Mise en forme, relecture, saisie.",
+    name: "Préparation & rédaction de documents",
+    beforeHours: 6.0,
+    afterHours: 4,
   },
   {
-    name: "RDV & signatures",
-    beforeHours: 3.0,
-    afterHours: 2,
-    description: "Organisation du rendez-vous, signature et explications.",
-  },
-  {
-    name: "Formalités postérieures",
-    beforeHours: 1.4,
-    afterHours: 0.7,
-    description: "Publication, enregistrement & clôture du dossier.",
+    name: "Formalités",
+    beforeHours: 2,
+    afterHours: 1.5,
   },
 ];
 
@@ -297,8 +272,10 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
           title: 'Gain de temps immédiat',
           icon: 'clock_countdown',
         },
-      ]" /><ComparativeTimeChart :steps="steps"
-  /></Container>
+      ]"
+    />
+    <ChartsTimeSaved :items="steps" />
+  </Container>
   <Container
     ><div class="secondary-headlines">
       <h2 class="secondary-headlines__title">Témoignages</h2>
@@ -312,9 +289,9 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
   <Container
     ><h3 class="feature-cards__title">Questions fréquentes</h3>
     <FAQComponent :questions />
+    <UILogosCarousel />
   </Container>
 
-  <Container><UILogosCarousel /></Container>
   <HotjarTracking />
 </template>
 <style lang="scss" scoped>
