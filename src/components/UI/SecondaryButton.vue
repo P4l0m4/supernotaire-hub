@@ -64,19 +64,23 @@ withDefaults(defineProps<Props>(), {
   font-weight: $regular;
 
   @media (min-width: $big-tablet-screen) {
-    transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, box-shadow 0.2s linear, gap 0.2s linear;
+    transition:
+      background-color 0.3s linear,
+      color 0.3s linear,
+      border-color 0.3s linear,
+      box-shadow 0.2s linear,
+      gap 0.2s linear;
 
     &:hover {
       box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
       gap: 1rem;
 
       & .icon {
-        transform: translateX(0.5rem);
+        transform: translateX(0.25rem);
       }
 
       & .icon--reverse {
-        transform: translateX(-0.5rem);
+        transform: translateX(-0.25rem);
       }
     }
   }

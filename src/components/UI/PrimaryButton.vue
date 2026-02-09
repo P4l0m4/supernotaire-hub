@@ -87,8 +87,11 @@ const iconColor = computed(() => {
 
   @media (min-width: $big-tablet-screen) {
     box-shadow: 0 0 0 0 rgba($text-color, 0);
-    transition: background-color 0.3s linear, color 0.3s linear,
-      border-color 0.3s linear, filter 0.3s linear,
+    transition:
+      background-color 0.3s linear,
+      color 0.3s linear,
+      border-color 0.3s linear,
+      filter 0.3s linear,
       background-position 1.5s linear;
 
     &:hover {
@@ -96,11 +99,11 @@ const iconColor = computed(() => {
       filter: drop-shadow(10px 10px 10px rgba($text-color, 0.1));
 
       & .icon {
-        transform: translateX(0.5rem);
+        transform: translateX(0.25rem);
       }
 
       & .icon--reverse {
-        transform: translateX(-0.5rem);
+        transform: translateX(-0.25rem);
       }
     }
   }
