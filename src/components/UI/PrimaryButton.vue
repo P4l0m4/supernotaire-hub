@@ -81,7 +81,7 @@ const iconColor = computed(() => {
   gap: 0.75rem;
   justify-content: center;
   align-items: center;
-  border-radius: calc($radius/2);
+  border-radius: calc($radius * 2);
   font-weight: $regular;
   position: relative;
 

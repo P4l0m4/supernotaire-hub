@@ -192,7 +192,7 @@ function selectOption(option: string) {
     top: 3.4rem;
     background-color: $primary-color;
     border-radius: 0 0 calc($radius/2) calc($radius/2);
-    width: calc(100% - 1.75rem);
+    width: 100%;
     overflow-y: scroll;
     max-height: 240px;
     border: 1px solid $accent-color-faded;

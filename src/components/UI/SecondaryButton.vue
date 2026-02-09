@@ -60,7 +60,7 @@ withDefaults(defineProps<Props>(), {
   gap: 0.75rem;
   justify-content: center;
   align-items: center;
-  border-radius: calc($radius/2);
+  border-radius: calc($radius * 2);
   font-weight: $regular;
 
   @media (min-width: $big-tablet-screen) {

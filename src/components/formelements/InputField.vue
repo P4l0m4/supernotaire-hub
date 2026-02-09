@@ -48,7 +48,11 @@ const onInput = (event: Event) => {
     value = value.replace(/\D+/g, "");
   }
 
-  if (props.maxLength && props.maxLength > 0 && value.length > props.maxLength) {
+  if (
+    props.maxLength &&
+    props.maxLength > 0 &&
+    value.length > props.maxLength
+  ) {
     value = value.slice(0, props.maxLength);
   }
 
