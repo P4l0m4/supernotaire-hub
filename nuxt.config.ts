@@ -3,6 +3,7 @@ import {
   getTutorialPages,
   getRubriquesPages,
   getPreEtatDatePages,
+  getArticlesPages,
 } from "./src/utils/sitemap";
 
 export default defineNuxtConfig({
@@ -95,12 +96,13 @@ export default defineNuxtConfig({
       const notariesPages = getNotariesPages();
       const rubriquePages = await getRubriquesPages();
       const preEtatDatePages = await getPreEtatDatePages();
-
+      const articlesPages = await getArticlesPages();
       return [
         ...tutorialPages,
         ...notariesPages,
         ...rubriquePages,
         ...preEtatDatePages,
+        ...articlesPages,
       ];
     },
   },

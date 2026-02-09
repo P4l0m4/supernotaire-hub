@@ -24,6 +24,16 @@ export async function getTutorialPages() {
   }));
 }
 
+export async function getArticlesPages() {
+  const response = await Storyblok.get("cdn/stories/articles", {});
+  const articles = response.data.story.content.articles;
+  return articles.map((a: any) => ({
+    loc: `/articles/${stringToSlug(a.title)}`,
+    changefreq: "daily",
+    priority: 0.9,
+  }));
+}
+
 export function getNotariesPages() {
   return notariesPages.map((page) => ({
     loc: `/annuaire/departement${page.slug}`,
