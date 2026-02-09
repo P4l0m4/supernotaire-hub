@@ -73,7 +73,7 @@ function selectOption(option: string) {
         v-if="icon?.length"
         :icon="icon"
         size="1rem"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
       />
       <span class="select-field__selected__placeholder">{{ displayText }}</span>
 
@@ -81,7 +81,7 @@ function selectOption(option: string) {
         <UIIconComponent
           :icon="isSelectOpen ? 'caret_up_bold' : 'caret_down_bold'"
           size="1rem"
-          :color="colors['text-color-faded']"
+          :color="`${colors['text-color']}70`"
         />
       </span>
     </span>
@@ -90,7 +90,7 @@ function selectOption(option: string) {
         v-if="tooltip && !tooltipLink"
         icon="info"
         size="1.2rem"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
         data-tour="tooltip-icon"
         v-tooltip="tooltip"
         :aria-label="tooltip"
@@ -105,7 +105,7 @@ function selectOption(option: string) {
         <UIIconComponent
           icon="info"
           size="1.2rem"
-          :color="colors['text-color-faded']"
+          :color="`${colors['text-color']}70`"
           data-tour="tooltip-icon"
         />
       </NuxtLink>
@@ -124,7 +124,7 @@ function selectOption(option: string) {
         :style="{
           opacity: optionSelected === option ? 0.6 : 1,
           backgroundColor:
-            optionSelected === option ? colors['accent-color-faded'] : '',
+            optionSelected === option ? `${colors['accent-color']}70` : '',
         }"
         >{{ option }}</span
       >
@@ -154,8 +154,8 @@ function selectOption(option: string) {
     max-height: 55px;
 
     &--open {
-      border: 1px solid $accent-color-faded;
-      box-shadow: 0 0px 6px 0px $accent-color-faded;
+      border: 1px solid rgba($accent-color, 0.1);
+      box-shadow: 0 0px 6px 0px rgba($accent-color, 0.1);
       border-radius: calc($radius/2) calc($radius/2) 0 0;
     }
 
@@ -195,8 +195,8 @@ function selectOption(option: string) {
     width: 100%;
     overflow-y: scroll;
     max-height: 240px;
-    border: 1px solid $accent-color-faded;
-    box-shadow: 0 2px 10px -2px $accent-color-faded;
+    border: 1px solid rgba($accent-color, 0.3);
+    box-shadow: 0 2px 10px -2px rgba($accent-color, 0.3);
     z-index: 2;
 
     @media (min-width: $big-tablet-screen) {

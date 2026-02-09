@@ -52,7 +52,7 @@ defineProps<{
 
   &__text {
     font-size: 1rem;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     text-wrap: balance;
     line-height: 1.35;
 

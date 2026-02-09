@@ -60,7 +60,7 @@ useJsonld(() => ({
   &__author {
     font-weight: $regular;
     font-size: $small-text;
-    color: $primary-color-faded;
+    color: rgba($primary-color, 0.1);
   }
 }
 </style>

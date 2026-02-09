@@ -74,7 +74,7 @@ defineProps<props>();
     &__title {
       font-size: 1rem;
       font-weight: $medium;
-      background-color: $success-color-faded;
+      background-color: rgba($success-color, 0.3);
       padding: 0.75rem;
       text-align: center;
       width: 100%;
@@ -107,7 +107,7 @@ defineProps<props>();
       font-size: 1rem;
       line-height: 1.35;
       font-weight: $regular;
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       text-align: center;
       text-wrap: balance;
 

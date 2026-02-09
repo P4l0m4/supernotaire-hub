@@ -441,7 +441,7 @@ onMounted(async () => {
         display: flex;
         align-items: center;
         gap: 0.25rem;
-        color: $text-color-faded;
+        color: rgba($text-color, 0.7);
         font-size: 0.85rem;
         font-weight: $regular;
 

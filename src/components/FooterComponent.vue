@@ -154,7 +154,7 @@
   gap: 2rem;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid $accent-color-faded;
+  border-top: 1px solid rgba($accent-color, 0.3);
   max-width: 2000px;
   margin: 0 auto;
 

@@ -6,12 +6,12 @@ interface Props {
     | "accent-color"
     | "base-color"
     | "text-color"
-    | "text-color-faded"
     | "primary-color"
     | "error-color"
     | "success-color"
     | "warning-color"
     | "purple-color";
+  faded?: boolean;
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   icon?: string;
   iconSize?: string;
@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
       flexDirection: direction,
       fontSize,
       color: variant ? colors[variant] : colors['text-color'],
+      opacity: faded ? 0.7 : 1,
     }"
   >
     <span class="button__text"><slot /></span>

@@ -125,7 +125,7 @@ watch(
     width: fit-content;
     background-color: $base-color;
     border-radius: $radius;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     z-index: 1;
     transition:
       color linear 0.3s,
@@ -157,7 +157,7 @@ watch(
       border: none;
 
       & > .form-steps__item__circle {
-        background-color: $accent-color-faded;
+        background-color: rgba($accent-color, 0.1);
         color: $primary-color;
       }
     }
@@ -168,7 +168,7 @@ watch(
       border: none;
 
       & > .form-steps__item__circle {
-        background-color: $error-color-faded;
+        background-color: rgba($error-color, 0.1);
         color: $primary-color;
       }
     }

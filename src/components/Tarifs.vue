@@ -145,7 +145,7 @@ const plans = ref([
           ></NuxtLink
         >
         <NuxtLink to="/faq-notaires" aria-label="Foire aux questions"
-          ><UITertiaryButton variant="text-color-faded"
+          ><UITertiaryButton variant="text-color" faded
             >Foire Aux Questions</UITertiaryButton
           ></NuxtLink
         >
@@ -263,7 +263,7 @@ const plans = ref([
           &__frequency {
             font-size: 1rem;
             font-weight: $regular;
-            color: $text-color-faded;
+            color: rgba($text-color, 0.7);
           }
         }
       }

@@ -118,7 +118,7 @@ const steps = [
     &__subtitle {
       text-align: center;
       font-size: 1rem;
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       text-wrap: balance;
       line-height: 1.35;
 
@@ -140,7 +140,9 @@ const steps = [
     padding: 1rem;
     border-radius: $radius;
     border: 1px solid transparent;
-    transition: background-color 0.3s ease, border 0.3s ease,
+    transition:
+      background-color 0.3s ease,
+      border 0.3s ease,
       backdrop-filter 0.3s ease;
 
     @media (min-width: $laptop-screen) {

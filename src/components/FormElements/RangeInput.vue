@@ -76,8 +76,8 @@ input[type="range"] {
     to right,
     $accent-color 0,
     $accent-color var(--filled),
-    $accent-color-faded var(--filled),
-    $accent-color-faded 100%
+    rgba($accent-color, 0.1) var(--filled),
+    rgba($accent-color, 0.1) 100%
   );
 }
 
@@ -85,7 +85,7 @@ input[type="range"] {
 input[type="range"]::-ms-track {
   height: 1rem;
   border-radius: $radius;
-  background: $accent-color-faded;
+  background: rgba($accent-color, 0.1);
   border: none;
   color: transparent; /* sinon la piste est rayée sur IE */
 }

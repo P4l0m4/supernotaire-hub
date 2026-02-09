@@ -32,7 +32,7 @@ function select(label: string) {
   model.value = label;
   nextTick(() => {
     const active = document.querySelector<HTMLInputElement>(
-      `input[value="${label}"]`
+      `input[value="${label}"]`,
     );
     active?.focus();
   });
@@ -70,7 +70,7 @@ function select(label: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: $accent-color-faded;
+  background: rgba($accent-color, 0.1);
   border-radius: calc($radius/2);
   overflow: hidden;
   height: 44px;

@@ -26,12 +26,12 @@ const local = computed({
 
 const debouncedSearch = useDebounceFn(
   () => emit("search", props.modelValue),
-  props.delay ?? 350
+  props.delay ?? 350,
 );
 
 watch(
   () => props.modelValue,
-  () => debouncedSearch()
+  () => debouncedSearch(),
 );
 </script>
 
@@ -43,7 +43,7 @@ watch(
     @click="debouncedSearch()"
     @keyup.enter="debouncedSearch()"
   >
-    <UIIconComponent icon="search" :color="colors['text-color-faded']" />
+    <UIIconComponent icon="search" :color="`${colors['text-color']}70`" />
 
     <input
       type="search"
@@ -78,7 +78,7 @@ watch(
 
   &:focus-within {
     border: 1px solid $accent-color;
-    box-shadow: 0 0px 6px 0px $accent-color-faded;
+    box-shadow: 0 0px 6px 0px rgba($accent-color, 0.1);
   }
 
   &__input {
@@ -97,7 +97,7 @@ watch(
     display: inline-block;
 
     &::placeholder {
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       font-size: 1rem;
       font-weight: $regular;
     }

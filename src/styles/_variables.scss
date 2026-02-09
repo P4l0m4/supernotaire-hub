@@ -6,32 +6,33 @@ $super-big-screen: 2400px;
 
 //COLORS
 $base-color: #f3f6fd;
-$primary-color: #fbfbff;
-$secondary-color: #00065c;
-$accent-color: #3185ff;
-$text-color: #22262e;
-$text-color-alt: $primary-color;
-$error-color: #f43f5e;
-$warning-color: #f59e0b;
-$success-color: #10b981;
-$gold-color: #ffe492;
-$loading-color: $secondary-color;
-$pink-color: #ff91af;
-$blue-color: #8082ab;
-$purple-color: #9035ff;
 
-$text-color-faded: rgba($text-color, 0.6);
-$primary-color-faded: rgba($primary-color, 0.5);
-$secondary-color-faded: rgba($secondary-color, 0.3);
-$accent-color-faded: rgba($accent-color, 0.3);
-$error-color-faded: rgba($error-color, 0.2);
-$success-color-faded: rgba($success-color, 0.3);
-$warning-color-faded: rgba($warning-color, 0.3);
-$loading-color-faded: rgba($loading-color, 0.3);
-$pink-color-faded: rgba($pink-color, 0.6);
-$blue-color-faded: rgba($blue-color, 0.6);
-$purple-color-faded: rgba($purple-color, 0.3);
-$border-color-faded: rgba($text-color, 0.06);
+$primary-color: #fbfbff;
+
+$secondary-color: #00065c;
+
+$accent-color: #3185ff;
+
+$text-color: #22262e;
+
+$text-color-alt: $primary-color;
+
+$error-color: #f43f5e;
+
+$warning-color: #f59e0b;
+
+$success-color: #10b981;
+
+$gold-color: #ffe492;
+
+$loading-color: $secondary-color;
+
+$pink-color: #ff91af;
+
+$blue-color: #8082ab;
+
+$purple-color: #a855f7;
+
 $transparent-light: rgba($primary-color, 0.1);
 $transparent-dark: rgba($text-color, 0.1);
 

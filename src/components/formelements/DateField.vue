@@ -67,7 +67,7 @@ const monthBridge = computed<Date | number | null>({
     <UIIconComponent
       v-if="icon"
       :icon="icon"
-      :color="colors['text-color-faded']"
+      :color="`${colors['text-color']}70`"
       size="1rem"
     />
     <VueDatePicker
@@ -152,14 +152,14 @@ const monthBridge = computed<Date | number | null>({
   }
 
   &:focus-within {
-    border: 1px solid $accent-color-faded;
-    box-shadow: 0 0px 6px 0px $accent-color-faded;
+    border: 1px solid rgba($accent-color, 0.1);
+    box-shadow: 0 0px 6px 0px rgba($accent-color, 0.1);
   }
 
   &__error {
     display: inline-block;
     position: absolute;
-    color: $error-color;
+    color: rgba($error-color, 0.7);
     font-size: $small-text;
     bottom: 0rem;
     right: 0;

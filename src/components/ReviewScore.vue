@@ -36,7 +36,7 @@ const averageScore = computed(() => {
   align-items: center;
   gap: 1rem;
   font-size: 0.75rem;
-  color: $text-color-faded;
+  color: rgba($text-color, 0.7);
 
   @media (min-width: $big-tablet-screen) {
     font-size: 1rem;

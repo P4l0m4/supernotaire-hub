@@ -45,7 +45,7 @@ defineProps<Props>();
 
   .paragraphs {
     margin-top: -0.7rem;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
   }
 }
 </style>

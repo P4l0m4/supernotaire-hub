@@ -25,13 +25,16 @@ defineProps<{
   color: $purple-color;
   font-size: $small-text;
   font-weight: $regular;
-  border: 1px solid $purple-color-faded;
+  border: 1px solid rgba($purple-color, 0.3);
   width: fit-content;
   border-radius: calc($radius / 2);
   padding: 0.5rem 0.5rem;
   cursor: pointer;
   max-width: 100%;
-  transition: transform 0.2s linear, color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s linear,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-3px);

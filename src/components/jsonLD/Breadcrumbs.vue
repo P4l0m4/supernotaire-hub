@@ -9,7 +9,7 @@ const props = defineProps({
   color: {
     type: String,
     required: false,
-    default: colors["text-color-faded"],
+    default: `${colors["text-color"]}70`,
   },
 });
 
@@ -67,7 +67,9 @@ useJsonld(() => ({
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: filter 0.3s linear, font-weight 0.3s linear;
+    transition:
+      filter 0.3s linear,
+      font-weight 0.3s linear;
 
     &:hover {
       filter: contrast(4);

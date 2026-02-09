@@ -581,7 +581,7 @@ onMounted(() => {
   &__hint {
     display: flex;
     flex-direction: column;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     font-size: $small-text;
     width: 100%;
     gap: 1rem;

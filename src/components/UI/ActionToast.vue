@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
     height: 100%;
     border-radius: calc($radius / 2);
     z-index: -1;
-    background-color: $primary-color;
+    background-color: $base-color;
   }
 
   .action-text {
@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<Props>(), {
     .secondary-message {
       font-size: 0.875rem;
       font-weight: $regular;
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       font-weight: $regular;
     }
   }
@@ -90,7 +90,7 @@ const props = withDefaults(defineProps<Props>(), {
     text-decoration: underline;
     font-size: 0.875rem;
     font-weight: $regular;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     width: fit-content;
     height: fit-content;
     margin-top: -0.5rem;

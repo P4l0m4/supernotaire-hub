@@ -102,7 +102,7 @@ const option = computed(() => ({
               fontWeight: "400",
               fontSize: 14,
               lineHeight: 20,
-              color: colors["text-color-faded"],
+              color: `${colors["text-color"]}70`,
             },
           },
         },

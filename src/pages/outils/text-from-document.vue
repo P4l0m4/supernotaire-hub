@@ -109,7 +109,12 @@ useHead({
           class="drop-zone__input"
           accept=".pdf,.jpg,.jpeg,.png"
           @click="(e) => e.stopPropagation()"
-          @change="(e) => handleDocumentTextExtraction((e.target as HTMLInputElement).files[0])"
+          @change="
+            (e) =>
+              handleDocumentTextExtraction(
+                (e.target as HTMLInputElement).files[0],
+              )
+          "
         />
         <span class="drop-zone__formats">.pdf, .jpg, .png</span>
       </label>
@@ -189,7 +194,9 @@ useHead({
   color: $text-color;
   border-radius: calc($radius / 2);
   cursor: pointer;
-  transition: background 0.2s ease, border 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border 0.2s ease;
 
   &:hover {
     background: rgba($accent-color, 0.1);
@@ -222,7 +229,7 @@ useHead({
   }
 
   &__formats {
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     font-size: $small-text;
     text-align: center;
     text-wrap: balance;

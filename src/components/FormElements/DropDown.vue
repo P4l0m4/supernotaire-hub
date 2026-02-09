@@ -43,19 +43,19 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
       <UIIconComponent
         v-if="icon"
         :icon
-        :color="colors['text-color-faded']" />{{ label }}
+        :color="`${colors['text-color']}70`" />{{ label }}
       <template v-if="number">({{ number }})</template
       ><UIIconComponent
         v-if="required"
         icon="asterisk"
         size="0.75rem"
-        :color="colors['error-color']"
+        :color="`${colors['error-color']}70`"
         style="margin-left: 0.2rem" />
       <UIIconComponent
         v-if="tooltip?.length && !tooltipLink?.length"
         icon="question"
         class="dropdown__tooltip"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
         size="1.15rem"
         data-tour="tooltip-icon"
         v-tooltip="tooltip"
@@ -71,7 +71,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
       >
         <UIIconComponent
           icon="question"
-          :color="colors['text-color-faded']"
+          :color="`${colors['text-color']}70`"
           size="1.15rem"
           data-tour="tooltip-icon"
         />
@@ -79,7 +79,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
       <UIIconComponent
         style="margin-left: auto"
         :icon="isDropdownOpen ? 'caret_down_bold' : 'caret_right_bold'"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
     /></span>
     <div ref="contentEl" class="dropdown__content" v-if="isDropdownOpen">
       <slot />

@@ -131,7 +131,7 @@ useHead({
     &__description {
       font-weight: $regular;
       text-wrap: balance;
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       transition: color 0.2s ease;
     }
   }

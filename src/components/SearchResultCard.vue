@@ -51,9 +51,14 @@ defineProps<Props>();
     padding: 1.5rem;
     gap: 1.5rem;
 
-    transition: box-shadow 0.3s ease, transform 0.3s ease,
-      background-color 0.3s linear, color 0.3s linear, border-color 0.3s linear,
-      filter 0.3s linear, background-position 0.3s linear;
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      background-color 0.3s linear,
+      color 0.3s linear,
+      border-color 0.3s linear,
+      filter 0.3s linear,
+      background-position 0.3s linear;
 
     &:hover {
       background-color: $primary-color;
@@ -87,7 +92,7 @@ defineProps<Props>();
     &__subtitle {
       font-size: $small-text;
       font-weight: $regular;
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       line-clamp: 3;
       display: -webkit-box;
       -webkit-box-orient: vertical;

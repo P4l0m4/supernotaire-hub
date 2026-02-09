@@ -76,7 +76,7 @@ const jsonLDSteps = computed(() =>
           : { text: s.text }),
       };
     }),
-  }))
+  })),
 );
 
 const jsonLDSupplies = computed(() =>
@@ -84,7 +84,7 @@ const jsonLDSupplies = computed(() =>
     "@type": "HowToSupply" as const,
     name: p.name,
     url: p.link || undefined,
-  }))
+  })),
 );
 
 const estimatedCost = computed(() => {
@@ -146,7 +146,7 @@ function handleScroll() {
   scrollPosition.value = window.scrollY;
   scrollPercentage.value = Math.min(
     (scrollPosition.value / tutorialHeight.value) * 100,
-    100
+    100,
   );
 }
 
@@ -230,7 +230,7 @@ onBeforeUnmount(() => {
               ><UIIconComponent
                 icon="help_circle"
                 size="1.25rem"
-                :color="colors['text-color-faded']"
+                :color="`${colors['text-color']}70`"
             /></NuxtLink>
           </li>
         </ul>
@@ -415,7 +415,7 @@ onBeforeUnmount(() => {
 
           &__number {
             font-weight: $bold;
-            color: $accent-color-faded;
+            color: rgba($accent-color, 0.1);
             font-size: 2rem;
           }
         }

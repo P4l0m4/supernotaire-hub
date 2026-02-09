@@ -27,7 +27,7 @@ interface State {
 const states: State[] = [
   {
     name: "default",
-    color: colors["secondary-color-faded"],
+    color: `${colors["secondary-color"]}70`,
     icon: "circle",
   },
   {
@@ -105,7 +105,9 @@ const currentState = computed(() => {
     &__fill {
       height: clamp(0.5rem, 0.5rem, 0.5rem);
       border-radius: calc($radius/2);
-      transition: width 0.6s ease-in-out, background-color 0.3s ease-in-out;
+      transition:
+        width 0.6s ease-in-out,
+        background-color 0.3s ease-in-out;
       position: relative;
 
       &::after {
@@ -130,7 +132,7 @@ const currentState = computed(() => {
 
     &__label {
       font-size: 1rem;
-      font-weight: $semi-bold;
+      font-weight: $regular;
       width: 100%;
       max-width: 100%;
       white-space: nowrap;
@@ -140,7 +142,7 @@ const currentState = computed(() => {
 
     &__percentage {
       font-size: 1rem;
-      font-weight: $medium;
+      font-weight: $semi-bold;
       display: flex;
       gap: 0.25rem;
       align-items: center;
@@ -149,8 +151,8 @@ const currentState = computed(() => {
   }
 
   &__legend {
-    font-size: 1rem;
-    color: $text-color-faded;
+    font-size: 0.75rem;
+    color: rgba($text-color, 0.7);
     width: 100%;
     max-width: 100%;
     white-space: nowrap;

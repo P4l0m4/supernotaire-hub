@@ -50,7 +50,14 @@ const simulateClick = () => {
       ref="fileInputRef"
       class="file-field__input"
       @click="(e) => e.stopPropagation()"
-      @change="(e) => model = (e.target as HTMLInputElement).files ? (multiple ? Array.from((e.target as HTMLInputElement).files!) : (e.target as HTMLInputElement).files![0]) : null"
+      @change="
+        (e) =>
+          (model = (e.target as HTMLInputElement).files
+            ? multiple
+              ? Array.from((e.target as HTMLInputElement).files!)
+              : (e.target as HTMLInputElement).files![0]
+            : null)
+      "
     />
     <!-- if a file has been chosen -->
     <UIIconComponent
@@ -89,15 +96,15 @@ const simulateClick = () => {
   }
 
   &:focus-within {
-    border: 1px solid $accent-color-faded;
-    box-shadow: 0 0px 6px 0px $accent-color-faded;
+    border: 1px solid rgba($accent-color, 0.1);
+    box-shadow: 0 0px 6px 0px rgba($accent-color, 0.1);
   }
 
   input[type="file"] {
     font-size: 1rem;
     padding: 0.65rem 0;
     border: none;
-    color: $text-color-faded;
+    color: rgba($text-color, 0.7);
     background-color: transparent !important;
     width: 100% !important;
     max-width: 100%;

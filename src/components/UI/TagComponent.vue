@@ -10,7 +10,7 @@ withDefaults(
   {
     color: colors["accent-color"],
     size: "small",
-  }
+  },
 );
 </script>
 <template>
@@ -20,7 +20,7 @@ withDefaults(
       backgroundColor: `${color}10`,
       color: color,
       border: `1px solid ${color}10`,
-      padding: size === 'small' ? '0.15rem 0.25rem' : '1rem 1.25rem',
+      padding: size === 'small' ? '0.25rem 0.5rem' : '1rem 1.25rem',
       fontSize: size === 'small' ? '0.75rem' : '1rem',
     }"
     ><UIIconComponent
@@ -43,5 +43,6 @@ withDefaults(
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-weight: $medium;
 }
 </style>

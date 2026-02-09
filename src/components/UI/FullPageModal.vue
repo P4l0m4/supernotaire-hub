@@ -99,7 +99,7 @@ onClickOutside(modalRef, () => {
 
       &__subtitle {
         font-size: 1rem;
-        color: $text-color-faded;
+        color: rgba($text-color, 0.7);
         text-align: center;
       }
     }

@@ -538,8 +538,7 @@ useHead({
       font-size: 1rem;
       line-height: 1.35;
       font-weight: $regular;
-      color: $text-color-faded;
-
+      color: rgba($text-color, 0.7);
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
       }

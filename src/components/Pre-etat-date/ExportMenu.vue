@@ -47,7 +47,7 @@ const wipeStatusIcon = computed(() => {
 const wipeStatusVariant = computed(() => {
   if (wipeSuccess.value) return "success-color";
   if (wipeError.value) return "error-color";
-  return "text-color-faded";
+  return "error-color";
 });
 
 onMounted(() => {
@@ -144,6 +144,7 @@ const wipeAll = async () => {
       :loading="loading"
       :disabled="downloadDisabled"
       variant="accent-color"
+      direction="row-reverse"
       @click="download"
       @keydown.enter="download"
       @keydown.space="download"
@@ -154,6 +155,9 @@ const wipeAll = async () => {
       :variant="wipeStatusVariant"
       :icon="wipeStatusIcon"
       @click="wipeAll"
+      @keydown.enter="wipeAll"
+      @keydown.space="wipeAll"
+      direction="row-reverse"
       style="margin: 0"
     >
       Supprimer les données
@@ -175,21 +179,9 @@ const wipeAll = async () => {
 .export-menu {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: center;
   gap: 1rem;
   width: 100%;
   height: fit-content;
-
-  @media (min-width: $big-tablet-screen) {
-    flex-direction: row;
-    justify-content: end;
-    align-items: center;
-  }
-
-  @media (min-width: $laptop-screen) {
-    flex-direction: row;
-    align-items: center;
-    width: fit-content;
-  }
 }
 </style>

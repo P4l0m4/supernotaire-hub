@@ -43,7 +43,7 @@ const model = defineModel<boolean>({
         v-if="tooltip?.length && !tooltipLink?.length"
         icon="question"
         class="checkbox__icon"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
         size="1.2rem"
         data-tour="tooltip-icon"
         v-tooltip="tooltip"
@@ -60,7 +60,7 @@ const model = defineModel<boolean>({
       >
         <UIIconComponent
           icon="question"
-          :color="colors['text-color-faded']"
+          :color="`${colors['text-color']}70`"
           size="1.2rem"
           data-tour="tooltip-icon"
         />
@@ -104,7 +104,7 @@ const model = defineModel<boolean>({
     width: 24px;
     min-width: 24px;
     height: 24px;
-    border: 1px solid $text-color-faded;
+    border: 1px solid rgba($text-color, 0.7);
     background: $base-color;
     border-radius: 4px;
     position: relative;

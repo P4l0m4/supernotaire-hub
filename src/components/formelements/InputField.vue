@@ -70,7 +70,7 @@ const onInput = (event: Event) => {
     <UIIconComponent
       v-if="icon"
       :icon="icon"
-      :color="colors['text-color-faded']"
+      :color="`${colors['text-color']}70`"
       size="1rem"
     />
 
@@ -143,7 +143,7 @@ const onInput = (event: Event) => {
       class="input-field__icon"
       data-tour="tooltip-icon"
       style="cursor: pointer"
-      :color="colors['text-color-faded']"
+      :color="`${colors['text-color']}70`"
       size="1.5rem"
       v-tooltip="tooltip"
       tabindex="0"
@@ -159,7 +159,7 @@ const onInput = (event: Event) => {
         icon="question"
         class="input-field__icon"
         data-tour="tooltip-icon"
-        :color="colors['text-color-faded']"
+        :color="`${colors['text-color']}70`"
         size="1.5rem"
     /></NuxtLink>
 
@@ -203,7 +203,7 @@ const onInput = (event: Event) => {
 
   &:focus-within {
     border: 1px solid $accent-color;
-    box-shadow: 0 0px 6px 0px $accent-color-faded;
+    box-shadow: 0 0px 6px 0px rgba($accent-color, 0.1);
   }
 
   input {
@@ -222,7 +222,7 @@ const onInput = (event: Event) => {
     display: inline-block;
 
     &::placeholder {
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
       font-size: 1rem;
       font-weight: $regular;
     }

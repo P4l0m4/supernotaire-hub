@@ -196,29 +196,6 @@ onMounted(() => {
 
 <template>
   <div class="liste-rubriques">
-    <div class="liste-rubriques__header">
-      <ChartsProgressBar
-        label="Progression globale"
-        :progress="overallProgress"
-        :state="
-          overallProgress === 100
-            ? 'completed'
-            : overallProgress > 0
-              ? 'progress'
-              : 'default'
-        "
-        :legend="`${completedCards} / ${cards.length} rubriques complétées`"
-      />
-      <PreEtatDateExportMenu />
-
-      <AnimationsConfetti
-        :active="overallProgress === 100"
-        :count="20"
-        :delay="800"
-        size="20rem"
-        style="position: absolute; inset: 0; margin: auto; z-index: -1"
-      />
-    </div>
     <TransitionGroup name="rubriques" tag="div" class="liste-rubriques__list">
       <NuxtLink
         v-for="card in sortedCards"
@@ -235,7 +212,7 @@ onMounted(() => {
             icon="unlock"
             size="small"
           >
-            Gratuit
+            GRATUIT
           </UITagComponent>
         </div>
         <ChartsProgressBar
@@ -259,6 +236,19 @@ onMounted(() => {
     </TransitionGroup>
   </div>
   <aside class="side-menu">
+    <div class="side-menu__header">
+      <ChartsDonutProgress :value="overallProgress" />
+      <span class="side-menu__header__legend">Progression globale</span>
+      <DossierExportMenu />
+
+      <AnimationsConfetti
+        :active="overallProgress === 100"
+        :count="20"
+        :delay="800"
+        size="20rem"
+        style="position: absolute; inset: 0; margin: auto; z-index: -1"
+      />
+    </div>
     <UIActionToast
       :color="colors['purple-color']"
       icon="help_circle"

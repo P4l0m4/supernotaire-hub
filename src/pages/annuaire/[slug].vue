@@ -47,7 +47,7 @@ function parseSlug(slug: string): SlugParse {
 // Cas SIRET: on lit directement Etablissement + PlaceMatch + PlaceRating
 async function getOneBySiret(
   supabase: SupabaseClient,
-  siret: string
+  siret: string,
 ): Promise<NotaryProfile | null> {
   const SELECT_FIELDS = `
     siret, denomination, adresse, codePostal, commune, departement,
@@ -73,11 +73,11 @@ async function getOneBySiret(
   if (!data) return null;
 
   const place = Array.isArray(data.PlaceMatch)
-    ? data.PlaceMatch[0] ?? null
-    : data.PlaceMatch ?? null;
+    ? (data.PlaceMatch[0] ?? null)
+    : (data.PlaceMatch ?? null);
   const pr = place?.PlaceRating
     ? Array.isArray(place.PlaceRating)
-      ? place.PlaceRating[0] ?? null
+      ? (place.PlaceRating[0] ?? null)
       : place.PlaceRating
     : null;
 
@@ -187,11 +187,11 @@ async function fetchNotary() {
     // mappe en NotaryProfile comme pour SIRET puis prend le meilleur
     const candidates: NotaryProfile[] = data.map((row: any) => {
       const place = Array.isArray(row.PlaceMatch)
-        ? row.PlaceMatch[0] ?? null
-        : row.PlaceMatch ?? null;
+        ? (row.PlaceMatch[0] ?? null)
+        : (row.PlaceMatch ?? null);
       const pr = place?.PlaceRating
         ? Array.isArray(place.PlaceRating)
-          ? place.PlaceRating[0] ?? null
+          ? (place.PlaceRating[0] ?? null)
           : place.PlaceRating
         : null;
       return {
@@ -235,7 +235,7 @@ watchEffect(fetchNotary);
 const titleText = computed(() =>
   profile.value?.matchedName
     ? profile.value?.matchedName
-    : profile.value?.denomination || "Profil du notaire"
+    : profile.value?.denomination || "Profil du notaire",
 );
 const addrText = computed(() => {
   const n = profile.value;
@@ -278,8 +278,8 @@ const returnHref = computed(() =>
   departementSlug.value
     ? `/annuaire/departement/${departementSlug.value}`
     : fromDepartement.value
-    ? "/annuaire/departement"
-    : "/annuaire"
+      ? "/annuaire/departement"
+      : "/annuaire",
 );
 const returnLabel = computed(() => `Retour au classement`);
 
@@ -587,7 +587,7 @@ const breadcrumbs = [
     }
 
     &__k {
-      color: $text-color-faded;
+      color: rgba($text-color, 0.7);
     }
     &__v {
       color: $text-color;

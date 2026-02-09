@@ -331,7 +331,7 @@ async function applyAllSuggestions() {
                 : 'caret_up_bold'
             "
             size="1rem"
-            :color="colors['text-color-faded']"
+            :color="`${colors['text-color']}70`"
             style="opacity: 0.8; margin-left: auto"
           />
         </div>
@@ -500,7 +500,7 @@ async function applyAllSuggestions() {
     font-size: $small-text;
     bottom: -0.5rem;
     right: -0.1rem;
-    background-color: $error-color-faded;
+    background-color: rgba($error-color, 0.1);
     backdrop-filter: blur(8px);
     padding: 0 0.2rem;
     border-radius: calc($radius/4);
@@ -551,7 +551,7 @@ async function applyAllSuggestions() {
 
   &--children-have-errors {
     border: 1px solid rgba($error-color, 0.2);
-    box-shadow: 0 0px 6px 0px $error-color-faded;
+    box-shadow: 0 0px 6px 0px rgba($error-color, 0.1);
 
     & > .array-item__title {
       color: $error-color;

@@ -176,7 +176,7 @@ watchEffect(() => {
         column-gap: 0.75rem;
         grid-template-columns: 1fr 100%;
         grid-template-rows: 1fr 1fr;
-        color: $text-color-faded;
+        color: rgba($text-color, 0.7);
 
         &__profile {
           display: flex;
