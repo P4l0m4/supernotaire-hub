@@ -28,7 +28,7 @@ export async function getArticlesPages() {
   const response = await Storyblok.get("cdn/stories/articles", {});
   const articles = response.data.story.content.articles;
   return articles.map((a: any) => ({
-    loc: `/articles/${stringToSlug(a.title)}`,
+    loc: `/conseils-pratiques/${stringToSlug(a.title)}`,
     changefreq: "daily",
     priority: 0.9,
   }));
