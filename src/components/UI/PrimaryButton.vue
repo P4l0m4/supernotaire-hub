@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
 const iconColor = computed(() => {
   switch (props.variant) {
     case "primary-color":
-      return colors["accent-color"];
+      return colors["text-color"];
     case "secondary-color":
       return colors["primary-color"];
     case "text-color":
@@ -157,7 +157,7 @@ const iconColor = computed(() => {
   background: radial-gradient(
       farthest-corner at top,
       $primary-color,
-      rgba($text-color, 0.1),
+      rgba(white, 0.8),
       $primary-color
     )
     top right/200% 200%;
