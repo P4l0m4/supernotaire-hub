@@ -117,6 +117,8 @@ watchEffect(() => {
   gap: 2rem;
   height: fit-content;
   overflow: hidden;
+  max-width: 2000px;
+  margin: 0 auto;
 
   &__cards {
     display: flex;
