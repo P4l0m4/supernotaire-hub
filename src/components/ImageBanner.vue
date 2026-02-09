@@ -54,6 +54,7 @@ defineProps({
   height: fit-content;
   display: flex;
   position: relative;
+  min-height: 30rem;
 
   @media (min-width: $big-tablet-screen) {
     max-height: 100vh;
