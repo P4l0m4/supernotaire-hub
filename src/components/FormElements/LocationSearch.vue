@@ -202,7 +202,7 @@ onMounted(async () => {
         background: none;
         cursor: pointer;
         border: none;
-        font-family: "Figtree", sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 1rem;
       }
 

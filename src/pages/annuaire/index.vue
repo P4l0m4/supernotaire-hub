@@ -493,7 +493,8 @@ onMounted(() => {
       </ul>
     </div>
   </Container>
-  <Container><ImageBanner
+  <Container
+    ><ImageBanner
       title="Reprenez le contrôle de votre temps 🧘"
       subtitle="Réduisez intelligemment votre charge de travail, sans compromis sur l’accompagnement."
       link-path="/inscription"
@@ -512,7 +513,8 @@ onMounted(() => {
           title: 'Gain de temps immédiat',
           icon: 'clock_countdown',
         },
-      ]" /></Container>
+      ]"
+  /></Container>
   <HotjarTracking />
 </template>
 
@@ -564,7 +566,7 @@ onMounted(() => {
           background: none;
           cursor: pointer;
           border: none;
-          font-family: "Figtree", sans-serif;
+          font-family: "Inter", sans-serif;
           font-size: 1rem;
         }
 

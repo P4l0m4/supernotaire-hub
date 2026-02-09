@@ -1,12 +1,12 @@
 @font-face {
-  font-family: "Figtree";
-  src: url(@/assets/fonts/Figtree.ttf) format("truetype");
+  font-family: "Inter";
+  src: url(@/assets/fonts/Inter.woff2) format("woff2");
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Figtree-Italic";
-  src: url(@/assets/fonts/Figtree-Italic.ttf) format("truetype");
+  font-family: "Inter-Italic";
+  src: url(@/assets/fonts/Inter-Italic.woff2) format("woff2");
   font-display: swap;
 }
 
@@ -29,7 +29,7 @@ body {
   overflow-x: hidden;
   background-color: $base-color;
   color: $text-color;
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
   font-synthesis: none; /* évite faux gras/italique */
   font-kerning: normal;
   font-variant-ligatures: common-ligatures;
@@ -75,7 +75,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 20px $primary-color inset !important;
   -webkit-text-fill-color: $text-color !important;
-  font-family: "Figtree", sans-serif !important;
+  font-family: "Inter", sans-serif !important;
 }
 input[type="search"] {
   -webkit-appearance: none;

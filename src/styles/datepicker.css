@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Figtree";
-  src: url(@/assets/fonts/Figtree.ttf) format("truetype");
+  font-family: "Inter";
+  src: url(@/assets/fonts/Inter.woff2) format("woff2");
   font-display: swap;
 }
 
@@ -898,11 +898,11 @@
   padding: var(--dp-common-padding);
 }
 .dp--qr-btn:not(
-    .dp--highlighted,
-    .dp--qr-btn-active,
-    .dp--qr-btn-disabled,
-    .dp--qr-btn-between
-  ) {
+  .dp--highlighted,
+  .dp--qr-btn-active,
+  .dp--qr-btn-disabled,
+  .dp--qr-btn-between
+) {
   background: none;
 }
 .dp--qr-btn:hover:not(.dp--qr-btn-active, .dp--qr-btn-disabled) {
@@ -933,7 +933,7 @@
   --dp-menu-appear-transition-timing: cubic-bezier(0.4, 0, 1, 1);
   --dp-transition-timing: ease-out;
   --dp-action-row-transtion: all 0.2s ease-in;
-  --dp-font-family: "Figtree", sans-serif;
+  --dp-font-family: "Inter", sans-serif;
   --dp-border-radius: 20px;
   --dp-cell-border-radius: 4px;
   --dp-transition-length: 22px;

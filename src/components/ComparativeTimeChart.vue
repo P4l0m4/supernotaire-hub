@@ -16,7 +16,7 @@ const props = withDefaults(
     title?: string;
     height?: string;
   }>(),
-  { height: "34rem" }
+  { height: "34rem" },
 );
 
 const isDesktop = useIsDesktop();
@@ -24,7 +24,7 @@ const isDesktop = useIsDesktop();
 const chartRef = ref();
 
 const categoriesRich = computed(() =>
-  props.steps.map((s) => `${s.name}\n${s.description ?? ""}`)
+  props.steps.map((s) => `${s.name}\n${s.description ?? ""}`),
 );
 
 const categoriesCompact = computed(() => props.steps.map((s) => s.name));
@@ -32,7 +32,7 @@ const categoriesCompact = computed(() => props.steps.map((s) => s.name));
 const beforeData = computed(() => props.steps.map((s) => s.beforeHours));
 const afterData = computed(() => props.steps.map((s) => s.afterHours));
 const gainsData = computed(() =>
-  props.steps.map((s) => s.beforeHours - s.afterHours)
+  props.steps.map((s) => s.beforeHours - s.afterHours),
 );
 
 const totalBefore = computed(() => beforeData.value.reduce((a, b) => a + b, 0));
@@ -41,12 +41,12 @@ const totalGain = computed(() => totalBefore.value - totalAfter.value);
 const pctGain = computed(() =>
   totalBefore.value > 0
     ? Math.round((totalGain.value / totalBefore.value) * 100)
-    : 0
+    : 0,
 );
 
 const option = computed(() => ({
   textStyle: {
-    fontFamily: "Figtree, sans-serif",
+    fontFamily: "Inter, sans-serif",
     color: colors["text-color"],
   },
   tooltip: {
