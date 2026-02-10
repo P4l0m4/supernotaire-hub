@@ -106,17 +106,24 @@ useJsonld(() => ({
 }));
 
 onMounted(async () => {
-  const storyblokApi = useStoryblokApi();
-  const { data } = await storyblokApi.get("cdn/stories", {
-    version: "published",
-  });
-  tutorials.value = data.stories[0].content.tutorials;
+  try {
+    const storyblokApi = useStoryblokApi();
+    const { data } = await storyblokApi.get("cdn/stories", {
+      version: "published",
+    });
 
-  carouselElements.value = tutorials.value.map((tutorial: any) => ({
-    link: `/tutoriels/${stringToSlug(tutorial.title)}`,
-    image: tutorial.previewImage.filename,
-    label: tutorial.title,
-  }));
+    const tutorialsFromApi = data?.stories?.[0]?.content?.tutorials ?? [];
+    tutorials.value = tutorialsFromApi;
+
+    carouselElements.value = tutorialsFromApi.map((tutorial: any) => ({
+      link: `/tutoriels/${stringToSlug(tutorial.title)}`,
+      image: tutorial?.previewImage?.filename ?? "",
+      label: tutorial?.title ?? "",
+    }));
+  } catch (error) {
+    tutorials.value = [];
+    carouselElements.value = [];
+  }
 });
 </script>
 <template>
