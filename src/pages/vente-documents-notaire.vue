@@ -162,7 +162,7 @@ useHead({
       <div class="centered-hero__text">
         <ReviewScore :reviews />
         <h1 class="centered-hero__text__title">
-          Acheteur déjà trouvé ?
+          Ne laissez pas un dossier incomplet retarder votre vente.
           <svg
             viewBox="0 0 100 6"
             preserveAspectRatio="none"
@@ -179,8 +179,8 @@ useHead({
         </h1>
 
         <p class="centered-hero__text__subtitle">
-          Évitez les retards à la signature, préparez tous vos documents pour le
-          notaire même si vous ne savez pas par où commencer.
+          Identifiez exactement les documents requis et préparez un dossier
+          complet, sans stress ni allers-retours.
         </p>
         <div class="centered-hero__text__link">
           <NuxtLink
@@ -341,7 +341,7 @@ useHead({
   right: 2px;
   bottom: -4px;
   height: 6px;
-  width: calc(45% - 2px);
+  width: calc(30% - 2px);
   fill: none;
   stroke: var(--underline-color, #ffbf00);
   stroke-width: 3px;
@@ -350,7 +350,7 @@ useHead({
   stroke-dasharray: 150; // longueur
   stroke-dashoffset: 150;
   transition: stroke-dashoffset 0.6s ease;
-  transform: translateX(-20%);
+  transform: translateX(-15%);
 }
 
 .centered-hero {
