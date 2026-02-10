@@ -12,13 +12,18 @@ onMounted(async () => {
   const { data } = await storyblokApi.get("cdn/stories", {
     version: "published",
   });
-  tutorials.value = data.stories[0].content.tutorials;
-  // filter to get only tutorials sharing at least one subject with the current tutorial
-  const currentSubjects = tutorial.value.subjects;
-  // remove current tutorial from the list
+  const tutorielsStory = data?.stories?.find(
+    (story: any) => story.slug === "tutoriels",
+  );
+  tutorials.value = tutorielsStory?.content?.tutorials ?? [];
+
+  const currentTutorial = tutorial.value;
+  const currentSubjects = currentTutorial?.subjects ?? [];
+
   carouselElements.value = tutorials.value
-    .filter((t: any) =>
-      t.subjects?.some((s: string) => currentSubjects.includes(s))
+    .filter(
+      (t: any) =>
+        t?.subjects?.some((s: string) => currentSubjects.includes(s)) ?? false,
     )
     .filter((t: any) => stringToSlug(t.title) !== tutorialSlug)
     .map((t: any) => ({
@@ -31,7 +36,9 @@ onMounted(async () => {
 const route = useRoute();
 const tutorialSlug = route.params.slug;
 const tutorial = computed(() =>
-  tutorials.value.find((f: any) => stringToSlug(f.title) === tutorialSlug)
+  (tutorials.value || []).find(
+    (f: any) => stringToSlug(f?.title ?? "") === tutorialSlug,
+  )
 );
 
 useJsonld(() => {

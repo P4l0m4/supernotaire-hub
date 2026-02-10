@@ -13,6 +13,7 @@ import ogimage from "@/assets/images/opengraph-banner.webp";
 import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
 
 import { colors } from "@/utils/colors";
+import { stringToSlug } from "@/utils/slugify";
 
 const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);
@@ -94,7 +95,10 @@ onMounted(async () => {
   const { data } = await storyblokApi.get("cdn/stories", {
     version: "published",
   });
-  tutorials.value = data.stories[0].content.tutorials;
+  const tutorielsStory = data?.stories?.find(
+    (story: any) => story.slug === "tutoriels",
+  );
+  tutorials.value = tutorielsStory?.content?.tutorials ?? [];
 
   carouselElements.value = tutorials.value.map((tutorial: any) => ({
     link: `/tutoriels/${stringToSlug(tutorial.title)}`,

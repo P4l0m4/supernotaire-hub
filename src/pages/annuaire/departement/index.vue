@@ -30,7 +30,7 @@ const departementLinks = computed(() =>
     subtitle: `${page.totalResults} notaires référencés pour ce département`,
     code: page.departementCode,
     to: `/annuaire/departement${page.slug}`,
-  }))
+  })),
 );
 
 onMounted(async () => {
@@ -39,13 +39,17 @@ onMounted(async () => {
     version: "published",
   });
 
-  carouselElements.value = data.stories[0].content.tutorials.map(
-    (tutorial: any) => ({
+  const tutorielsStory = data?.stories?.find(
+    (story: any) => story.slug === "tutoriels",
+  );
+
+  carouselElements.value =
+    tutorielsStory?.content?.tutorials ??
+    [].map((tutorial: any) => ({
       link: `/tutoriels/${stringToSlug(tutorial.title)}`,
       image: tutorial.previewImage.filename,
       label: tutorial.title,
-    })
-  );
+    }));
 });
 
 useHead(() => ({

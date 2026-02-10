@@ -19,10 +19,13 @@ onMounted(async () => {
       version: "published",
     });
 
-    const tutorialsFromApi = data?.stories?.[0]?.content?.tutorials ?? [];
-    tutorials.value = tutorialsFromApi;
+    const tutorielsStory = data?.stories?.find(
+      (story: any) => story.slug === "tutoriels",
+    );
 
-    carouselElements.value = tutorialsFromApi
+    tutorials.value = tutorielsStory?.content?.tutorials ?? [];
+
+    carouselElements.value = tutorials.value
       .filter((t: any) =>
         t.subjects?.some((s: string) => currentSubjects.includes(s)),
       )

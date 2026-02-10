@@ -112,7 +112,10 @@ onMounted(async () => {
       version: "published",
     });
 
-    const tutorialsFromApi = data?.stories?.[0]?.content?.tutorials ?? [];
+    const tutorielsStory = data?.stories?.find(
+      (story: any) => story.slug === "tutoriels",
+    );
+    const tutorialsFromApi = tutorielsStory?.content?.tutorials ?? [];
     tutorials.value = tutorialsFromApi;
 
     carouselElements.value = tutorialsFromApi.map((tutorial: any) => ({

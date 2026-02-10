@@ -1,22 +1,34 @@
 <script setup lang="ts">
 import { useStoryblokApi } from "@storyblok/vue";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import { stringToSlug } from "@/utils/slugify";
 import { useIsMobile } from "@/utils/otherFunctions";
 import { colors } from "@/utils/colors";
 
-const isMobile = useIsMobile();
+const isMobile = ref(false);
 
 const tutorials = ref<any[]>([]);
 // const carouselElements = ref<any[]>([]);
 const selectedSubject = ref<string | null>(null);
 
 onMounted(async () => {
+  const mediaQuery = useIsMobile();
+  watch(
+    mediaQuery,
+    (val) => {
+      isMobile.value = !!val;
+    },
+    { immediate: true },
+  );
+
   const storyblokApi = useStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
     version: "published",
   });
-  tutorials.value = data.stories[0].content.tutorials;
+  const tutorielsStory = data?.stories?.find(
+    (story: any) => story.slug === "tutoriels",
+  );
+  tutorials.value = tutorielsStory?.content?.tutorials ?? [];
 
   // carouselElements.value = tutorials.value.map((tutorial: any) => ({
   //   link: `/tutoriels/${stringToSlug(tutorial.title)}`,
@@ -26,9 +38,9 @@ onMounted(async () => {
 });
 
 const subjectsList = computed<string[]>(() => {
-  if (tutorials.value.length === 0) return [];
+  if (tutorials.value?.length === 0) return [];
 
-  const flatMap = tutorials.value.flatMap((t: any) => t.subjects);
+  const flatMap = tutorials.value?.flatMap((t: any) => t.subjects);
 
   const strings = flatMap
     .filter((s: any) => typeof s === "string")
@@ -43,7 +55,7 @@ const carouselElements = computed(() => {
 
   if (selectedSubject.value) {
     filteredTutorials = tutorials.value.filter((tutorial: any) =>
-      tutorial.subjects.includes(selectedSubject.value)
+      tutorial.subjects.includes(selectedSubject.value),
     );
   }
 

@@ -260,7 +260,7 @@ useHead({
         Leurs avis valent mieux que tous nos arguments
       </h3>
     </div>
-    <ReviewsCarousel :reviews="reviews" />
+    <ReviewsCarousel :reviews />
     <div id="last-chance" class="last-chance">
       <div class="last-chance__text">
         <h2 class="last-chance__text__title">
@@ -293,7 +293,7 @@ useHead({
 
   <Container
     ><h3 id="faq" class="feature-cards__title">Questions fréquentes 🤔</h3>
-    <FAQComponent :questions="objections" />
+    <FAQComponent :questions />
     <UILogosCarousel />
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
   </Container>

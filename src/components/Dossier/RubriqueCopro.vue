@@ -18,10 +18,15 @@ onMounted(async () => {
     const { data } = await storyblokApi.get("cdn/stories", {
       version: "published",
     });
-    const tutorialsFromApi = data?.stories?.[0]?.content?.tutorials ?? [];
-    tutorials.value = tutorialsFromApi;
+
+    const tutorielsStory = data?.stories?.find(
+      (story: any) => story.slug === "tutoriels",
+    );
+
+    tutorials.value = tutorielsStory?.content?.tutorials ?? [];
+
     // tutorials sharing at least one subject with the subjects array
-    carouselElements.value = tutorialsFromApi
+    carouselElements.value = tutorials.value
       .filter((t: any) =>
         t.subjects?.some((s: string) => currentSubjects.includes(s)),
       )

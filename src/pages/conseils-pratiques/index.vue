@@ -60,7 +60,12 @@ onMounted(async () => {
   const { data } = await storyblokApi.get("cdn/stories", {
     version: "published",
   });
-  articles.value = data.stories[0].content.articles;
+
+  const articlesStory = data?.stories?.find(
+    (story: any) => story.slug === "articles",
+  );
+
+  articles.value = articlesStory?.content?.articles ?? [];
 });
 
 useHead({
