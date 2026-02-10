@@ -2,6 +2,8 @@
 import { useStoryblokApi } from "@storyblok/vue";
 import { onMounted, ref } from "vue";
 
+import { stringToSlug } from "@/utils/slugify";
+
 import RubriqueBase from "@/components/Dossier/RubriqueBase.vue";
 import diagnosticsTravauxInterieursFormDefinition from "@/utils/formDefinition/checklist-diagnostics-travaux-interieurs.json";
 import { buildDocDefinition as buildDiagnosticsTravauxInterieursDocDefinition } from "@/utils/docDefinitions/checklist-diagnostics-travaux-interieurs";
@@ -11,22 +13,28 @@ const currentSubjects = ["Diagnostics"];
 const tutorials = ref<any[]>([]);
 
 onMounted(async () => {
-  const storyblokApi = useStoryblokApi();
-  const { data } = await storyblokApi.get("cdn/stories", {
-    version: "published",
-  });
-  tutorials.value = data.stories[0].content.tutorials;
-  // tutorials sharing at least one subject with the subjects array
+  try {
+    const storyblokApi = useStoryblokApi();
+    const { data } = await storyblokApi.get("cdn/stories", {
+      version: "published",
+    });
 
-  carouselElements.value = tutorials.value
-    .filter((t: any) =>
-      t.subjects?.some((s: string) => currentSubjects.includes(s)),
-    )
-    .map((t: any) => ({
-      link: `/tutoriels/${stringToSlug(t.title)}`,
-      image: t.previewImage.filename,
-      label: t.title,
-    }));
+    const tutorialsFromApi = data?.stories?.[0]?.content?.tutorials ?? [];
+    tutorials.value = tutorialsFromApi;
+
+    carouselElements.value = tutorialsFromApi
+      .filter((t: any) =>
+        t.subjects?.some((s: string) => currentSubjects.includes(s)),
+      )
+      .map((t: any) => ({
+        link: `/tutoriels/${stringToSlug(t.title)}`,
+        image: t.previewImage?.filename ?? "",
+        label: t.title ?? "",
+      }));
+  } catch (error) {
+    tutorials.value = [];
+    carouselElements.value = [];
+  }
 });
 </script>
 
