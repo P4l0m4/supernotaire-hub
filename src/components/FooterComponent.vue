@@ -55,8 +55,17 @@
             ></path>
           </svg>
         </li>
+
+        <li class="footer__links-container__links__li">
+          <NuxtLink to="/vente-documents-notaire"
+            >Préparation de dossier</NuxtLink
+          >
+        </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/vendeurs">Notre offre</NuxtLink>
+        </li>
+        <li class="footer__links-container__links__li">
+          <NuxtLink to="/conseils-pratiques">Conseils pratiques</NuxtLink>
         </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/tutoriels">Tutoriels</NuxtLink>
@@ -64,11 +73,7 @@
         <li class="footer__links-container__links__li">
           <NuxtLink to="/outils">Boîte à outils</NuxtLink>
         </li>
-        <li class="footer__links-container__links__li">
-          <NuxtLink to="/vente-documents-notaire"
-            >Préparation de dossier</NuxtLink
-          >
-        </li>
+
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
