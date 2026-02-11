@@ -466,7 +466,7 @@ onMounted(() => {
                 :color="
                   n.rating && n.userRatingsTotal
                     ? colors['warning-color']
-                    : colors['text-color-faded']
+                    : `${colors['text-color']}70`
                 "
               />
 

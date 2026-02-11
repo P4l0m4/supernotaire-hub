@@ -350,7 +350,7 @@ const breadcrumbs = [
           :color="
             profile?.rating && profile?.userRatingsTotal
               ? colors['warning-color']
-              : colors['text-color-faded']
+              : `${colors['text-color']}70`
           "
         />
       </div>

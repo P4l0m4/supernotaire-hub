@@ -23,7 +23,7 @@ const slugKey = computed(() => {
   return v.startsWith("/") ? v : `/${v}`;
 });
 const pageConfig = computed(() =>
-  notariesPages.find((p) => p.slug === slugKey.value)
+  notariesPages.find((p) => p.slug === slugKey.value),
 );
 
 const RX_DEPT = /(\d{2,3})$/;
@@ -32,42 +32,42 @@ const fallbackDepartement = computed(() => {
   return m ? m[1] : "";
 });
 const departementCode = computed(
-  () => pageConfig.value?.departementCode || fallbackDepartement.value
+  () => pageConfig.value?.departementCode || fallbackDepartement.value,
 );
 
 const titleText = computed(
   () =>
     pageConfig.value?.title ||
     (departementCode.value
-      ? `Meilleurs notaires du departement ${departementCode.value}`
-      : "Meilleurs notaires par departement")
+      ? `Meilleurs notaires du département ${departementCode.value}`
+      : "Meilleurs notaires par département"),
 );
 const descriptionText = computed(
   () =>
     pageConfig.value?.description ||
     (departementCode.value
-      ? `Decouvrez les notaires du departement ${departementCode.value}, classes par avis clients.`
-      : "Decouvrez les notaires classes par avis clients.")
+      ? `Découvrez les notaires du département ${departementCode.value}, classés par avis clients.`
+      : "Découvrez les notaires classés par avis clients."),
 );
 const departementLabel = computed(
   () =>
     pageConfig.value?.departementLabel ||
     (departementCode.value
-      ? `dans le departement ${departementCode.value}`
-      : "dans ce departement")
+      ? `dans le département ${departementCode.value}`
+      : "dans ce département"),
 );
 const departementName = computed(
-  () => pageConfig.value?.departementName || departementCode.value
+  () => pageConfig.value?.departementName || departementCode.value,
 );
 const locationLabel = computed(() =>
-  departementLabel.value ? departementLabel.value : ""
+  departementLabel.value ? departementLabel.value : "",
 );
 const showEmptyState = computed(
   () =>
     !pending.value &&
     !errorMessage.value &&
     notaries.value.length === 0 &&
-    departementCode.value.length > 0
+    departementCode.value.length > 0,
 );
 const fromDepartement = computed(() => {
   const v = route.query.from;
@@ -75,14 +75,14 @@ const fromDepartement = computed(() => {
   return v === "departement";
 });
 const returnHref = computed(() =>
-  fromDepartement.value ? "/annuaire/departement" : "/annuaire"
+  fromDepartement.value ? "/annuaire/departement" : "/annuaire",
 );
 const returnLabel = computed(() =>
-  fromDepartement.value ? "Retour aux departements" : "Retour a l'annuaire"
+  fromDepartement.value ? "Retour aux départements" : "Retour à l'annuaire",
 );
 
 const faqQuestions = computed(() => {
-  const label = departementLabel.value || "dans ce departement";
+  const label = departementLabel.value || "dans ce département";
   const count = notaries.value.length;
   const countAnswer = count
     ? `Nous listons actuellement ${count} notaire(s) ${label}.`
@@ -147,7 +147,7 @@ watch(
   (v) => {
     fetchNotariesByDepartement(v);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const runtimeConfig = useRuntimeConfig();
@@ -272,7 +272,7 @@ useHead(() => ({
                 :color="
                   n.rating && n.userRatingsTotal
                     ? colors['warning-color']
-                    : colors['text-color-faded']
+                    : `${colors['text-color']}70`
                 "
               />
 
