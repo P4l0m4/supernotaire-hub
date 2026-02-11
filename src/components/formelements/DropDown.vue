@@ -42,7 +42,7 @@ onClickOutside(target, () => (isDropdownOpen.value = false), {
     >
       <UIIconComponent
         v-if="icon"
-        :icon
+        :icon="icon"
         :color="`${colors['text-color']}70`" />{{ label }}
       <template v-if="number">({{ number }})</template
       ><UIIconComponent

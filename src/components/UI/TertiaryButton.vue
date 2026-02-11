@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
     <UIIconComponent
       v-if="icon"
       class="icon"
-      :icon
+      :icon="icon"
       :size="iconSize || undefined"
       :color="variant ? colors[variant] : colors['text-color']"
     />

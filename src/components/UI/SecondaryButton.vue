@@ -43,7 +43,7 @@ withDefaults(defineProps<Props>(), {
       v-if="icon"
       class="icon"
       :class="{ 'icon--reverse': reverse }"
-      :icon
+      :icon="icon"
       :size="iconSize || undefined"
       :color="variant ? colors[variant] : colors['text-color']"
     />

@@ -64,7 +64,7 @@ const iconColor = computed(() => {
       v-if="icon"
       class="icon"
       :class="{ 'icon--reverse': reverse }"
-      :icon
+      :icon="icon"
       :size="iconSize || undefined"
       :color="iconColor"
     />

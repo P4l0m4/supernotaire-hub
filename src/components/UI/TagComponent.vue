@@ -25,7 +25,7 @@ withDefaults(
     }"
     ><UIIconComponent
       v-if="icon"
-      :icon
+      :icon="icon"
       :size="size === 'small' ? '0.75rem' : '1rem'"
       :color="color"
       style="margin-right: 0.25rem"
