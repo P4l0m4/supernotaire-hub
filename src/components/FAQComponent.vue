@@ -6,7 +6,7 @@ interface FAQQuestion {
 
 const props = defineProps({
   questions: {
-    type: Array as () => FAQQuestion[],
+    type: Array as () => FAQQuestion[] | [],
     required: true,
   },
 });
@@ -20,7 +20,7 @@ function toggleQuestion(index: number) {
   }
 }
 
-const jsonLDFAQ = props.questions.map((question) => {
+const jsonLDFAQ = props.questions?.map((question) => {
   return {
     "@type": "Question" as const,
     name: question.title,
@@ -38,7 +38,7 @@ useJsonld(() => ({
 }));
 </script>
 <template>
-  <div class="faq-component">
+  <div class="faq-component" v-if="questions && questions.length">
     <div
       class="faq-component__card"
       :class="{ 'faq-component__card--opened': questionOpened === index }"

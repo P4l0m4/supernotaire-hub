@@ -273,7 +273,7 @@ const questions = [
         </h3>
       </div>
 
-      <FAQComponent :questions />
+      <FAQComponent :questions="questions" />
     </div>
   </Container>
   <Container>
