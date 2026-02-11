@@ -180,7 +180,7 @@ useHead({
 
         <p class="centered-hero__text__subtitle">
           Identifiez exactement les documents requis et préparez un dossier
-          complet, sans stress ni allers-retours.
+          complet, prêt à envoyer au notaire.
         </p>
         <div class="centered-hero__text__link">
           <NuxtLink
