@@ -41,6 +41,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/pdfmake": "^0.2.11",
     "@zadigetvoltaire/nuxt-gtm": "^0.0.13",
     "ajv": "^8.17.1",

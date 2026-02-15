@@ -405,7 +405,7 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 12rem);
   gap: 2rem;
   color: $text-color;
   width: 100%;
