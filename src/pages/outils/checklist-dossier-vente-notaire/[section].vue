@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { preEtatDateSections } from "@/utils/preEtatDateSections";
 import RubriquePrealables from "@/components/Dossier/RubriquePrealables.vue";
 import RubriqueIdentite from "@/components/Dossier/RubriqueIdentite.vue";
@@ -26,9 +26,11 @@ const sectionParam = computed<SectionParam | null>(() => {
     : null;
 });
 
-if (!sectionParam.value && process.client) {
-  navigateTo("/outils/checklist-dossier-vente-notaire");
-}
+watchEffect(() => {
+  if (!sectionParam.value && process.client) {
+    navigateTo("/outils/checklist-dossier-vente-notaire");
+  }
+});
 
 const sectionLabels: Record<SectionParam, string> = {
   prealables: "Informations préalables",
@@ -99,7 +101,10 @@ useHead({
 <template>
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs?.length" :links="breadcrumbs" />
-    <component v-if="sectionParam && currentComponent" :is="currentComponent" />
+    <component
+      v-if="currentComponent && typeof currentComponent !== 'string'"
+      :is="currentComponent"
+    />
   </Container>
 
   <HotjarTracking />

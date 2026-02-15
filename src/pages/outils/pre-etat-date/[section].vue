@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import PreEtatDateRubriqueDocuments from "@/components/Pre-etat-date/RubriqueDocuments.vue";
 import PreEtatDateRubriqueBien from "@/components/Pre-etat-date/RubriqueBien.vue";
 import PreEtatDateRubriqueCopropriete from "@/components/Pre-etat-date/RubriqueCopropriete.vue";
@@ -61,9 +61,11 @@ const sectionParam = computed<SectionParam | null>(() => {
     : null;
 });
 
-if (!sectionParam.value && process.client) {
-  navigateTo("/outils/pre-etat-date");
-}
+watchEffect(() => {
+  if (!sectionParam.value && process.client) {
+    navigateTo("/outils/pre-etat-date");
+  }
+});
 
 const breadcrumbs = computed(() => [
   { name: "Accueil", url: "/" },
@@ -98,7 +100,10 @@ const selectedComponent = computed(() => {
 <template>
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs?.length" :links="breadcrumbs" />
-    <component :is="selectedComponent" v-if="selectedComponent" />
+    <component
+      v-if="selectedComponent && typeof selectedComponent !== 'string'"
+      :is="selectedComponent"
+    />
   </Container>
 
   <HotjarTracking />
