@@ -5,35 +5,45 @@ const pages = [
   "/outils/checklist-dossier-vente-notaire",
 ];
 
-// Runs on WebKit iPhone 14 Pro to mirror the reported device.
-test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
-  test.use({
-    browserName: "webkit",
-    viewport: { width: 393, height: 852 }, // iPhone 14 Pro logical size
-    userAgent:
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
-  });
+test.setTimeout(30_000);
 
+test.use({
+  browserName: "webkit",
+  viewport: { width: 393, height: 852 }, // iPhone 14 Pro logical size
+  userAgent:
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+});
+
+test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
   for (const path of pages) {
     test(`no InvalidCharacterError or emitsOptions crash on ${path}`, async ({
       page,
     }) => {
       const consoleMessages: string[] = [];
       const errors: Error[] = [];
+      let closed = false;
 
       page.on("console", (msg) => {
         const text = msg.text();
-        consoleMessages.push(text);
+        const loc = msg.location();
+        const locStr =
+          loc && loc.url
+            ? `${loc.url}:${loc.lineNumber ?? 0}:${loc.columnNumber ?? 0}`
+            : "";
+        consoleMessages.push(
+          [msg.type(), text, locStr].filter(Boolean).join(" | "),
+        );
       });
       page.on("pageerror", (err) => {
         errors.push(err);
       });
-
-      await page.goto(`https://easycase.fr${path}`, {
-        waitUntil: "networkidle",
+      page.on("close", () => {
+        closed = true;
       });
+
+      await page.goto(path, { waitUntil: "networkidle" });
       // give hydration / deferred scripts time to run
-      await page.waitForTimeout(4000);
+      await page.waitForTimeout(2000);
 
       // Open mobile menu to trigger potential overlay code paths
       const menuBtn = await page.$(
@@ -41,12 +51,19 @@ test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
       );
       if (menuBtn) {
         await menuBtn.click({ trial: true }).catch(() => {});
-        await page.evaluate(() => {
-          document.querySelector(".driver-overlay")?.remove();
-          document.body.classList.remove("driver-active", "driver-fade");
-        });
+        try {
+          await page.evaluate(() => {
+            document.querySelector(".driver-overlay")?.remove();
+            document.body.classList.remove("driver-active", "driver-fade");
+          });
+        } catch {
+          // ignore evaluate errors (page may have navigated/closed)
+        }
         await menuBtn.click().catch(() => {});
-        await page.waitForTimeout(500);
+      }
+
+      if (closed) {
+        throw new Error("Page/context closed unexpectedly during test.");
       }
 
       const fatalConsole = consoleMessages.filter((t) =>

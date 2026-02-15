@@ -56,9 +56,7 @@ const currentColor = computed(() => {
         }"
       />
     </svg>
-    <figcaption class="donut__label"">
-      {{ value }}%
-    </figcaption>
+    <figcaption class="donut__label">{{ value }}%</figcaption>
   </figure>
 </template>
 
