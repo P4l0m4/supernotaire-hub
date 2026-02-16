@@ -300,7 +300,7 @@ async function applyAllSuggestions() {
         style="margin-left: auto"
       />
     </div>
-    <div class="array-field__items">
+    <div v-if="model.length > 0" class="array-field__items">
       <div
         v-for="(item, idx) in model"
         :key="item.__id || idx"

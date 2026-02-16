@@ -254,7 +254,7 @@
       "label": "Bénéficiaires",
       "fields": [
         {
-          "label": "Coordonnées bancaires des bénéficiaires de la vente",
+          "label": "Désignation des bénéficiaires de la vente",
           "type": "array",
           "path": "coordonnees_bancaires_beneficiaires",
           "id": "charges-taxes-coordonnees-bancaires-beneficiaires",
