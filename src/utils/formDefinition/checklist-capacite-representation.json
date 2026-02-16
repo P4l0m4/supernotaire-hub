@@ -22,7 +22,12 @@
           "name": "bien_vendu_en_nom_propre",
           "type": "select",
           "options": ["Oui", "Non"],
-          "showIf": { "path": "statut_partie", "equals": "Personne physique" }
+          "placeholder": "Sélectionnez une option",
+          "showIf": { "path": "statut_partie", "equals": "Personne physique" },
+          "requiredIf": {
+            "path": "statut_partie",
+            "equals": "Personne physique"
+          }
         },
         {
           "path": "sous_protection_personne_physique",
@@ -33,6 +38,12 @@
           "type": "select",
           "options": ["Oui", "Non"],
           "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": "Non" }
+            ]
+          },
+          "requiredIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
               { "path": "bien_vendu_en_nom_propre", "equals": "Non" }
@@ -54,6 +65,10 @@
           "showIf": {
             "path": "sous_protection_personne_physique",
             "equals": "Oui"
+          },
+          "requiredIf": {
+            "path": "sous_protection_personne_physique",
+            "equals": "Oui"
           }
         },
         {
@@ -68,6 +83,12 @@
           ],
           "placeholder": "Sélectionnez le type de représentation",
           "showIf": {
+            "all": [
+              { "path": "statut_partie", "equals": "Personne physique" },
+              { "path": "bien_vendu_en_nom_propre", "equals": "Oui" }
+            ]
+          },
+          "requiredIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
               { "path": "bien_vendu_en_nom_propre", "equals": "Oui" }
@@ -88,6 +109,10 @@
           ],
           "placeholder": "Selectionnez le type de protection",
           "showIf": {
+            "path": "type_representation_personne_physique",
+            "equals": "Représentation d\u2019un majeur protégé"
+          },
+          "requiredIf": {
             "path": "type_representation_personne_physique",
             "equals": "Représentation d\u2019un majeur protégé"
           }
