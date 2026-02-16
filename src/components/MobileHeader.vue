@@ -71,15 +71,6 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               >Tutoriels<span class="line"></span
             ></NuxtLink>
           </li>
-          <li class="header__nav__links__link">
-            <NuxtLink
-              to="/annuaire"
-              class="nuxt-link"
-              @keydown.esc="isMenuOpen = false"
-              exact
-              >Annuaire<span class="line"></span
-            ></NuxtLink>
-          </li>
         </ul>
       </nav>
     </Transition>
@@ -149,7 +140,9 @@ onClickOutside(target, () => (isMenuOpen.value = false));
     width: 0px;
     height: 2px;
     background-color: transparent;
-    transition: width 0.3s ease, background-color 0.3s ease;
+    transition:
+      width 0.3s ease,
+      background-color 0.3s ease;
   }
 }
 
