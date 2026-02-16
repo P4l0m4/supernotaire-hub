@@ -76,33 +76,17 @@ export function buildDocDefinition(
     data.type_association_syndicale === "Autre",
   );
 
-  // Documents copro (si en copropriété)
-  addDoc("Historique des charges de copropriété (3 dernières années)", isCopro);
+  // Documents copro
   addDoc("Fiche synthétique de la copropriété (si disponible)", isCopro);
-  addDoc("Compte-rendu de la dernière AG (PV)", isCopro);
+  addDoc("Carnet d'entretien de l'immeuble", isCopro);
+  addDoc("Règlement de copropriété", isCopro);
+  addDoc("État descriptif de la division", isCopro);
+  addDoc("Dernier procès-verbal d'AG", isCopro);
   addDoc("Procès-verbal d'AG N-1", isCopro);
   addDoc("Procès-verbal d'AG N-2", isCopro);
-  addDoc("Convocation et ordre du jour de la prochaine AG", isCopro);
-  addDoc("Règlement de copropriété et état descriptif de division", isCopro);
   addDoc("Pré-état daté", isCopro);
-  addDoc("Carnet d'entretien de l'immeuble", isCopro);
-  addDoc(
-    "Relevé des charges annuelles (budget prévisionnel et dépenses)",
-    isCopro,
-  );
-  addDoc("Dernier relevé de charges", isCopro);
   addDoc("Dernier appel de charges", isCopro);
-  addDoc("Mises en demeure / relances de charges éventuelles", isCopro);
-  addDoc("Protocole de recouvrement en cours (le cas échéant)", isCopro);
-  addDoc(
-    "Diagnostics parties communes (DTG, audits énergétiques le cas échéant)",
-    isCopro,
-  );
-  addDoc(
-    "Devis ou autorisations pour travaux sur parties communes",
-    isCopro && data.gestion_copropriete !== "Aucun syndic",
-  );
-  addDoc("Coordonnées du représentant du syndic / conseil syndical", isCopro);
+  addDoc("Dernier relevé de charges", isCopro);
 
   // ASL / AFUL
   addDoc("Statuts et règlement intérieur de l'ASL / AFUL", isAsl);
