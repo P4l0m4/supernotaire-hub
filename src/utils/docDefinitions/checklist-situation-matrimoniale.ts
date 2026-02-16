@@ -27,7 +27,7 @@ export function buildDocDefinition(
   if (situation.statut === "Célibataire / Concubin(e) / Union libre") {
     addInfo("Nationalité étrangère", situation.celibataire?.etranger);
     addDoc("Certificat de célibat", situation.celibataire?.etranger === "Oui");
-    addDoc("Certificat de coutume", situation.celibataire?.etranger === "Non");
+    addDoc("Certificat de coutume", situation.celibataire?.etranger === "Oui");
   }
 
   if (situation.statut === "Marié(e) (communauté)") {
