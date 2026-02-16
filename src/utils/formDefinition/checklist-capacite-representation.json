@@ -37,6 +37,7 @@
           "tooltip": "Tutelle, curatelle, habilitation, mandat de protection future...",
           "type": "select",
           "options": ["Oui", "Non"],
+          "placeholder": "Sélectionnez une option",
           "showIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
@@ -61,7 +62,7 @@
             "Tutelle",
             "Mandat de protection future ou autre"
           ],
-          "placeholder": "Selectionnez le type",
+          "placeholder": "Sélectionnez une option",
           "showIf": {
             "path": "sous_protection_personne_physique",
             "equals": "Oui"
@@ -85,13 +86,13 @@
           "showIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
-              { "path": "bien_vendu_en_nom_propre", "equals": "Oui" }
+              { "path": "bien_vendu_en_nom_propre", "equals": "Non" }
             ]
           },
           "requiredIf": {
             "all": [
               { "path": "statut_partie", "equals": "Personne physique" },
-              { "path": "bien_vendu_en_nom_propre", "equals": "Oui" }
+              { "path": "bien_vendu_en_nom_propre", "equals": "Non" }
             ]
           }
         },
@@ -107,7 +108,7 @@
             "Mandataire spécial",
             "Habilitation familiale"
           ],
-          "placeholder": "Selectionnez le type de protection",
+          "placeholder": "Sélectionnez le type de protection",
           "showIf": {
             "path": "type_representation_personne_physique",
             "equals": "Représentation d\u2019un majeur protégé"

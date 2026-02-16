@@ -67,7 +67,7 @@
             "any": [
               {
                 "path": "type_chauffage",
-                "equals": "Pompe Ã  chaleur"
+                "equals": "Pompe à chaleur"
               },
               {
                 "path": "type_chauffage",
@@ -83,7 +83,7 @@
             "or": [
               {
                 "path": "type_chauffage",
-                "equals": "Pompe Ã  chaleur"
+                "equals": "Pompe à chaleur"
               },
               {
                 "path": "type_chauffage",
