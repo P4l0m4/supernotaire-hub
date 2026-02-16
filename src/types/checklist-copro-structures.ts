@@ -33,7 +33,7 @@ export interface ChecklistCoproStructures {
   type_copropriete?: TypeCopropriete;
   montant_annuel_charges?: number;
   copro_fond_travaux?: OuiNon;
-  copro_quote_part_lot?: number;
+  copro_quote_part_lot?: string;
   copro_charges_a_jour?: OuiNon;
   montant_sommes_dues?: number;
   copro_lots_inclus_vente?: LotsInclus[];

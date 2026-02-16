@@ -4,7 +4,7 @@ import { buildChecklistPdfStructure } from "./pdfStructure";
 
 export function buildDocDefinition(
   data: ChecklistCoproStructures,
-  logoBase64: string
+  logoBase64: string,
 ) {
   if (!data) return;
 
@@ -30,46 +30,50 @@ export function buildDocDefinition(
   addInfo(
     "Montant annuel moyen des charges",
     data.montant_annuel_charges,
-    isCopro
+    isCopro,
   );
   addInfo("Fonds de travaux", data.copro_fond_travaux, isCopro);
   addInfo(
     "Quote-part attachée au lot",
     data.copro_quote_part_lot,
-    data.copro_fond_travaux === "Oui"
+    data.copro_fond_travaux === "Oui",
   );
   addInfo("Charges à jour", data.copro_charges_a_jour, isCopro);
   addInfo(
-    "Montant des sommes dues",
+    "Montant approximatif des sommes dues",
     data.montant_sommes_dues,
-    data.copro_charges_a_jour === "Oui"
+    data.copro_charges_a_jour === "Non",
   );
   addInfo(
     "Lots inclus dans la vente",
     lots.join(", "),
-    isCopro && lots.length > 0
+    isCopro && lots.length > 0,
   );
   addInfo(
     "Précision lot annexe",
     data.copro_precision_autre_lot,
-    lots.includes("Autre lot annexe")
+    lots.includes("Autre lot annexe"),
   );
   addInfo("Gestion de la copropriété", data.gestion_copropriete, isCopro);
   addInfo("Email du syndic", data.email_syndic, Boolean(data.email_syndic));
   addInfo("Numéro du syndic", data.tel_syndic, Boolean(data.tel_syndic));
 
-  addInfo("Type de structure (ASL/AFUL)", data.type_association_syndicale, isAsl);
+  addInfo(
+    "Type de structure (ASL/AFUL)",
+    data.type_association_syndicale,
+    isAsl,
+  );
   addInfo("Cotisations à jour", data.asl_cotisations_a_jour, isAsl);
   addInfo("Email du gestionnaire", data.email_asl, Boolean(data.email_asl));
   addInfo(
     "Téléphone du gestionnaire",
     data.telephone_asl,
-    Boolean(data.telephone_asl)
+    Boolean(data.telephone_asl),
   );
   addInfo(
     "Précision type de structure",
     data.precision_type_structure,
-    data.type_association_syndicale === "Autre"
+    data.type_association_syndicale === "Autre",
   );
 
   // Documents copro (si en copropriété)
@@ -84,7 +88,7 @@ export function buildDocDefinition(
   addDoc("Carnet d'entretien de l'immeuble", isCopro);
   addDoc(
     "Relevé des charges annuelles (budget prévisionnel et dépenses)",
-    isCopro
+    isCopro,
   );
   addDoc("Dernier relevé de charges", isCopro);
   addDoc("Dernier appel de charges", isCopro);
@@ -92,11 +96,11 @@ export function buildDocDefinition(
   addDoc("Protocole de recouvrement en cours (le cas échéant)", isCopro);
   addDoc(
     "Diagnostics parties communes (DTG, audits énergétiques le cas échéant)",
-    isCopro
+    isCopro,
   );
   addDoc(
     "Devis ou autorisations pour travaux sur parties communes",
-    isCopro && data.gestion_copropriete !== "Aucun syndic"
+    isCopro && data.gestion_copropriete !== "Aucun syndic",
   );
   addDoc("Coordonnées du représentant du syndic / conseil syndical", isCopro);
 

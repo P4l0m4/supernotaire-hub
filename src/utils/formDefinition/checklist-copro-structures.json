@@ -77,8 +77,9 @@
           "id": "copro-quote-part-lot",
           "label": "Montant de la quote-part attachée au lot",
           "name": "copro_quote_part_lot",
-          "placeholder": "1000",
-          "type": "number",
+          "placeholder": "125/10000",
+          "tooltip": "Fraction exprimée en tantièmes",
+          "type": "text",
           "showIf": {
             "path": "copro_fond_travaux",
             "equals": "Oui"
@@ -113,6 +114,10 @@
           "placeholder": "500",
           "type": "number",
           "showIf": {
+            "path": "copro_charges_a_jour",
+            "equals": "Non"
+          },
+          "requiredIf": {
             "path": "copro_charges_a_jour",
             "equals": "Non"
           }
@@ -255,6 +260,10 @@
           ],
           "placeholder": "Sélectionnez une option",
           "showIf": {
+            "path": "type_structure_collective",
+            "equals": "D’une association syndicale (ASL / AFUL…)"
+          },
+          "requiredIf": {
             "path": "type_structure_collective",
             "equals": "D’une association syndicale (ASL / AFUL…)"
           }
