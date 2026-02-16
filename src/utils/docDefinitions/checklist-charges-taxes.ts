@@ -34,8 +34,15 @@ export function buildDocDefinition(
   addInfo(
     "Date du dernier entretien du chauffage",
     data.date_entretien_chauffage,
+    data.type_chauffage === "Pompe à chaleur" ||
+      data.type_chauffage === "Gaz" ||
+      data.type_chauffage === "Fioul",
   );
-  addInfo("Date du dernier ramonage", data.date_ramonage);
+  addInfo(
+    "Date du dernier ramonage",
+    data.date_ramonage,
+    data.type_chauffage === "Bois",
+  );
 
   addInfo("Mode d'assainissement", data.mode_assainissement);
   addInfo("Situation d'occupation fiscale", data.situation_fiscale);
@@ -78,12 +85,20 @@ export function buildDocDefinition(
     const label = `Beneficiaire ${index + 1}`;
     const rows: Array<[string, TableCell]> = [
       ["Rôle", val(beneficiaire.role_beneficiaire)],
-      [
+    ];
+    const isMandataire =
+      beneficiaire.role_beneficiaire === "Mandataire (agence, etc)";
+
+    if (isMandataire) {
+      rows.push([
         "Perçoit une commission",
         val(beneficiaire.beneficiaire_percoit_commission),
-      ],
-    ];
-    if (beneficiaire.beneficiaire_percoit_commission === "Oui") {
+      ]);
+    }
+    if (
+      isMandataire &&
+      beneficiaire.beneficiaire_percoit_commission === "Oui"
+    ) {
       rows.push([
         "Montant de la commission",
         val(beneficiaire.montant_commission),

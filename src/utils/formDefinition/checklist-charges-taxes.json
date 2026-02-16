@@ -63,7 +63,38 @@
           "mode": "date-picker",
           "placeholder": "jj/mm/aaaa",
           "maxDate": "today",
-          "required": true
+          "showIf": {
+            "any": [
+              {
+                "path": "type_chauffage",
+                "equals": "Pompe Ã  chaleur"
+              },
+              {
+                "path": "type_chauffage",
+                "equals": "Gaz"
+              },
+              {
+                "path": "type_chauffage",
+                "equals": "Fioul"
+              }
+            ]
+          },
+          "requiredIf": {
+            "or": [
+              {
+                "path": "type_chauffage",
+                "equals": "Pompe Ã  chaleur"
+              },
+              {
+                "path": "type_chauffage",
+                "equals": "Gaz"
+              },
+              {
+                "path": "type_chauffage",
+                "equals": "Fioul"
+              }
+            ]
+          }
         },
         {
           "path": "date_ramonage",
@@ -74,7 +105,14 @@
           "mode": "date-picker",
           "placeholder": "jj/mm/aaaa",
           "maxDate": "today",
-          "required": true
+          "showIf": {
+            "path": "type_chauffage",
+            "equals": "Bois"
+          },
+          "requiredIf": {
+            "path": "type_chauffage",
+            "equals": "Bois"
+          }
         }
       ]
     },
