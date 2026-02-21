@@ -1,4 +1,4 @@
-import type { Adresse } from "@/utils/types/adresse";
+import type { Adresse } from "@/types/adresse";
 
 export interface ValeurFonciere {
   localisation: {

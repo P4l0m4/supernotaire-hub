@@ -73,3 +73,27 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Quality & Tests
+
+Run static analysis with Knip:
+
+```bash
+npx knip
+# or: yarn knip
+```
+
+Run unit tests with Vitest:
+
+```bash
+npx vitest
+# or: yarn vitest
+```
+
+Run end-to-end tests with Playwright (install browsers once with `npx playwright install`):
+
+```bash
+npx playwright test
+# debug/headed: npx playwright test --debug
+# filter by name: npx playwright test -g "my test"
+```
