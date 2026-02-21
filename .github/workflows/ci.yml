@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - name: Run Vitest
+        run: yarn vitest run
+
+  e2e-playwright:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: Build
+        run: yarn build
+      - name: Start preview server
+        run: yarn preview -- --port 3000 &
+      - name: Wait for preview
+        run: npx wait-on http://localhost:3000
+      - name: Run Playwright (webkit-ios)
+        env:
+          LOCAL_E2E: "1"
+        run: npx playwright test --project=webkit-ios --reporter=line

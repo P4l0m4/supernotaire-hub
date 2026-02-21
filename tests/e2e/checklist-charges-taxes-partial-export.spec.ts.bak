@@ -1,0 +1,151 @@
+import { test, expect } from "@playwright/test";
+
+test.setTimeout(90_000);
+
+test.use({
+  browserName: "webkit",
+  viewport: { width: 393, height: 852 }, // iPhone 14 Pro
+  userAgent:
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+});
+
+test.describe("Checklist - charges & taxes - export partiel", () => {
+  test("remplir la rubrique puis tÃ©lÃ©charger le PDF partiel", async ({
+    page,
+  }) => {
+    // Bloquer les tutoriels Driver avant chargement
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("checklist-tour-done", "1");
+        localStorage.removeItem("checklist-tour");
+        localStorage.setItem("ped-tour-done", "1");
+        localStorage.removeItem("ped-tour-documents");
+      } catch {
+        /* ignore */
+      }
+    });
+
+    await page.goto("/outils/checklist-dossier-vente-notaire/charges-taxes", {
+      waitUntil: "domcontentloaded",
+    });
+    await page.evaluate(() => {
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem("checklist-tour-done", "1");
+      localStorage.removeItem("checklist-tour");
+      localStorage.setItem("ped-tour-done", "1");
+      localStorage.removeItem("ped-tour-documents");
+    });
+
+    await page
+      .getByRole("heading", { name: "Charges & Taxes" })
+      .waitFor({ timeout: 20_000 });
+
+    // killer overlay driver si injectÃ©
+    const killDriver = async () => {
+      await page.evaluate(() => {
+        try {
+          document.querySelector(".driver-overlay")?.remove();
+          document
+            .querySelectorAll(".driver-popover, .driver-highlighted-element")
+            .forEach((el) => el.remove());
+          document.body.classList.remove("driver-active", "driver-fade");
+        } catch {
+          /* ignore */
+        }
+      });
+    };
+    await killDriver();
+
+    const selectOption = async (labelText: string, optionText: string) => {
+      const field = page
+        .locator(".form-field")
+        .filter({ hasText: new RegExp(labelText, "i") })
+        .first();
+      const select = field.locator(".select-field__selected").first();
+      await select.scrollIntoViewIfNeeded();
+      await killDriver();
+      await select.click({ timeout: 10_000, force: true });
+      const option = page
+        .locator(".select-field__content__option", { hasText: optionText })
+        .first();
+      await option.waitFor({ timeout: 10_000 });
+      await option.click({ timeout: 10_000, force: true });
+    };
+
+    // Section Bien
+    await selectOption("Type de bien", "Appartement");
+    await page.getByRole("button", { name: /^Suivant$/i }).click();
+
+    // Section Chauffage
+    await selectOption("Type de chauffage", "Ã‰lectrique");
+    await page.getByRole("button", { name: /^Suivant$/i }).click();
+
+    // Section Assainissement
+    await selectOption("Mode d'assainissement", "Collectif");
+    await page.getByRole("button", { name: /^Suivant$/i }).click();
+
+    // Section FiscalitÃ©
+    await selectOption(
+      "S\u00e9lectionnez la situation fiscale",
+      "RÃ©sidence principale",
+    );
+    const taxeInput = page.getByLabel("Montant annuel de la taxe fonciÃ¨re");
+    await taxeInput.fill("1200");
+    await selectOption("PrÃ©sence d'une TEOM", "Non");
+    await selectOption("Le bien est-il soumis Ã  la taxe d'habitation ?", "Non");
+    await page.getByRole("button", { name: /^Suivant$/i }).click();
+
+    // Section PrÃªt
+    await selectOption(
+      "Existe t-il un prÃªt immobilier en cours sur le bien ?",
+      "Non",
+    );
+    await page.getByRole("button", { name: /^Suivant$/i }).click();
+
+    // Section BÃ©nÃ©ficiaires (array)
+    await page.getByRole("button", { name: /Ajouter un Ã©lÃ©ment/i }).click();
+    const roleSelect = page
+      .locator(".array-item")
+      .first()
+      .locator(".select-field__selected")
+      .first();
+    await roleSelect.click({ timeout: 10_000 });
+    await page
+      .locator(".select-field__content__option", {
+        hasText: "PropriÃ©taire du bien (personne physique ou morale)",
+      })
+      .click({ timeout: 10_000 });
+
+    // Terminer la rubrique
+    await page.getByRole("button", { name: /^Terminer$/i }).click({ timeout: 10_000 });
+    await page.waitForURL("**/outils/checklist-dossier-vente-notaire");
+    await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() =>
+      page.waitForLoadState("domcontentloaded"),
+    );
+    await page.evaluate(() => {
+      try {
+        document.querySelector(".driver-overlay")?.remove();
+        document
+          .querySelectorAll(".driver-popover, .driver-highlighted-element")
+          .forEach((el) => el.remove());
+        document.body.classList.remove("driver-active", "driver-fade");
+      } catch {
+        /* ignore */
+      }
+    });
+
+    // Ouvrir le menu d'export et lancer l'export partiel
+    await page
+      .getByRole("button", { name: /Exporter le rÃ©capitulatif/i })
+      .click();
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      page.getByRole("button", { name: /Export partiel/i }).click(),
+    ]);
+
+    expect(download.suggestedFilename()).toContain(
+      "checklist-documents-notaire-vente-partiel",
+    );
+  });
+});

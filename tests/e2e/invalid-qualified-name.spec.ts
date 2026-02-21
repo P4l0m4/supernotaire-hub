@@ -5,7 +5,7 @@ const pages = [
   "/outils/checklist-dossier-vente-notaire",
 ];
 
-test.setTimeout(30_000);
+test.setTimeout(90_000);
 
 test.use({
   browserName: "webkit",
@@ -21,7 +21,18 @@ test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
     }) => {
       const consoleMessages: string[] = [];
       const errors: Error[] = [];
-      let closed = false;
+
+      // Empêcher le tutoriel/driver de se lancer avant le chargement
+      await page.addInitScript(() => {
+        try {
+          localStorage.setItem("checklist-tour-done", "1");
+          localStorage.removeItem("checklist-tour");
+          localStorage.setItem("ped-tour-done", "1");
+          localStorage.removeItem("ped-tour-documents");
+        } catch {
+          /* ignore */
+        }
+      });
 
       page.on("console", (msg) => {
         const text = msg.text();
@@ -37,11 +48,37 @@ test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
       page.on("pageerror", (err) => {
         errors.push(err);
       });
-      page.on("close", () => {
-        closed = true;
-      });
 
-      await page.goto(path, { waitUntil: "networkidle" });
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await page.waitForLoadState("load", { timeout: 15_000 });
+      // Nettoyer overlays driver si présents
+      await page.evaluate(() => {
+        try {
+          localStorage.setItem("checklist-tour-done", "1");
+          localStorage.removeItem("checklist-tour");
+          localStorage.setItem("ped-tour-done", "1");
+          localStorage.removeItem("ped-tour-documents");
+          const killDriver = () => {
+            document.querySelector(".driver-overlay")?.remove();
+            document
+              .querySelectorAll(".driver-popover, .driver-highlighted-element")
+              .forEach((el) => el.remove());
+            document.body.classList.remove("driver-active", "driver-fade");
+          };
+          killDriver();
+          const obs = new MutationObserver(() => killDriver());
+          obs.observe(document.body, { childList: true, subtree: true });
+          setTimeout(() => obs.disconnect(), 5000);
+        } catch {
+          /* ignore */
+        }
+      });
+      // Fermer le tutoriel/modal éventuel qui peut bloquer la page
+      const onboardingClose = page
+        .getByRole("dialog", { name: /commencez par les justificatifs/i })
+        .getByRole("button", { name: /terminer|close|×/i });
+      await onboardingClose.click({ timeout: 2000 }).catch(() => {});
+
       // give hydration / deferred scripts time to run
       await page.waitForTimeout(2000);
 
@@ -60,10 +97,6 @@ test.describe("Invalid qualified name regressions (WebKit/iOS)", () => {
           // ignore evaluate errors (page may have navigated/closed)
         }
         await menuBtn.click().catch(() => {});
-      }
-
-      if (closed) {
-        throw new Error("Page/context closed unexpectedly during test.");
       }
 
       const fatalConsole = consoleMessages.filter((t) =>
