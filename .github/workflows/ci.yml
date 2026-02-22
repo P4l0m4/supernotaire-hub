@@ -31,12 +31,12 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      - name: Build
-        run: yarn build
+      - name: Build (Nitro node preset)
+        run: NITRO_PRESET=node yarn build
       - name: Start preview server
-        run: yarn preview -- --port 3000 &
-      - name: Wait for preview
-        run: npx wait-on http://localhost:3000
+        run: |
+          NITRO_PRESET=node yarn preview --port 3000 &
+          npx wait-on http://localhost:3000
       - name: Run Playwright (webkit-ios)
         env:
           LOCAL_E2E: "1"
