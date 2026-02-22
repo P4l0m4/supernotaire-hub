@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   nitro: {
-    preset: "netlify",
+    preset: process.env.NITRO_PRESET || "netlify",
   },
 
   srcDir: "src/",
