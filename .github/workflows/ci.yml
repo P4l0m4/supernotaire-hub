@@ -22,6 +22,7 @@ jobs:
   e2e-playwright:
     runs-on: ubuntu-latest
     needs: unit-tests
+    timeout-minutes: 10
     env:
       NITRO_PRESET: node
     steps:
@@ -37,8 +38,11 @@ jobs:
         run: npx nuxi build --preset node
       - name: Start preview server
         run: |
-          PORT=3000 HOST=0.0.0.0 node .output/server/index.mjs &
-          npx wait-on http://localhost:3000
+          PORT=3000 HOST=0.0.0.0 node .output/server/index.mjs > /tmp/nitro.log 2>&1 &
+          echo $! > /tmp/nitro.pid
+          npx wait-on --timeout 120000 http://localhost:3000 || (echo "Nitro logs:" && cat /tmp/nitro.log && exit 1)
+          echo "Nitro logs (tail):"
+          tail -n 40 /tmp/nitro.log
       - name: Run Playwright (webkit-ios)
         env:
           LOCAL_E2E: "1"
