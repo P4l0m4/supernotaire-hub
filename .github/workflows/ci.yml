@@ -34,10 +34,10 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Build (Nitro node preset)
-        run: NITRO_PRESET=node yarn build
+        run: npx nuxi build --preset node
       - name: Start preview server
         run: |
-          NITRO_PRESET=node yarn preview --port 3000 &
+          NITRO_PRESET=node npx nuxi preview --port 3000 &
           npx wait-on http://localhost:3000
       - name: Run Playwright (webkit-ios)
         env:
