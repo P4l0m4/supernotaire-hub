@@ -37,7 +37,7 @@ jobs:
         run: npx nuxi build --preset node
       - name: Start preview server
         run: |
-          NITRO_PRESET=node npx nuxi preview --port 3000 &
+          PORT=3000 HOST=0.0.0.0 node .output/server/index.mjs &
           npx wait-on http://localhost:3000
       - name: Run Playwright (webkit-ios)
         env:
