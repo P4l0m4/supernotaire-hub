@@ -32,8 +32,8 @@ jobs:
           node-version: 20
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Install Playwright WebKit only
+        run: npx playwright install --with-deps webkit
       - name: Build (Nitro node preset)
         run: npx nuxi build --preset node-server
       - name: Start preview server
