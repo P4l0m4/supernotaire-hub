@@ -24,7 +24,7 @@ jobs:
     needs: unit-tests
     timeout-minutes: 10
     env:
-      NITRO_PRESET: node
+      NITRO_PRESET: node-server
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,7 +35,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Build (Nitro node preset)
-        run: npx nuxi build --preset node
+        run: npx nuxi build --preset node-server
       - name: Start preview server
         run: |
           PORT=3000 HOST=0.0.0.0 node .output/server/index.mjs > /tmp/nitro.log 2>&1 &
