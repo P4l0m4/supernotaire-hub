@@ -83,6 +83,9 @@ export default defineNuxtConfig({
       SUPABASE_ANON_KEY: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
       STRIPE_PUBLIC_KEY: process.env.NUXT_PUBLIC_STRIPE_PUBLIC_KEY,
       SENTRY_DSN: process.env.NUXT_PUBLIC_SENTRY_DSN,
+      posthogPublicKey: "phc_f1R92TSPblGGcXL9nEfxxx0Sr5Em8TCjN2oL4XEcFuR",
+      posthogHost: "https://us.i.posthog.com",
+      posthogDefaults: "2026-01-30",
     },
   },
 
