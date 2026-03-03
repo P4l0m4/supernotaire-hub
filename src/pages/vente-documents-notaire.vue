@@ -261,18 +261,12 @@ useHead({
       </h3>
     </div>
     <ReviewsCarousel :reviews />
-    <div id="last-chance" class="last-chance">
-      <div class="last-chance__text">
-        <h2 class="last-chance__text__title">
-          Si vous êtes arrivé jusque-là, c'est qu'il est temps d'essayer.
-        </h2>
-        <p class="last-chance__text__subtitle">
-          Évitez les retards et les erreurs qui coutent cher.<br />
-          Rejoinez les milliers de vendeurs qui ont déjà gagné des semaines sur
-          leur vente.
-        </p>
-      </div>
-      <div class="last-chance__links">
+
+    <UILastChance
+      title="Si vous êtes arrivé jusque-là, c'est qu'il est temps d'essayer."
+      subtitle="Évitez les retards et les erreurs qui coutent cher. Rejoignez les milliers de vendeurs qui ont déjà gagné des semaines sur leur vente."
+    >
+      <template #links>
         <NuxtLink
           to="/outils/checklist-dossier-vente-notaire"
           class="last-chance__links__link"
@@ -287,8 +281,8 @@ useHead({
             J'ai encore des questions
           </UISecondaryButton>
         </NuxtLink>
-      </div>
-    </div>
+      </template>
+    </UILastChance>
   </Container>
 
   <Container
@@ -488,76 +482,6 @@ useHead({
       @media (min-width: $tablet-screen) {
         max-width: 350px;
       }
-    }
-  }
-}
-
-.last-chance {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  color: $text-color;
-  width: 100%;
-  background-color: $primary-color;
-  border-radius: calc($radius/2);
-  padding: 2rem;
-
-  @media (min-width: $big-tablet-screen) {
-    padding: 4rem 2rem;
-    gap: 3rem;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    max-width: 49rem;
-    text-align: center;
-    align-items: center;
-
-    @media (min-width: $big-tablet-screen) {
-      gap: 1.5rem;
-    }
-
-    &__title {
-      width: 100%;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: $semi-bold;
-      text-wrap: balance;
-
-      @media (min-width: $big-tablet-screen) {
-        font-size: 2.5rem;
-      }
-    }
-
-    &__subtitle {
-      font-size: 1rem;
-      line-height: 1.35;
-      font-weight: $regular;
-      color: rgba($text-color, 0.7);
-      @media (min-width: $big-tablet-screen) {
-        font-size: 1.25rem;
-      }
-    }
-  }
-
-  &__links {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    @media (min-width: $big-tablet-screen) {
-      flex-direction: row;
-      gap: 2rem;
-    }
-
-    &__link {
-      width: 100%;
-      max-width: 24rem;
     }
   }
 }

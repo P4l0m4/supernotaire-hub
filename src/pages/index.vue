@@ -41,6 +41,39 @@ const profiles = ref([
   },
 ]);
 
+const bannerFeatures = ref([
+  {
+    name: "Dossiers complets",
+    icon: "folder_star_fill",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Démarches simplifiées",
+    icon: "file_dashed_fill",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Gain de temps immédiat",
+    icon: "clock",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Suivi en temps réel",
+    icon: "compass",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Diminution des erreurs",
+    icon: "alert_circle",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Conformité RGPD",
+    icon: "lock",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+]);
+
 useHead({
   title: "EasyCase | Finalisation rapide de vente immobilière",
   meta: [
@@ -185,6 +218,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <UIFeaturesBanner :features="bannerFeatures" />
     <UILogosCarousel />
   </Container>
   <Container>
@@ -324,7 +358,8 @@ onMounted(async () => {
     content: "";
     position: absolute;
     width: 100vw;
-    height: calc(100vh - 6rem);
+    bottom: -6rem;
+    height: calc(100vh);
     background-image: url("@/assets/images/buildings.svg");
     opacity: 0.8;
     background-position: center;
@@ -478,6 +513,13 @@ onMounted(async () => {
         max-width: 350px;
       }
     }
+  }
+}
+
+.features-banner {
+  margin-top: 4rem;
+  @media (min-width: $laptop-screen) {
+    margin-top: -2rem;
   }
 }
 

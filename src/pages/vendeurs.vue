@@ -14,6 +14,7 @@ import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
 
 import { colors } from "@/utils/colors";
 import { stringToSlug } from "@/utils/slugify";
+import FeaturesBanner from "~/components/UI/FeaturesBanner.vue";
 
 const tutorials = ref<any[]>([]);
 const carouselElements = ref<any[]>([]);
@@ -81,6 +82,39 @@ const features = ref([
   },
 ]);
 
+const bannerFeatures = ref([
+  {
+    name: "Dossiers complets",
+    icon: "folder_star_fill",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Démarches simplifiées",
+    icon: "file_dashed_fill",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Gain de temps immédiat",
+    icon: "clock",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Suivi en temps réel",
+    icon: "compass",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Diminution des erreurs",
+    icon: "alert_circle",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+  {
+    name: "Conformité RGPD",
+    icon: "lock",
+    path: "/outils/checklist-dossier-vente-notaire",
+  },
+]);
+
 useJsonld(() => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -133,6 +167,7 @@ onMounted(async () => {
         <img class="hero__image__dots" :src="dots" alt="dots" />
       </div>
     </div>
+    <UIFeaturesBanner :features="bannerFeatures" />
     <Benefits
       title="Vendeurs de biens immobiliers"
       subtitle="+ 80% d’efficacité dans vos démarches"
@@ -188,6 +223,27 @@ onMounted(async () => {
       </h3>
     </div>
     <UICarouselComponent :carousel-elements="carouselElements" />
+
+    <UILastChance
+      title="Si vous êtes arrivé jusque-là, c'est qu'il est temps d'essayer."
+      subtitle="Évitez les retards et les erreurs qui coutent cher. Rejoignez les milliers de vendeurs qui ont déjà gagné des semaines sur leur vente."
+    >
+      <template #links>
+        <NuxtLink
+          to="/outils/checklist-dossier-vente-notaire"
+          class="last-chance__links__link"
+        >
+          <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
+            Obtenir mon récapitulatif en 5 minutes
+          </UIPrimaryButton>
+        </NuxtLink>
+        <NuxtLink to="#faq" class="last-chance__links__link">
+          <UISecondaryButton variant="accent-color" icon="file_dashed_fill">
+            Créer un Pré-état daté
+          </UISecondaryButton>
+        </NuxtLink>
+      </template>
+    </UILastChance>
   </Container>
   <HotjarTracking />
 </template>
