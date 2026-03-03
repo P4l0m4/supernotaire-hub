@@ -174,8 +174,8 @@ onMounted(async () => {
         </div>
         <div class="centered-hero__text__link">
           <NuxtLink
-            to="/inscription"
-            aria-label="Découvrir notre offre"
+            to="/outils/checklist-dossier-vente-notaire"
+            aria-label="Créer gratuitement mon dossier"
             style="width: 100%"
           >
             <UIPrimaryButton variant="accent-color" icon="arrow_right">
