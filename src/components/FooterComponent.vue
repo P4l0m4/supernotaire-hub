@@ -96,7 +96,9 @@
           </svg>
         </li>
         <li class="footer__links-container__links__li">
-          <NuxtLink :to="{ path: '/', hash: '#roadmap' }">Roadmap</NuxtLink>
+          <NuxtLink :to="{ path: '/contact', hash: '#roadmap' }"
+            >Roadmap</NuxtLink
+          >
         </li>
         <li class="footer__links-container__links__li">
           <NuxtLink to="/annuaire">Annuaire</NuxtLink>

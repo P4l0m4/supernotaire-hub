@@ -11,10 +11,6 @@ const options = [
     icon: "phone",
     text: "06 70 50 35 93",
   },
-  {
-    icon: "mail",
-    text: "aurore.sajott@gmail.com",
-  },
 ];
 
 useHead({
