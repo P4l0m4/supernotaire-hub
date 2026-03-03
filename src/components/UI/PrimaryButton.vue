@@ -88,15 +88,15 @@ const iconColor = computed(() => {
   @media (min-width: $big-tablet-screen) {
     box-shadow: 0 0 0 0 rgba($text-color, 0);
     transition:
-      background-color 0.3s linear,
-      color 0.3s linear,
-      border-color 0.3s linear,
-      filter 0.3s linear,
-      background-position 1.5s linear;
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      filter 0.3s ease,
+      background-position 1.5s ease;
 
     &:hover {
       background-position: top left;
-      filter: drop-shadow(10px 10px 10px rgba($text-color, 0.1));
+      filter: drop-shadow(0.5rem 0.5rem 0 rgba(var(--shadow-color), 0.3));
 
       & .icon {
         transform: translateX(0.25rem);
@@ -118,6 +118,9 @@ const iconColor = computed(() => {
 }
 
 .secondary-color {
+  --shadow-color:
+    #{red($secondary-color)}, #{green($secondary-color)},
+    #{blue($secondary-color)};
   background: radial-gradient(
       farthest-corner at top,
       $secondary-color,
@@ -130,6 +133,8 @@ const iconColor = computed(() => {
 }
 
 .accent-color {
+  --shadow-color:
+    #{red($accent-color)}, #{green($accent-color)}, #{blue($accent-color)};
   background: radial-gradient(
       farthest-corner at top,
       $accent-color,
@@ -142,6 +147,8 @@ const iconColor = computed(() => {
 }
 
 .text-color {
+  --shadow-color:
+    #{red($text-color)}, #{green($text-color)}, #{blue($text-color)};
   background: radial-gradient(
       farthest-corner at top,
       $text-color,
@@ -154,6 +161,8 @@ const iconColor = computed(() => {
 }
 
 .primary-color {
+  --shadow-color:
+    #{red($primary-color)}, #{green($primary-color)}, #{blue($primary-color)};
   background: radial-gradient(
       farthest-corner at top,
       $primary-color,
@@ -166,6 +175,8 @@ const iconColor = computed(() => {
 }
 
 .success-color {
+  --shadow-color:
+    #{red($success-color)}, #{green($success-color)}, #{blue($success-color)};
   background: radial-gradient(
       farthest-corner at top,
       $success-color,
@@ -178,6 +189,8 @@ const iconColor = computed(() => {
 }
 
 .purple-color {
+  --shadow-color:
+    #{red($purple-color)}, #{green($purple-color)}, #{blue($purple-color)};
   background: radial-gradient(
       farthest-corner at top,
       $purple-color,
@@ -190,6 +203,8 @@ const iconColor = computed(() => {
 }
 
 .error-color {
+  --shadow-color:
+    #{red($error-color)}, #{green($error-color)}, #{blue($error-color)};
   background: radial-gradient(
       farthest-corner at top,
       $error-color,

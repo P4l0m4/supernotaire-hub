@@ -60,6 +60,19 @@ defineProps({
     max-height: 100vh;
   }
 
+  &::after {
+    content: "";
+    background-color: rgba($accent-color, 0.1);
+    border-radius: calc($radius / 2);
+    bottom: -0.75rem;
+    right: -0.75rem;
+    top: 0.75rem;
+    left: 0.75rem;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+
   & img {
     filter: brightness(0.5);
     object-fit: cover;

@@ -127,6 +127,7 @@ watchEffect(() => {
     max-height: 500px;
     list-style: none;
     padding: 0;
+    padding-bottom: 0.75rem;
     margin: 0;
     width: max-content;
     animation: reviews-marquee 120s linear infinite;
@@ -150,9 +151,23 @@ watchEffect(() => {
       padding: 1rem;
       background-color: $primary-color;
       box-shadow: $shadow-black;
+      position: relative;
 
       @media (min-width: $big-tablet-screen) {
         padding: 1.5rem;
+      }
+
+      &::after {
+        content: "";
+        background-color: rgba($accent-color, 0.1);
+        border-radius: calc($radius / 2);
+        bottom: -0.75rem;
+        right: -0.75rem;
+        top: 0.75rem;
+        left: 0.75rem;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
       }
 
       &__stars {
@@ -187,8 +202,8 @@ watchEffect(() => {
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          background-color: rgba($warning-color, 0.1);
-          color: $warning-color;
+          background-color: rgba($accent-color, 0.1);
+          color: $accent-color;
           font-weight: $semi-bold;
           grid-column: 1;
           grid-row: 1 / span 2;

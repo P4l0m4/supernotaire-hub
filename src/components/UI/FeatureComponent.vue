@@ -14,7 +14,7 @@ defineProps<props>();
   <div
     class="feature"
     :class="{ reverse: reverse }"
-    :style="{ backgroundColor: `${color}10` }"
+    :style="{ backgroundColor: `${color}10`, color: color }"
   >
     <div class="feature__text">
       <h2
@@ -35,8 +35,9 @@ defineProps<props>();
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  border-radius: $radius;
+  border-radius: calc($radius / 2);
   height: fit-content;
+  position: relative;
 
   @media (min-width: $tablet-screen) {
     padding: 2rem;
@@ -53,6 +54,29 @@ defineProps<props>();
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &::before {
+    content: "";
+    background-color: currentColor;
+    opacity: 0.4;
+    border-radius: calc($radius / 2);
+    bottom: -0.75rem;
+    right: -0.75rem;
+    top: 0.75rem;
+    left: 0.75rem;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+  &::after {
+    content: "";
+    background-color: rgba($base-color, 1);
+    border-radius: calc($radius / 2);
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
   }
 
   &__text {

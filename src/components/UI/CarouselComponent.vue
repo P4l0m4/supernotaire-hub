@@ -147,7 +147,13 @@ const scroll = (direction: "left" | "right") => {
     gap: 1rem;
     width: fit-content;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    padding-bottom: 0.75rem;
+
+    @media (min-width: $big-tablet-screen) {
+      gap: 2rem;
+    }
 
     &::-webkit-scrollbar {
       display: none;

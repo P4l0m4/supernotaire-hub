@@ -38,23 +38,31 @@ withDefaults(defineProps<Props>(), {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  border-radius: $radius;
+  border-radius: calc($radius / 2);
   position: relative;
-  overflow: hidden;
   scroll-snap-align: center;
-  transition: filter 0.3s linear, box-shadow 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    box-shadow 0.3s ease;
   filter: grayscale(30%);
+  box-shadow: 0.75rem 0.75rem 0 0 rgba($accent-color, 0.1);
+
+  @media (min-width: $big-tablet-screen) {
+    width: 360px;
+    min-width: 360px;
+    height: 280px;
+  }
 
   &:hover {
     filter: grayscale(0%);
-    box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
+    box-shadow: 0.5rem 0.5rem 0 0 rgba($accent-color, 0.3);
 
     & .carousel-slide__arrow {
       transform: rotate(15deg);
     }
   }
 
-  &::after {
+  &::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -62,12 +70,7 @@ withDefaults(defineProps<Props>(), {
     height: 100%;
     background-image: linear-gradient(45deg, $text-color, transparent 60%);
     opacity: 0.8;
-  }
-
-  @media (min-width: $big-tablet-screen) {
-    width: 360px;
-    min-width: 360px;
-    height: 280px;
+    border-radius: calc($radius / 2);
   }
 
   &__label {

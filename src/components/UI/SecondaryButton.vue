@@ -65,14 +65,13 @@ withDefaults(defineProps<Props>(), {
 
   @media (min-width: $big-tablet-screen) {
     transition:
-      background-color 0.3s linear,
-      color 0.3s linear,
-      border-color 0.3s linear,
-      box-shadow 0.2s linear,
-      gap 0.2s linear;
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 20px 40px 40px -30px rgba($text-color, 0.05);
+      box-shadow: 0.5rem 0.5rem 0 0 rgba(var(--shadow-color), 0.1);
       gap: 1rem;
 
       & .icon {
@@ -95,48 +94,65 @@ withDefaults(defineProps<Props>(), {
 }
 
 .secondary-color {
+  --shadow-color:
+    #{red($secondary-color)}, #{green($secondary-color)},
+    #{blue($secondary-color)};
   background-color: rgba($secondary-color, 0.1);
   color: $secondary-color;
   border: 2px solid $secondary-color;
 }
 
 .accent-color {
+  --shadow-color:
+    #{red($accent-color)}, #{green($accent-color)}, #{blue($accent-color)};
   background-color: rgba($accent-color, 0.1);
   color: $accent-color;
   border: 2px solid $accent-color;
 }
 
 .text-color {
+  --shadow-color:
+    #{red($text-color)}, #{green($text-color)}, #{blue($text-color)};
   background-color: rgba($text-color, 0.1);
   color: $text-color;
   border: 2px solid $text-color;
 }
 
 .primary-color {
+  --shadow-color:
+    #{red($primary-color)}, #{green($primary-color)}, #{blue($primary-color)};
   background-color: rgba($primary-color, 0.1);
   color: $primary-color;
   border: 2px solid $primary-color;
 }
 
 .error-color {
+  --shadow-color:
+    #{red($error-color)}, #{green($error-color)}, #{blue($error-color)};
   background-color: rgba($error-color, 0.1);
   color: $error-color;
   border: 2px solid $error-color;
 }
 
 .warning-color {
+  --shadow-color:
+    #{red($warning-color)}, #{green($warning-color)}, #{blue($warning-color)};
   background-color: rgba($warning-color, 0.1);
   color: $warning-color;
   border: 2px solid $warning-color;
 }
 
 .success-color {
+  --shadow-color:
+    #{red($success-color)}, #{green($success-color)}, #{blue($success-color)};
   background-color: rgba($success-color, 0.1);
   color: $success-color;
   border: 2px solid $success-color;
 }
 
 .purple-color {
+  --shadow-color:
+    #{red($purple-color)}, #{green($purple-color)}, #{blue($purple-color)};
   background-color: rgba($purple-color, 0.1);
   color: $purple-color;
   border: 2px solid $purple-color;

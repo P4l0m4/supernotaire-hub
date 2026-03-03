@@ -34,6 +34,7 @@ const reloadIconAnimation = () => {
 </template>
 <style lang="scss" scoped>
 .feature-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -44,14 +45,12 @@ const reloadIconAnimation = () => {
   border-radius: calc($radius / 2);
   box-shadow: 20px 40px 40px -30px rgba($text-color, 0.03);
   transition:
-    transform 0.2s linear,
+    background-color 0.2s ease,
     color 0.2s ease,
     box-shadow 0.2s ease;
-  transform: scale(1);
-  transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
   @starting-style {
-    transform: scale(0);
+    background-color: $base-color;
   }
 
   ::v-deep svg {
@@ -77,14 +76,26 @@ const reloadIconAnimation = () => {
     gap: 1rem;
     height: 100%;
     border-radius: calc($radius / 2);
-    // border: 1px solid rgba($text-color, 0.1);
     transition:
-      transform 0.2s linear,
+      transform 0.2s ease,
       color 0.2s ease,
       box-shadow 0.2s ease;
 
     @media (min-width: $big-tablet-screen) {
       padding: 1.5rem;
+    }
+
+    &::before {
+      content: "";
+      background-color: rgba($accent-color, 0.1);
+      border-radius: calc($radius / 2);
+      bottom: -0.75rem;
+      right: -0.75rem;
+      top: 0.75rem;
+      left: 0.75rem;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
     }
 
     &__title {

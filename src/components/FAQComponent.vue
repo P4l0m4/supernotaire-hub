@@ -79,7 +79,7 @@ useJsonld(() => ({
   }
 
   &__card {
-    border-radius: $radius;
+    border-radius: calc($radius / 2);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -91,6 +91,7 @@ useJsonld(() => ({
     cursor: pointer;
     background-color: $base-color;
     border: 1px solid darken($base-color, 5%);
+    position: relative;
 
     @media (min-width: $big-tablet-screen) {
       min-width: 500px;
@@ -98,9 +99,46 @@ useJsonld(() => ({
       min-height: 6.5rem;
     }
 
+    &::before {
+      content: "";
+      background-color: rgba($base-color, 1);
+      border-radius: calc($radius / 2);
+      inset: 0;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      background-color: rgba($accent-color, 0.1);
+      border-radius: calc($radius / 2);
+      bottom: -0.75rem;
+      right: -0.75rem;
+      top: 0.75rem;
+      left: 0.75rem;
+      position: absolute;
+      width: 100%;
+      z-index: -2;
+      transition: background-color 0.3s ease;
+    }
+
     &--opened {
-      background-color: darken($base-color, 2%);
+      background-color: rgba($accent-color, 0.1);
       border: 1px solid transparent;
+
+      &::after {
+        content: "";
+        background-color: rgba($accent-color, 0.3);
+        border-radius: calc($radius / 2);
+        bottom: -0.75rem;
+        right: -0.75rem;
+        top: 0.75rem;
+        left: 0.75rem;
+        position: absolute;
+        width: 100%;
+        z-index: -2;
+      }
     }
 
     &__question {
@@ -125,7 +163,7 @@ useJsonld(() => ({
       font-weight: $regular;
       animation: fading 0.3s;
       width: 100%;
-      line-height: $subtitles;
+      line-height: 1.4;
       color: $text-color;
     }
 

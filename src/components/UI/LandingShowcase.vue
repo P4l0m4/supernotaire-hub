@@ -13,7 +13,7 @@ const props = withDefaults(
   }>(),
   {
     highlightColor: colors["text-color"],
-  }
+  },
 );
 
 const titleParts = computed(() => {
@@ -105,6 +105,7 @@ const titleParts = computed(() => {
 
   &__interface {
     width: 100%;
+    position: relative;
 
     &__image {
       width: 100%;
@@ -112,6 +113,19 @@ const titleParts = computed(() => {
       max-height: 400px;
       object-fit: cover;
       border-radius: calc($radius / 2);
+    }
+
+    &::before {
+      content: "";
+      background-color: rgba($accent-color, 0.1);
+      border-radius: calc($radius / 2);
+      bottom: -0.75rem;
+      right: -0.75rem;
+      top: 0.75rem;
+      left: 0.75rem;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
     }
   }
 }
