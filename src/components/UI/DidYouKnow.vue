@@ -24,13 +24,14 @@ defineProps<{
 
 <style scoped lang="scss">
 .did-you-know {
+  background-color: $primary-color;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   gap: 2rem;
   width: 100%;
   min-width: 280px;
-  min-height: 21.87rem;
+  min-height: calc(100vh - 4rem);
   position: relative;
   overflow: hidden;
 
@@ -40,7 +41,6 @@ defineProps<{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    min-height: 28rem;
   }
 
   &__content {

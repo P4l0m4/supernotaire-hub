@@ -124,27 +124,26 @@ useHead({
       <FAQComponent :questions />
     </div>
   </Container>
-  <Container>
-    <UIDidYouKnow title="Servez-vous, c'est gratuit !">
-      <template #text>
-        Depuis quelques années, les bases de données de l'administration fiscale
-        relatives aux transactions immobilières sont en accès libre sur
-        internet. Les données sont issues des actes notariés et des informations
-        cadastrales. Nous les utilisons pour vous fournir une estimation fiable
-        de la valeur foncière des biens.
-      </template>
-      <template #cta>
-        <NuxtLink
-          to="/outils/valeur-fonciere#valeur-fonciere"
-          aria-label="Estimer un bien immobilier"
+
+  <UIDidYouKnow title="Servez-vous, c'est gratuit !">
+    <template #text>
+      Depuis quelques années, les bases de données de l'administration fiscale
+      relatives aux transactions immobilières sont en accès libre sur internet.
+      Les données sont issues des actes notariés et des informations
+      cadastrales. Nous les utilisons pour vous fournir une estimation fiable de
+      la valeur foncière des biens.
+    </template>
+    <template #cta>
+      <NuxtLink
+        to="/outils/valeur-fonciere#valeur-fonciere"
+        aria-label="Estimer un bien immobilier"
+      >
+        <UIPrimaryButton variant="accent-color"
+          >Estimer un bien immobilier</UIPrimaryButton
         >
-          <UIPrimaryButton variant="accent-color"
-            >Estimer un bien immobilier</UIPrimaryButton
-          >
-        </NuxtLink>
-      </template>
-    </UIDidYouKnow></Container
-  >
+      </NuxtLink>
+    </template>
+  </UIDidYouKnow>
   <HotjarTracking />
 </template>
 <style scoped lang="scss">
