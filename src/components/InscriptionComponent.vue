@@ -3,6 +3,7 @@ import { useVuelidate } from "@vuelidate/core";
 import emailjs from "@emailjs/browser";
 import { required, email } from "@vuelidate/validators";
 import { ref } from "vue";
+import { options } from "floating-vue";
 
 const isPopupOpen = ref(false);
 
@@ -60,7 +61,7 @@ const vContact$ = useVuelidate(rules, {
   email: emailAdress,
   option: selectedOption,
 });
-const form = ref(null);
+// const form = ref(null);
 
 const emailErrors = computed(() => {
   const errors: string[] = [];
@@ -101,7 +102,7 @@ async function validContactState() {
 </script>
 <template>
   <div class="inscription-component">
-    <form class="form-beta" ref="form" @submit.prevent="submit">
+    <form class="form-beta" @submit.prevent="submit">
       <FormElementsRadioOption
         v-for="opt in radioOptions"
         :key="opt.id"
@@ -139,7 +140,7 @@ async function validContactState() {
       </div>
     </form>
     <ConfirmationPopUp
-      v-if="isPopupOpen"
+      v-if="isPopupOpen && selectedOption === 'notaire'"
       @close-confirmation="isPopupOpen = false"
     >
       <template #title>Vous faites partie de l'aventure 🎉</template>
@@ -152,6 +153,23 @@ async function validContactState() {
           style="width: 100%"
           ><UIPrimaryButton variant="accent-color" icon="hand_heart_fill"
             >Devenir Notaire Fondateur</UIPrimaryButton
+          ></NuxtLink
+        >
+      </template>
+    </ConfirmationPopUp>
+    <ConfirmationPopUp
+      v-else-if="isPopupOpen && selectedOption === 'vendeur'"
+      @close-confirmation="isPopupOpen = false"
+    >
+      <template #title>Vous faites partie de l'aventure 🎉</template>
+      Envie de gagner du temps dès maintenant ? Préparez votre dossier en
+      quelques clics et gagnez des semaines sur votre vente.
+      <template #button>
+        <NuxtLink
+          to="/outils/checklist-dossier-vente-notaire"
+          style="width: 100%"
+          ><UIPrimaryButton variant="accent-color" icon="hand_heart_fill"
+            >Préparer gratuitement mon dossier</UIPrimaryButton
           ></NuxtLink
         >
       </template>

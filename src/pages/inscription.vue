@@ -17,7 +17,7 @@ useHead({
       <div class="inscription__headlines">
         <h1 class="titles">Rejoignez l'accès anticipé</h1>
         <h2 class="subtitles">
-          Profitez en avant-première des fonctionnalités de EasyCase 🚀
+          Profitez en avant-première des fonctionnalités d'EasyCase 🚀
         </h2>
       </div>
 
