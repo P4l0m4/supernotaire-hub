@@ -56,7 +56,7 @@ function simulateClick() {
     <UIWrappedIcon
       v-if="radioOption.icon"
       :icon="radioOption.icon"
-      :color="colors['accent-color']"
+      :color="error ? colors['error-color'] : colors['accent-color']"
       size="big"
     />
 
