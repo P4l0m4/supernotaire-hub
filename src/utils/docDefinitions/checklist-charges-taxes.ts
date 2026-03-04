@@ -105,7 +105,7 @@ export function buildDocDefinition(
       ]);
     }
     infoRows.push([label, buildKeyValueSubTable(rows)]);
-    addDoc(`RIB du beneficiaire ${index + 1}`);
+    addDoc(`RIB du bénéficiaire ${index + 1}`);
   });
 
   // Documents

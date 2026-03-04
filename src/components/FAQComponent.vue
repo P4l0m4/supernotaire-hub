@@ -89,9 +89,10 @@ useJsonld(() => ({
     gap: 1rem;
     padding: 1rem;
     cursor: pointer;
-    background-color: $base-color;
-    border: 1px solid darken($base-color, 5%);
+    background-color: $primary-color;
+    border: 1px solid rgba($text-color, 0.1);
     position: relative;
+    transition: background-color 0.3s ease;
 
     @media (min-width: $big-tablet-screen) {
       min-width: 500px;
