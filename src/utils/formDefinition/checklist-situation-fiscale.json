@@ -10,9 +10,20 @@
           "id": "situation-fiscale-type-proprietaire",
           "label": "Le propriétaire du bien est une :",
           "name": "type_proprietaire",
-          "type": "select",
-          "options": ["Personne physique", "Personne morale"],
-          "placeholder": "Sélectionner une option",
+          "type": "radio",
+          "options": [
+            {
+              "label": "Personne physique",
+              "value": "Personne physique",
+              "icon": "person_fill"
+            },
+            {
+              "label": "Personne morale",
+              "value": "Personne morale",
+              "icon": "briefcase_fill"
+            }
+          ],
+
           "required": true
         },
         {

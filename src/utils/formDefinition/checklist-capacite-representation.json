@@ -10,9 +10,19 @@
           "id": "capacite-statut-partie",
           "label": "Le vendeur est une :",
           "name": "statut_partie",
-          "type": "select",
-          "options": ["Personne physique", "Personne morale"],
-          "placeholder": "Sélectionnez un statut",
+          "type": "radio",
+          "options": [
+            {
+              "label": "Personne physique",
+              "value": "Personne physique",
+              "icon": "person_fill"
+            },
+            {
+              "label": "Personne morale",
+              "value": "Personne morale",
+              "icon": "briefcase_fill"
+            }
+          ],
           "required": true
         },
         {
