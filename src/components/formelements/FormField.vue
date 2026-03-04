@@ -395,10 +395,6 @@ const isAnyHighlight = computed(
     font-size: 1rem;
     color: $text-color;
     font-weight: $medium;
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     width: 100%;
   }
 
