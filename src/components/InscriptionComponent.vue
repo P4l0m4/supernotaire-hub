@@ -3,7 +3,6 @@ import { useVuelidate } from "@vuelidate/core";
 import emailjs from "@emailjs/browser";
 import { required, email } from "@vuelidate/validators";
 import { ref } from "vue";
-import { options } from "floating-vue";
 
 const isPopupOpen = ref(false);
 
