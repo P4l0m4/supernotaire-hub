@@ -102,29 +102,6 @@ const valueRef = computed({
   set: (v) => setByPath(model.value, props.formField.path, v),
 });
 
-// const arrayRef = computed<any[]>({
-//   get: () => {
-//     const v = getByPath(model.value, props.formField.path);
-//     if (Array.isArray(v)) return v;
-//     setByPath(model.value, props.formField.path, []); // write-through
-//     return [];
-//   },
-//   set: (v) =>
-//     setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []),
-// });
-
-// const checkBoxGroupRef = computed<string[]>({
-//   get: () => {
-//     const v = getByPath(model.value, props.formField.path);
-//     if (Array.isArray(v)) return v;
-//     setByPath(model.value, props.formField.path, []); // write-through
-//     return [];
-//   },
-//   set: (v) => {
-//     setByPath(model.value, props.formField.path, Array.isArray(v) ? v : []);
-//   },
-// });
-
 const arrayRef = computed<any[]>({
   get: () => {
     const v = getByPath(model.value, props.formField.path);
@@ -204,30 +181,38 @@ const isAnyHighlight = computed(
         size="0.75rem"
         :color="colors['error-color']"
     /></label>
-    <FormElementsInputField
+
+    <ClientOnly
       v-if="
         formField.type === 'text' ||
         formField.type === 'number' ||
         formField.type === 'email'
       "
-      :id="formField.id"
-      :label="formField.label"
-      :placeholder="formField.placeholder || ''"
-      :name="formField.name"
-      v-model="valueRef"
-      :required="
-        formField.required
-          ? formField.required
-          : formField.requiredIf
-            ? false
-            : undefined
-      "
-      :icon="formField.icon || ''"
-      :error="errorMessage"
-      :tooltip="formField.tooltip || ''"
-      :tooltipLink="formField.tooltipLink || ''"
-      :maxLength="formField.maxLength"
-    />
+    >
+      <FormElementsInputField
+        :id="formField.id"
+        :label="formField.label"
+        :placeholder="formField.placeholder || ''"
+        :name="formField.name"
+        v-model="valueRef"
+        :required="
+          formField.required
+            ? formField.required
+            : formField.requiredIf
+              ? false
+              : undefined
+        "
+        :icon="formField.icon || ''"
+        :error="errorMessage"
+        :tooltip="formField.tooltip || ''"
+        :tooltipLink="formField.tooltipLink || ''"
+        :maxLength="formField.maxLength"
+      />
+      <template #fallback>
+        <UISkeletonLoader height="2.75rem" />
+      </template>
+    </ClientOnly>
+
     <ClientOnly v-else-if="formField.type === 'date'">
       <FormElementsDateField
         :id="formField.id"
@@ -241,96 +226,145 @@ const isAnyHighlight = computed(
         :minDate="resolveMinDate(formField)"
         :maxDate="resolveMaxDate(formField)"
       />
+      <template #fallback>
+        <UISkeletonLoader height="2.75rem" />
+      </template>
     </ClientOnly>
 
-    <FormElementsArrayFieldRenderer
-      v-if="formField.type === 'array'"
-      v-model="arrayRef"
-      :field="formField"
-      :suggestion="typeof suggestion === 'object' ? suggestion : undefined"
-      :parentError="errorMessage"
-    />
-    <FormElementsSelectField
-      v-else-if="formField.type === 'select'"
-      :options="formField.options || []"
-      v-model="valueRef"
-      :placeholder="formField.placeholder || ''"
-      :icon="formField.icon || ''"
-      :error="errorMessage"
-      :tooltip="formField.tooltip || ''"
-      :tooltipLink="formField.tooltipLink || ''"
-    />
-    <FormElementsSegmentedControl
-      v-else-if="formField.type === 'segmented-control'"
-      v-model="valueRef"
-      :options="formField.options || []"
-      :error="errorMessage"
-    />
-    <FormElementsFileField
-      v-else-if="formField.type === 'file'"
-      :id="formField.id"
-      :name="formField.name"
-      :label="formField.label"
-      v-model="valueRef"
-      :required="formField.required"
-      :error="errorMessage"
-      :icon="formField.icon || ''"
-      :accept="formField.accept"
-      :multiple="formField.multiple || false"
-      :TS_TYPE="formField.TS_TYPE || ''"
-    />
-    <FormElementsRangeInput
-      v-else-if="formField.type === 'range'"
-      v-model="valueRef"
-      :options="formField.options"
-      :error="errorMessage"
-    />
+    <ClientOnly v-else-if="formField.type === 'array'">
+      <FormElementsArrayFieldRenderer
+        v-if="formField.type === 'array'"
+        v-model="arrayRef"
+        :field="formField"
+        :suggestion="typeof suggestion === 'object' ? suggestion : undefined"
+        :parentError="errorMessage"
+    /></ClientOnly>
 
-    <FormElementsDropDown
-      v-if="formField.type === 'checkbox-group'"
-      :label="formField.placeholder || formField.label"
-      :icon="formField.icon"
-      :error="errorMessage"
-      :required="Boolean(formField.required || formField.requiredIf)"
-      :tooltip="formField.tooltip || ''"
-      :tooltipLink="formField.tooltipLink || ''"
-    >
-      <FormElementsCheckboxField
-        v-for="(option, index) in formField.options"
-        :key="index"
-        :id="`${formField.id}-${index}`"
-        :name="formField.name"
-        :label="option.label"
-        :modelValue="isChecked(option.value)"
-        @update:modelValue="(val) => setChecked(option.value, val)"
-      />
-    </FormElementsDropDown>
-
-    <FormElementsCheckboxField
-      v-if="formField.type === 'checkbox'"
-      :label="formField.label"
-      :id="formField.id"
-      :name="formField.name"
-      :tooltip="formField.tooltip || ''"
-      :tooltipLink="formField.tooltipLink || ''"
-      v-model="valueRef"
-    />
-    <ClientOnly>
-      <FormElementsLocationSearch
-        v-if="formField.type === 'location'"
-        :id="formField.id"
-        :label="formField.label"
+    <ClientOnly v-else-if="formField.type === 'select'">
+      <FormElementsSelectField
+        :options="formField.options || []"
         v-model="valueRef"
         :placeholder="formField.placeholder || ''"
-        :required="
-          formField.required
-            ? formField.required
-            : formField.requiredIf
-              ? false
-              : undefined
-        "
+        :icon="formField.icon || ''"
         :error="errorMessage"
-    /></ClientOnly>
+        :tooltip="formField.tooltip || ''"
+        :tooltipLink="formField.tooltipLink || ''"
+      />
+      <template #fallback>
+        <UISkeletonLoader height="2.75rem" />
+      </template>
+    </ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'segmented-control'">
+      <FormElementsSegmentedControl
+        v-model="valueRef"
+        :options="formField.options || []"
+        :error="errorMessage"
+      />
+      <template #fallback>
+        <UISkeletonLoader height="2.75rem" />
+      </template>
+    </ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'file'">
+      <FormElementsFileField
+        :id="formField.id"
+        :name="formField.name"
+        :label="formField.label"
+        v-model="valueRef"
+        :required="formField.required"
+        :error="errorMessage"
+        :icon="formField.icon || ''"
+        :accept="formField.accept"
+        :multiple="formField.multiple || false"
+        :TS_TYPE="formField.TS_TYPE || ''" />
+      <template #fallback> <UISkeletonLoader height="2.75rem" /> </template
+    ></ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'range'">
+      <FormElementsRangeInput
+        v-model="valueRef"
+        :options="formField.options"
+        :error="errorMessage" />
+      <template #fallback> <UISkeletonLoader height="2.75rem" /> </template
+    ></ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'checkbox-group'">
+      <FormElementsDropDown
+        :label="formField.placeholder || formField.label"
+        :icon="formField.icon"
+        :error="errorMessage"
+        :required="Boolean(formField.required || formField.requiredIf)"
+        :tooltip="formField.tooltip || ''"
+        :tooltipLink="formField.tooltipLink || ''"
+      >
+        <FormElementsCheckboxField
+          v-for="(option, index) in formField.options"
+          :key="index"
+          :id="`${formField.id}-${index}`"
+          :name="formField.name"
+          :label="option.label"
+          :modelValue="isChecked(option.value)"
+          @update:modelValue="(val) => setChecked(option.value, val)"
+        /> </FormElementsDropDown
+      ><template #fallback> <UISkeletonLoader height="2.75rem" /> </template>
+    </ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'checkbox'">
+      <Transition name="form-field-fade">
+        <FormElementsCheckboxField
+          :label="formField.label"
+          :id="formField.id"
+          :name="formField.name"
+          :tooltip="formField.tooltip || ''"
+          :tooltipLink="formField.tooltipLink || ''"
+          v-model="valueRef" /></Transition
+      ><template #fallback> <UISkeletonLoader height="2.75rem" /> </template
+    ></ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'location'">
+      <Transition name="form-field-fade">
+        <FormElementsLocationSearch
+          :id="formField.id"
+          :label="formField.label"
+          v-model="valueRef"
+          :placeholder="formField.placeholder || ''"
+          :required="
+            formField.required
+              ? formField.required
+              : formField.requiredIf
+                ? false
+                : undefined
+          "
+          :error="errorMessage"
+      /></Transition>
+      <template #fallback>
+        <UISkeletonLoader height="2.75rem" />
+      </template>
+    </ClientOnly>
+
+    <ClientOnly v-else-if="formField.type === 'radio'">
+      <Transition name="form-field-fade">
+        <div class="radios-wrapper">
+          <FormElementsRadioOption
+            v-for="(option, index) in formField.options"
+            :key="index"
+            :radioOption="{
+              ...option,
+              id: `${formField.id}-${index}`,
+              name: formField.name,
+            }"
+            v-model="valueRef"
+            :error="errorMessage"
+            size="small"
+          /></div
+      ></Transition>
+      <template #fallback>
+        <div class="radios-wrapper">
+          <UISkeletonLoader height="8.25rem" />
+          <UISkeletonLoader height="8.25rem" /></div
+      ></template>
+    </ClientOnly>
 
     <Transition name="form-field-fade">
       <UISmartSuggestion
@@ -360,7 +394,7 @@ const isAnyHighlight = computed(
   &__label {
     font-size: 1rem;
     color: $text-color;
-    font-weight: $regular;
+    font-weight: $medium;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -373,6 +407,12 @@ const isAnyHighlight = computed(
     box-shadow: 0 0 0 0 rgba($purple-color, 0.25);
     border-radius: calc($radius / 2);
   }
+}
+
+.radios-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
 }
 
 @keyframes prefillPulse {

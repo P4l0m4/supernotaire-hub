@@ -1,4 +1,5 @@
 import type { RangeOption } from "@/components/FormElements/RangeInput.vue";
+import type { RadioOption } from "@/components/FormElements/RadioOption.vue";
 
 type FieldType =
   | "text"
@@ -33,6 +34,7 @@ export interface BaseField {
     | "segmented-control"
     | "file"
     | "date"
+    | "radio"
   >;
   required?: boolean;
   requiredIf?: ShowIf;
@@ -125,6 +127,11 @@ export interface DateField extends Omit<BaseField, "type"> {
   minDate?: string | Date;
 }
 
+export interface RadioField extends Omit<BaseField, "type"> {
+  type: "radio";
+  options: RadioOption[];
+}
+
 export type FormField =
   | BaseField // text, radio, textarea, email, location
   | CheckBoxField
@@ -135,7 +142,8 @@ export type FormField =
   | SelectField
   | SegmentedControlField
   | FileField
-  | DateField;
+  | DateField
+  | RadioField;
 
 export interface FormDefinition {
   title: string;

@@ -316,31 +316,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="rubrique">
     <div class="rubrique__header">
-      <h1 class="titles">{{ title }}</h1>
-      <p class="subtitles">
-        Remplissez les informations requises pour cette rubrique. Vos données
-        sont conservées localement sur votre navigateur.
-      </p>
+      <h1 class="rubrique__header__title">{{ title }}</h1>
     </div>
 
-    <div class="rubrique__actions">
-      <NuxtLink
-        to="/outils/checklist-dossier-vente-notaire"
-        aria-label="Retourner aux rubriques"
-      >
-        <UITertiaryButton icon="arrow_left" direction="row-reverse"
-          >Retourner aux rubriques</UITertiaryButton
-        ></NuxtLink
-      >
-      <UITertiaryButton
-        v-if="showLastAction"
-        variant="accent-color"
-        icon="download"
-        @click="downloadPdf"
-      >
-        Télécharger le récapitulatif
-      </UITertiaryButton>
-    </div>
     <div
       class="rubrique__form"
       :id="sectionId === 'identite' ? 'checklist-tour-form' : undefined"
@@ -353,6 +331,25 @@ onBeforeUnmount(() => {
         @complete="onComplete"
         @valid-state="onValidState"
       />
+    </div>
+
+    <div class="rubrique__actions">
+      <NuxtLink
+        to="/outils/checklist-dossier-vente-notaire"
+        aria-label="Retourner aux rubriques"
+      >
+        <UISecondaryButton icon="arrow_left" direction="row-reverse"
+          >Retourner aux rubriques</UISecondaryButton
+        ></NuxtLink
+      >
+      <UITertiaryButton
+        v-if="showLastAction"
+        variant="text-color"
+        icon="download"
+        @click="downloadPdf"
+      >
+        Télécharger le récapitulatif
+      </UITertiaryButton>
     </div>
   </div>
 </template>

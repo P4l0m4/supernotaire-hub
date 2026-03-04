@@ -637,6 +637,14 @@ watch(
   min-width: 280px;
   max-width: 43rem;
   scroll-margin-top: 4rem;
+  background-color: $primary-color;
+  padding: 1rem;
+  border-radius: calc($radius / 1.5);
+  border: 1px solid rgba($text-color, 0.1);
+
+  @media (min-width: $big-tablet-screen) {
+    padding: 1.5rem;
+  }
 
   &__title {
     color: $text-color;

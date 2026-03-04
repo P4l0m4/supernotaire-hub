@@ -19,9 +19,14 @@ withDefaults(defineProps<Props>(), {
 </template>
 <style lang="scss" scoped>
 .skeleton-loader {
-  background: linear-gradient(90deg, #eee 25%, #ddd 50%, #eee 75%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, $base-color 80%, transparent) 15%,
+    color-mix(in srgb, $secondary-color 12%, $primary-color 88%) 50%,
+    color-mix(in srgb, $base-color 80%, transparent) 85%
+  );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 1.8s ease-in-out infinite;
 }
 
 @keyframes shimmer {

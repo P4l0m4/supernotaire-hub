@@ -17,10 +17,20 @@
           "path": "type_bien",
           "id": "prealables-type-bien",
           "label": "Type de bien",
-          "placeholder": "Sélectionnez le type de bien",
           "name": "type_bien",
-          "type": "select",
-          "options": ["Appartement", "Maison"],
+          "type": "radio",
+          "options": [
+            {
+              "label": "Appartement",
+              "value": "Appartement",
+              "icon": "buildings_fill"
+            },
+            {
+              "label": "Maison",
+              "value": "Maison",
+              "icon": "house_line_fill"
+            }
+          ],
           "required": true
         },
         {

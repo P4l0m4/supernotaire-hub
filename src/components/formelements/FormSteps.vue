@@ -123,7 +123,7 @@ watch(
     cursor: pointer;
     gap: 0.5rem;
     width: fit-content;
-    background-color: $base-color;
+    background-color: $primary-color;
     border-radius: $radius;
     color: rgba($text-color, 0.7);
     z-index: 1;
