@@ -51,16 +51,15 @@ test.describe("Checklist - préalables - export partiel", () => {
     await firstSuggestion.waitFor({ timeout: 12_000 });
     await firstSuggestion.click();
 
-    // Type de bien : sélectionner "Appartement"
-    const typeField = page
-      .locator(".form-field")
-      .filter({ hasText: "Type de bien" })
-      .locator(".select-field__selected");
-    await typeField.scrollIntoViewIfNeeded();
-    await typeField.click({ timeout: 10_000 });
-    await page
-      .locator(".select-field__content__option", { hasText: "Appartement" })
-      .click();
+    // Type de bien : sélectionner "Appartement" (radio)
+    const typeField = page.locator(".form-field").filter({
+      hasText: "Type de bien",
+    });
+    const appartementOption = typeField
+      .locator(".radio-option")
+      .filter({ hasText: "Appartement" });
+    await appartementOption.scrollIntoViewIfNeeded();
+    await appartementOption.click({ timeout: 10_000 });
 
     // Valider la rubrique (un seul écran, bouton "Terminer")
     await page

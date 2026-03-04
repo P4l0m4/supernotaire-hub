@@ -141,6 +141,8 @@ function simulateClick() {
   }
 
   &__input {
+    position: absolute;
+    visibility: hidden;
     min-width: 2rem;
     max-width: 2rem;
     height: clamp(2rem, 2rem, 2rem);
@@ -152,6 +154,11 @@ function simulateClick() {
     transition:
       border-color 0.3s ease,
       background-color 0.3s ease;
+
+    @media (min-width: $tablet-screen) {
+      position: inherit;
+      visibility: visible;
+    }
   }
 
   &__text {
