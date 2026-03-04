@@ -8,9 +8,9 @@ import { colors } from "@/utils/colors";
 
 import type { ListSection } from "@/components/UI/ListPreview.vue";
 
-import fileText from "@/assets/animated-icons/fileText.svg?raw";
-import arrowsOut from "@/assets/animated-icons/arrowsOut.svg?raw";
-import puzzlePiece from "@/assets/animated-icons/puzzlePiece.svg?raw";
+import fileText from "@/assets/animated-icons/FileText.svg?raw";
+import arrowsOut from "@/assets/animated-icons/ArrowsOut.svg?raw";
+import puzzlePiece from "@/assets/animated-icons/PuzzlePiece.svg?raw";
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
