@@ -105,11 +105,7 @@ async function validContactState() {
       <FormElementsRadioOption
         v-for="opt in radioOptions"
         :key="opt.id"
-        :id="opt.id"
-        :name="opt.name"
-        :value="opt.value"
-        :label="opt.label"
-        :description="opt.description"
+        :radioOption="opt"
         v-model="selectedOption"
         :error="optionsErrors[0]"
       />
