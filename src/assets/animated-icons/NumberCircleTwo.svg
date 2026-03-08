@@ -1,0 +1,49 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="NumberCircleTwo" clip-path="url(#clip0_1785_2406)">
+<path id="Vector" d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property0" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 75.4088px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property0;"></path>
+<path id="Vector_2" d="M19 21.9992H13L18.3962 14.8042C18.6564 14.4586 18.8387 14.0609 18.9307 13.6383C19.0227 13.2157 19.0223 12.7782 18.9294 12.3558C18.8365 11.9333 18.6534 11.536 18.3926 11.191C18.1318 10.8459 17.7994 10.5614 17.4184 10.3568C17.0373 10.1522 16.6165 10.0325 16.1848 10.0057C15.7531 9.979 15.3208 10.0459 14.9174 10.2019C14.514 10.3579 14.1491 10.5993 13.8477 10.9095C13.5463 11.2197 13.3155 11.5914 13.1713 11.9992" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="id_anim_stroke-property1" data-duration="1" data-offset="0" style="stroke-dashoffset: 0px; stroke-dasharray: 0px, 25.3339px; animation: 1s linear 0s 1 normal forwards running id_anim_stroke-property1;"></path>
+</g>
+<defs>
+<clipPath id="clip0_1785_2406">
+<rect width="32" height="32" fill="white"></rect>
+</clipPath>
+</defs>
+<style>
+        @keyframes id_anim_stroke-property0{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 75.40877532958984px;
+            }
+        
+            50%{
+                stroke-dashoffset: -37.70438766479492px; 
+        stroke-dasharray: 37.70438766479492px, 37.70438766479492px;
+            }
+        
+            100%{
+                stroke-dashoffset: -75.40877532958984px; 
+        stroke-dasharray: 75.40877532958984px, 0px;
+            }
+        
+        }
+         
+        @keyframes id_anim_stroke-property1{
+        
+            0%{
+                stroke-dashoffset: 0px; 
+        stroke-dasharray: 0px, 25.33392906188965px;
+            }
+        
+            50%{
+                stroke-dashoffset: -12.666964530944824px; 
+        stroke-dasharray: 12.666964530944824px, 12.666964530944824px;
+            }
+        
+            100%{
+                stroke-dashoffset: -25.33392906188965px; 
+        stroke-dasharray: 25.33392906188965px, 0px;
+            }
+        
+        }
+        </style></svg>
