@@ -152,7 +152,7 @@ onMounted(async () => {
           Créez facilement votre dossier de vente immobilière et confiez-le
           rapidement à un notaire, où que vous soyez.
         </p>
-        <NuxtLink to="/inscription" class="hero__text__link">
+        <NuxtLink to="/outils/checklist-dossier-vente-notaire" class="hero__text__link">
           <UIPrimaryButton variant="accent-color" icon="arrow_right">
             Créer mon dossier
           </UIPrimaryButton>

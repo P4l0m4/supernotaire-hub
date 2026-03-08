@@ -74,13 +74,23 @@ const objections = [
   {
     title: "Est-ce que ça remplace le notaire ?",
     answer:
-      "Le notaire reste indispensable pour vérifier le dossier et réaliser l’acte de vente. L’outil vous permet simplement de préparer tous les documents nécessaire à votre dossier avant votre premier rendez-vous, de façon à éviter les oublis et gagner du temps sur la vente de votre bien. ",
+      "Le notaire reste indispensable pour vérifier le dossier et réaliser le compromis et l’acte de vente. L’outil vous permet simplement de préparer tous les documents nécessaire à votre dossier avant votre premier rendez-vous, de façon à éviter les oublis et gagner du temps sur la vente de votre bien. ",
   },
   {
     title: "Et si j’oublie un document important ?",
     answer:
       "Notre outils couvre les cas fréquents (copropriété, travaux, prêt, annexes…) aussi bien que les situations exceptionnelles (mandats, personnes morales, associations syndicales, urbanisme particulier, etc). En cas de doute, n'hésitez pas à nous contacter pour obtenir une aide personnalisée.",
   },
+  {
+    title: "EasyCase gère-t-il seulement les ventes immobilières simples ?",
+    answer:
+      "Non. EasyCase gère également de nombreux cas juridiques complexes. Le questionnaire peut adapter la liste de documents et les informations demandées pour des situations telles que : indivision, succession ou héritage, démembrement (usufruit / nue-propriété), SCI, servitudes, vente sous curatelle ou tutelle, vente par mandataire, biens loués ou occupés, et d'autres cas qui nécessitent une analyse juridique poussée. L’outil génère alors une checklist de pièces et d’informations adaptée à la situation juridique déclarée.",
+  },
+  {
+    title: "La liste des documents demandés est-elle générique ?",
+    answer:
+      "Non. EasyCase génère une checklist personnalisée à partir d’un questionnaire simple. Les documents demandés varient selon : le type de bien, le mode de détention (personne seule, indivision, SCI…), la situation juridique (succession, démembrement…), l’occupation du bien, les travaux réalisés, et tous les autres paramètres à prendre en compte pour une vente immobilière. La liste est donc différente pour chaque dossier.",
+  }
 ];
 </script>
 <template>

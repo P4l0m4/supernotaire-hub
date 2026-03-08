@@ -102,7 +102,7 @@ defineProps({
       font-weight: $bold;
       text-align: center;
       text-wrap: balance;
-      line-height: 0.9;
+      line-height: 1;
       color: $primary-color;
 
       @media (min-width: $tablet-screen) {

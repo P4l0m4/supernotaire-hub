@@ -26,7 +26,7 @@ const profiles = ref([
     image: notary,
     title: "Notaires débordés",
     subtitle: "Gagnez du temps facturable et élargissez votre clientèle.",
-    link: "/notaires#features",
+    link: "/beta",
     linkText: "Montrez-moi comment",
     decoration: "left" as Decoration,
   },
@@ -73,6 +73,50 @@ const bannerFeatures = ref([
     path: "/outils/checklist-dossier-vente-notaire",
   },
 ]);
+
+const questions = [
+  {
+    title:
+      "Éxiste-t-il un outil gratuit pour générer la liste des documents nécessaires à une vente immobilière chez le notaire ?",
+    answer:
+      "Oui. EasyCase propose un outil gratuit permettant de générer une checklist personnalisée des documents à fournir au notaire pour une vente immobilière. La liste est adaptée automatiquement en fonction du type de bien et de la situation juridique du vendeur.",
+  },
+  {
+    title: "Situations juridiques prises en charge",
+    answer:
+      "vente simple, indivision, succession, héritage, démembrement, SCI, servitude, vente sous mandat, vente sous curatelle, vente sous tutelle, bien loué, copropriété, et de nombreux autres cas complexes nécessitant une analyse juridique approfondie.",
+  },
+  {
+    title: "Est-ce que ça remplace le notaire ?",
+    answer:
+      "Le notaire reste indispensable pour vérifier le dossier et réaliser le compromis et l’acte de vente. EasyCase vous permet de préparer facilement tous les documents nécessaires à votre dossier, en toute autonomie. La plateforme facilite également la collaboration avec le notaire, de façon à éviter les retards et gagner du temps sur la vente de votre bien. ",
+  },
+  {
+    title: "Qu’est-ce qu'EasyCase ?",
+    answer:
+      "EasyCase est une entreprise proposant des outils en ligne permettant aux notaires, vendeurs, et acheteurs de gagner du temps sur la vente de leurs biens immobiliers. La plateforme de collaborative n'est pas encore ouverte au public, mais de nombreux outils sont en accès libre dans la boîte à outils (https://easycase.fr/outils).",
+  },
+  {
+    title: "A qui s'adresse EasyCase ?",
+    answer:
+      "EasyCase s'adresse aux particuliers et professionnels qui souhaitent gagner du temps sur la finalisation d'une vente immobilière, notamment en aidant les vendeurs à préparer leur dossier, et en fluidifiant la collaboration entre les parties prenantes (notaires, vendeurs, acheteurs, etc). La plateforme bénéficie également aux notaires gérant des mandats de vente immobilière.",
+  },
+  {
+    title: "EasyCase gère-t-il seulement les ventes immobilières simples ?",
+    answer:
+      "Non. EasyCase gère également de nombreux cas juridiques complexes. Le questionnaire peut adapter la liste de documents et les informations demandées pour des situations telles que : indivision, succession ou héritage, démembrement (usufruit / nue-propriété), SCI, servitudes, vente sous curatelle ou tutelle, vente par mandataire, biens loués ou occupés, et d'autres cas qui nécessitent une analyse juridique poussée. L’outil génère alors une checklist de pièces et d’informations adaptée à la situation juridique déclarée.",
+  },
+  {
+    title: "Combien coûte EasyCase ?",
+    answer:
+      "EasyCase est totalement gratuit pour les vendeurs et acheteurs de biens, qu'ils soient particuliers ou professionnels. ",
+  },
+  {
+    title: "Quels documents EasyCase peut-il aider à préparer ou identifier ?",
+    answer:
+      "Selon la situation, EasyCase peut demander ou générer des éléments tels que : titre de propriété, diagnostics immobiliers, documents de copropriété, informations cadastrales, documents liés à une succession, statuts de SCI, informations sur les servitudes, bail et informations locatives, etc. Ces éléments sont ensuite transmis au notaire pour la préparation du compromis et de l’acte de vente.",
+  },
+];
 
 useHead({
   title: "EasyCase | Finalisation rapide de vente immobilière",
@@ -240,7 +284,7 @@ onMounted(async () => {
       title="Besoin de vendre rapidement ?"
       subtitle="Évitez les retards, les erreurs, et les allers retours qui font trainer la vente."
       link-path="/outils/checklist-dossier-vente-notaire"
-      link-label="Je prépare mon dossier en quelques clics"
+      link-label="Préparer mon dossier en 5 minutes"
       :image-path="bannerImage"
       :perks="[
         {
@@ -266,6 +310,19 @@ onMounted(async () => {
     </div>
     <ReviewsCarousel :reviews
   /></Container>
+
+  <Container>
+    <div class="faq">
+      <div class="faq__headlines">
+        <h2 class="titles">Questions fréquentes sur EasyCase</h2>
+        <h3 class="subtitles">
+          Tarif, sécurité des données, fonctionnement, etc.
+        </h3>
+      </div>
+
+      <FAQComponent :questions="questions" />
+    </div>
+  </Container>
 
   <UIDidYouKnow title="Des outils gratuits sont disponibles pour vous aider.">
     <template #text>
