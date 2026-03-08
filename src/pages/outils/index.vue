@@ -90,7 +90,9 @@ useHead({
         :key="tool.name"
         :to="tool.path"
         :target="tool.target ? tool.target : '_self'"
-        ><UIPerk
+      >
+        <UIFeatureCard
+          :key="tool.name"
           :icon="tool.icon"
           :title="tool.name"
           :description="tool.description"
@@ -115,12 +117,12 @@ useHead({
 
   @media (min-width: $desktop-screen) {
     grid-template-columns: repeat(3, 1fr);
+    min-height: min-content;
   }
 
   &__tool {
     display: flex;
     width: 100%;
-    height: fit-content;
     transform: scale(1);
     transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 

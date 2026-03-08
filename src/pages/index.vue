@@ -414,6 +414,11 @@ onMounted(async () => {
     }
   }
 
+  @media (min-width: $super-big-screen) {
+    max-width: 2064px;
+    min-height: 60svh;
+  }
+
   &__text {
     display: flex;
     flex-direction: column;

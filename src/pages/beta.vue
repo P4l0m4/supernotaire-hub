@@ -467,6 +467,15 @@ Pourtant, le chiffre d’affaires ne suit pas, et recruter reste hors de portée
     }
   }
 
+  @media (min-width: $super-big-screen) {
+    max-width: 2064px;
+    min-height: 60svh;
+
+    &::before {
+      height: 100%;
+    }
+  }
+
   &__text {
     display: flex;
     flex-direction: column;

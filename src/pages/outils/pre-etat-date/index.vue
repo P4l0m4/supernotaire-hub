@@ -128,7 +128,7 @@ useHead({
   <Container>
     <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div id="pre-etat-date" class="tool">
-      <div class="tool__headlines">
+      <div class="tool__headlines sr-only">
         <h1 class="tool__headlines__title">
           Générateur de Pré-état daté gratuit
         </h1>

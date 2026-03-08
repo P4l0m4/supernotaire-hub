@@ -37,13 +37,14 @@ $size-big: 3.75rem;
   width: clamp(var(--wrapper-size), var(--wrapper-size), var(--wrapper-size));
   height: clamp(var(--wrapper-size), var(--wrapper-size), var(--wrapper-size));
   background-color: color-mix(in srgb, var(--wrapper-color) 10%, transparent);
-  border-radius: calc($radius / 2);
 
   &--small {
     --wrapper-size: #{$size-small};
+    border-radius: calc($radius / 4);
   }
   &--big {
     --wrapper-size: #{$size-big};
+    border-radius: calc($radius / 2);
   }
 }
 </style>

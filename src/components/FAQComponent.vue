@@ -90,7 +90,6 @@ useJsonld(() => ({
     padding: 1rem;
     cursor: pointer;
     background-color: $primary-color;
-    border: 1px solid rgba($text-color, 0.1);
     position: relative;
     transition: background-color 0.3s ease;
 

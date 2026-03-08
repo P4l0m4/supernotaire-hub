@@ -24,7 +24,7 @@ defineProps<{
 
 <style scoped lang="scss">
 .did-you-know {
-  background-color: $primary-color;
+  background: linear-gradient($primary-color, transparent);
   display: flex;
   flex-direction: column;
   padding: 1rem;

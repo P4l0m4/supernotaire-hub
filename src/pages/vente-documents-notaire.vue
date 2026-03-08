@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { reviews } from "@/utils/reviews";
-import signature from "@/assets/animated-icons/Signature.svg?raw";
-import globe from "@/assets/animated-icons/globe-animated.svg?raw";
-import puzzle from "@/assets/animated-icons/PuzzlePiece.svg?raw";
-import bannerImage from "@/assets/images/accompagnement-vente-immo-mobile.webp";
+import { colors } from "@/utils/colors";
+
+import one from "@/assets/animated-icons/NumberCircleOne.svg?raw";
+import two from "@/assets/animated-icons/NumberCircleTwo.svg?raw";
+import three from "@/assets/animated-icons/NumberCircleThree.svg?raw";
 
 const runtimeConfig = useRuntimeConfig();
 const baseUrl = runtimeConfig.public?.baseURL || "https://easycase.fr";
 
 const pushChecklistStart = (
-  ctaLocation: "hero" | "features" | "last_chance",
+  ctaLocation:
+    | "hero"
+    | "form"
+    | "features"
+    | "last_chance"
+    | "preview"
+    | "warning",
 ) => {
   if (!process.client) return;
   if (window.location.hostname === "localhost") return;
@@ -22,139 +29,59 @@ const pushChecklistStart = (
   });
 };
 
-const breadcrumbs = ref([
-  {
-    name: "Accueil",
-    url: "/",
-  },
-  {
-    name: "Préparation de dossier",
-    url: "/vente-documents-notaire",
-  },
-]);
-
 const featureCards = [
   {
-    icon: signature,
-    title: "Conforme aux exigences notariales",
+    icon: one,
+    title: "Liste personnalisée",
+    description: "Obtenez la liste exacte des documents pour votre situation.",
+  },
+  {
+    icon: two,
+    title: "Organisation du dossier",
     description:
-      "Conçu en collaboration avec des notaires pour garantir que vous fournissez exactement ce dont ils ont besoin, au bon moment. ",
+      "Rassemblez toutes les informations nécessaires en un rien de temps.",
   },
   {
-    icon: globe,
-    title: "Adopté par plus de 1250 vendeurs",
-    description:
-      "Plus de 1250 vendeurs français ont gagné en moyenne 3 semaines sur leur vente en moins de 5 minutes grâce à notre outil ultra intuitif.",
-  },
-  {
-    icon: puzzle,
-    title: "Adapté à votre situation spécifique",
-    description:
-      "Obtenez la liste exacte des documents à fournir au notaire pour la vente de votre bien immobilier. Vous saurez exactement quoi récupérer, auprès de qui, et quand.",
-  },
-];
-
-const questions = [
-  {
-    title: "À qui s’adresse cet outil ?",
-    answer:
-      "Aux vendeurs qui ont déjà un acheteur (compromis signé ou vente en cours) et qui doivent préparer les documents demandés par le notaire.",
-  },
-  {
-    title: "Est-ce gratuit ?",
-    answer:
-      "Oui, vous pouvez préparer votre dossier immédiatement et sans inscription. Vous pouvez également débloquer des fonctionnalités supplémentaires en optant pour la version payante.",
-  },
-  {
-    title: "Combien de temps ça prend ?",
-    answer:
-      "En général 2 à 5 minutes pour générer votre récapitulatif, puis vous avancez à votre rythme pour rassembler les pièces.",
-  },
-  {
-    title: "Est-ce valable pour les maisons et les appartements ?",
-    answer:
-      "Oui. L'outil est conçu pour s'adapter à de très nombreuses situations concernant la vente de maisons et d'appartements. Nous prenons notamment en compte les situations de copropriété ou non, les biens avec ou sans garage, les ventes avec ou sans prêt immobilier, sous mandat ou non, sur des zones particulières, etc.",
-  },
-  {
-    title:
-      "L'outil est-il utilisable si je n'ai pas encore trouvé d'acheteur ?",
-    answer:
-      "Oui, vous pouvez commencer à préparer votre dossier de vente dès maintenant pour gagner du temps une fois que vous aurez trouvé un acheteur.",
-  },
-  {
-    title: "L'outil est-il adapté pour les ventes de terrains ?",
-    answer:
-      "Non, l'outil est spécifiquement conçu pour les ventes de maisons et d'appartements.",
-  },
-  {
-    title: "Est-ce que ça remplace le notaire ?",
-    answer:
-      "Non. Nous vous aidons à préparer les documents demandés pour éviter les retards chez le notaire qui ralentissent la vente de plusieurs mois.",
+    icon: three,
+    title: "Export du récapitulatif",
+    description: "Partagez facilement votre récapitulatif avec votre notaire.",
   },
 ];
 
 const objections = [
   {
-    title: "Je ne sais pas par où commencer.",
+    title: "À quoi sert cet outil ?",
     answer:
-      "Vous répondez à quelques questions simples, on vous donne la liste complète et structurée, adaptée à votre situation.",
+      "A créer une liste complète, personnalisée et structurée de tous les documents nécessaires pour vendre votre bien rapidement.",
+  },
+  {
+    title:
+      "En quoi est-ce différent des listes de documents que je trouve sur internet ?",
+    answer:
+      "Les listes génériques que l'on trouve sur internet sont toujours incomplètes, puisqu'elles ne couvent que le tronc commun des documents à fournir, sans tenir compte des spécificités de votre situation. Vous devrez ensuite multiplier les allers-retours avec le notaire pour comprendre ce qui manque, ce qui allonge la vente de plusieurs semaines. Notre outil s'adapte à votre situation spécifique, vous permettant de préparer un dossier complet rapidement et en évitant les retards et les allers-retours inutiles.",
+  },
+  {
+    title: "Est-ce que je peux créer ma liste gratuitement ?",
+    answer:
+      "L'outil est disponible gratuitement dans une version limitée, qui couvre les thématiques juridiques de base. La version complète est proposée à un prix très abordable de 10 euros seulement et vous permettra d'inclure les thématiques les plus complexes à votre liste.",
+  },
+  {
+    title:
+      "En quoi cette liste est-elle différente d'une liste fournie par mon notaire ?",
+    answer:
+      "Lors du premier rendez-vous, le notaire fournit souvent une liste générique limitée, un tronc commun de documents et informations à fournir. Par la suite, il vous demandera de nombreux autres documents spécifiques à votre situation, ce qui allonge considérablement la procédure. Notre outil s'adapte à votre situation spécifique, bien au delà du tronc commun, vous permettant de préparer un dossier complet et personnalisé avant ce rendez-vous.",
+  },
+  {
+    title: "Est-ce que ça remplace le notaire ?",
+    answer:
+      "Le notaire reste indispensable pour vérifier le dossier et réaliser l’acte de vente. L’outil vous permet simplement de préparer tous les documents nécessaire à votre dossier avant votre premier rendez-vous, de façon à éviter les oublis et gagner du temps sur la vente de votre bien. ",
   },
   {
     title: "Et si j’oublie un document important ?",
     answer:
       "Notre outils couvre les cas fréquents (copropriété, travaux, prêt, annexes…) aussi bien que les situations exceptionnelles (mandats, personnes morales, associations syndicales, urbanisme particulier, etc). En cas de doute, n'hésitez pas à nous contacter pour obtenir une aide personnalisée.",
   },
-  {
-    title:
-      "Qu'est-ce que ça fait de plus que les listes de documents que je trouve sur internet / chez le notaire ?",
-    answer:
-      "Les listes génériques que l'on trouve sur internet ou chez le notaire sont toujours incomplètes, puisqu'elles ne couvent que le tronc commun des documents à fournir, sans tenir compte des spécificités de votre situation. Vous devrez ensuite multiplier les allers-retours avec le notaire pour comprendre ce qui manque, ce qui peut faire perdre plusieurs semaines voire mois sur la vente.",
-  },
-  {
-    title: "Qu'est-ce que j'obtiens, concrètement ?",
-    answer:
-      "Un récapitulatif clair et structuré de tous les documents à fournir au notaire et adapté à votre situation spécifique, qui vous permettra d'éviter les retards sur la vente.",
-  },
 ];
-
-useJsonld(() => ({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Trouver les documents à fournir au notaire pour la vente de mon bien immobilier",
-  description:
-    "Découvrez comment préparer efficacement votre dossier de vente pour le notaire et éviter les retards à la signature. Notre outil vous guide étape par étape pour rassembler tous les documents nécessaires, même si vous ne savez pas par où commencer.",
-  url: `${baseUrl}/vente-documents-notaire`,
-}));
-
-useHead({
-  title:
-    "Évitez les retards à la signature, préparez votre dossier de vente immobilière",
-  meta: [
-    {
-      name: "description",
-      content:
-        "Répondez à quelques questions rapides et gagnez des semaines sur votre vente immobilière, même si vous ne savez pas par où commencer.",
-    },
-    {
-      property: "og:type",
-      content: "website",
-    },
-    {
-      property: "og:title",
-      content:
-        "Évitez les retards à la signature, préparez votre dossier de vente immobilière",
-    },
-    {
-      property: "og:url",
-      content: `${baseUrl}/vente-documents-notaire`,
-    },
-    {
-      property: "og:description",
-      content:
-        "Répondez à quelques questions rapides et gagnez des semaines sur votre vente immobilière, même si vous ne savez pas par où commencer.",
-    },
-  ],
-});
 </script>
 <template>
   <Container>
@@ -162,7 +89,7 @@ useHead({
       <div class="centered-hero__text">
         <ReviewScore :reviews />
         <h1 class="centered-hero__text__title">
-          Ne laissez pas un dossier incomplet retarder votre vente.
+          Tous les documents nécessaires pour vendre votre bien immobilier.
           <svg
             viewBox="0 0 100 6"
             preserveAspectRatio="none"
@@ -179,31 +106,42 @@ useHead({
         </h1>
 
         <p class="centered-hero__text__subtitle">
-          Identifiez exactement les documents requis et préparez un dossier
-          complet, prêt à envoyer au notaire.
+          Générez en 5 minutes la liste exacte des documents à fournir à votre
+          notaire.
         </p>
+
         <div class="centered-hero__text__link">
           <NuxtLink
             to="/outils/checklist-dossier-vente-notaire"
-            aria-label="Gagner des semaines sur ma vente"
+            aria-label="Obtenir ma liste de documents"
             style="width: 100%"
             @click="pushChecklistStart('hero')"
           >
             <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
-              Gagner des semaines sur ma vente
+              Créer ma liste personnalisée
             </UIPrimaryButton></NuxtLink
           >
         </div>
       </div>
     </div>
   </Container>
+
+  <DossierProductPreview />
+
   <Container
-    ><Benefits
-      title="N'attendez pas que le notaire vous rappelle"
-      subtitle="Un oubli peut retarder ou bloquer la vente 🚫"
-      text="Nous vous guidons étape par étape pour rassembler tous les documents nécessaires, sans stress ni confusion."
-    />
-    <div class="feature-cards">
+    ><div class="feature-cards">
+      <h3 class="feature-cards__title">
+        Un outil
+        <span
+          :style="{
+            color: colors['success-color'],
+            fontFamily: 'Fitree-Italic',
+            fontStyle: 'italic',
+          }"
+          >simple</span
+        >
+        pour préparer votre dossier
+      </h3>
       <UIFeatureCard
         v-for="featureCard in featureCards"
         :key="featureCard.title"
@@ -214,137 +152,89 @@ useHead({
       <NuxtLink
         to="/outils/checklist-dossier-vente-notaire"
         class="feature-cards__link"
-        @click="pushChecklistStart('features')"
       >
         <UIPrimaryButton
           variant="accent-color"
-          icon="hands_clapping_fill"
+          icon="folder_simple_plus_fill"
           style="max-width: none"
         >
-          Commencer gratuitement
+          Créer ma liste de documents
         </UIPrimaryButton>
       </NuxtLink>
     </div></Container
   >
 
+  <DossierWarningSection />
+
+  <AlreadyUsedBy :reviews="reviews" />
   <Container>
     <h3 class="feature-cards__title">Les questions que l'on se pose tous 🙋‍♀️</h3>
     <FAQComponent :questions="objections" />
   </Container>
-  <Container
-    ><ImageBanner
-      title="Besoin de vendre rapidement ?"
-      subtitle="Évitez les retards, les erreurs, et les allers retours qui font trainer la vente."
-      link-path="/outils/checklist-dossier-vente-notaire"
-      link-label="Je prépare mon dossier en quelques clics"
-      :image-path="bannerImage"
-      :perks="[
-        {
-          title: 'Rapide et facile à utiliser',
-          icon: 'sparkle',
-        },
-        {
-          title: 'Dossier complet et organisé',
-          icon: 'list_checks',
-        },
-        {
-          title: 'Gain de temps immédiat',
-          icon: 'clock_countdown',
-        },
-      ]"
-  /></Container>
-  <Container>
-    <div class="secondary-headlines">
-      <h2 class="secondary-headlines__title">Témoignages</h2>
-      <h3 class="secondary-headlines__subtitle">
-        Leurs avis valent mieux que tous nos arguments
-      </h3>
-    </div>
-    <ReviewsCarousel :reviews />
-
-    <UILastChance
-      title="Si vous êtes arrivé jusque-là, c'est qu'il est temps d'essayer."
-      subtitle="Évitez les retards et les erreurs qui coutent cher. Rejoignez les milliers de vendeurs qui ont déjà gagné des semaines sur leur vente."
-    >
-      <template #links>
-        <NuxtLink
-          to="/outils/checklist-dossier-vente-notaire"
-          class="last-chance__links__link"
-          @click="pushChecklistStart('last_chance')"
-        >
-          <UIPrimaryButton variant="accent-color" icon="hands_clapping_fill">
-            Obtenir mon récapitulatif en 5 minutes
-          </UIPrimaryButton>
-        </NuxtLink>
-        <NuxtLink to="#faq" class="last-chance__links__link">
-          <UISecondaryButton variant="accent-color" icon="question">
-            J'ai encore des questions
-          </UISecondaryButton>
-        </NuxtLink>
-      </template>
-    </UILastChance>
-  </Container>
-
-  <Container
-    ><h3 id="faq" class="feature-cards__title">Questions fréquentes 🤔</h3>
-    <FAQComponent :questions />
-    <UILogosCarousel />
-    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
-  </Container>
-
-  <HotjarTracking />
+  <UILastChance
+    title="Obtenez la liste complète des documents pour vendre votre bien"
+    subtitle="Répondez à quelques questions simples. Votre liste personnalisée sera prête en quelques minutes."
+    ><template #links
+      ><NuxtLink
+        to="/outils/checklist-dossier-vente-notaire/prealables"
+        aria-label="Générer ma liste personnalisée"
+        style="width: 100%"
+        @click.prevent="pushChecklistStart('last_chance')"
+      >
+        <UIPrimaryButton variant="accent-color" icon="file_text_fill">
+          Créer ma liste en 5 minutes
+        </UIPrimaryButton></NuxtLink
+      ></template
+    ></UILastChance
+  >
+  <UILogosCarousel />
 </template>
 <style lang="scss" scoped>
-.feature-cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  height: fit-content;
+.scene * {
+  transform-box: fill-box; /* origine = bbox de l’élément */
+  transform-origin: center;
+}
 
-  @media (min-width: $big-tablet-screen) {
-    grid-template-columns: 1fr 1fr 1fr;
+@keyframes floatY {
+  0% {
+    transform: translateY(0px);
   }
-
-  &__title {
-    width: 100%;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: $semi-bold;
-    text-wrap: balance;
-    margin-bottom: 1rem;
-
-    @media (min-width: $big-tablet-screen) {
-      font-size: 2.5rem;
-      grid-column: span 3;
-      margin-bottom: 2rem;
-    }
+  100% {
+    transform: translateY(-4px);
   }
+}
 
-  &__link {
-    height: 100%;
+.float-slow {
+  animation: floatY 3.5s ease-in-out infinite alternate;
+}
+.float-fast {
+  animation: floatY 2.2s ease-in-out infinite alternate;
+  animation-delay: 0.3s;
+}
 
-    @media (min-width: $big-tablet-screen) {
-      grid-column: 2/3;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-fast {
+    animation: none;
   }
 }
 
 .svg-underline {
   display: block;
   position: absolute;
-  right: 2px;
-  bottom: -4px;
+  right: 30%;
+  bottom: -6px;
+  margin: auto;
   height: 6px;
-  width: calc(30% - 2px);
+  width: calc(25% - 2px);
   fill: none;
   stroke: var(--underline-color, #ffbf00);
   stroke-width: 3px;
   stroke-linecap: round;
   overflow: visible;
-  stroke-dasharray: 150; // longueur
-  stroke-dashoffset: 150;
+  stroke-dasharray: 120; // longueur
+  stroke-dashoffset: 120;
   transition: stroke-dashoffset 0.6s ease;
-  transform: translateX(-15%);
 }
 
 .centered-hero {
@@ -362,6 +252,7 @@ useHead({
     content: "";
     position: absolute;
     width: 100vw;
+    bottom: 0rem;
     height: calc(100vh - 6rem);
     background-image: url("@/assets/images/buildings.svg");
     opacity: 0.8;
@@ -370,6 +261,10 @@ useHead({
     z-index: -1;
     pointer-events: none;
     transition: opacity 0.5s ease-in-out;
+
+    @starting-style {
+      opacity: 0;
+    }
   }
 
   &::after {
@@ -414,6 +309,15 @@ useHead({
     }
   }
 
+  @media (min-width: $super-big-screen) {
+    max-width: 2064px;
+    min-height: 60svh;
+
+    &::before {
+      height: 100%;
+    }
+  }
+
   &__text {
     display: flex;
     flex-direction: column;
@@ -443,6 +347,10 @@ useHead({
       text-shadow: 0 0 10px rgba($text-color, 0.2);
       transition: opacity 1s ease-in-out;
 
+      @starting-style {
+        opacity: 0;
+      }
+
       @media (min-width: $big-tablet-screen) {
         font-size: 3rem;
       }
@@ -462,7 +370,7 @@ useHead({
 
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
-        max-width: 44rem;
+        max-width: 40rem;
       }
     }
 
@@ -470,7 +378,8 @@ useHead({
       color: $text-color;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      align-items: center;
+      gap: 1rem;
       max-width: 400px;
       transform: scale(1);
       transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
@@ -482,6 +391,40 @@ useHead({
       @media (min-width: $tablet-screen) {
         max-width: 350px;
       }
+    }
+  }
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  height: fit-content;
+
+  @media (min-width: $big-tablet-screen) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  &__title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: $semi-bold;
+    text-wrap: balance;
+    margin-bottom: 1rem;
+
+    @media (min-width: $big-tablet-screen) {
+      font-size: 2.5rem;
+      grid-column: span 3;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__link {
+    height: 100%;
+
+    @media (min-width: $big-tablet-screen) {
+      grid-column: 2/3;
     }
   }
 }

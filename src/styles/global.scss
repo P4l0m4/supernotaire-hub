@@ -244,6 +244,11 @@ input[type="checkbox"] {
     justify-content: space-between;
   }
 
+  @media (min-width: $super-big-screen) {
+    max-width: 2064px;
+    min-height: 60svh;
+  }
+
   &__text {
     display: flex;
     flex-direction: column;
@@ -345,19 +350,20 @@ input[type="checkbox"] {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgba($text-color, 0.1);
+  background: rgba($text-color, 0.05);
   border-radius: 20px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba($text-color, 0.4);
+  background: rgba($text-color, 0.2);
   border-radius: $radius;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba($text-color, 0.6);
+  background: rgba($text-color, 0.4);
+  cursor: grab;
 }
 
 //DETAILS

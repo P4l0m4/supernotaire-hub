@@ -172,12 +172,12 @@ const questions = [
       "L'accès complet est disponible via un paiement unique de 10 euros qui débloque les 6 rubriques premium pour votre dossier. Pas d'abonnement, pas de frais cachés, pas de compte à créer. Vous payez une seule fois et générez votre PDF complet immédiatement.",
   },
   {
-    title: "Puis-je remplir les rubriques premium avant d'acheter ?",
+    title: "Puis-je remplir les rubriques premium gratuitement ?",
     answer:
       "Oui, vous pouvez remplir toutes les rubriques premium gratuitement. Le paiement n'est nécessaire qu'au moment de générer le PDF complet. Ainsi, vous voyez exactement ce que vous obtenez avant de payer.",
   },
   {
-    title: "Mes données sont-elles sécurisées ?",
+    title: "Mes données sont-elles en sécurité ?",
     answer:
       "Vos données sont stockées localement et anonymement dans votre navigateur. Elles ne quittent jamais votre ordinateur et ne sont sont jamais stockées sur nos serveurs. Vous avez le contrôle total de vos informations et pouvez les supprimer à tout moment en cliquant sur le bouton de suppression.",
   },
@@ -240,9 +240,9 @@ const questions = [
 
 <template>
   <Container>
-    <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
+       <JsonLDBreadcrumbs v-if="breadcrumbs" :links="breadcrumbs" />
     <div id="checklist-dossier-vente-notaire" class="tool">
-      <div class="tool__headlines">
+      <div class="tool__headlines sr-only">
         <h1 class="tool__headlines__title">
           Préparez votre dossier de vente immobilière
         </h1>
@@ -261,7 +261,9 @@ const questions = [
         {{ notifyMessage }}
       </UIActionToast>
     </UINotificationModal>
+ 
   </Container>
+
   <Container>
     <div class="faq">
       <div class="faq__headlines">

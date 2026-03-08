@@ -28,27 +28,19 @@ defineProps<{
   gap: 2rem;
   color: $text-color;
   width: 100%;
-  background-color: $primary-color;
+  background: linear-gradient(rgba($accent-color, 0.1), transparent);
   border-radius: calc($radius/2);
   padding: 2rem;
   position: relative;
+  margin: 0 auto;
 
   @media (min-width: $big-tablet-screen) {
     padding: 4rem 2rem;
     gap: 3rem;
   }
 
-  &::after {
-    content: "";
-    background-color: rgba($accent-color, 0.1);
-    border-radius: calc($radius / 2);
-    bottom: -0.75rem;
-    right: -0.75rem;
-    top: 0.75rem;
-    left: 0.75rem;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
+    @media (min-width: $desktop-screen) {
+    max-width: 2064px;
   }
 
   &__text {
@@ -81,6 +73,8 @@ defineProps<{
       line-height: 1.35;
       font-weight: $regular;
       color: rgba($text-color, 0.7);
+      text-wrap: balance;
+
       @media (min-width: $big-tablet-screen) {
         font-size: 1.25rem;
       }

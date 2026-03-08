@@ -40,10 +40,9 @@ const reloadIconAnimation = () => {
   gap: 1rem;
   color: $accent-color;
   background-color: rgba($primary-color, 1);
-  border: 1px solid transparent;
   width: 100%;
   border-radius: calc($radius / 2);
-  box-shadow: 20px 40px 40px -30px rgba($text-color, 0.03);
+  box-shadow: 0.75rem 0.75rem 0 0 rgba($accent-color, 0.1);
   transition:
     background-color 0.2s ease,
     color 0.2s ease,
@@ -51,6 +50,10 @@ const reloadIconAnimation = () => {
 
   @starting-style {
     background-color: $base-color;
+  }
+
+  &:hover {
+    box-shadow: 0.5rem 0.5rem 0 0 rgba($accent-color, 0.2);
   }
 
   ::v-deep svg {
@@ -83,19 +86,6 @@ const reloadIconAnimation = () => {
 
     @media (min-width: $big-tablet-screen) {
       padding: 1.5rem;
-    }
-
-    &::before {
-      content: "";
-      background-color: rgba($accent-color, 0.1);
-      border-radius: calc($radius / 2);
-      bottom: -0.75rem;
-      right: -0.75rem;
-      top: 0.75rem;
-      left: 0.75rem;
-      position: absolute;
-      width: 100%;
-      z-index: -1;
     }
 
     &__title {
