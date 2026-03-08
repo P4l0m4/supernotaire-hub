@@ -40,26 +40,59 @@ onClickOutside(target, () => (isMenuOpen.value = false));
         <ul class="header__nav__links">
           <li class="header__nav__links__link" style="margin-top: 2.5rem">
             <NuxtLink
-              to="/inscription"
+              to="/vente-documents-notaire"
               class="nuxt-link"
               @keydown.esc="isMenuOpen = false"
               exact
-              >Accès anticipé<span class="line"></span
-            ></NuxtLink>
-          </li>
-          <li class="header__nav__links__link">
-            <NuxtLink to="/beta" @keydown.esc="isMenuOpen = false" exact
-              >Notaires</NuxtLink
+              :style="{ color: `${colors['accent-color']}` }"
+              ><UIWrappedIcon
+                icon="file_text_fill"
+                :color="colors['accent-color']"
+                size="small"
+              />Préparer mon dossier</NuxtLink
             >
           </li>
           <li class="header__nav__links__link">
-            <NuxtLink to="/vendeurs" @keydown.esc="isMenuOpen = false" exact
-              >Vendeurs</NuxtLink
+            <NuxtLink
+              to="/outils"
+              class="nuxt-link"
+              @keydown.esc="isMenuOpen = false"
+              exact
+              :style="{ color: `${colors['purple-color']}` }"
+              ><UIWrappedIcon
+                icon="tree_structure_fill"
+                :color="colors['purple-color']"
+                size="small"
+              />Boîte à outils</NuxtLink
+            >
+          </li>
+
+          <li class="header__nav__links__link">
+            <NuxtLink
+              to="/vendeurs"
+              class="nuxt-link"
+              @keydown.esc="isMenuOpen = false"
+              exact
+              :style="{ color: `${colors['text-color']}` }"
+              ><UIWrappedIcon
+                icon="user_fill"
+                :color="`${colors['text-color']}60`"
+                size="small"
+              />Vendeurs</NuxtLink
             >
           </li>
           <li class="header__nav__links__link">
-            <NuxtLink to="/outils" @keydown.esc="isMenuOpen = false" exact
-              >Boîte à outils</NuxtLink
+            <NuxtLink
+              to="/beta"
+              class="nuxt-link"
+              @keydown.esc="isMenuOpen = false"
+              exact
+              :style="{ color: `${colors['text-color']}` }"
+              ><UIWrappedIcon
+                icon="briefcase_fill"
+                :color="`${colors['text-color']}60`"
+                size="small"
+              />Notaires</NuxtLink
             >
           </li>
           <li class="header__nav__links__link">
@@ -68,8 +101,13 @@ onClickOutside(target, () => (isMenuOpen.value = false));
               class="nuxt-link"
               @keydown.esc="isMenuOpen = false"
               exact
-              >Tutoriels<span class="line"></span
-            ></NuxtLink>
+              :style="{ color: `${colors['text-color']}` }"
+              ><UIWrappedIcon
+                icon="question_fill"
+                :color="`${colors['text-color']}60`"
+                size="small"
+              />Tutoriels</NuxtLink
+            >
           </li>
         </ul>
       </nav>
@@ -83,7 +121,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
   padding: 1.5rem;
   background-color: $base-color;
   box-shadow: $shadow-black;
-  z-index: 1;
+  z-index: 2;
   transform: translateY(0);
   transition: transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
@@ -97,7 +135,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
 
   &__nav {
     position: fixed;
-    top: 0.75rem;
+    top: 1.5rem;
     right: 1rem;
     z-index: 2;
 
@@ -105,8 +143,9 @@ onClickOutside(target, () => (isMenuOpen.value = false));
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
       background-color: $primary-color;
+      border: 1px solid rgba($text-color, 0.1);
       padding: 1rem;
       border-radius: calc($radius / 2);
     }
@@ -124,7 +163,7 @@ onClickOutside(target, () => (isMenuOpen.value = false));
     background-color: $primary-color;
     z-index: 3;
     border-radius: calc($radius / 2);
-    box-shadow: $shadow-black;
+    box-shadow: 0.25rem 0.25rem 0 rgba($secondary-color, 0.1);
   }
 }
 
@@ -133,30 +172,33 @@ onClickOutside(target, () => (isMenuOpen.value = false));
   color: $text-color;
   white-space: nowrap;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: left;
+  background-color: $base-color;
+  padding: 0.25rem;
+  padding-right: 0.75rem;
+  border-radius: calc($radius/4);
+  transform: translateY(0);
+  transition:
+    box-shadow 0.2s ease,
+    transform 1s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 
-  .line {
-    width: 0px;
-    height: 2px;
-    background-color: transparent;
-    transition:
-      width 0.3s ease,
-      background-color 0.3s ease;
+  @starting-style {
+    transform: translateY(-1rem);
   }
 }
 
 .router-link-exact-active {
-  .line {
-    width: 100%;
-    background-color: $accent-color;
-  }
+  box-shadow: 0.25rem 0.25rem 0
+    color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .logo {
+  box-shadow: none;
+
   img {
-    width: 8rem;
-    height: 2rem;
+    width: 6rem;
   }
 }
 </style>

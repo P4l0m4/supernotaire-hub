@@ -98,9 +98,9 @@ useHead({
         </li>
       </ul>
       <div class="header__nav__buttons">
-        <NuxtLink to="/inscription" exact-active-class="x">
-          <UIPrimaryButton variant="accent-color">
-            Accéder à la bêta
+        <NuxtLink to="/vente-documents-notaire" exact-active-class="x">
+          <UIPrimaryButton variant="accent-color" icon="file_text_fill">
+            Préparer mon dossier
           </UIPrimaryButton>
         </NuxtLink>
       </div>

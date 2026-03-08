@@ -64,16 +64,11 @@
         <li class="footer__links-container__links__li">
           <NuxtLink to="/vendeurs">Notre offre</NuxtLink>
         </li>
-        <li class="footer__links-container__links__li">
-          <NuxtLink to="/conseils-pratiques">Conseils pratiques</NuxtLink>
-        </li>
+        
         <li class="footer__links-container__links__li">
           <NuxtLink to="/tutoriels">Tutoriels</NuxtLink>
         </li>
-        <li class="footer__links-container__links__li">
-          <NuxtLink to="/outils">Boîte à outils</NuxtLink>
-        </li>
-
+        
         <li class="footer__links-container__links__li">
           <NuxtLink to="/faq-vendeurs">F.A.Q.</NuxtLink>
         </li>
@@ -96,13 +91,19 @@
           </svg>
         </li>
         <li class="footer__links-container__links__li">
+          <NuxtLink to="/outils">Boîte à outils</NuxtLink>
+        </li>
+        <li class="footer__links-container__links__li">
+          <NuxtLink to="/conseils-pratiques">Conseils pratiques</NuxtLink>
+        </li>
+        <li class="footer__links-container__links__li">
           <NuxtLink :to="{ path: '/contact', hash: '#roadmap' }"
             >Roadmap</NuxtLink
           >
         </li>
-        <li class="footer__links-container__links__li">
+        <!-- <li class="footer__links-container__links__li">
           <NuxtLink to="/annuaire">Annuaire</NuxtLink>
-        </li>
+        </li> -->
         <li class="footer__links-container__links__li">
           <NuxtLink to="/contact">Contact</NuxtLink>
         </li>
@@ -112,11 +113,11 @@
           <h4
             class="footer__links-container__special-box__title-section__title"
           >
-            Gagnez du temps
+            Gagnez des semaines sur vos ventes immobilières
           </h4>
         </div>
         <p class="paragraphs">
-          Créez votre dossier de vente immobilière sans effort et confiez-le
+          Créez votre dossier sans effort et confiez-le
           rapidement à un notaire.
         </p>
         <NuxtLink to="/beta"
